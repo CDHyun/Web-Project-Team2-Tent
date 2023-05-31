@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!-- Footer Area -->
 <footer class="footer_area white-footer section_padding_100_0">
 	<div class="container">
