@@ -46,7 +46,7 @@ public class AdminDao {
 	
 	
 	
-	// function   String queryName, String queryContent
+	// function   
 	
 	public ArrayList<AdminDto> searchAction(String queryName, String queryContent) {
 		if(queryName == null){ // 첫화면인 경우
@@ -106,7 +106,7 @@ public class AdminDao {
 	
 	}
 	
-	
+	//수정, 삭제하기위해 데이터보여주는 메서드
 	public AdminDto contentView(String ppCode) {
 		AdminDto dto = null;
 		Connection connection = null;
@@ -157,7 +157,7 @@ public class AdminDao {
 	
 	
 	
-	
+	// 데이터수정메서드
 	public void updateAction(String pCode, String pBrandName,String pName, String pPrice, String pColor, String pStock, String pfName, String pfRealName) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -201,7 +201,7 @@ public class AdminDao {
 	
 	
 	
-	
+	// 데이터 삭제일자 업데이트 메서드 == 삭제 
 	public void deleteAction(String pCode, String pColor) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -233,8 +233,43 @@ public class AdminDao {
 		}
 	}	
 		
-
 	
+	
+	//데이터 입력메서드
+
+	public void insert(String pName, String pBrandName, String pPrice, String cgNo) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "INSERT INTO product (pName, pBrandName, pPrice, pInsertDate, cgNo) SELECT '?', '?', ?, NOW(), ? FROM category;";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, pName);
+			preparedStatement.setString(2, pBrandName);
+			preparedStatement.setString(3, pPrice);
+			preparedStatement.setString(4, cgNo);
+			
+			preparedStatement.executeUpdate();
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	
+	}
 	
 	
 	
