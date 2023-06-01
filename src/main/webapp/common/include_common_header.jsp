@@ -17,7 +17,7 @@
 				<div class="col-6">
 					<div
 						class="language-currency-dropdown d-flex align-items-center justify-content-end">
-						<!-- Language Dropdown -->
+						<!-- <!-- Language Dropdown
 						<div class="language-dropdown">
 							<div class="dropdown">
 								<a class="btn btn-sm dropdown-toggle" href="#" role="button"
@@ -30,8 +30,7 @@
 								</div>
 							</div>
 						</div>
-
-						<!-- Currency Dropdown -->
+						<!-- <!-- Currency Dropdown
 						<div class="currency-dropdown">
 							<div class="dropdown">
 								<a class="btn btn-sm dropdown-toggle" href="#" role="button"
@@ -43,7 +42,7 @@
 										class="dropdown-item" href="#">â¬ Euro</a>
 								</div>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -208,7 +207,7 @@
 							<c:if test="${!empty SUID}">
 								<ul class="user-meta-dropdown">
 									<li class="user-title"><span>Hello,</span> ${sMember.m_name} 🙂</li> 
-									<li><a href="my_account">My Account</a></li>
+									<li><a href="user_my_account.do">My Account</a></li>
 									<li><a href="order_list">Orders List</a></li>
 									<li><a href="wishlist_view">Wishlist</a></li>
 									<li><a href="logout.do"><i class="icofont-logout"></i>Logout</a></li>

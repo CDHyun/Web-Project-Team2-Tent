@@ -76,11 +76,13 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "index.do";
 			break;
-		case "/adminindex.do":
+		case "/user_my_account.do":
+			viewPage = "account-details.jsp";
+			break;
+    case "/adminindex.do":
 			command = new AdminCommand();
 			command.execute(request, response);
 			viewPage = "adminProductSelect.jsp";
-			break;
 		default:
 			break;
 		}
