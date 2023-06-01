@@ -9,6 +9,12 @@
 </head>
 <body>
 
+<!-- Header Start -->
+	<div class="header">
+		<jsp:include page="/adminSidebar.jsp" />
+	</div>
+	<!-- Header End -->
+
 <form action="adminindex.do" method="post" enctype="multipart/form-data">
 	 
 				pBrandName <input type="text" name="name" size="30"><br/>

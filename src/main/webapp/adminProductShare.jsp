@@ -8,6 +8,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<!-- Header Start -->
+	<div class="header">
+		<jsp:include page="/adminSidebar.jsp" />
+	</div>
+	<!-- Header End -->
 <!-- 이 페이지는 상품 수정, 삭제를 하기위한 공유페이지입니다.     사이드바에서 수정이나 삭제를 누를 시  이페이지가 보여지며 이페이지에서 pcode하이퍼링크를 누를시 adminPD가 나와서 admincontentcommand를 통해 pcode해당되는 데이터를 가져와서 adminproductupdate.jsp가 보여진다. -->
  <form action="adminindex.do" method="get">
 		검색 선택 : 
