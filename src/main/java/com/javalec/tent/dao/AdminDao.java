@@ -104,7 +104,56 @@ public class AdminDao {
 		return dtos;
 	
 	
-}
+	}
+	
+	
+	public AdminDto contentView(int ppCode) {
+		AdminDto dto = null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "select p.pCode, p.pBrandName, p.pName ,po.pColor, p.pPrice, po.pStock, p.pupdatedate,pf.pfName, pf.pfRealName  from product p, productoption po, productfile pf where p.pCode = po.pCode and p.pCode = pf.pCode and p.pCode=?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, ppCode);
+			resultSet = preparedStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				int pCode = resultSet.getInt(1);
+				String pBrandName = resultSet.getString(2);
+				String pName = resultSet.getString(3);
+				String pColor = resultSet.getString(4);
+				int pPrice = resultSet.getInt(5);
+				int pStock = resultSet.getInt(6);
+				Timestamp pUpdatedate = resultSet.getTimestamp(7);
+				String pfName = resultSet.getString(8);
+				String pfRealName = resultSet.getString(9);
+				
+				dto = new AdminDto(pStock, pBrandName, pName, pColor, pPrice, pStock, pUpdatedate, pfName, pfRealName);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet != null){ // 무언가 들어가 있으면close
+					resultSet.close();
+				}
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return dto;
+		
+	}// contentView
 	
 	
 }
