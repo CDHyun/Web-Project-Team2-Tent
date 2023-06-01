@@ -12,6 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import com.javalec.tent.command.AdminCommand;
 import com.javalec.tent.command.AdminContentCommand;
+import com.javalec.tent.command.AdminDeleteCommand;
+import com.javalec.tent.command.AdminUpdateCommand;
 import com.javalec.tent.command.IndexCommand;
 import com.javalec.tent.command.TentCommand;
 import com.javalec.tent.command.UserLogoutCommand;
@@ -90,6 +92,17 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "adminProductUpdate.jsp";
 			break;
+		case "/adminUpdate.do":
+			command = new AdminUpdateCommand();
+			command.execute(request, response);
+			viewPage = "adminProductSelect.jsp";
+			break;
+		case "/adminDelete.do":
+			command = new AdminDeleteCommand();
+			command.execute(request, response);
+			viewPage = "adminProductSelect.jsp";
+			break;
+
 			
 		default:
 			break;

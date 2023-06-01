@@ -107,7 +107,7 @@ public class AdminDao {
 	}
 	
 	
-	public AdminDto contentView(int ppCode) {
+	public AdminDto contentView(String ppCode) {
 		AdminDto dto = null;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -117,7 +117,7 @@ public class AdminDao {
 			connection = dataSource.getConnection();
 			String query = "select p.pCode, p.pBrandName, p.pName ,po.pColor, p.pPrice, po.pStock, p.pupdatedate,pf.pfName, pf.pfRealName  from product p, productoption po, productfile pf where p.pCode = po.pCode and p.pCode = pf.pCode and p.pCode=?";
 			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setInt(1, ppCode);
+			preparedStatement.setInt(1, Integer.parseInt(ppCode));
 			resultSet = preparedStatement.executeQuery();
 			
 			if(resultSet.next()) {
@@ -131,7 +131,7 @@ public class AdminDao {
 				String pfName = resultSet.getString(8);
 				String pfRealName = resultSet.getString(9);
 				
-				dto = new AdminDto(pStock, pBrandName, pName, pColor, pPrice, pStock, pUpdatedate, pfName, pfRealName);
+				dto = new AdminDto(pCode, pBrandName, pName, pColor, pPrice, pStock, pUpdatedate, pfName, pfRealName);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -154,6 +154,90 @@ public class AdminDao {
 		return dto;
 		
 	}// contentView
+	
+	
+	
+	
+	public void updateAction(String pCode, String pBrandName,String pName, int pPrice, String pColor, int pStock, String pfName, String pfRealName) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "update product p,productoption po, productfile pf set p.pBrandName= ? ,p.pName=?, p.pPrice =? , po.pStock=?, pf.pfName=?, pf.pfRealName=? where p.pCode = po.pCode and p.pCode = pf.pCode and p.pCode =? and po.pcolor=?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, pBrandName);
+			preparedStatement.setString(2, pName);
+			preparedStatement.setInt(3, pPrice);
+			preparedStatement.setInt(4, pStock);
+			preparedStatement.setString(5, pfName);
+			preparedStatement.setString(6, pfRealName);
+			preparedStatement.setString(7, pCode);
+			preparedStatement.setString(8, pColor);
+			
+			
+			preparedStatement.executeUpdate();
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	public void deleteAction(String pCode, String pColor) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "update product p, productoption po set p.pDeletedate =now() and p.pDeleted=1 where p.pCode= po.pCode and p.pCode =? and po.pColor =?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1 ,pCode );
+			preparedStatement.setString(2 ,pColor );
+			
+			
+			preparedStatement.executeUpdate();
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}	
+		
+
+	
+	
+	
+	
 	
 	
 }
