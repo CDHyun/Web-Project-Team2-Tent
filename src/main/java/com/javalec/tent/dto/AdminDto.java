@@ -13,7 +13,7 @@ public class AdminDto {
 	String pfName;
 	String pfRealName;
 	int cgNo;
-	String chName;
+	String cgName;
 	String pColor;
 	int pStock;
 	
@@ -21,6 +21,67 @@ public class AdminDto {
 	public AdminDto() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	public AdminDto(int pCode) {
+		// TODO Auto-generated constructor stub
+		this.pCode = pCode;
+	}
+	
+	
+	
+	
+
+
+	public AdminDto(int pCode, String pBrandName,  String pName,String pColor,int pPrice,int pStock, Timestamp pInsertdate, String pfName, String pfRealName) {
+		super();
+		this.pCode = pCode;
+		this.pName = pName;
+		this.pBrandName = pBrandName;
+		this.pPrice = pPrice;
+		this.pInsertdate = pInsertdate;
+		this.pfName = pfName;
+		this.pfRealName = pfRealName;
+		this.pColor = pColor;
+		this.pStock = pStock;
+	}
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public String getCgName() {
+		return cgName;
+	}
+
+
+
+
+
+
+	public void setCgName(String cgName) {
+		this.cgName = cgName;
+	}
+
+
+
+
 
 
 	public int getpCode() {
@@ -123,13 +184,13 @@ public class AdminDto {
 	}
 
 
-	public String getChName() {
-		return chName;
+	public String getcgName() {
+		return cgName;
 	}
 
 
-	public void setChName(String chName) {
-		this.chName = chName;
+	public void setcgName(String cgName) {
+		this.cgName = cgName;
 	}
 
 
