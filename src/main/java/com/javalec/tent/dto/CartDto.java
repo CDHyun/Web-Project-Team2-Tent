@@ -6,12 +6,26 @@ public class CartDto {
 	String uid;
 	int pCode;
 	String pName;
-	String pPrice;	
+	int pPrice;	
 	String pfName;
 	String pBrandName;
 	String pColor;
 	public CartDto() {
 		// TODO Auto-generated constructor stub
+	}
+		public CartDto(int cNo, int cQty, String uid, int pCode, String pName, int pPrice, String pfName, String pBrandName,
+				String pColor) {
+			super();
+			this.cNo = cNo;
+			this.cQty = cQty;
+			this.uid = uid;
+			this.pCode = pCode;
+			this.pName = pName;
+			this.pPrice = pPrice;
+			this.pfName = pfName;
+			this.pBrandName = pBrandName;
+			this.pColor = pColor;
+		
 	}
 	public int getcNo() {
 		return cNo;
@@ -43,10 +57,10 @@ public class CartDto {
 	public void setpName(String pName) {
 		this.pName = pName;
 	}
-	public String getpPrice() {
+	public int getpPrice() {
 		return pPrice;
 	}
-	public void setpPrice(String pPrice) {
+	public void setpPrice(int pPrice) {
 		this.pPrice = pPrice;
 	}
 	public String getPfName() {
@@ -67,19 +81,8 @@ public class CartDto {
 	public void setpColor(String pColor) {
 		this.pColor = pColor;
 	}
-	public CartDto(int cNo, int cQty, String uid, int pCode, String pName, String pPrice, String pfName,
-			String pBrandName, String pColor) {
-		super();
-		this.cNo = cNo;
-		this.cQty = cQty;
-		this.uid = uid;
-		this.pCode = pCode;
-		this.pName = pName;
-		this.pPrice = pPrice;
-		this.pfName = pfName;
-		this.pBrandName = pBrandName;
-		this.pColor = pColor;
-	}
-	//
 	
-}
+	}
+	
+	
+	
