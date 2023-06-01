@@ -13,6 +13,9 @@ public class AdminCommand implements TentCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
+		//검색기능에 필요한 변수
+		String queryName = request.getParameter("query");
+		String queryContent = request.getParameter("content");
 
 		AdminDao dao = new AdminDao();   // dB 연결
 	
@@ -21,8 +24,12 @@ public class AdminCommand implements TentCommand {
 		
 		
 		// all product select 
-		//	ArrayList<AdminDto> dtos = dao.searchAction();
-		//	request.setAttribute("list", dtos);
+			ArrayList<AdminDto> dtos = dao.searchAction(queryName, queryContent);
+			request.setAttribute("list", dtos);
+			
+			
+			
+			
 		
 		
 	}
