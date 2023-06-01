@@ -6,11 +6,47 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 상품확인</title>
+<style>
+  .header {
+    display: flex;
+  }
+
+ 
+
+  .content {
+   margin-left: 350px;
+  }
+  
+  table {
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 50%;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+</style>
+
+
 </head>
 <body>
-<h3>searchAction</h3>
 
-	   <form action="adminindex.do" method="get">
+<!-- Header Start -->
+	<div class="header">
+		<jsp:include page="/adminSidebar.jsp" />
+	</div>
+	<!-- Header End -->
+
+
+
+	   <form action="adminindex.do" method="get" class="content">
 		검색 선택 : 
 			<select name="query">
 				<option value="pBrandName" selected="selected">브랜드명</option>
@@ -24,7 +60,7 @@
 			<input type="submit" value="검색">
 	</form>
 	
-	<table border="">
+	<table border="" class="content">
 		<tr>
 			<th>pCode</th><th>pBrandName</th><th>pName</th><th>pColor</th><th>pPrice</th><th>pStock</th><th>pInsertdate</th>
 		</tr>

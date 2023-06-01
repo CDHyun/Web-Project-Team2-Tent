@@ -9,6 +9,14 @@
 </head>
 <body>
 
+
+<!-- Header Start -->
+	<div class="header">
+		<jsp:include page="/adminSidebar.jsp" />
+	</div>
+	<!-- Header End -->
+	
+	
 <form action="adminUpdate.do" method="post">  
 		pCode <input type="text" name="pCode" value="${content_view.pCode }" readonly="readonly"><br/>
 		pBrandName <input type="text" name="pBrandName" value="${content_view.pBrandName }"><br/>
