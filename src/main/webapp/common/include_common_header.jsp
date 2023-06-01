@@ -11,8 +11,7 @@
 					<div class="welcome-note">
 						<span class="popover--text" data-toggle="popover"
 							data-content="Welcome to Bigshop ecommerce template."><i
-							class="icofont-info-square"></i></span> <span class="text">Welcome
-							to tomorrowHome.</span>
+							class="icofont-info-square"></i></span> <span class="text">Tent Shop에 오신 걸 환영합니다.</span>
 					</div>
 				</div>
 				<div class="col-6">
@@ -58,8 +57,8 @@
 				<nav class="classy-navbar" id="bigshopNav">
 
 					<!-- Nav Brand -->
-					<a href="index.html" class="nav-brand">
-						<img src="img/core-img/logo.jpg" alt="logo" id="logo_img" style="width:190px;height:50px;">
+					<a href="index.do" class="nav-brand">
+						<img src="img/core-img/logo.png" alt="logo" id="logo_img" style="width:220px;height:50px;">
 					</a>
 
 					<!-- Toggler -->
@@ -81,17 +80,17 @@
 							<ul>
 								<li><a href="index.do">Home</a></li>
 								<li><a href="product_list.do" id="shop_main_menu">Shop</a></li>
-								<c:if test="${empty sM_id}">
+								<c:if test="${empty SUID}">
 									<li><a href="" class="login_check">Orders</a></li>
 								</c:if>
-								<c:if test="${!empty sM_id}">
+								<c:if test="${!empty SUID}">
 									<li><a href="purchase_list.do">Orders</a></li>
 								</c:if>
 								<li><a href="faq">FAQ</a></li>
-								<c:if test="${empty sM_id}">
+								<c:if test="${empty SUID}">
 									<li><a href="" class="login_check">Board</a></li>
 								</c:if>
-								<c:if test="${!empty sM_id}">
+								<c:if test="${!empty SUID}">
 									<li><a href="qna_list">Board</a></li>
 								</c:if>
 								
@@ -116,10 +115,10 @@
 
 						<!-- Wishlist -->
 						<div class="wishlist-area">
-						<c:if test="${empty sM_id}">
+						<c:if test="${empty SUID}">
 							<a href="#" class="wishlist-btn login_check""><i class="icofont-heart"></i></a>
 						</c:if>	
-						<c:if test="${!empty sM_id}">
+						<c:if test="${!empty SUID}">
 							<a href="wishlist_view" class="wishlist-btn"><i class="icofont-heart"></i></a>
 						</c:if>
 						</div>
@@ -128,16 +127,16 @@
 						
 						<div class="cart-area">
 							<div class="cart--btn">
-							<c:if test="${empty sM_id}">
+							<c:if test="${empty SUID}">
 								<a href="#" class="login_check"><i class="icofont-cart"></i></a>
 							</c:if>
-							<c:if test="${!empty sM_id}">
+							<c:if test="${!empty SUID}">
 								<a href="cart_view"><i class="icofont-cart"></i><span class="cart_quantity">${cartList.size()}</span></a>
 							</c:if>
 							</div>
  
 							<!-- Cart Dropdown Content -->
-							<c:if test="${!empty sM_id}">
+							<c:if test="${!empty SUID}">
 								<div class="cart-dropdown-content">
 									<ul class="cart-list">
 										<c:set var="tot_price" value="0" />
@@ -195,25 +194,24 @@
 						<!-- Account -->
 						<div class="account-area">
 							<div class="user-thumbnail">
-							<c:if test="${empty sM_id}">
+							<c:if test="${empty SUID}">
 								<a href="login_form">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
 										  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
 									</svg>
 								</a>
 							</c:if>
-							<c:if test="${!empty sM_id}">
+							<c:if test="${!empty SUID}">
 								<a href="#"><img src="img/bg-img/bono.jpeg" alt=""></a>
 							</c:if>
 							</div>
-							<c:if test="${!empty sM_id}">
+							<c:if test="${!empty SUID}">
 								<ul class="user-meta-dropdown">
 									<li class="user-title"><span>Hello,</span> ${sMember.m_name} 🙂</li> 
 									<li><a href="my_account">My Account</a></li>
 									<li><a href="order_list">Orders List</a></li>
 									<li><a href="wishlist_view">Wishlist</a></li>
-									<li><a href="member_logout"><i class="icofont-logout"></i>
-											Logout</a></li>
+									<li><a href="logout.do"><i class="icofont-logout"></i>Logout</a></li>
 								</ul>
 							</c:if>
 						</div>
