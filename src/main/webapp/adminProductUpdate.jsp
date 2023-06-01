@@ -22,7 +22,7 @@
 		
 		
 		
-		<input type="submit" value="수정">&nbsp;&nbsp;&nbsp;<a href="adminindex.do">처음으로</a> 
+		<input type="submit" value="수정">
 		
 	
 

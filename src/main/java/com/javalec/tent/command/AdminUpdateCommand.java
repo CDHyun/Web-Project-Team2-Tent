@@ -13,9 +13,9 @@ public class AdminUpdateCommand implements TentCommand {
 		String pCode =request.getParameter("pCode");
 		String pBrandName =request.getParameter("pBrandName");
 		String pName =request.getParameter("pName");
-		int pPrice = Integer.parseInt(request.getParameter("pPrice"));
+		String pPrice = request.getParameter("pPrice");
 		String pColor =request.getParameter("pColor");
-		int pStock =Integer.parseInt(request.getParameter("pStock"));
+		String pStock =request.getParameter("pStock");
 		String pfName =request.getParameter("file");
 		String pfRealName =request.getParameter("file");
 		

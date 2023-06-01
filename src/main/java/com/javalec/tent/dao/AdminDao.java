@@ -158,18 +158,18 @@ public class AdminDao {
 	
 	
 	
-	public void updateAction(String pCode, String pBrandName,String pName, int pPrice, String pColor, int pStock, String pfName, String pfRealName) {
+	public void updateAction(String pCode, String pBrandName,String pName, String pPrice, String pColor, String pStock, String pfName, String pfRealName) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		
+		System.out.println("@@");
 		try {
 			connection = dataSource.getConnection();
 			String query = "update product p,productoption po, productfile pf set p.pBrandName= ? ,p.pName=?, p.pPrice =? , po.pStock=?, pf.pfName=?, pf.pfRealName=? where p.pCode = po.pCode and p.pCode = pf.pCode and p.pCode =? and po.pcolor=?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, pBrandName);
 			preparedStatement.setString(2, pName);
-			preparedStatement.setInt(3, pPrice);
-			preparedStatement.setInt(4, pStock);
+			preparedStatement.setString(3, pPrice);
+			preparedStatement.setString(4, pStock);
 			preparedStatement.setString(5, pfName);
 			preparedStatement.setString(6, pfRealName);
 			preparedStatement.setString(7, pCode);
