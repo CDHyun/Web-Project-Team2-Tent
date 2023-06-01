@@ -3,11 +3,11 @@ quickview modal 보여지기 전 상품데이터 조회
 */
 $('#quickview').on('show.bs.modal', function(e){
 	console.log(e.relatedTarget);
-	let p_no = $(e.relatedTarget).attr("p_no");
+	let p_no = $(e.relatedTarget).attr("pCode");
 	$.ajax({
-		url: "product_detail_rest",
-		method: "get",
-		data: {"p_no" : p_no},
+		url: "/product_detail",
+		method: "post",
+		data: {"pCode" : pCode},
 		dataType: "json",
 		success:function(resultObj){
 			console.log(resultObj);
@@ -227,13 +227,6 @@ function changeProductList(pageno){
 	});
 }
 	
-/*
-All Reset 선택시 이벤트
-*/
-$("#all_reset_btn").on("click", function(e){
-	location.href = "product_list?pageno=1";
-});
-
 /*
 선택 조건값을 저장 
 */

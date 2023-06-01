@@ -90,8 +90,66 @@
         </div>
     </div>
     <!-- Sign_Up Area End -->
+    
+    <!-- signUpModal Start -->
+	<div class="modal" id="signUpModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="container">
+					<h5 class="mb-3" style="display: inline-block">SingUp</h5>
+					<span style="color: red">${l_msg}</span>
+					<form id="user_register_form" action="user_register_action"
+						method="post">
+						<div class="form-group">
+							<div class="input-form-group">
+								<input type="text" class="form-control" id="uid" name="uid"
+									placeholder="id">
+								<button type="button" class="btn btn-primary btn-sm"
+									onclick="checkDuplicateId()">중복확인</button>
+							</div>
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" id="uPassword"
+								name="uPassword" placeholder="password">
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control" id="uRePass"
+								name="uRePass" placeholder="password">
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control" id="uName" name="uName"
+								placeholder="name">
+						</div>
+						<div class="form-group">
+							<input type="email" class="form-control" id="uEmail"
+								name="uEmail" placeholder="Email">
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control address" id="uAddress"
+								name="uAddress" placeholder="address">
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control postcode" id="uZipCode"
+								name="uZipCode" placeholder="ZipCode">
+							<button type="button"
+								class="btn btn-outline-primary mb-1 searchAddr">search</button>
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control phone_number" id="uPhone"
+								name="uPhone" placeholder="phone(ex: 010-1234-5678) ">
+						</div>
 
-    <!-- Footer Area -->
+						<button type="button" class="btn btn-primary btn-sm"
+							onclick="registerCheck()">Register</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- SignUpModal End -->
+
+
+	<!-- Footer Area -->
  	<jsp:include page="common/include_common_bottom.jsp"/>
     <!-- Footer Area -->
 
@@ -100,55 +158,67 @@
 	<script src="js/shop/user.js"></script>
 	
 	<script type="text/javascript">
-		
 		/*
 		회원가입
-		*/
-		$('#member_register_form').on('submit',function(e){
-			if(!member_valiidation()){
+		 */
+		$('#member_register_form').on('submit', function(e) {
+			if (!member_valiidation()) {
 				$(this).find("[type='submit']").blur();
 				e.preventDefault();
 			}
 		});
-		
-		function member_valiidation(){
-			let validation = $("#m_id").val() == "" || $("#m_password") == "" || $("#m_name").val() == "" 
-				|| $("#m_email").val() == "" || $("#m_address").val() == "" 
-				|| $("#m_post").val() == "" || $("#m_phone").val() == "";
-			
-			if(validation){
-				Toast.fire({ icon: 'warning', title: "필수 입력값을 입력하지 않았습니다.\n 모든 값을 입력해주세요." });
+
+		function member_valiidation() {
+			let validation = $("#m_id").val() == "" || $("#m_password") == ""
+					|| $("#m_name").val() == "" || $("#m_email").val() == ""
+					|| $("#m_address").val() == "" || $("#m_post").val() == ""
+					|| $("#m_phone").val() == "";
+
+			if (validation) {
+				Toast.fire({
+					icon : 'warning',
+					title : "필수 입력값을 입력하지 않았습니다.\n 모든 값을 입력해주세요."
+				});
 				return false;
 			}
-			let regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/; 
-			if(!regPhone.test($(".phone_number").val())){
-				Toast.fire({ icon: 'warning', title: "휴대폰 번호 형식이 유효하지 않습니다" });
+			let regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+			if (!regPhone.test($(".phone_number").val())) {
+				Toast.fire({
+					icon : 'warning',
+					title : "휴대폰 번호 형식이 유효하지 않습니다"
+				});
 				$(".phone_number").val("");
 				return false;
 			}
 			return true;
 		}
-		
+
 		/*
 		회원 로그인 
-		*/
-		$("#user_login_form").on("submit", function(e){
-			if($("#id").val() == "" || $("#password").val() == ""){
-				Toast.fire({ icon: 'warning', title: "ID, 비밀번호를 모두 입력해주세요" });
+		 */
+		$("#user_login_form").on("submit", function(e) {
+			if ($("#id").val() == "" || $("#password").val() == "") {
+				Toast.fire({
+					icon : 'warning',
+					title : "ID, 비밀번호를 모두 입력해주세요"
+				});
 				$(this).find("[type='submit']").blur();
 				e.preventDefault();
 			}
 		});
-		
+
 		function loginCheck() {
-		   
+
 			var uid = $("#uid").val();
-		    var uPassword = $("#uPassword").val();
+			var uPassword = $("#uPassword").val();
 			var form = document.user_login_form;
-		    
-		    
-			if($("#uid").val() == "" || $("#uPassword").val() == ""){
-				Toast.fire({ icon: 'warning', title: "ID, 비밀번호를 모두 입력해주세요", target: '#toastContainer' });
+
+			if ($("#uid").val() == "" || $("#uPassword").val() == "") {
+				Toast.fire({
+					icon : 'warning',
+					title : "ID, 비밀번호를 모두 입력해주세요",
+					target : '#toastContainer'
+				});
 				return;
 			}
 			$.ajax({
@@ -161,42 +231,60 @@
 				success : function(result) {
 					console.log(result);
 					if (result === "0") {
-						Toast.fire({ icon: 'warning', title: "ID 혹은 비밀번호를 확인해주세요." });
+						Toast.fire({
+							icon : 'warning',
+							title : "ID 혹은 비밀번호를 확인해주세요."
+						});
 						return;
 					}
 					if (result === "-1") {
-						Toast.fire({ icon: 'warning', title: "탈퇴한 회원입니다." });
+						Toast.fire({
+							icon : 'warning',
+							title : "탈퇴한 회원입니다."
+						});
 						return;
 					}
 					if (result === "-2") {
-						Toast.fire({ icon: 'warning', title: "존재하지 않는 회원입니다." });
+						Toast.fire({
+							icon : 'warning',
+							title : "존재하지 않는 회원입니다."
+						});
 						return;
 					}
 					if (result === "1") {
-						Toast.fire({ icon: 'success', title: "로그인 성공! \n 환영합니다." });
-					    setTimeout(function() {
-					        $("#user_login_form").submit();
-					    }, 1500);
+						Toast.fire({
+							icon : 'success',
+							title : "로그인 성공! \n 환영합니다."
+						});
+						setTimeout(function() {
+							$("#user_login_form").submit();
+						}, 1500);
 					}
 				},
 				error : function() {
 					showAlert("오류가 발생했습니다. 다시 시도해주세요.");
 				}
 			});
-				
+
 		}
-		
+
 		/* ID 중복 확인 */
 		function checkDuplicateId() {
 			const uid = $('#uid').val();
 			const regExpAdmin = /^(?!.*(?:admin|root|insert|update|delete|select)).*$/
 			if (!regExpAdmin.test(uid.toLowerCase())) {
-				Toast.fire({ icon: 'warning', title: "해당 아이디는 사용 불가능합니다." });
+				Toast.fire({
+					icon : 'warning',
+					title : "해당 아이디는 사용 불가능합니다."
+				});
 				form.uid.select();
 				return;
 			}
 			if (uid.trim().length === 0) {
-				Toast.fire({ icon: 'warning', title: "아이디를 입력해주세요." });
+				Toast.fire({
+					icon : 'warning',
+					title : "아이디를 입력해주세요."
+				});
 				return;
 			}
 			console.log(uid);
@@ -209,19 +297,27 @@
 				success : function(result) {
 					console.log(result);
 					if (result === "0") {
-						Toast.fire({ icon: 'warning', title: "사용 가능한 아이디입니다." });
-						
+						Toast.fire({
+							icon : 'warning',
+							title : "사용 가능한 아이디입니다."
+						});
+
 					} else {
-						Toast.fire({ icon: 'warning', title: "중복되는 아이디입니다." });
+						Toast.fire({
+							icon : 'warning',
+							title : "중복되는 아이디입니다."
+						});
 					}
 				},
 				error : function() {
-						Toast.fire({ icon: 'warning', title: "오류가 발생했습니다. 다시 시도해주세요." });
+					Toast.fire({
+						icon : 'warning',
+						title : "오류가 발생했습니다. 다시 시도해주세요."
+					});
 				}
 			});
 		}
-		
-		
+
 		function registerCheck() {
 			/*  var uid = $('#uid').val(); */
 			const uid = $('#uid').val();
@@ -247,88 +343,146 @@
 			const regExpuAddress = /^[가-힣|0-9|a-z|A-Z|-|\s]*$/;
 
 			if (!regExpAdmin.test(uid.toLowerCase())) {
-				Toast.fire({ icon: 'warning', title: "해당 아이디는 사용 불가능합니다." });
+				Toast.fire({
+					icon : 'warning',
+					title : "해당 아이디는 사용 불가능합니다."
+				});
 				form.uid.select();
 				return;
 			}
 
 			if (uid.trim().length === 0) {
-				Toast.fire({ icon: 'warning', title: "아이디를 입력해주세요." });
+				Toast.fire({
+					icon : 'warning',
+					title : "아이디를 입력해주세요."
+				});
 				return;
 			}
 
 			if (!regExpuid.test(uid)) {
-				Toast.fire({ icon: 'warning', title: "아이디는 영문&숫자만 사용 가능합니다." });
+				Toast.fire({
+					icon : 'warning',
+					title : "아이디는 영문&숫자만 사용 가능합니다."
+				});
 				form.uid.select();
 				return
+
 			}
 
 			if (uPassword.trim().length === 0) {
-				Toast.fire({ icon: 'warning', title: "비밀번호를 입력해주세요." });
+				Toast.fire({
+					icon : 'warning',
+					title : "비밀번호를 입력해주세요."
+				});
 				return;
 			}
 			if (!regExpuPass.test(uPassword)) {
-				Toast.fire({ icon: 'warning', title: "비밀번호는 영문&숫자만 사용 가능합니다." });
+				Toast.fire({
+					icon : 'warning',
+					title : "비밀번호는 영문&숫자만 사용 가능합니다."
+				});
 				form.uPassword.select();
 				return
+
 			}
 
 			if (uRePass.trim().length === 0) {
-				Toast.fire({ icon: 'warning', title: "비밀번호 확인을 입력해주세요." });
+				Toast.fire({
+					icon : 'warning',
+					title : "비밀번호 확인을 입력해주세요."
+				});
 				return;
 			}
 			if (!regExpuPass.test(uRePass)) {
-				Toast.fire({ icon: 'warning', title: "비밀번호는 영문&숫자만 사용 가능합니다." });
+				Toast.fire({
+					icon : 'warning',
+					title : "비밀번호는 영문&숫자만 사용 가능합니다."
+				});
 				form.uRePass.select();
 				return
+
 			}
 			if (uPassword.trim() !== uRePass.trim()) {
-				Toast.fire({ icon: 'warning', title: "비밀번호가 일치하지 않습니다." });
+				Toast.fire({
+					icon : 'warning',
+					title : "비밀번호가 일치하지 않습니다."
+				});
 				form.uRePass.select();
 				return
+
 			}
 
 			if (uName.trim().length === 0) {
-				Toast.fire({ icon: 'warning', title: "이름을 입력해주세요." });
+				Toast.fire({
+					icon : 'warning',
+					title : "이름을 입력해주세요."
+				});
 				return;
 			}
 			if (!regExpuName.test(uName)) {
-				Toast.fire({ icon: 'warning', title: "이름은 한글과 영문만 입력 할 수 있습니다." });
+				Toast.fire({
+					icon : 'warning',
+					title : "이름은 한글과 영문만 입력 할 수 있습니다."
+				});
 				form.uName.select();
 				return
+
 			}
 
 			if (uPhone.trim().length === 0) {
-				Toast.fire({ icon: 'warning', title: "전화번호를 입력해주세요." });
+				Toast.fire({
+					icon : 'warning',
+					title : "전화번호를 입력해주세요."
+				});
 				return;
 			}
-			
+
 			if (!regExpuPhone.test(uPhone)) {
-				Toast.fire({ icon: 'warning', title: "전화번호를 확인해주세요.\n ex)010-1234-5678" });
+				Toast.fire({
+					icon : 'warning',
+					title : "전화번호를 확인해주세요.\n ex)010-1234-5678"
+				});
 				form.uPhone.select();
 				return
+
 			}
 
 			if (uEmail.trim().length === 0) {
-				Toast.fire({ icon: 'warning', title: "이메일을 입력해주세요." });
+				Toast.fire({
+					icon : 'warning',
+					title : "이메일을 입력해주세요."
+				});
 				showAlert("이메일을 입력해주세요.");
 				return;
 			}
 			if (!regExpuEmail.test(uEmail)) {
-				Toast.fire({ icon: 'warning', title: "이메일 형식을 확인해주세요. \n ex) id@domain.com" });
+				Toast.fire({
+					icon : 'warning',
+					title : "이메일 형식을 확인해주세요. \n ex) id@domain.com"
+				});
 				form.uEmail.select();
 				return
+
+				
 
 			}
 
 			if (uAddress.trim().length === 0) {
-				Toast.fire({ icon: 'warning', title: "주소를 입력해주세요." });
+				Toast.fire({
+					icon : 'warning',
+					title : "주소를 입력해주세요."
+				});
 				return;
 			}
 			if (!regExpuAddress.test(uAddress)) {
-				Toast.fire({ icon: 'warning', title: "주소는 영문/한글/숫자/- 만 입력 가능합니다." });
+				Toast.fire({
+					icon : 'warning',
+					title : "주소는 영문/한글/숫자/- 만 입력 가능합니다."
+				});
 				form.uAddress.select();
 				return
+
+				
 
 			}
 
