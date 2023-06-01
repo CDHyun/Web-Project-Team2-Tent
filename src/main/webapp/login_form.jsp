@@ -47,70 +47,37 @@
     <!-- Breadcumb Area -->
 
     <!-- Login Area -->
-	<div class="bigshop_reg_log_area section_padding_100_50">
-		<div class="container">
-			<div class="row">
-				<div class="col-12 col-md-6">
-					<div class="login_form mb-50">
-						<h5 class="mb-3" style="display: inline-block">Login</h5> &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red">${l_msg}</span>
-
-						<form id="user_login_form" method="post" action="login.do">
-							<div class="form-group">
-								<input type="text" class="form-control" id="uid" name="uid" placeholder="ID">
-							</div>
-							<div class="form-group">
-								<input type="password" class="form-control" id="uPassword" name="uPassword" placeholder="Password">
-							</div>
-							<div class="form-check">
-								<div class="custom-control custom-checkbox mb-3 pl-1">
-									<input type="checkbox" class="custom-control-input" id="customChe">
-									<label class="custom-control-label" for="customChe">Remember me for this computer</label>
+	<div id="loginModal">
+		<div class="bigshop_reg_log_area section_padding_100_50">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 col-md-6">
+						<div class="login_form mb-50">
+							<h5 class="mb-3" style="display: inline-block">Login</h5> &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red">${l_msg}</span>
+	
+							<form id="user_login_form" method="post" action="login.do">
+								<div class="form-group">
+									<input type="text" class="form-control" id="uid" name="uid" placeholder="ID">
 								</div>
+								<div class="form-group">
+									<input type="password" class="form-control" id="uPassword" name="uPassword" placeholder="Password">
+								</div>
+								<div class="form-check">
+									<div class="custom-control custom-checkbox mb-3 pl-1">
+										<input type="checkbox" class="custom-control-input" id="customChe">
+										<label class="custom-control-label" for="customChe">Remember me for this computer</label>
+									</div>
+								</div>
+								<button type="button" id="login_btn" class="btn btn-primary btn-sm" onclick="loginCheck()">Login</button>
+								<button type="button" id="modal_test" class="btn btn-primary btn-sm" onclick="openModal()">open</button>
+							</form>
+							<!-- Forget Password -->
+							<div class="forget_pass mt-15">
+								<a href="#">Forget Password?</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="sign_up.jsp">아직 회원이 아니신가요?</a>
 							</div>
-							<button type="button" id="login_btn"
-								class="btn btn-primary btn-sm" onclick="loginCheck()">Login</button>
-						</form>
-						<!-- Forget Password -->
-						<div class="forget_pass mt-15">
-							<a href="#">Forget Password?</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="sign_up.jsp">아직 회원이 아니신가요?</a>
 						</div>
 					</div>
 				</div>
-				<div class="col-12 col-md-6">
-                    <div class="login_form mb-50">
-                        <h5 class="mb-3" style="display:inline-block">Register</h5>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red">${r_msg}</span>
-
-                        <form id="user_register_form" action="member_register_action" method="post">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="uid" name="uid" placeholder="id">
-                            </div>
-                              <div class="form-group">
-                                <input type="password" class="form-control" id="uPassword" name="uPassword"  placeholder="password">
-                            </div>
-                              <div class="form-group">
-                                <input type="password" class="form-control" id="uRePass" name="uRePass"  placeholder="password">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="uName" name="uName" placeholder="name">
-                            </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control" id="uEmail" name="uEmail"  placeholder="Email">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control address" id="uAddress" name="uAddress"  placeholder="address">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control postcode" id="uZipCode" name="uZipCode" placeholder="ZipCode">
-                            	<button type="button" class="btn btn-outline-primary mb-1 searchAddr">search</button>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control phone_number" id="uPhone" name="uPhone"  placeholder="phone(ex: 010-1234-5678) ">
-                            </div>
-                           
-                            <button type="button" class="btn btn-primary btn-sm" onclick="registerCheck()">Register</button>
-                        </form>
-                    </div>
-                </div>
 			</div>
 		</div>
 	</div>
@@ -129,13 +96,13 @@
 		/*
 		회원가입
 		*/
-		$('#member_register_form').on('submit',function(e){
+/* 		$('#member_register_form').on('submit',function(e){
 			if(!member_valiidation()){
 				$(this).find("[type='sub
 		mit']").blur();
 				e.preventDefault();
 			}
-		});
+		}); */
 
 		function member_valiidation() {
 			let validation = $("#m_id").val() == "" || $("#m_password") == ""
@@ -236,6 +203,27 @@
 			});
 
 		}
+		
+		// 모달 열기
+		function openModal() {
+		  document.getElementById("loginModal").style.display = "block";
+		}
+
+		// 모달 닫기
+		function closeModal() {
+		  document.getElementById("loginModal").style.display = "none";
+		}
+
+		// 모달 외부 클릭 시 닫기
+		window.onclick = function(event) {
+		  var modal = document.getElementById("loginModal");
+		  if (event.target == modal) {
+		    closeModal();
+		  }
+		};
+		
+		
+		
 	</script>
 
 </body>

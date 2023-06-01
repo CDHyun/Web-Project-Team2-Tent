@@ -70,7 +70,6 @@ public class UserDao {
 				/* 회원가입 성공 */
 				result = 1;
 			}
-			/* Slack Test */
 
 		} catch (Exception e) {
 			e.printStackTrace();
