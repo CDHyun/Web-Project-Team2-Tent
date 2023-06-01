@@ -16,6 +16,11 @@ public class AdminCommand implements TentCommand {
 		//검색기능에 필요한 변수
 		String queryName = request.getParameter("query");
 		String queryContent = request.getParameter("content");
+		
+		
+		//업데이트에 필요한 변수
+		
+		
 
 		AdminDao dao = new AdminDao();   // dB 연결
 	
