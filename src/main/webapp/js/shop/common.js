@@ -28,7 +28,8 @@ $(".login_check").on("click", function(e){
 	ToastConfirm.fire({ icon: 'question', 
 			title: "로그인이 필요한 페이지입니다.\n 로그인 하시겠습니까?"}).then((result) => {
 			if(result.isConfirmed){
-				location.href = "login_form.do";
+				/*location.href = "login_form.do";*/
+				openLoginModal();
 			}
 		});
 	e.preventDefault();
@@ -71,7 +72,8 @@ function addToCart(params){
 		ToastConfirm.fire({ icon: 'question', 
 				title: "로그인이 필요한 페이지입니다.\n 로그인 하시겠습니까?"}).then((result) => {
 				if(result.isConfirmed){
-					location.href = "login_form.jsp";
+					/*location.href = "login_form.do";*/
+					openLoginModal();	
 				}
 			});
 		return;
@@ -103,7 +105,8 @@ function addToWishList(param){
 		ToastConfirm.fire({ icon: 'question', 
 				title: "로그인이 필요한 페이지입니다.\n 로그인 하시겠습니까?"}).then((result) => {
 				if(result.isConfirmed){
-					location.href = "login_form.do";
+					/*location.href = "login_form.do";*/
+					openLoginModal();
 				}
 			});
 		return;

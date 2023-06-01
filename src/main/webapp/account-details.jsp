@@ -12,10 +12,10 @@
     <!-- include_common_top -->
 	<jsp:include page="common/include_common_top.jsp"/>
     <!-- include_common_top -->
-    <link rel="stylesheet" href="css/shop/member.css">
+    <link rel="stylesheet" href="css/shop/user.css">
 	<!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp"/>
-	<script src="js/shop/member.js"></script>
+	<script src="js/shop/user.js"></script>
 	<script type="text/javascript">
 		/*
 		회원정보 수정 

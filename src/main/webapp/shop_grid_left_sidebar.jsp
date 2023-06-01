@@ -16,6 +16,15 @@
     <!-- include_common_top -->
     <link rel="stylesheet" href="css/shop/product.css">
 
+<script type="text/javascript">
+/*
+All Reset 선택시 이벤트
+*/
+$("#cbAllProduct").on("click", function(e){
+	location.href = "product_list.do";
+});
+</script>
+
 </head>
 
 <body>
@@ -64,8 +73,8 @@
                             <div class="widget-desc">
                                 <!-- Single Checkbox  -->
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="button" class="custom-control-input" id="all_reset_btn">
-                                    <label class="custom-control-label" for="all_reset_btn">All Product<span class="text-muted"></span></label>
+                                    <input type="checkbox" class="custom-control-input" id="cbAllProduct">
+                                    <label class="custom-control-label" for="cbAllProduct"><a href="product_list.do">All Product</a><span class="text-muted"></span></label>
                                 </div>
                              </div>
                          </div>
@@ -194,31 +203,31 @@
                             <h6 class="widget-title">Average Rating</h6>
                             <div class="widget-desc p_score">
                                 <ul>
-                                	<div class="custom-control custom-checkbox d-flex align-items-center mb-2"">
+                                	<div class="custom-control custom-checkbox d-flex align-items-center mb-2">
                                 		<input type="checkbox" class="custom-control-input" id="customCheck16" score="5">
                                 		<label class="custom-control-label" for="customCheck16">
                                 			<li><a href=""><i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <span class="text-muted"></span></a></li>
                                 		</label>
                                     </div>
-                                	<div class="custom-control custom-checkbox d-flex align-items-center mb-2"">
+                                	<div class="custom-control custom-checkbox d-flex align-items-center mb-2">
                                 		<input type="checkbox" class="custom-control-input" id="customCheck17" score="4">
                                 		<label class="custom-control-label" for="customCheck17">
                                     		<li><a href=""><i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> <span class="text-muted"></span></a></li>
                                 		</label>
                                     </div>
-                                	<div class="custom-control custom-checkbox d-flex align-items-center mb-2"">
+                                	<div class="custom-control custom-checkbox d-flex align-items-center mb-2">
                                 		<input type="checkbox" class="custom-control-input" id="customCheck18" score="3">
                                 		<label class="custom-control-label" for="customCheck18">
                                     		<li><a href=""><i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> <span class="text-muted"></span></a></li>
                                 		</label>
                                     </div>
-                                	<div class="custom-control custom-checkbox d-flex align-items-center mb-2"">
+                                	<div class="custom-control custom-checkbox d-flex align-items-center mb-2">
                                 		<input type="checkbox" class="custom-control-input" id="customCheck19" score="2">
                                 		<label class="custom-control-label" for="customCheck19">
                                     		<li><a href=""><i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> <span class="text-muted"></span></a></li>
                                 		</label>
                                     </div>
-                                	<div class="custom-control custom-checkbox d-flex align-items-center"">
+                                	<div class="custom-control custom-checkbox d-flex align-items-center">
                                 		<input type="checkbox" class="custom-control-input" id="customCheck20" score="1">
                                 		<label class="custom-control-label" for="customCheck20">
                                     		<li><a href=""><i class="fa fa-star" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> <i class="fa fa-star-o" aria-hidden="true"></i> <span class="text-muted"></span></a></li>
@@ -288,7 +297,8 @@
 	
 	                                        <p class="brand_name">${product.pBrandName}</p>
 	                                        <a href="product_detail?p_no=${product.pCode}" p_no="${product.pCode}">${product.pName}</a>
-	                                        <h6 class="product-price">&#8361;<s:eval expression="new java.text.DecimalFormat('#,###').format(product.pPrice)"/><span></span></h6>
+	                                       <%--  <h6 class="product-price">&#8361;<s:eval expression="new java.text.DecimalFormat('#,###').format(${product.pPrice})"/><span></span></h6> --%>
+	                                        <h6 class="product-price">&#8361;${product.pPrice}<span></span></h6>
 	                                    	
 	                                    </div>
 	                                </div>
