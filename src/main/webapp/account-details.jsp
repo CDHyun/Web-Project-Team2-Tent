@@ -114,7 +114,7 @@
                 <div class="col-12">
                     <h5>My Account</h5>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="index.do">Home</a></li>
                         <li class="breadcrumb-item active">My Account</li>
                     </ol>
                 </div>
@@ -130,7 +130,7 @@
 				<div class="col-12 col-lg-3">
 				    <div class="my-account-navigation mb-50">
 				        <ul>
-				            <li><a href="my_account">My Account</a></li>
+				            <li><a href="user_my_account.do">My Account</a></li>
 				            <li class="active"><a href="#">Account Details</a></li>
 				            <li><a href="order_list">Orders</a></li>
 				            <li><a href="member_logout">Logout</a></li>

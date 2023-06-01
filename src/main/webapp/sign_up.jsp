@@ -14,8 +14,6 @@
 	<jsp:include page="common/include_common_top.jsp"/>
     <!-- include_common_top -->
     <link rel="stylesheet" href="css/shop/user.css">
-   
-
 </head>
 
 <body>
@@ -56,7 +54,10 @@
 
                         <form id="user_register_form" action="member_register_action" method="post">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="uid" name="uid" placeholder="id">
+                            	<div class="input-form-group">
+	                                <input type="text" class="form-control" id="uid" name="uid" placeholder="id">
+		                            <button type="button" class="btn btn-primary btn-sm" onclick="checkDuplicateId()">중복확인</button>
+                            	</div>
                             </div>
                               <div class="form-group">
                                 <input type="password" class="form-control" id="uPassword" name="uPassword"  placeholder="password">
@@ -96,7 +97,7 @@
 
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp"/>
-	<script src="js/shop/member.js"></script>
+	<script src="js/shop/user.js"></script>
 	
 	<script type="text/javascript">
 		
@@ -190,31 +191,32 @@
 			const uid = $('#uid').val();
 			const regExpAdmin = /^(?!.*(?:admin|root|insert|update|delete|select)).*$/
 			if (!regExpAdmin.test(uid.toLowerCase())) {
-				showAlert("Java Fundmental 규약에 어긋나는 아이디는 사용 불가능합니다.");
+				Toast.fire({ icon: 'warning', title: "해당 아이디는 사용 불가능합니다." });
 				form.uid.select();
 				return;
 			}
 			if (uid.trim().length === 0) {
-				showAlert("아이디를 입력해주세요.");
+				Toast.fire({ icon: 'warning', title: "아이디를 입력해주세요." });
 				return;
 			}
 			console.log(uid);
 			$.ajax({
 				type : 'POST',
-				url : './userRegisterCheckCommand',
+				url : './UserCheckDuplicateCommand',
 				data : {
 					uid : uid
 				},
 				success : function(result) {
 					console.log(result);
 					if (result === "0") {
-						showAlert("사용 가능한 아이디입니다.");
+						Toast.fire({ icon: 'warning', title: "사용 가능한 아이디입니다." });
+						
 					} else {
-						showAlert("중복되는 아이디입니다.");
+						Toast.fire({ icon: 'warning', title: "중복되는 아이디입니다." });
 					}
 				},
 				error : function() {
-					showAlert("오류가 발생했습니다. 다시 시도해주세요.");
+						Toast.fire({ icon: 'warning', title: "오류가 발생했습니다. 다시 시도해주세요." });
 				}
 			});
 		}
@@ -360,10 +362,6 @@
 			});
 
 		}
-
-	
 	</script>
-
 </body>
-
 </html>
