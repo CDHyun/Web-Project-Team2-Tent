@@ -102,23 +102,23 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "product_detail.jsp";
 			break;
-		case "/adminindex.do":
+		case "/adminindex.do":  // 상품보여주기
 			command = new AdminCommand();
 			command.execute(request, response);
 			viewPage = "adminProductSelect.jsp";
 			break;
-		case "/adminProductDetail.do":
+		case "/adminProductDetail.do": // 상품정보보여주기 메커니즘
 			command = new AdminContentCommand();
 			command.execute(request, response);
 			viewPage = "adminProductUpdate.jsp";
 			break;
-		case "/adminUpdate.do":
-			command = new AdminUpdateCommand();
+		case "/adminUpdate.do": //상품수정 메커니즘
+			command = new AdminCommand();
 			command.execute(request, response);
 			viewPage = "adminProductShare.jsp";
 			break;
-		case "/adminDelete.do":
-			command = new AdminDeleteCommand();
+		case "/adminDelete.do": //상품삭제 메커니즘
+			command = new AdminCommand();
 			command.execute(request, response);
 			viewPage = "adminProductShare.jsp";
 			break;
@@ -147,6 +147,11 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "adminindex.do";
 			break;	
+		case "/adminUpdateAction.do": //상품수정 메커니즘
+			command = new AdminUpdateCommand();
+			command.execute(request, response);
+			viewPage = "adminindex.do";
+			break;
 		
 		default:
 			break;

@@ -18,6 +18,7 @@ public class AdminUpdateCommand implements TentCommand {
 		String pStock =request.getParameter("pStock");
 		String pfName =request.getParameter("file");
 		String pfRealName =request.getParameter("file");
+		String fileName = request.getParameter("fileName");
 		
 		AdminDao dao  = new AdminDao();
 		dao.updateAction(pCode, pBrandName, pName, pPrice, pColor, pStock, pfName, pfRealName);
