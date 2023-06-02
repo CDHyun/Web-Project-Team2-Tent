@@ -161,7 +161,6 @@ public class AdminDao {
 	public void updateAction(String pCode, String pBrandName,String pName, String pPrice, String pColor, String pStock, String pfName, String pfRealName) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		System.out.println("@@");
 		try {
 			connection = dataSource.getConnection();
 			String query = "update product p,productoption po, productfile pf set p.pBrandName= ? ,p.pName=?, p.pPrice =? , po.pStock=?, pf.pfName=?, pf.pfRealName=? where p.pCode = po.pCode and p.pCode = pf.pCode and p.pCode =? and po.pcolor=?";
@@ -237,20 +236,40 @@ public class AdminDao {
 	
 	//데이터 입력메서드
 
-	public void insert(String pName, String pBrandName, String pPrice, String cgNo) {
+	public void insert(String pName, String pBrandName, String pPrice, String cgNo,String pfName, String pfRealName, String pCode, String pStock,String pColor, String pfNo) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		
+		PreparedStatement preparedStatement1 = null;
+		PreparedStatement preparedStatement2 = null;
 		try {
-			connection = dataSource.getConnection();
-			String query = "INSERT INTO product (pName, pBrandName, pPrice, pInsertDate, cgNo) SELECT '?', '?', ?, NOW(), ? FROM category;";
-			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, pName);
-			preparedStatement.setString(2, pBrandName);
-			preparedStatement.setString(3, pPrice);
-			preparedStatement.setString(4, cgNo);
-			
-			preparedStatement.executeUpdate();
+	        connection = dataSource.getConnection();
+	        String query = "INSERT INTO product (pName, pBrandName, pPrice, pInsertDate, cgNo) VALUES (?, ?, ?, NOW(), ?)";
+	        preparedStatement = connection.prepareStatement(query);
+	        preparedStatement.setString(1, pName);
+	        preparedStatement.setString(2, pBrandName);
+	        preparedStatement.setInt(3, Integer.parseInt(pPrice));
+	        preparedStatement.setInt(4, Integer.parseInt(cgNo));
+	        preparedStatement.executeUpdate();
+
+	        String query2 = "INSERT INTO productfile (pfNo, pfName, pfRealName, pCode) SELECT ?, ?, ?, ? FROM product WHERE pName=?";
+	        preparedStatement1 = connection.prepareStatement(query2);
+	        preparedStatement1.setInt(1, Integer.parseInt(pfNo));
+	        preparedStatement1.setString(2, pfName);
+	        preparedStatement1.setString(3, pfRealName);
+	        preparedStatement1.setInt(4, Integer.parseInt(pCode));
+	        preparedStatement1.setString(5, pName);
+
+	        preparedStatement1.executeUpdate();
+
+	        String query3 = "INSERT INTO productoption (pStock, pColor, pCode) SELECT ?, ?, ? FROM product WHERE pName=?";
+	        preparedStatement2 = connection.prepareStatement(query3);
+	        preparedStatement2.setInt(1,Integer.parseInt(pStock));
+	        preparedStatement2.setString(2, pColor);
+	        preparedStatement2.setInt(3, Integer.parseInt(pCode));
+	        preparedStatement2.setString(4, pName);
+
+	        preparedStatement2.executeUpdate();
+
 		
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -268,7 +287,6 @@ public class AdminDao {
 			}
 		}
 		
-	
 	}
 	
 	

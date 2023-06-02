@@ -6,8 +6,40 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 상품입력</title>
+<style>
+  .header {
+    display: flex;
+  }
+
+ 
+
+  .content {
+   margin-left: 350px;
+  }
+  
+  table {
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 50%;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+</style>
 </head>
+
+
+
+
 <body>
+
 
 <!-- Header Start -->
 	<div class="header">
@@ -15,15 +47,17 @@
 	</div>
 	<!-- Header End -->
 
-<form action="adminindex.do" method="post" enctype="multipart/form-data">
-	 
-				pBrandName <input type="text" name="name" size="30"><br/>
-				pName<input type="text" name="tel" size="30"><br/>
-				pPrice<input type="text" name="address" size="30"><br/>
-				pStock<input type="text" name="address" size="30"><br/>
+<form action="adminInsert.do" method="get" enctype="multipart/form-data" class="content">
+	 			
+				pCode <input type="text" name="pCode" size="30"><br/>
+				pBrandName <input type="text" name="pBrandName" size="30"><br/>
+				pName<input type="text" name="pName" size="30"><br/>
+				pPrice<input type="text" name="pPrice" size="30"><br/>
+				pStock<input type="text" name="pStock" size="30"><br/>
+				cgNo<input type="text" name="cgNo" size="30"><br/>
+				pfNo<input type="text" name="pfNo" size="30"><br/>
+				pColor<input type="text" name="pColor" size="30"><br/>
 				파일 : <input type="file" name="file"><br>
-				<input type="submit" value="업로드">	<br/>
-				pColor<input type="text" name="relation" size="30"><br/>
 				
 				
 				<input type="submit" value="입력"> 
