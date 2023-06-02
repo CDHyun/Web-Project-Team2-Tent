@@ -122,45 +122,38 @@ DataSource dataSource;
 	}
 	}
 	
-	
-	public double totalPrice(String uid){
-		
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		double total = 0;
-		
-		
-		try {
-			connection = dataSource.getConnection();
-			
-			// 전체 가격 계산
-			String query1 = "SELECT SUM(p.pPrice * c.cQty) AS totalPrice FROM cart c JOIN product p ON c.pCode = p.pCode WHERE c.uid = ?";
-			preparedStatement = connection.prepareStatement(query1);
-			preparedStatement.setString(1, uid);
-			resultSet = preparedStatement.executeQuery();
-			
-			if(resultSet.next()) {
-				total = resultSet.getDouble("totalPrice");
-			}
-			
-		
-			
-			
-			
-		}catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				if(resultSet != null) resultSet.close();	
-				if(preparedStatement != null) preparedStatement.close();
-				if(connection != null) connection.close();
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		}
-		return total;
-		
+	// 작동 되는지 봐야함
+	public double totalPrice(String uid, String pCode){
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+	    double total = 0;
+
+	    try {
+	        connection = dataSource.getConnection();
+
+	        // 선택한 물건 가격 계산
+	        String query = "SELECT SUM(p.pPrice * c.cQty) AS total FROM cart c JOIN product p ON c.pCode = p.pCode WHERE c.uid = ? AND c.pCode = ?";
+	        preparedStatement = connection.prepareStatement(query);
+	        preparedStatement.setString(1, uid);
+	        preparedStatement.setString(2, pCode);
+	        resultSet = preparedStatement.executeQuery();
+
+	        if(resultSet.next()) {
+	            total = resultSet.getDouble("total");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if(resultSet != null) resultSet.close();
+	            if(preparedStatement != null) preparedStatement.close();
+	            if(connection != null) connection.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return total;
 	}
 	
 	
