@@ -47,7 +47,6 @@ public class AdminInputCommand implements TentCommand {
    		    MultipartRequest multipartRequest = new MultipartRequest(
    		        request, directory, maxSize, encoding, new DefaultFileRenamePolicy()
    		    );
-   		    System.out.println("@hi");
 
    		    
    		  

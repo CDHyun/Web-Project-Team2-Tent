@@ -34,6 +34,8 @@
   }
 </style>
 </head>
+
+
 <body>
 
 
@@ -44,15 +46,15 @@
 	<!-- Header End -->
 	
 	
-<form action="#" method="post" class="content"> 
+<form action="adminUpdateAction.do" method="post" class="content" >
  				<img alt="image" src="images/product/${content_view.pfName}" width="250" height="250"><br/>
-		pCode <input type="text" name="pCode" value="${content_view.pCode }" readonly="readonly"><br/>
-		pBrandName <input type="text" name="pBrandName" value="${content_view.pBrandName }"><br/>
-		pName <input type="text" name="pName" value="${content_view.pName }"><br/>
-		pPrice <input type="text" name="pPrice" value="${content_view.pPrice }" ><br/>
-		pColor <input type="text" name="pColor" value="${content_view.pColor }"><br/>
-		pStock <input type="text" name="pStock" value="${content_view.pStock }"><br/>
-		파일 : <input type="text" name="fileName" value="${content_view.pfName }"><br/>
+		pCode <input type="text" name="pCode" id="pCode" value="${content_view.pCode }" readonly="readonly"><br/>
+		pBrandName <input type="text" name="pBrandName" id="pBrandName" value="${content_view.pBrandName }"><br/>
+		pName <input type="text" name="pName" id="pName" value="${content_view.pName }"><br/>
+		pPrice <input type="text" name="pPrice" id="pPrice" value="${content_view.pPrice }" ><br/>
+		pColor <input type="text" name="pColor" id="pColor" value="${content_view.pColor }"><br/>
+		pStock <input type="text" name="pStock" id="pStock" value="${content_view.pStock }"><br/>
+		파일명 : <input type="text" name="fileName" id="fileName" value="${file }"><br/>
 		<input type="file" name="file"><br/>
 		
 			
@@ -60,8 +62,8 @@
 		
 		
 		
-		<input type="button" value="수정" onclick="adminindex.do">&nbsp;&nbsp;&nbsp;
-		<input type="button" value="삭제" onclick="adminindex.do">
+		<input type="submit" value="수정" class="update" >&nbsp;&nbsp;&nbsp;
+		
 		
 	
 
