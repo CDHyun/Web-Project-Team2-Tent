@@ -10,7 +10,7 @@ public class CartUpdateCommand implements TentCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		String cQty = request.getParameter("cQty");
+		int cQty =Integer.parseInt(request.getParameter("cQty"));
 		CartDao dao = new CartDao();
 		dao.cartUpdateAction(cQty);
 		

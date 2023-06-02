@@ -10,7 +10,7 @@ public class CartDeleteCommand implements TentCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		String pCode = request.getParameter("pCode");
+		int pCode = Integer.parseInt(request.getParameter("pCode"));
 		CartDao dao = new CartDao();
 		dao.cartDeleteAction(pCode);
 	}

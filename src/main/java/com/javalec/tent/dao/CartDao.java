@@ -71,7 +71,7 @@ DataSource dataSource;
 		return dtos;
 	}
 	
-	public void cartDeleteAction(String pCode){
+	public void cartDeleteAction(int pCode){
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -81,7 +81,7 @@ DataSource dataSource;
 			connection = dataSource.getConnection();
 			String query = " delete from cart where pCode =?";
 			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, pCode);
+			preparedStatement.setInt(1, pCode);
 			preparedStatement.executeUpdate();
 			
 		}catch(Exception e) {
@@ -96,7 +96,7 @@ DataSource dataSource;
 			}
 		}
 	}
-	public void cartUpdateAction(String cQty) {
+	public void cartUpdateAction(int cQty) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -106,7 +106,7 @@ DataSource dataSource;
 			connection = dataSource.getConnection();
 			String query = " update cart set cQty=?";
 			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, cQty);
+			preparedStatement.setInt(1, cQty);
 			preparedStatement.executeUpdate();
 			
 		}catch(Exception e) {
