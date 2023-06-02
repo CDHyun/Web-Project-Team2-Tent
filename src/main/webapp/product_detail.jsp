@@ -59,21 +59,21 @@
                 <div class="col-12 col-lg-6">
                     <div class="single_product_thumb">
                         <div id="product_details_slider" class="carousel slide" data-ride="carousel">
-
+						<c:forEach items="${productInfo}" var="product">
                             <!-- Carousel Inner -->
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <a class="gallery_img" href="img/p_img/${imgList[0].im_name}" title="First Slide">
-                                        <img class="d-block w-100" src="img/p_img/${imgList[0].im_name}" alt="First slide">
+                                    <a class="gallery_img" href="images/product/${product.pfRealName}" title="First Slide">
+                                        <img class="d-block w-100" src="images/product/${product.pfHoverRealName}" alt="First slide">
                                     </a>
                                     <!-- Product Badge -->
                                     <div class="product_badge">
-                                        <span class="badge-new">${product.p_concept}</span>
+                                        <span class="badge-new"></span>
                                     </div>
                                 </div>
                                 <div class="carousel-item">
-                                    <a class="gallery_img" href="img/p_img/${imgList[1].im_name}" title="Second Slide">
-                                        <img class="d-block w-100" src="img/p_img/${imgList[1].im_name}" alt="Second slide">
+                                    <a class="gallery_img" href="images/product/${product.pfHoverRealName}" title="Second Slide">
+                                        <img class="d-block w-100" src="images/product/${product.pfHoverRealName}" alt="Second slide">
                                     </a>
                                     <!-- Product Badge -->
                                     <div class="product_badge">
@@ -185,6 +185,7 @@
                                 <a href="#refund" class="nav-link" data-toggle="tab" role="tab">Return &amp; Cancellation</a>
                             </li>
                         </ul>
+                        
                         <!-- Tab Content -->
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade show active" id="description">
@@ -195,7 +196,7 @@
                                     </c:forEach>
                                 </div>
                             </div>
-
+						</c:forEach>
 							<!-- Review area -->
 
                             <div role="tabpanel" class="tab-pane fade" id="reviews">

@@ -18,20 +18,19 @@
 	<!-- <script src="js/shop/product.js"></script> -->
 
 <script type="text/javascript">
-/* 	
-	$('#quickview').on('show.bs.modal', function(e){
-		console.log(e.relatedTarget);
-		let pCode = $(e.relatedTarget).attr("pCode");
-		$.ajax({
-			url: "/product_detail",
-			method: "post",
-			data: {"pCode" : pCode},
-			dataType: "json",
-			success:function(resultObj){
-				console.log(resultObj);
-				if(resultObj.errorCode > 0){
+ 	 function clickQuickView(pCode) {
+		console.log(pCode);
+		console.log(${productInfo});
+		$('#quickview').on('show.bs.modal', function(e){
+			let pCode = $(e.relatedTarget).attr("pCode");
+			$.ajax({
+				url: "./product_detail",
+				method: "post",
+				data: { pCode: pCode },
+				dataType: "json",
+				success: function (resultObj) {
 					let product = resultObj.data;
-					$(e.target).find('.badge-new').html(product.p_concept);
+					/* $(e.target).find('.badge-new').html(product.p_concept); */
 					$(e.target).find('.title').html(product.pName);
 					$(e.target).find('.price').html("&#8361; " + numberWithCommas(product.pPrice));
 					$(e.target).find('.p_desc').html(product.p_desc);
@@ -49,36 +48,11 @@
 					$(e.target).find('.q_view_to_wish_btn').attr("pCode", pCode);
 					$(e.target).find(".first_img").attr("src", `images/product/${product.pfRealName}`);
 					$(e.target).find(".hover_img").attr("src", `images/product/${product.pfHoverRealName}`);
-				} else {
-					Toast.fire({ icon: 'error', title: resultObj.errorMsg });
 				}
-			}
-		});
-	});
-	 */
-	 function clickQuickView(pCode) {
-		console.log(pCode);
-		$.ajax({
-			url: "./product_detail",
-			method: "post",
-			data: { pCode: pCode },
-			dataType: "json",
-			success: function (resultObj) {
-				console.log(resultObj);
-			}
+			});
 		});
 	}
-
-	 
-	 /* 	 
-	function ClickQuickview()() {
-		$('#quickview').modal('show');
-		let pCode = $(e.relatedTarget).attr("pCode");
-		location.href="product_detail.do?pCode=${product.pCode}"
-	}
-	 */
-	 
-	 
+	
 </script>
 
 </head>
@@ -324,8 +298,8 @@
 	                                <div class="single-product-area mb-30">
 	                                    <div class="product_image">
 	                                        <!-- Product Image -->
-	                                        <img class="normal_img" src="images/product/${product.pfRealName}" alt="">
-	                                        <img class="hover_img" src="images/product/${product.pfHoverRealName}" alt="">
+	                                        <a href="product_detail.do$pCode=${product.pCode}"><img class="normal_img" src="images/product/${product.pfRealName}" alt=""></a>
+	                                         <a href="product_detail.do$pCode=${product.pCode}"><img class="hover_img" src="images/product/${product.pfHoverRealName}" alt=""></a>
 		
 	                                        <!-- Product Badge -->
 	                                        <div class="product_badge">
@@ -348,6 +322,7 @@
 	
 	                                        <!-- Quick View -->
 	                                        <div class="product_quick_view">
+	                                        <button pCode ="${product.pCode}" onclick="$('#quickview').modal('show');">Quick View</button>
 	                                            <a data-toggle="modal" data-target="#quickview" pCode="${product.pCode}" onclick="clickQuickView('${product.pCode}')"><i class="icofont-eye-alt"></i> Quick View</a>
 	                                        </div>
 	
@@ -367,86 +342,6 @@
                     </div>
 
                     <!-- Shop Pagination Area -->
-					<!-- Modal Area -->
-					<div class="modal fade" id="quickview" tabindex="-1" role="dialog"
-						aria-labelledby="quickview" aria-hidden="true">
-						<div class="modal-dialog modal-lg modal-dialog-centered"
-							role="document">
-							<div class="modal-content">
-								<button type="button" class="close btn" data-dismiss="modal"
-									aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-								<div class="modal-body">
-									<div class="quickview_body">
-										<div class="container">
-											<div class="row">
-											<c:forEach items="${productInfo}" var="product">
-												<div class="col-12 col-lg-5">
-													<div class="quickview_pro_img">
-														<img class="first_img" src="images/product/${product.pfRealName}" alt="">
-														<img class="hover_img" src="images/product/${product.pfHoverRealName}" alt="">
-														<!-- Product Badge -->
-														<div class="product_badge">
-															<span class="badge-new"></span>
-														</div>
-													</div>
-												</div>
-												<div class="col-12 col-lg-7">
-													<div class="quickview_pro_des">
-														<h4 class="title">${product.pName}</h4>
-														<div class="top_seller_product_rating mb-15">
-															<i class="fa fa-star" aria-hidden="true"></i>
-														</div>
-														<h5 class="price">
-															<span></span>
-														</h5>
-														<p class="p_desc"></p>
-														<a class="p_detail_link"
-															href="product_detail.do$pCode=${product.pCode}">View
-															Full Product Details</a>
-													</div>
-													<!-- Add to Cart Form -->
-													<form class="cart" id="q_view_cart_add_form" method="post">
-														<input type="hidden" name="p_no" id="p_no" />
-														<div class="quantity">
-															<input type="number" class="qty-text" id="qty" step="1"
-																min="1" max="12" name="qty" value="1">
-														</div>
-														<button type="submit" name="addtocart" value="5"
-															class="cart-submit">Add to cart</button>
-														<!-- Wishlist -->
-														<div class="modal_pro_wishlist">
-															<a href="" class="q_view_to_wish_btn"><i
-																class="icofont-heart"></i></a>
-														</div>
-													</form>
-													</c:forEach>
-													<!-- Share -->
-													<div class="share_wf mt-30">
-														<p>Share with friends</p>
-														<div class="_icon">
-															<a href="#"><i class="fa fa-facebook"
-																aria-hidden="true"></i></a> <a href="#"><i
-																class="fa fa-twitter" aria-hidden="true"></i></a> <a
-																href="#"><i class="fa fa-pinterest"
-																aria-hidden="true"></i></a> <a href="#"><i
-																class="fa fa-linkedin" aria-hidden="true"></i></a> <a
-																href="#"><i class="fa fa-instagram"
-																aria-hidden="true"></i></a> <a href="#"><i
-																class="fa fa-envelope-o" aria-hidden="true"></i></a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Mdoal Area -->
-                    
                    <%--  <div class="shop_pagination_area mt-30">
                         <nav aria-label="Page navigation">
                             <ul class="pagination pagination-sm justify-content-center">
