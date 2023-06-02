@@ -15,6 +15,12 @@
 	<jsp:include page="common/include_common_top.jsp"/>
     <!-- include_common_top -->
     <link rel="stylesheet" href="css/shop/cart.css">
+             <script>
+        function selectAll(selectAll)  {
+  		const checkboxes= document.querySelectorAll('input[type="checkbox"]');
+  		checkboxes.forEach((checkbox) => {checkbox.checked = selectAll.checked })
+		}
+                             </script>
 
 </head>
 
@@ -54,47 +60,46 @@
                     <div class="cart-table">
                         <div class="table-responsive">
                             <table class="table table-bordered mb-30">
-                                <thead>
-                                    <tr>
-                                        <th scope="col"><input type="checkbox" id="check_all"></th>
+                                <thead>                                
+           								<tr>
+                                        <th scope="col"><input type="checkbox" id="check_all" onclick='selectAll(this)'/> <b>Select All</b></th>
                                         <th scope="col">Image</th>
                                         <th scope="col">Product</th>
                                         <th scope="col">Unit Price</th>
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Total</th>
-                                        <th scope="col"><i class="icofont-ui-delete"></i></th>
-                                    </tr>
-                                </thead>
+                                        <th scope="col"><i class="icofont-ui-delete"></i></th>	
+                                       </tr>
+									</thead>
                                 <tbody id="cart_item_tbody">
-                                
+                                	
                                 <!-- cart item -->
-                                <c:if test="${cartList.size() == 0}">
+                                <c:if test="${cart.size() == 0}">
                                		<tr>
                                			<td colspan="7">카트에 등록된 상품이 없습니다. 상품을 등록해주세요 🙂</td>
                                		</tr>
                                	</c:if>
                                 <c:set var="tot_price" value="0" />
-                                <c:forEach var="cart" items="${cartList}">
-                                <c:set var="tot_price" value="${tot_price + cart.product.p_price * cart.c_qty}" />
-                                    <tr id="cart_item_${cart.c_no}">
+                                <c:forEach var="cart" items="${cart}">
+                                <c:set var="tot_price" value="${tot_price + cart.product.pPrice * cart.cQty}" />
+                                    <tr id="cart_item_${cart.cNo}">
                                         <th scope="row">
-                                            <input type="checkbox" c_no="${cart.c_no}">
+                                            <input type="checkbox" c_no="${cart.cNo}">
                                         </th>
                                         <td>
-                                            <img src="img/p_img/${cart.product.imageList[0].im_name}" alt="Product">
+                                            <img src="img/p_img/${cart.product.imageList[0].pfName}" alt="Product">
                                         </td>
-                                        <td>
-                                            <a href="product_detail?p_no=${cart.product.p_no}">${cart.product.p_name}</a>
-                                        </td>
-                                        <td>&#8361;<s:eval expression="new java.text.DecimalFormat('#,##0').format(cart.product.p_price)"/></td>
+                                        <td>${cart.product.pName}&nbsp;${cart.product.pBrandName}&nbsp;${cart.product.pCode}&nbsp;${cart.productOption.pColor}</td>
+                                        <td>&#8361;<s:eval expression="new java.text.DecimalFormat('#,##0').format(cart.product.pPrice)"/></td>
                                         <td>
                                             <div class="quantity">
-                                                <input type="number" class="qty-text" step="1" min="1" max="99" name="quantity" value="${cart.c_qty}" c_no='${cart.c_no}'>
+				<form action="CartUpdate.do"><button type="submit" class="btn btn-primary" id="cart_sel_selet_btn">+</button></form> <input type="number" class="qty-text" step="1" min="1" max="99" name="quantity" value="${cart.cQty}" c_no='${cart.cNo}'>
+					<form action="CartDelete.do"><button type="submit" class="btn btn-primary" id="cart_sel_selet_btn">-</button></form>
                                             </div>
                                         </td>
-                                        <td class="item_total" id="item_total_${cart.c_no}">&#8361;<s:eval expression="new java.text.DecimalFormat('#,##0').format(cart.product.p_price * cart.c_qty)"/></td>
+                                        <td class="item_total" id="item_total_${cart.cNo}">&#8361;<s:eval expression="new java.text.DecimalFormat('#,##0').format(cart.product.pPrice * cart.cQty)"/></td>
                                         <th scope="row">
-                                            <i class="icofont-close"  c_no='${cart.c_no}'></i>
+                                           <button type="submit" class="btn btn-primary" id="cart_sel_selet_btn">Delete Items</button> <i class="icofont-close"  c_no='${cart.cNo}'></i>
                                         </th>
                                     </tr>
                                 </c:forEach>
@@ -105,12 +110,6 @@
                         </div>
                     </div>
                 </div>
-
-				<c:if test="${cartList.size() != 0}">
-	                <div class="col-12 col-lg-6">
-	                   	<button type="submit" class="btn btn-primary" id="cart_sel_selet_btn">Delete Items</button>
-	                </div>
-
 	                <div class="col-12 col-lg-5">
 	                    <div class="cart-total-area mb-30">
 	                        <h5 class="mb-3">Cart Totals</h5>
@@ -146,11 +145,11 @@
 	                    	<form id="cart_checkout_form" method="post"></form>
 	                    </div>
 	                </div>
-                </c:if>
                 
             </div>
         </div>
     </div>
+  
     <!-- Cart Area End -->
 
     <!-- Footer Area -->
