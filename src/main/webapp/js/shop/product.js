@@ -1,9 +1,10 @@
 /*
 quickview modal 보여지기 전 상품데이터 조회
 */
+/*
 $('#quickview').on('show.bs.modal', function(e){
 	console.log(e.relatedTarget);
-	let p_no = $(e.relatedTarget).attr("pCode");
+	let pCode = $(e.relatedTarget).attr("pCode");
 	$.ajax({
 		url: "/product_detail",
 		method: "post",
@@ -14,29 +15,30 @@ $('#quickview').on('show.bs.modal', function(e){
 			if(resultObj.errorCode > 0){
 				let product = resultObj.data;
 				$(e.target).find('.badge-new').html(product.p_concept);
-				$(e.target).find('.title').html(product.p_name);
-				$(e.target).find('.price').html("&#8361; " + numberWithCommas(product.p_price));
+				$(e.target).find('.title').html(product.pName);
+				$(e.target).find('.price').html("&#8361; " + numberWithCommas(product.pPrice));
 				$(e.target).find('.p_desc').html(product.p_desc);
 				let scoreBuffer = "";
-				for(let i = 0; i < product.p_avg_score; i++){
+				for(let i = 0; i < product.pAvgScore; i++){
 					scoreBuffer += `<i class="fa fa-star" aria-hidden="true"></i>`;
 				}
 				if(scoreBuffer == "") scoreBuffer = "등록된 리뷰가 없습니다";
 				$(e.target).find('.top_seller_product_rating.mb-15').html(scoreBuffer);
 				$(e.target).find('.p_detail_link').on("click", function(e){
-					location.href = "product_detail?p_no=" + p_no;
+					location.href = "product_detail?pCodo=" + pCode;
 					e.preventDefault();
 				});
-				$(e.target).find('#p_no').val(p_no);
-				$(e.target).find('.q_view_to_wish_btn').attr("p_no", p_no);
-				$(e.target).find(".first_img").attr("src", `img/p_img/${product.imageList[0].im_name}`);
-				$(e.target).find(".hover_img").attr("src", `img/p_img/${product.imageList[1].im_name}`);
+				$(e.target).find('#pCode').val(pCode);
+				$(e.target).find('.q_view_to_wish_btn').attr("pCode", pCode);
+				$(e.target).find(".first_img").attr("src", `images/product/${product.pfRealName}`);
+				$(e.target).find(".hover_img").attr("src", `images/product/${product.pfHoverRealName}`);
 			} else {
 				Toast.fire({ icon: 'error', title: resultObj.errorMsg });
 			}
 		}
 	});
 });
+*/
 
 /*
 list -> Add to Cart 

@@ -24,12 +24,14 @@ public class ProductDto {
 	String pfHoverName;		// 올린 호버 이미지 이름
 	String pfHoverRealName;	// 프로젝트에 저장되는 실제 호버 이미지 이름
 	
+	String pColor;			// 상품의 색상
+	int pStock;			// 상품의 수량
+	
 	/* Constructor */
 	public ProductDto() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	//p.pCode, p.cgNo, p.pName, p.pBrandName, p.pPrice, p.pDeleted, pf.pfRealName
 	/* Main Page에 상품 리스트 가져올 생성자 */
 	public ProductDto(int cgNo, int pCode, String pName, String pBrandName, int pPrice, boolean pDeleted,
 			String pfRealName, String pfHoverRealName) {
@@ -44,12 +46,28 @@ public class ProductDto {
 		this.pfHoverRealName = pfHoverRealName;
 	}
 	
+	/* 상품 정보 상세보기 */
+	public ProductDto(String cgName, int pCode, String pName, String pBrandName, int pPrice, String pfRealName,
+			String pfHoverRealName, String pColor) {
+		super();
+		this.cgName = cgName;
+		this.pCode = pCode;
+		this.pName = pName;
+		this.pBrandName = pBrandName;
+		this.pPrice = pPrice;
+		this.pfRealName = pfRealName;
+		this.pfHoverRealName = pfHoverRealName;
+		this.pColor = pColor;
+	}
+	
+	
+	
+	
 	
 
 	public int getCgNo() {
 		return cgNo;
 	}
-
 
 	public void setCgNo(int cgNo) {
 		this.cgNo = cgNo;
@@ -157,6 +175,22 @@ public class ProductDto {
 
 	public void setPfHoverRealName(String pfHoverRealName) {
 		this.pfHoverRealName = pfHoverRealName;
+	}
+
+	public String getpColor() {
+		return pColor;
+	}
+
+	public void setpColor(String pColor) {
+		this.pColor = pColor;
+	}
+
+	public int getpStock() {
+		return pStock;
+	}
+
+	public void setpStock(int pStock) {
+		this.pStock = pStock;
 	}
 	
 	

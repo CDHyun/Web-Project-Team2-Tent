@@ -14,7 +14,10 @@ import com.javalec.tent.command.AdminCommand;
 import com.javalec.tent.command.AdminContentCommand;
 import com.javalec.tent.command.AdminDeleteCommand;
 import com.javalec.tent.command.AdminUpdateCommand;
+import com.javalec.tent.command.CartCommand;
 import com.javalec.tent.command.IndexCommand;
+import com.javalec.tent.command.ProductDetailCommand;
+import com.javalec.tent.command.PurchaserInfoCommand;
 import com.javalec.tent.command.TentCommand;
 import com.javalec.tent.command.UserInfoCommand;
 import com.javalec.tent.command.UserLogoutCommand;
@@ -91,6 +94,11 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "my_account.jsp";
 			break;
+		case "/product_detail.do":
+			command = new ProductDetailCommand();
+			command.execute(request, response);
+			viewPage = "shop_grid_left_sidebar.jsp";
+			break;
 		case "/adminindex.do":
 			command = new AdminCommand();
 			command.execute(request, response);
@@ -111,8 +119,15 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "adminProductSelect.jsp";
 			break;
-
-			
+		case("/purchase_info.do"):
+			command = new PurchaserInfoCommand();
+			command.execute(request, response);
+			viewPage = "purchase_info.jsp";
+			break;
+		case "/cart.do":
+			command = new CartCommand();
+			command.execute(request, response);
+			viewPage = "cart.jsp";
 		default:
 			break;
 		}

@@ -103,6 +103,59 @@ public class ProductDao {
 		return products;
 	}
 	
+	public ArrayList<ProductDto> productDetail(int pCode){
+		ArrayList<ProductDto> productInfo = new ArrayList<ProductDto>();
+		
+		if(queryContent == null){
+			queryContent = "";
+		}
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			con = dataSource.getConnection();
+			
+			String sql = "select p.pCode, cg.cgName, p.pName, p.pBrandName, p.pPrice, po.pColor, pf.pfRealName, pf.pfHoverRealName"
+					+ " from product p"
+					+ " left join productFile pf on p.pCode = pf.pCode"
+					+ " left join productOption po on p.pCode = po.pCode"
+					+ " left join category cg on p.cgNo = cg.cgNo"
+					+ " where p.pCode = ?";
+			
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, pCode);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				int wkpCode = rs.getInt(1);
+				String wkcgName = rs.getString(2);
+				String wkpName = rs.getString(3);
+				String wkpBrandName = rs.getString(4);
+				int wkpPrice = rs.getInt(5);
+				String wkpColor = rs.getString(6);
+				String wkpfRealName = rs.getString(7);
+				String wkpfHoverRealName = rs.getString(8);
+				
+				ProductDto productDto = new ProductDto(wkcgName, wkpCode, wkpName, wkpBrandName, wkpPrice, wkpfRealName, wkpfHoverRealName, wkpColor);
+				productInfo.add(productDto);
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(con != null) con.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return productInfo;
+	}
+	
 	
 	
 	

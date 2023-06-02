@@ -15,14 +15,70 @@
 	<jsp:include page="common/include_common_top.jsp"/>
     <!-- include_common_top -->
     <link rel="stylesheet" href="css/shop/product.css">
+	<!-- <script src="js/shop/product.js"></script> -->
 
 <script type="text/javascript">
-/*
-All Reset 선택시 이벤트
-*/
-$("#cbAllProduct").on("click", function(e){
-	location.href = "product_list.do";
-});
+/* 	
+	$('#quickview').on('show.bs.modal', function(e){
+		console.log(e.relatedTarget);
+		let pCode = $(e.relatedTarget).attr("pCode");
+		$.ajax({
+			url: "/product_detail",
+			method: "post",
+			data: {"pCode" : pCode},
+			dataType: "json",
+			success:function(resultObj){
+				console.log(resultObj);
+				if(resultObj.errorCode > 0){
+					let product = resultObj.data;
+					$(e.target).find('.badge-new').html(product.p_concept);
+					$(e.target).find('.title').html(product.pName);
+					$(e.target).find('.price').html("&#8361; " + numberWithCommas(product.pPrice));
+					$(e.target).find('.p_desc').html(product.p_desc);
+					let scoreBuffer = "";
+					for(let i = 0; i < product.pAvgScore; i++){
+						scoreBuffer += `<i class="fa fa-star" aria-hidden="true"></i>`;
+					}
+					if(scoreBuffer == "") scoreBuffer = "등록된 리뷰가 없습니다";
+					$(e.target).find('.top_seller_product_rating.mb-15').html(scoreBuffer);
+					$(e.target).find('.p_detail_link').on("click", function(e){
+						location.href = "product_detail?pCodo=" + pCode;
+						e.preventDefault();
+					});
+					$(e.target).find('#pCode').val(pCode);
+					$(e.target).find('.q_view_to_wish_btn').attr("pCode", pCode);
+					$(e.target).find(".first_img").attr("src", `images/product/${product.pfRealName}`);
+					$(e.target).find(".hover_img").attr("src", `images/product/${product.pfHoverRealName}`);
+				} else {
+					Toast.fire({ icon: 'error', title: resultObj.errorMsg });
+				}
+			}
+		});
+	});
+	 */
+	 function clickQuickView(pCode) {
+		console.log(pCode);
+		$.ajax({
+			url: "./product_detail",
+			method: "post",
+			data: { pCode: pCode },
+			dataType: "json",
+			success: function (resultObj) {
+				console.log(resultObj);
+			}
+		});
+	}
+
+	 
+	 /* 	 
+	function ClickQuickview()() {
+		$('#quickview').modal('show');
+		let pCode = $(e.relatedTarget).attr("pCode");
+		location.href="product_detail.do?pCode=${product.pCode}"
+	}
+	 */
+	 
+	 
 </script>
 
 </head>
@@ -40,7 +96,7 @@ $("#cbAllProduct").on("click", function(e){
     <!-- Header Area End -->
     
     <!-- Quick View Modal Area -->
-    <jsp:include page="common/include_product_quickview_modal.jsp"/>
+<%--     <jsp:include page="common/include_product_quickview_modal.jsp"/> --%>
     <!-- Quick View Modal Area end -->
 
     <!-- Breadcumb Area -->
@@ -278,7 +334,7 @@ $("#cbAllProduct").on("click", function(e){
 	
 	                                        <!-- Wishlist -->
 	                                        <div class="product_wishlist">
-	                                            <a href="" class="list_to_wish_btn" p_no="${product.pCode}"><i class="icofont-heart"></i></a>
+	                                            <a href="" class="list_to_wish_btn" pCode="${product.pCode}"><i class="icofont-heart"></i></a>
 	                                        </div>
 	
 	                                    </div>
@@ -287,16 +343,16 @@ $("#cbAllProduct").on("click", function(e){
 	                                    <div class="product_description">
 	                                        <!-- Add to cart -->
 	                                        <div class="product_add_to_cart">
-	                                            <a href="#" class="list_add_to_cart_btn" p_no="${product.pCode}"><i class="icofont-shopping-cart"></i> Add to Cart</a>
+	                                            <a href="#" class="list_add_to_cart_btn" pCode="${product.pCode}"><i class="icofont-shopping-cart"></i> Add to Cart</a>
 	                                        </div>
 	
 	                                        <!-- Quick View -->
 	                                        <div class="product_quick_view">
-	                                            <a href="#" data-toggle="modal" data-target="#quickview" p_no="${product.pCode}"><i class="icofont-eye-alt"></i> Quick View</a>
+	                                            <a data-toggle="modal" data-target="#quickview" pCode="${product.pCode}" onclick="clickQuickView('${product.pCode}')"><i class="icofont-eye-alt"></i> Quick View</a>
 	                                        </div>
 	
 	                                        <p class="brand_name">${product.pBrandName}</p>
-	                                        <a href="product_detail?p_no=${product.pCode}" p_no="${product.pCode}">${product.pName}</a>
+	                                        <a href="product_detail?pCode=${product.pCode}" pCode="${product.pCode}">${product.pName}</a>
 	                                       <%--  <h6 class="product-price">&#8361;<s:eval expression="new java.text.DecimalFormat('#,###').format(${product.pPrice})"/><span></span></h6> --%>
 	                                        <h6 class="product-price">&#8361;${product.pPrice}<span></span></h6>
 	                                    	
@@ -311,6 +367,85 @@ $("#cbAllProduct").on("click", function(e){
                     </div>
 
                     <!-- Shop Pagination Area -->
+					<!-- Modal Area -->
+					<div class="modal fade" id="quickview" tabindex="-1" role="dialog"
+						aria-labelledby="quickview" aria-hidden="true">
+						<div class="modal-dialog modal-lg modal-dialog-centered"
+							role="document">
+							<div class="modal-content">
+								<button type="button" class="close btn" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<div class="modal-body">
+									<div class="quickview_body">
+										<div class="container">
+											<div class="row">
+											<c:forEach items="${productInfo}" var="product">
+												<div class="col-12 col-lg-5">
+													<div class="quickview_pro_img">
+														<img class="first_img" src="images/product/${product.pfRealName}" alt="">
+														<img class="hover_img" src="images/product/${product.pfHoverRealName}" alt="">
+														<!-- Product Badge -->
+														<div class="product_badge">
+															<span class="badge-new"></span>
+														</div>
+													</div>
+												</div>
+												<div class="col-12 col-lg-7">
+													<div class="quickview_pro_des">
+														<h4 class="title">${product.pName}</h4>
+														<div class="top_seller_product_rating mb-15">
+															<i class="fa fa-star" aria-hidden="true"></i>
+														</div>
+														<h5 class="price">
+															<span></span>
+														</h5>
+														<p class="p_desc"></p>
+														<a class="p_detail_link"
+															href="product_detail.do$pCode=${product.pCode}">View
+															Full Product Details</a>
+													</div>
+													<!-- Add to Cart Form -->
+													<form class="cart" id="q_view_cart_add_form" method="post">
+														<input type="hidden" name="p_no" id="p_no" />
+														<div class="quantity">
+															<input type="number" class="qty-text" id="qty" step="1"
+																min="1" max="12" name="qty" value="1">
+														</div>
+														<button type="submit" name="addtocart" value="5"
+															class="cart-submit">Add to cart</button>
+														<!-- Wishlist -->
+														<div class="modal_pro_wishlist">
+															<a href="" class="q_view_to_wish_btn"><i
+																class="icofont-heart"></i></a>
+														</div>
+													</form>
+													</c:forEach>
+													<!-- Share -->
+													<div class="share_wf mt-30">
+														<p>Share with friends</p>
+														<div class="_icon">
+															<a href="#"><i class="fa fa-facebook"
+																aria-hidden="true"></i></a> <a href="#"><i
+																class="fa fa-twitter" aria-hidden="true"></i></a> <a
+																href="#"><i class="fa fa-pinterest"
+																aria-hidden="true"></i></a> <a href="#"><i
+																class="fa fa-linkedin" aria-hidden="true"></i></a> <a
+																href="#"><i class="fa fa-instagram"
+																aria-hidden="true"></i></a> <a href="#"><i
+																class="fa fa-envelope-o" aria-hidden="true"></i></a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Mdoal Area -->
                     
                    <%--  <div class="shop_pagination_area mt-30">
                         <nav aria-label="Page navigation">
@@ -345,14 +480,10 @@ $("#cbAllProduct").on("click", function(e){
     <!-- Footer Area -->
  	<jsp:include page="common/include_common_bottom.jsp"/>
     <!-- Footer Area -->
-
-    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+        <!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp"/>
-	<script src="js/shop/product.js"></script>
-	<script type="text/javascript">
 
-		
-	</script>
+
 </body>
 
 </html>
