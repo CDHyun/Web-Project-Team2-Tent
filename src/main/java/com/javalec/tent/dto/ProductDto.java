@@ -21,6 +21,8 @@ public class ProductDto {
 	/* ProductFile */
 	String pfName;			// 올린 상품 이미지 이름
 	String pfRealName;		// 프로젝트에 저장된 실제 파일 이름
+	String pfHoverName;		// 올린 호버 이미지 이름
+	String pfHoverRealName;	// 프로젝트에 저장되는 실제 호버 이미지 이름
 	
 	/* Constructor */
 	public ProductDto() {
@@ -30,7 +32,7 @@ public class ProductDto {
 	//p.pCode, p.cgNo, p.pName, p.pBrandName, p.pPrice, p.pDeleted, pf.pfRealName
 	/* Main Page에 상품 리스트 가져올 생성자 */
 	public ProductDto(int cgNo, int pCode, String pName, String pBrandName, int pPrice, boolean pDeleted,
-			String pfRealName) {
+			String pfRealName, String pfHoverRealName) {
 		super();
 		this.cgNo = cgNo;
 		this.pCode = pCode;
@@ -39,6 +41,7 @@ public class ProductDto {
 		this.pPrice = pPrice;
 		this.pDeleted = pDeleted;
 		this.pfRealName = pfRealName;
+		this.pfHoverRealName = pfHoverRealName;
 	}
 	
 	
@@ -138,6 +141,22 @@ public class ProductDto {
 
 	public void setPfRealName(String pfRealName) {
 		this.pfRealName = pfRealName;
+	}
+
+	public String getPfHoverName() {
+		return pfHoverName;
+	}
+
+	public void setPfHoverName(String pfHoverName) {
+		this.pfHoverName = pfHoverName;
+	}
+
+	public String getPfHoverRealName() {
+		return pfHoverRealName;
+	}
+
+	public void setPfHoverRealName(String pfHoverRealName) {
+		this.pfHoverRealName = pfHoverRealName;
 	}
 	
 	

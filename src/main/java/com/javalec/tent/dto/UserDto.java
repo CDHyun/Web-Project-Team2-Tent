@@ -6,7 +6,7 @@ public class UserDto {
 	String uid;							// 유저 아이디
 	String uPassword;					// 유저 비밀번호
 	String uName;						// 유저 이름
-	String uNiceName;					// 유저 닉네임
+	String uNickName;					// 유저 닉네임
 	String uPhone;						// 유저 전화번호
 	String uBirthday;					// 유저 생일
 	String uEmail;						// 유저 이메일
@@ -28,17 +28,39 @@ public class UserDto {
 	}
 
 	
+//	u.uid, u.uPassword, u.uName, u.uNickName, u.uPhone, u.uEmail, u.uGender, u.uBirthday, u.uInsertDate, ua.uaNo, ua.uaAddress, ua.uaDetailAddress, ua.uaZipCode from user u, userAddress
+	/* 사용자 정보 조회 */
+	public UserDto(String uid, String uPassword, String uName, String uNickName, String uPhone, String uBirthday,
+			String uEmail, String uInsertDate, int uaNo, String uaZipcode, String uaAddress, String uaDetailAddress) {
+		super();
+		this.uid = uid;
+		this.uPassword = uPassword;
+		this.uName = uName;
+		this.uNickName = uNickName;
+		this.uPhone = uPhone;
+		this.uBirthday = uBirthday;
+		this.uEmail = uEmail;
+		this.uInsertDate = uInsertDate;
+		this.uaNo = uaNo;
+		this.uaZipcode = uaZipcode;
+		this.uaAddress = uaAddress;
+		this.uaDetailAddress = uaDetailAddress;
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	
 	
 	
 	/* getter & setter */
-
 	public String getUid() {
 		return uid;
 	}
-
 
 	public void setUid(String uid) {
 		this.uid = uid;
@@ -65,13 +87,13 @@ public class UserDto {
 	}
 
 
-	public String getuNiceName() {
-		return uNiceName;
+	public String getuNickName() {
+		return uNickName;
 	}
 
 
-	public void setuNiceName(String uNiceName) {
-		this.uNiceName = uNiceName;
+	public void setuNickName(String uNickName) {
+		this.uNickName = uNickName;
 	}
 
 

@@ -36,7 +36,7 @@ public class UserCheckDuplicateCommand extends HttpServlet implements TentComman
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String uid = request.getParameter("uid");
+    	String uid = request.getParameter("ruid");
 		UserDao userDao = new UserDao();
 		int result = userDao.checkDuplicateId(uid);
 		response.getWriter().write(result + "");

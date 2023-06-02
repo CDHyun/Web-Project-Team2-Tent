@@ -16,6 +16,7 @@ import com.javalec.tent.command.AdminDeleteCommand;
 import com.javalec.tent.command.AdminUpdateCommand;
 import com.javalec.tent.command.IndexCommand;
 import com.javalec.tent.command.TentCommand;
+import com.javalec.tent.command.UserInfoCommand;
 import com.javalec.tent.command.UserLogoutCommand;
 
 /**
@@ -58,29 +59,37 @@ public class HomeController extends HttpServlet {
 		String com = uri.substring(conPath.length());
 		
 		switch (com) {
+		/* 상품 페이지로 이동 */
 		case "/product_list.do":
 			command = new IndexCommand();
 			command.execute(request, response);
 			viewPage = "shop_grid_left_sidebar.jsp";
 			break;
+		/* 메인 페이지로 이동 */
 		case "/index.do":
 			command = new IndexCommand();
 			command.execute(request, response);
 			viewPage = "index.jsp";
 			break;
+		/* 로그인 페이지로 이동 */
 		case "/login_form.do":
 			viewPage = "login_form.jsp";
 			break;
+		/* 로그인 후 메인 페이지로 이동 */
 		case "/login.do":
 			viewPage = "index.do";
 			break;
+		/* 로그아웃 후 메인 페이지로 이동 */
 		case "/logout.do":
 			command = new UserLogoutCommand();
 			command.execute(request, response);
 			viewPage = "index.do";
 			break;
+		/* 마이 페이지로 이동 */
 		case "/user_my_account.do":
-			viewPage = "account-details.jsp";
+			command = new UserInfoCommand();
+			command.execute(request, response);
+			viewPage = "my_account.jsp";
 			break;
 		case "/adminindex.do":
 			command = new AdminCommand();

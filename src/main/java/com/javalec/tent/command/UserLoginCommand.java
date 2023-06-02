@@ -45,8 +45,8 @@ public class UserLoginCommand extends HttpServlet implements TentCommand {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String uid = request.getParameter("uid");
-		String uPassword = request.getParameter("uPassword");
+		String uid = request.getParameter("luid");
+		String uPassword = request.getParameter("luPassword");
 		System.out.println("uid : " + uid);
 		System.out.println("uPassword : " + uPassword);
 		UserDao userDao = new UserDao();

@@ -18,7 +18,7 @@ public class UserDao {
 	String uid;							// 유저 아이디
 	String uPassword;					// 유저 비밀번호
 	String uName;						// 유저 이름
-	String uNiceName;					// 유저 닉네임
+	String uNickName;					// 유저 닉네임
 	String uPhone;						// 유저 전화번호
 	String uBirthday;					// 유저 생일
 	String uEmail;						// 유저 이메일
@@ -39,7 +39,7 @@ public class UserDao {
 		// TODO Auto-generated constructor stub
 		try {
 			Context context = new InitialContext();
-			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/jazz");
+			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/tent");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -197,25 +197,34 @@ public class UserDao {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		int rowCount = 0;
 
 		try {
 			con = dataSource.getConnection();
 
-			String query = "select u.uid, u.uPassword, u.uName, u.uNickName, u.uPhone, u.uEmail, u.uGender, u.uBirthday, u.uInsertDate, ua.uaNo, ua.uaAddress, ua.uaDetailAddress, ua.uaZipCode from user u, userAddress ua where u.uid = ua.uid and u.uid = ?";
+			String query = "select u.uid, u.uPassword, u.uName, u.uNickName, u.uPhone, u.uEmail, u.uGender,"
+					+ " u.uBirthday, u.uInsertDate, ua.uaNo, ua.uaAddress, ua.uaDetailAddress, ua.uaZipcode"
+					+ " from user u, userAddress ua where u.uid = ua.uid and u.uid = ?";
 			ps = con.prepareStatement(query);
 			ps.setString(1, uid);
 			rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				String wkid = rs.getString(1);
 				String wkPassword = rs.getString(2);
 				String wkName = rs.getString(3);
-				String wkPhone = rs.getString(4);
-				String wkAddress = rs.getString(5);
+				String wkNickName = rs.getString(4);
+				String wkPhone = rs.getString(5);
 				String wkEmail = rs.getString(6);
-				String wkInsertDate = rs.getString(7);
-//				UserDto userDto = new UserDto(wkid, wkPassword, wkName, wkPhone, wkAddress, wkEmail, wkInsertDate);
-//				beanList.add(userDto);
+				int wkGender = rs.getInt(7);
+				String wkBirthday = rs.getString(8);
+				String wkInsertDate = rs.getString(9);
+				int wkuaNo = rs.getInt(10);
+				String wkuaAddress = rs.getString(11);
+				String wkuaDetailAddress = rs.getString(12);
+				String wkuaZipCode = rs.getString(13);
+				System.out.println(wkid);
+				System.out.println(wkPassword);
+				UserDto userDto = new UserDto(wkid, wkPassword, wkName, wkNickName, wkPhone, wkBirthday, wkEmail, wkInsertDate, wkuaNo, wkuaZipCode, wkuaAddress, wkuaDetailAddress);
+				beanList.add(userDto);
 			}
 
 		} catch (Exception e) {

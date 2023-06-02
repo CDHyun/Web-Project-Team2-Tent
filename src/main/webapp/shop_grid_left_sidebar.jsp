@@ -269,7 +269,7 @@ $("#cbAllProduct").on("click", function(e){
 	                                    <div class="product_image">
 	                                        <!-- Product Image -->
 	                                        <img class="normal_img" src="images/product/${product.pfRealName}" alt="">
-	                                        <img class="hover_img" src="images/product/${product.pfRealName}" alt="">
+	                                        <img class="hover_img" src="images/product/${product.pfHoverRealName}" alt="">
 		
 	                                        <!-- Product Badge -->
 	                                        <div class="product_badge">

@@ -7,11 +7,11 @@
 	<script src="js/jquery.min.js"></script>
 	<script type="text/javascript">
 	function loginCheck() {
-		var uid = $("#uid").val();
-		var uPassword = $("#uPassword").val();
+		var luid = $("#luid").val();
+		var luPassword = $("#luPassword").val();
 		var form = document.user_login_form;
 	
-		if ($("#uid").val() == "" || $("#uPassword").val() == "") {
+		if ($("#luid").val() == "" || $("#luPassword").val() == "") {
 			Toast.fire({
 				icon : 'warning',
 				title : "ID, 비밀번호를 모두 입력해주세요",
@@ -23,8 +23,8 @@
 			type : 'POST',
 			url : './UserLoginCommand',
 			data : {
-				uid : uid,
-				uPassword : uPassword
+				luid : luid,
+				luPassword : luPassword
 			},
 			success : function(result) {
 				console.log(result);
@@ -60,7 +60,10 @@
 				}
 			},
 			error : function() {
-				showAlert("오류가 발생했습니다. 다시 시도해주세요.");
+				Toast.fire({
+					icon : 'warning',
+					title : "오류가 발생했습니다. 관리자에게 문의해주세요."
+				});
 			}
 		});
 	}
@@ -145,7 +148,6 @@
 						icon : 'warning',
 						title : "사용 가능한 아이디입니다."
 					});
-	
 				} else {
 					Toast.fire({
 						icon : 'warning',
@@ -305,9 +307,12 @@
 				ruid : ruid,
 				ruPassword : ruPassword,
 				ruName : ruName,
+				ruNickName : ruNickName,
 				ruPhone : ruPhone,
 				ruEmail : ruEmail,
-				ruAddress : ruAddress
+				ruAddress : ruAddress,
+				ruDetailAddress : ruDetailAddress,
+				ruZipcode : ruZipcode
 			},
 			success : function(result) {
 				console.log(result);
@@ -576,12 +581,11 @@
 				<span style="color: red">${l_msg}</span>
 				<form id="user_login_form" method="post" action="login.do">
 					<div class="form-group">
-						<input type="text" class="form-control" id="uid" name="uid"
+						<input type="text" class="form-control" id="luid" name="luid"
 							placeholder="ID">
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" id="uPassword"
-							name="uPassword" placeholder="Password">
+						<input type="password" class="form-control" id="luPassword" name="luPassword" placeholder="Password">
 					</div>
 					<div class="form-check">
 						<div class="custom-control custom-checkbox mb-3 pl-1">
@@ -617,32 +621,38 @@
 				<form id="user_register_form" action="" method="post">
 					<div class="form-group">
 						<div class="input-form-group">
-							<input type="text" class="form-control" id="ruid" name="ruid" placeholder="id">
+							<input type="text" class="form-control" id="ruid" name="ruid" placeholder="아이디">
 							<button type="button" class="btn btn-primary btn-sm" onclick="checkDuplicateId()">중복확인</button>
 						</div>
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" id="ruPassword" name="ruPassword" placeholder="password">
+						<input type="password" class="form-control" id="ruPassword" name="ruPassword" placeholder="비밀번호">
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" id="ruRePass" name="ruRePass" placeholder="password">
+						<input type="password" class="form-control" id="ruRePass" name="ruRePass" placeholder="비밀번호 확인">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" id="ruName" name="ruName" placeholder="name">
+						<input type="text" class="form-control" id="ruName" name="ruName" placeholder="이름">
 					</div>
 					<div class="form-group">
-						<input type="email" class="form-control" id="ruEmail" name="ruEmail" placeholder="Email">
+						<input type="text" class="form-control" id="ruNickName" name="ruNickName" placeholder="닉네임">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control address" id="ruAddress" name="ruAddress" placeholder="address">
+						<input type="email" class="form-control" id="ruEmail" name="ruEmail" placeholder="이메일">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control postcode" id="ruZipCode" name="ruZipCode" placeholder="ZipCode">
+						<input type="text" class="form-control address" id="ruAddress" name="ruAddress" placeholder="주소">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="ruDetailAddress" name="ruDetailAddress" placeholder="상세 주소">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control postcode" id="ruZipCode" name="ruZipCode" placeholder="우편번호">
 						<button type="button"
 							class="btn btn-outline-primary mb-1 searchAddr">search</button>
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control phone_number" id="ruPhone" name="ruPhone" placeholder="phone(ex: 010-1234-5678) ">
+						<input type="text" class="form-control" id="ruPhone" name="ruPhone" placeholder="전화번호(ex: 010-1234-5678) ">
 					</div>
 					<div class="button-container">
 					<button type="button" class="btn btn-primary btn-sm" onclick="registerCheck()">Register</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

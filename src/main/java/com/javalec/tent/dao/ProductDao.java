@@ -32,6 +32,8 @@ public class ProductDao {
 	/* ProductFile */
 	String pfName;			// 올린 상품 이미지 이름
 	String pfRealName;		// 프로젝트에 저장된 실제 파일 이름
+	String pfHoverName;		// 올린 호버 이미지 이름
+	String pfHoverRealName;	// 프로젝트에 저장되는 실제 호버 이미지 이름
 	
 	/* Search */
 	String queryContent;	// 사용자가 검색창에 입력한 내용
@@ -65,7 +67,7 @@ public class ProductDao {
 		try {
 			con = dataSource.getConnection();
 			
-			String sql = "select p.pCode, p.cgNo, p.pName, p.pBrandName, p.pPrice, p.pDeleted, pf.pfRealName "
+			String sql = "select p.pCode, p.cgNo, p.pName, p.pBrandName, p.pPrice, p.pDeleted, pf.pfRealName, pf.pfHoverRealName "
 					+ "from product p "
 					+ "left join productFile pf ON p.pCode = pf.pCode "
 					+ "where p.pName like '%" + queryContent + "%' and p.pDeleted = 0 or p.pBrandName like '%" + queryContent + "%' and p.pDeleted = 0;";
@@ -80,9 +82,10 @@ public class ProductDao {
 				String wkpBrandName = rs.getString(4);
 				int wkpPrice = rs.getInt(5);
 				boolean wkpDeleted = rs.getBoolean(6);
-				String wkpRealName = rs.getString(7);
+				String wkpfRealName = rs.getString(7);
+				String wkpfHoverRealName = rs.getString(8);
 				
-				ProductDto productDto = new ProductDto(wkcgNo, wkpCode, wkpName, wkpBrandName, wkpPrice, wkpDeleted, wkpRealName);
+				ProductDto productDto = new ProductDto(wkcgNo, wkpCode, wkpName, wkpBrandName, wkpPrice, wkpDeleted, wkpfRealName, wkpfHoverRealName);
 				products.add(productDto);
 			}
 			
