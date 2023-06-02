@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import com.javalec.tent.command.AdminCommand;
 import com.javalec.tent.command.AdminContentCommand;
 import com.javalec.tent.command.AdminDeleteCommand;
+import com.javalec.tent.command.AdminInputCommand;
 import com.javalec.tent.command.AdminUpdateCommand;
 import com.javalec.tent.command.CartCommand;
 import com.javalec.tent.command.CartDeleteCommand;
@@ -114,12 +115,12 @@ public class HomeController extends HttpServlet {
 		case "/adminUpdate.do":
 			command = new AdminUpdateCommand();
 			command.execute(request, response);
-			viewPage = "adminProductSelect.jsp";
+			viewPage = "adminProductShare.jsp";
 			break;
 		case "/adminDelete.do":
 			command = new AdminDeleteCommand();
 			command.execute(request, response);
-			viewPage = "adminProductSelect.jsp";
+			viewPage = "adminProductShare.jsp";
 			break;
 		case("/purchase_info.do"):
 			command = new PurchaserInfoCommand();
@@ -141,6 +142,12 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "cart.jsp";
 			break;
+		case "/adminInsert.do":
+			command = new AdminInputCommand();
+			command.execute(request, response);
+			viewPage = "adminindex.do";
+			break;	
+		
 		default:
 			break;
 		}
