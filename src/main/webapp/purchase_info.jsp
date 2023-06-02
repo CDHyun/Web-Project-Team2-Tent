@@ -19,6 +19,11 @@
 </head>
 
 <body>
+
+<c:set var="users" value="${selectUser}" />
+
+
+
     <!-- Preloader -->
     <div id="preloader">
         <div class="spinner-grow" role="status">
@@ -52,7 +57,7 @@
         <a><i class="icofont-check-circled"></i> Reciever</a>
         <a><i class="icofont-check-circled"></i> Payment</a>
         <a><i class="icofont-check-circled"></i> Confirm</a>
-        <a><i class="icofont-check-circled"></i> Complate</a>
+        <a><i class="icofont-check-circled"></i> Complete</a>
     </div>
 
     <!-- Checkout Area -->
@@ -66,19 +71,19 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="first_name">ID</label>
-                                    <input type="text" class="form-control o_check" id="first_name" name="m_id" readonly value="${sM_id}" >
+                                    <input type="text" class="form-control o_check" id="first_name" name="m_id" readonly value="${users[0].uid}" >
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="last_name">Name</label>
-                                    <input type="text" class="form-control o_check" id="last_name" name="m_name" placeholder="Name" value="${sMember.m_name}" >
+                                    <input type="text" class="form-control o_check" id="last_name" name="m_name" placeholder="Name" value="${users[0].uName}" >
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="email_address">Email</label>
-                                    <input type="email" class="form-control o_check" name="m_email" id="email_address" placeholder="Email Address" value="${sMember.m_email}" >
+                                    <input type="email" class="form-control o_check" name="m_email" id="email_address" placeholder="Email Address" value="${users[0].uEmail}" >
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="phone_number">Phone Number</label>
-                                    <input type="text" class="form-control o_check phone_number" name="m_phone" id="phone_number" min="0" value="${sMember.m_phone}" placeholder="- 제외 입력해주세요">
+                                    <input type="text" class="form-control o_check phone_number" name="m_phone" id="phone_number" min="0" value="${users[0].uphone}" placeholder="- 제외 입력해주세요">
                                 </div>
                         </form>
                     </div>
@@ -94,6 +99,7 @@
             </div>
         </div>
     </div> -->
+    
     
      <div class="checkout_area section_padding_100">
         <div class="container">
@@ -161,8 +167,8 @@
 
                 <div class="col-12">
                     <div class="checkout_pagination mt-3 d-flex justify-content-end clearfix">
-                        <a href="" class="btn btn-primary mt-2 ml-2 order_back_btn order_back"  id="back_reciever">Go Back</a>
-                        <a href="" id="reciever_next_btn" class="btn btn-primary mt-2 ml-2 order_next">Continue</a>
+                        <a href="" class="btn btn-primary mt-2 ml-2 order_back_btn order_back"  id="back_Receiver">Go Back</a>
+                        <a href="" id="Receiver_next_btn" class="btn btn-primary mt-2 ml-2 order_next">Continue</a>
                     </div>
                 </div>
             </div>
