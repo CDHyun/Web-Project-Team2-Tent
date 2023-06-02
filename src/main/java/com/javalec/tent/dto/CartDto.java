@@ -27,6 +27,17 @@ public class CartDto {
 			this.pColor = pColor;
 	}
 		
+	public CartDto(int cNo, int cQty, String uid, int pCode) {
+			super();
+			this.cNo = cNo;
+			this.cQty = cQty;
+			this.uid = uid;
+			this.pCode = pCode;
+		}
+	
+	
+	
+	
 	public CartDto(int cQty) {
 			super();
 			this.cQty = cQty;

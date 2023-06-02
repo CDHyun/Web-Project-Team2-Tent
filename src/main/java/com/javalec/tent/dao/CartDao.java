@@ -121,7 +121,52 @@ DataSource dataSource;
 			}
 	}
 	}
+	
+	
+	public double totalPrice(String uid){
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		double total = 0;
+		
+		
+		try {
+			connection = dataSource.getConnection();
+			
+			// 전체 가격 계산
+			String query1 = "SELECT SUM(p.pPrice * c.cQty) AS totalPrice FROM cart c JOIN product p ON c.pCode = p.pCode WHERE c.uid = ?";
+			preparedStatement = connection.prepareStatement(query1);
+			preparedStatement.setString(1, uid);
+			resultSet = preparedStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				total = resultSet.getDouble("totalPrice");
+			}
+			
+		
+			
+			
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet != null) resultSet.close();	
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		}
+		return total;
+		
 	}
+	
+	
+	
+	
+}// End
 
 	
 	
