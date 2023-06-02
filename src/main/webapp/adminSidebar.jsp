@@ -37,9 +37,9 @@
 </label>
 <div class="sidebar">
   <br/><br/><br/><br/><br/><br/><ul>
-    <li>상품관리
+    <li><a href="adminindex.do">상품관리</a>
       <ul class="sub-menu">
-        <li><a href="adminInsert.do">상품추가</a></li>
+        <li><a href="adminProductInsert.jsp">상품추가</a></li>
         <li><a href="adminUpdate.do">상품수정</a></li>
         <li><a href="adminDelete.do">상품삭제</a></li>
        
