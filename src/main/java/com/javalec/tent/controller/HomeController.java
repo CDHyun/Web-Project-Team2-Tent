@@ -15,6 +15,8 @@ import com.javalec.tent.command.AdminContentCommand;
 import com.javalec.tent.command.AdminDeleteCommand;
 import com.javalec.tent.command.AdminUpdateCommand;
 import com.javalec.tent.command.CartCommand;
+import com.javalec.tent.command.CartDeleteCommand;
+import com.javalec.tent.command.CartUpdateCommand;
 import com.javalec.tent.command.IndexCommand;
 import com.javalec.tent.command.ProductDetailCommand;
 import com.javalec.tent.command.PurchaserInfoCommand;
@@ -128,6 +130,17 @@ public class HomeController extends HttpServlet {
 			command = new CartCommand();
 			command.execute(request, response);
 			viewPage = "cart.jsp";
+			break;
+		case "/CartUpdate.do":
+			command = new CartUpdateCommand();
+			command.execute(request, response);
+			viewPage = "cart.jsp";
+			break;
+		case "/CartDelete.do":
+			command = new CartDeleteCommand();
+			command.execute(request, response);
+			viewPage = "cart.jsp";
+			break;
 		default:
 			break;
 		}
