@@ -99,7 +99,7 @@ public class HomeController extends HttpServlet {
 		case "/product_detail.do":
 			command = new ProductDetailCommand();
 			command.execute(request, response);
-			viewPage = "shop_grid_left_sidebar.jsp";
+			viewPage = "product_detail.jsp";
 			break;
 		case "/adminindex.do":
 			command = new AdminCommand();
