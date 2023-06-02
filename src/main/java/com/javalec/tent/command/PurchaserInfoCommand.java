@@ -17,7 +17,8 @@ public class PurchaserInfoCommand implements TentCommand {
 
 			// TODO Auto-generated method stub
 			HttpSession session = request.getSession();
-			String uid = (String)session.getAttribute("SUID");
+//			String uid = (String)session.getAttribute("SUID");
+			String uid = "donghyun"; //****
 			PurchaseDao dao = new PurchaseDao();
 		
 			ArrayList<PurchaseDto> dtos = dao.selectUser(uid);

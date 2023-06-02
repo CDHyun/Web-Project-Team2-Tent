@@ -83,11 +83,38 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="phone_number">Phone Number</label>
-                                    <input type="text" class="form-control o_check phone_number" name="m_phone" id="phone_number" min="0" value="${users[0].uphone}" placeholder="- 제외 입력해주세요">
+                                    <input type="text" class="form-control o_check phone_number" name="m_phone" id="phone_number" min="0" value="${users[0].uPhone}" placeholder="- 제외 입력해주세요">
                                 </div>
-                        </form>
-                    </div>
-                </div>
+                                <div class="col-md-12 mb-3">
+												<label for="street_address">Address</label> <input
+													type="text" class="form-control address o_check"
+													name="o_rv_address" placeholder="Address" value="${users[0].uaAddress}">
+											</div>
+											<div class="col-md-6 mb-3">
+												<label for="postcode">Postcode</label> <input type="text"
+													class="form-control postcode o_check" name="o_rv_post"
+													placeholder="Postcode" value="${users[0].uaZipcode}">
+											</div>
+											<div class="col-md-6 mb-3 search">
+												<button type="button"
+													class="btn btn-outline-primary mb-1 searchAddr">search</button>
+											</div>
+											<div class="col-md-12">
+												<label for="order-notes">Message</label>
+												<textarea class="form-control" name="o_message"
+													id="order-notes" cols="30" rows="10"
+													placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+                                
+                                
+                                
+                                
+                                
+                            
 <!-- 
                 <div class="col-12">
 
@@ -99,56 +126,27 @@
             </div>
         </div>
     </div> -->
-    
-    
-     <div class="checkout_area section_padding_100">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="checkout_details_area clearfix">
-                        <h5 class="mb-4">Receiver Info</h5>
-                        <form id="Receiver_info_form" method="post">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="last_name">Name</label>
-                                    <input type="text" class="form-control o_check" id="last_name" name="o_rv_name" placeholder="Name" value="" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="phone_number">Phone Number</label>
-                                    <input type="text" class="form-control phone_number o_check" name="o_rv_phone" id="phone_number" min="0" placeholder="- 제외 입력해주세요" value="">
-                                </div>
-                                <div class="col-md-12 mb-3">
-                                    <label for="street_address">Address</label>
-                                    <input type="text" class="form-control address o_check"  name="o_rv_address" placeholder="Address" value="">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="postcode">Postcode</label>
-                                    <input type="text" class="form-control postcode o_check" name="o_rv_post" placeholder="Postcode" value="">
-                                </div>
-                                <div class="col-md-6 mb-3 search">
-                                    <button type="button" class="btn btn-outline-primary mb-1 searchAddr">search</button>
-                                </div>
-                                <div class="col-md-12">
-                                    <label for="order-notes">Message</label>
-                                    <textarea class="form-control" name="o_message" id="order-notes" cols="30" rows="10" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
 
-                <div class="col-12">
-                    <div class="checkout_pagination mt-3 d-flex justify-content-end clearfix">
-                        <a href="" class="btn btn-primary mt-2 ml-2 order_back_btn order_back"  id="back_Receiver">Go Back</a>
-                        <a href="" id="Receiver_next_btn" class="btn btn-primary mt-2 ml-2 order_next">Continue</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-                        </form>
-                    </div>
-                </div>
-<!-- 
+
+							<div class="col-12">
+								<div class="checkout_pagination mt-3 d-flex justify-content-end align-items-center clearfix">
+									<form id="back_Receiver" action="product_detail.do"
+										name="Go Back">
+										<input type="button" class="btn btn-primary ml-2 order_next"
+											value="Go Back">
+									</form>
+									<form id="Receiver_next_btn" action="payment.do"
+										name="Continue">
+										<input type="button" class="btn btn-primary ml-2 order_next"
+											value="Continue">
+									</form>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<!-- 
                 <div class="col-12">
                     <div class="checkout_pagination mt-3 d-flex justify-content-end clearfix">
                         <a href="" class="btn btn-primary mt-2 ml-2 order_back_btn order_back"  id="back_receiver">Go Back</a>
@@ -158,8 +156,7 @@
             </div>
         </div>
     </div> -->
-    
-    </div>
+  
     <!-- Checkout Area -->
 
     <!-- Footer Area -->

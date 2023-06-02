@@ -29,7 +29,6 @@ public PurchaseDao() {
 }
 
 
-
      public ArrayList<PurchaseDto> selectUser(String uid) {
  		ArrayList<PurchaseDto> beanList = new ArrayList<PurchaseDto>();
  		Connection connection = null;
@@ -38,7 +37,7 @@ public PurchaseDao() {
 
  		try {
  			connection = dataSource.getConnection();
- 			String query = "select uName, uPhone, uEmail from user where uid = ?";
+ 			String query = "select uName, uPhone, uEmail, uaAddress, uaZipcode from user where uid = ?";
  			preparedStatement = connection.prepareStatement(query); 
  			preparedStatement.setString(1, uid);
  			resultSet = preparedStatement.executeQuery();
@@ -47,7 +46,10 @@ public PurchaseDao() {
  				String uName = resultSet.getString(1);
  				String uPhone = resultSet.getString(2);
  				String uEmail = resultSet.getString(3);
- 				PurchaseDto dto = new PurchaseDto(uid, uName, uPhone, uEmail);
+ 				String uaAddress = resultSet.getString(4);
+ 				String uaZipcode = resultSet.getString(5);
+ 				
+ 				PurchaseDto dto = new PurchaseDto(uid, uName, uPhone, uEmail, uaZipcode, uaAddress);
  				beanList.add(dto);
  			}
 

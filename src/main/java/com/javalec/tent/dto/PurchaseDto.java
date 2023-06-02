@@ -39,24 +39,18 @@ public class PurchaseDto {
 	}
 	
 	
-	public PurchaseDto(String uid, String uName, String uPhone, String uEmail) {
+
+
+
+	public PurchaseDto(String uid, String uName, String uPhone, String uEmail, String uaZipcode, String uaAddress) {
 		super();
 		this.uid = uid;
 		this.uName = uName;
 		this.uPhone = uPhone;
 		this.uEmail = uEmail;
+		this.uaZipcode = uaZipcode;
+		this.uaAddress = uaAddress;
 	}
-
-
-
-
-
-
-
-
-
-
-
 
 
 
