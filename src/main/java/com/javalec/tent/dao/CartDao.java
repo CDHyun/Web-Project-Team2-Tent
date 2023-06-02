@@ -1,8 +1,10 @@
 package com.javalec.tent.dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.naming.Context;
@@ -26,10 +28,6 @@ DataSource dataSource;
 			e.printStackTrace();
 		}
 	}
-	
-
-	
-
 	public ArrayList<CartDto> cart(String uid){
 		ArrayList<CartDto> dtos = new ArrayList<CartDto>();
 		Connection connection = null;
@@ -72,7 +70,61 @@ DataSource dataSource;
 		}
 		return dtos;
 	}
-}
+	
+	public void cartDeleteAction(String pCode){
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+	
+		try {
+			connection = dataSource.getConnection();
+			String query = " delete from cart where pCode =?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, pCode);
+			preparedStatement.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet != null) resultSet.close();
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch(Exception e) 	{
+				e.printStackTrace();
+			}
+		}
+	}
+	public void cartUpdateAction(String cQty) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+	
+		try {
+			connection = dataSource.getConnection();
+			String query = " update cart set cQty=?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, cQty);
+			preparedStatement.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet != null) resultSet.close();
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch(Exception e) 	{
+				e.printStackTrace();
+			}
+	}
+	}
+	}
+
+	
+	
 
 
 		

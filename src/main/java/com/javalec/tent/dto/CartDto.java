@@ -25,8 +25,14 @@ public class CartDto {
 			this.pfName = pfName;
 			this.pBrandName = pBrandName;
 			this.pColor = pColor;
-		
 	}
+		
+	public CartDto(int cQty) {
+			super();
+			this.cQty = cQty;
+		}
+	
+	
 	public int getcNo() {
 		return cNo;
 	}
