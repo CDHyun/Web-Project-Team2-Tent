@@ -56,7 +56,9 @@ public class AdminDao {
 	    
 	    try {
 	        connection = dataSource.getConnection();
-	        String query = "SELECT COUNT(*) FROM product";
+	        String query = "SELECT COUNT(*) AS row_count\r\n"
+	        		+ "FROM product p, productoption po, productfile pf\r\n"
+	        		+ "WHERE p.pCode = po.pCode AND p.pCode = pf.pCode;";
 	        preparedStatement = connection.prepareStatement(query);
 	        resultSet = preparedStatement.executeQuery();
 	        
@@ -86,7 +88,7 @@ public class AdminDao {
 
 	
 	
-	public ArrayList<AdminDto> searchAction(String queryName, String queryContent) {
+	public ArrayList<AdminDto> searchAction(String queryName, String queryContent, int index_no) {
 		if(queryName == null){ // 첫화면인 경우
 			queryName = "p.pBrandName";
 			queryContent = "";
@@ -102,7 +104,8 @@ public class AdminDao {
 			
 			String WhereDefault = "select p.pCode, p.pBrandName, p.pName ,po.pColor, p.pPrice, po.pStock, p.pinsertdate, pf.pfName, pf.pfRealName  from product p, productoption po, productfile pf ";
 			String WhereDefault2 = " where p.pCode = po.pCode and p.pCode = pf.pCode and " + queryName + " like '%" +queryContent + "%'";
-			String WhereDefault3 = " Limit 0,7";
+			String WhereDefault3 = " LIMIT " + index_no + ",7";
+				
 			preparedStatement = connection.prepareStatement(WhereDefault+WhereDefault2+WhereDefault3);
 			resultSet = preparedStatement.executeQuery();
 			
