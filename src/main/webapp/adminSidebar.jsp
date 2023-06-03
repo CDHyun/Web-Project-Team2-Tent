@@ -45,7 +45,7 @@
        
       </ul>
     </li>
-    <li>주문처리</li>
+    <li><a href="adminpurchaseCheck.do">주문처리</a></li>
     <li>리뷰관리</li>
     <li>고객관리</li>
   </ul>

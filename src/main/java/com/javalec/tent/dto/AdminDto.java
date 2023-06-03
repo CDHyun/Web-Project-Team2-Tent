@@ -17,6 +17,13 @@ public class AdminDto {
 	String pColor;
 	int pStock;
 	
+	// 주문처리에 필요한 변수
+	int pcNo;
+	String uid;
+	int pcQty;
+	int pcStatus;
+	Timestamp pcInsertdate;
+	
 	
 	public AdminDto() {
 		// TODO Auto-generated constructor stub
@@ -31,6 +38,68 @@ public class AdminDto {
 	
 	
 	
+
+
+	public AdminDto(int pcNo, String uid, int pCode, String pColor, int pcQty, int pcStatus, Timestamp pcInsertdate) {
+		super();
+		this.pCode = pCode;
+		this.pColor = pColor;
+		this.pcNo = pcNo;
+		this.uid = uid;
+		this.pcQty = pcQty;
+		this.pcStatus = pcStatus;
+		this.pcInsertdate = pcInsertdate;
+	}
+
+
+	public int getPcNo() {
+		return pcNo;
+	}
+
+
+	public void setPcNo(int pcNo) {
+		this.pcNo = pcNo;
+	}
+
+
+	public String getUid() {
+		return uid;
+	}
+
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+
+	public int getPcQty() {
+		return pcQty;
+	}
+
+
+	public void setPcQty(int pcQty) {
+		this.pcQty = pcQty;
+	}
+
+
+	public int getPcStatus() {
+		return pcStatus;
+	}
+
+
+	public void setPcStatus(int pcStatus) {
+		this.pcStatus = pcStatus;
+	}
+
+
+	public Timestamp getPcInsertdate() {
+		return pcInsertdate;
+	}
+
+
+	public void setPcInsertdate(Timestamp pcInsertdate) {
+		this.pcInsertdate = pcInsertdate;
+	}
 
 
 	public AdminDto(int pCode, String pBrandName,  String pName,String pColor,int pPrice,int pStock, Timestamp pInsertdate, String pfName, String pfRealName) {

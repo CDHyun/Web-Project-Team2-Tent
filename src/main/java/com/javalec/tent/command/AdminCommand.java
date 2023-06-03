@@ -18,7 +18,7 @@ public class AdminCommand implements TentCommand {
 		String queryContent = request.getParameter("content");
 		
 		
-		//업데이트에 필요한 변수
+	
 		
 		
 
@@ -34,7 +34,9 @@ public class AdminCommand implements TentCommand {
 			
 			
 			
-			
+			// count select 
+			int daocount = dao.pCount();
+			request.setAttribute("d_count", daocount);
 		
 		
 	}

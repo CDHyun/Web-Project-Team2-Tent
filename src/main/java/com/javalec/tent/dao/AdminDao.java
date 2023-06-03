@@ -48,6 +48,44 @@ public class AdminDao {
 	
 	// function   
 	
+	public int pCount() {
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+	    int p_count = 0; // p_count 변수를 try 블록 외부에서 선언하여 나중에 접근할 수 있도록 합니다.
+	    
+	    try {
+	        connection = dataSource.getConnection();
+	        String query = "SELECT COUNT(*) FROM product";
+	        preparedStatement = connection.prepareStatement(query);
+	        resultSet = preparedStatement.executeQuery();
+	        
+	        if (resultSet.next()) {
+	            p_count = resultSet.getInt(1);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (resultSet != null) {
+	                resultSet.close();
+	            }
+	            if (preparedStatement != null) {
+	                preparedStatement.close();
+	            }
+	            if (connection != null) {
+	                connection.close();
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
+	    return p_count; // p_count의 값을 메서드의 끝에서 반환합니다.
+	}
+
+	
+	
 	public ArrayList<AdminDto> searchAction(String queryName, String queryContent) {
 		if(queryName == null){ // 첫화면인 경우
 			queryName = "p.pBrandName";
@@ -64,6 +102,7 @@ public class AdminDao {
 			
 			String WhereDefault = "select p.pCode, p.pBrandName, p.pName ,po.pColor, p.pPrice, po.pStock, p.pinsertdate, pf.pfName, pf.pfRealName  from product p, productoption po, productfile pf ";
 			String WhereDefault2 = " where p.pCode = po.pCode and p.pCode = pf.pCode and " + queryName + " like '%" +queryContent + "%'";
+			//String WhereDefault3 = " Limit 0,7";
 			preparedStatement = connection.prepareStatement(WhereDefault+WhereDefault2);
 			resultSet = preparedStatement.executeQuery();
 			
@@ -207,7 +246,7 @@ public class AdminDao {
 		
 		try {
 			connection = dataSource.getConnection();
-			String query = "update product p, productoption po set p.pDeletedate =now() and p.pDeleted=1 where p.pCode= po.pCode and p.pCode =? and po.pColor =?";
+			String query = "update product p, productoption po set pDeleteDate=now() ,pDeleted =1 where p.pCode = ? and po.pColor =?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1 ,pCode );
 			preparedStatement.setString(2 ,pColor );
@@ -236,10 +275,10 @@ public class AdminDao {
 	
 	//데이터 입력메서드
 
-	public void insert(String pName, String pBrandName, String pPrice, String cgNo,String pfName, String pfRealName, String pCode, String pStock,String pColor, String pfNo) {
+	public void insert(String pName, String pBrandName, String pPrice, String cgNo, String pCode, String pStock,String pColor, String pfNo) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		PreparedStatement preparedStatement1 = null;
+		//PreparedStatement preparedStatement1 = null;
 		PreparedStatement preparedStatement2 = null;
 		try {
 	        connection = dataSource.getConnection();
@@ -251,15 +290,15 @@ public class AdminDao {
 	        preparedStatement.setInt(4, Integer.parseInt(cgNo));
 	        preparedStatement.executeUpdate();
 
-	        String query2 = "INSERT INTO productfile (pfNo, pfName, pfRealName, pCode) SELECT ?, ?, ?, ? FROM product WHERE pName=?";
-	        preparedStatement1 = connection.prepareStatement(query2);
-	        preparedStatement1.setInt(1, Integer.parseInt(pfNo));
-	        preparedStatement1.setString(2, pfName);
-	        preparedStatement1.setString(3, pfRealName);
-	        preparedStatement1.setInt(4, Integer.parseInt(pCode));
-	        preparedStatement1.setString(5, pName);
+	      //  String query2 = "INSERT INTO productfile (pfNo, pfName, pfRealName, pCode) SELECT ?, ?, ?, ? FROM product WHERE pName=?";
+	      //  preparedStatement1 = connection.prepareStatement(query2);
+	      //  preparedStatement1.setInt(1, Integer.parseInt(pfNo));
+	      //  preparedStatement1.setString(2, pfName);
+	      //  preparedStatement1.setString(3, pfRealName);
+	      //  preparedStatement1.setInt(4, Integer.parseInt(pCode));
+	      //  preparedStatement1.setString(5, pName);
 
-	        preparedStatement1.executeUpdate();
+	      //  preparedStatement1.executeUpdate();
 
 	        String query3 = "INSERT INTO productoption (pStock, pColor, pCode) SELECT ?, ?, ? FROM product WHERE pName=?";
 	        preparedStatement2 = connection.prepareStatement(query3);
@@ -290,7 +329,61 @@ public class AdminDao {
 	}
 	
 	
+	// 주문처리에 사용되는 주문내역불러오기
+	public ArrayList<AdminDto> purchaseCheck() {
+		
+		
+		ArrayList<AdminDto> dtos = new ArrayList<AdminDto>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			
+			String WhereDefault = "select pc.pcNo, pc.uid, pc.pCode, po.pColor, pc.pcQty, pc.pcInsertDate, pc.pcStatus from purchase pc, product p, productoption po";
+			String WhereDefault2 = " where p.pCode = pc.pCode and p.pCode = po.pCode and po.pCode = pc.pCode";
+			
+			preparedStatement = connection.prepareStatement(WhereDefault+WhereDefault2);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				int pcNo = resultSet.getInt(1);
+				String uid = resultSet.getString(2);
+				int pCode = resultSet.getInt(3);
+				String pColor = resultSet.getString(4);
+				int pcQty = resultSet.getInt(5);
+				Timestamp pcInsertdate = resultSet.getTimestamp(6);
+				int pcStatus = resultSet.getInt(7);
+				
+				
+		
+				AdminDto dto = new AdminDto(pcNo, uid, pCode, pColor, pcQty, pcStatus, pcInsertdate);
+				dtos.add(dto);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet != null){ // 무언가 들어가 있으면close
+					resultSet.close();
+				}
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return dtos;
 	
+	
+	}
 	
 	
 }
