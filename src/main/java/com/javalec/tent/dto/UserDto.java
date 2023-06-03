@@ -6,7 +6,7 @@ public class UserDto {
 	String uid;							// 유저 아이디
 	String uPassword;					// 유저 비밀번호
 	String uName;						// 유저 이름
-	String uNiceName;					// 유저 닉네임
+	String uNickName;					// 유저 닉네임
 	String uPhone;						// 유저 전화번호
 	int uGender;						// 유저 성별 1 : 남자, 2 : 여자
 	String uBirthday;					// 유저 생일
@@ -66,13 +66,13 @@ public class UserDto {
 	}
 
 
-	public String getuNiceName() {
-		return uNiceName;
+	public String getuNickName() {
+		return uNickName;
 	}
 
 
-	public void setuNiceName(String uNiceName) {
-		this.uNiceName = uNiceName;
+	public void setuNickName(String uNiceName) {
+		this.uNickName = uNiceName;
 	}
 
 

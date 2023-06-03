@@ -18,7 +18,7 @@ public class UserDao {
 	String uid;							// 유저 아이디
 	String uPassword;					// 유저 비밀번호
 	String uName;						// 유저 이름
-	String uNiceName;					// 유저 닉네임
+	String uNickName;					// 유저 닉네임
 	String uPhone;						// 유저 전화번호
 	String uBirthday;					// 유저 생일
 	String uEmail;						// 유저 이메일
@@ -40,7 +40,7 @@ public class UserDao {
 		// TODO Auto-generated constructor stub
 		try {
 			Context context = new InitialContext();
-			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/jazz");
+			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/tent");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -74,8 +74,8 @@ public class UserDao {
 	        addressPs = con.prepareStatement(sql2);
 	        addressPs.setString(1, uid);
 	        addressPs.setString(2, uAddress);
-	        addressPs.setString(3, uZipcode);
-	        addressPs.setString(4, uDetailAddress);
+	        addressPs.setString(3, uDetailAddress);
+	        addressPs.setString(4, uZipcode);
 	        userAddressCount = addressPs.executeUpdate();
 
 	        if (userCount > 0 && userAddressCount > 0) {
