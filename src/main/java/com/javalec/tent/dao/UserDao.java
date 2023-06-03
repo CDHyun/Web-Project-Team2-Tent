@@ -22,6 +22,7 @@ public class UserDao {
 	String uPhone;						// 유저 전화번호
 	String uBirthday;					// 유저 생일
 	String uEmail;						// 유저 이메일
+	int uGender;						// 유저 성별 1:남자, 2:여자
 	String uInsertDate;					// 유저 회원가입 날짜
 	String uUpdateDate;					// 유저 정보 수정 날짜
 	String uDeleteDate;					// 유저 탈퇴 날짜
@@ -45,46 +46,57 @@ public class UserDao {
 		}
 	}
 
-	public int signUp(String uid, String uPassword, String uName, String uPhone, String uAddress, String uEmail) {
-		int count = 0;
-		int result = 0;
+	public int signUp(String uid, String uPassword, String uName, String uNickName, String uPhone, String uEmail, int uGender, String uBirthday, String uAddress, String uDetailAddress, String uZipcode) {
+	    int userCount = 0;
+	    int userAddressCount = 0;
+	    int result = 0;
 
-		Connection con = null;
-		PreparedStatement ps = null;
+	    Connection con = null;
+	    PreparedStatement userPs = null;
+	    PreparedStatement addressPs = null;
 
-		try {
-			con = dataSource.getConnection();
+	    try {
+	        con = dataSource.getConnection();
 
-			String query = "insert into user(uid, uPassword, uName, uPhone, uAddress, uEmail, uInsertDate) values(?, ?, ?, ?, ?, ?, now())";
-			ps = con.prepareStatement(query);
-			ps.setString(1, uid);
-			ps.setString(2, uPassword);
-			ps.setString(3, uName);
-			ps.setString(4, uPhone);
-			ps.setString(5, uAddress);
-			ps.setString(6, uEmail);
+	        String sql1 = "insert into user(uid, uPassword, uName, uNickName, uPhone, uEmail, uGender, uBirthday, uInsertDate) values(?, ?, ?, ?, ?, ?, ?, ?, now())";
+	        userPs = con.prepareStatement(sql1);
+	        userPs.setString(1, uid);
+	        userPs.setString(2, uPassword);
+	        userPs.setString(3, uName);
+	        userPs.setString(4, uNickName);
+	        userPs.setString(5, uPhone);
+	        userPs.setString(6, uEmail);
+	        userPs.setInt(7, uGender);
+	        userPs.setString(8, uBirthday);
+	        userCount = userPs.executeUpdate();
 
-			count = ps.executeUpdate();
+	        String sql2 = "insert into userAddress(uaNo, uid, uaAddress, uaDetailAddress, uaZipcode) values(1, ?, ?, ?, ?)";
+	        addressPs = con.prepareStatement(sql2);
+	        addressPs.setString(1, uid);
+	        addressPs.setString(2, uAddress);
+	        addressPs.setString(3, uZipcode);
+	        addressPs.setString(4, uDetailAddress);
+	        userAddressCount = addressPs.executeUpdate();
 
-			if (count > 0) {
-				/* 회원가입 성공 */
-				result = 1;
-			}
+	        if (userCount > 0 && userAddressCount > 0) {
+	            /* 회원가입 성공 */
+	            result = 1;
+	        }
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (con != null)
-					con.close();
-				if (ps != null)
-					ps.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return result;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (con != null) con.close();
+	            if (userPs != null) userPs.close();
+	            if (addressPs != null) addressPs.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return result;
 	}
+
 
 	public int checkDuplicateId(String uid) {
 		Connection con = null;

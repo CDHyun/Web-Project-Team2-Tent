@@ -8,6 +8,7 @@ public class UserDto {
 	String uName;						// 유저 이름
 	String uNiceName;					// 유저 닉네임
 	String uPhone;						// 유저 전화번호
+	int uGender;						// 유저 성별 1 : 남자, 2 : 여자
 	String uBirthday;					// 유저 생일
 	String uEmail;						// 유저 이메일
 	String uInsertDate;					// 유저 회원가입 날짜
@@ -182,6 +183,16 @@ public class UserDto {
 
 	public void setUaDetailAddress(String uaDetailAddress) {
 		this.uaDetailAddress = uaDetailAddress;
+	}
+
+
+	public int getuGender() {
+		return uGender;
+	}
+
+
+	public void setuGender(int uGender) {
+		this.uGender = uGender;
 	}
 	
 	

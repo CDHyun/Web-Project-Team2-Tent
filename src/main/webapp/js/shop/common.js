@@ -2,7 +2,7 @@
 숫자 형식 포맷 메서드
 */
 function numberWithCommas(price) { 
-	return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
+    return price.toLocaleString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
 }
 
 /*
@@ -41,7 +41,7 @@ ajax 로그인체크
 function check_session(){
 	let result = false;
 	$.ajax({
-		url: "UserSessionCheck",
+		url: "./UserSessionCheck",
 		method: "post",
 		async: false,
 		success:function(resultData){ 
@@ -72,7 +72,6 @@ function addToCart(params){
 		ToastConfirm.fire({ icon: 'question', 
 				title: "로그인이 필요한 페이지입니다.\n 로그인 하시겠습니까?"}).then((result) => {
 				if(result.isConfirmed){
-					/*location.href = "login_form.do";*/
 					openLoginModal();	
 				}
 			});
@@ -105,7 +104,6 @@ function addToWishList(param){
 		ToastConfirm.fire({ icon: 'question', 
 				title: "로그인이 필요한 페이지입니다.\n 로그인 하시겠습니까?"}).then((result) => {
 				if(result.isConfirmed){
-					/*location.href = "login_form.do";*/
 					openLoginModal();
 				}
 			});
