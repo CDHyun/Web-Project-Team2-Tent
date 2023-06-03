@@ -16,6 +16,9 @@
   .content {
    margin-left: 350px;
   }
+  .content2 {
+   margin-left: 700px;
+  }
   
   table {
     margin-top: 20px;
@@ -47,18 +50,17 @@
 	</div>
 	<!-- Header End -->
 	
+	<form action="adminStatusChange.do" method="post" class="content">
 	
-	
-	<table border="" class="content">
+	<table border="" >
   <tr>
     <th>구매번호</th>
     <th>구매자</th>
     <th>제품번호</th>
     <th>색상</th>
     <th>수량</th>
-    <th>상태</th>
     <th>주문날짜</th>
-    <th>콤보</th>
+   	<th>상태</th>
   </tr>
   <c:forEach items="${check}" var="dto">
     <tr>
@@ -67,22 +69,21 @@
       <td>${dto.pCode}</td>
       <td>${dto.pColor}</td>
       <td>${dto.pcQty}</td>
-      <td>${dto.pcStatus}</td>
       <td>${dto.pcInsertdate}</td>
      <td>
-  <select name="status">
-    <option value="-1">주문취소</option>
-    <option value="0" selected="selected">상품준비중</option>
-    <option value="1">배송중</option>
-    <option value="2">배송완료</option>
-  </select>
-</td>
+  		<select name="status">
+  			<option value="-1" ${dto.pcStatus == -1 ? 'selected' : ''}>주문취소</option>
+  			<option value="0" ${dto.pcStatus == 0 ? 'selected' : ''}>상품준비중</option>
+ 			<option value="1" ${dto.pcStatus == 1 ? 'selected' : ''}>배송중</option>
+  			<option value="2" ${dto.pcStatus == 2 ? 'selected' : ''}>배송완료</option>
+		</select>
+	</td>
     </tr>
   </c:forEach>
-</table>
+</table><br/><br/>
 	
-	
-	
+	<input type="submit" value="확인" class="content2" >
+	</form>
 	
 	
 	
