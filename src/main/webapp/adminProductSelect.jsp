@@ -78,8 +78,9 @@
     int lastpage = (int) request.getAttribute("d_count");
     int itemsPerPage = 7; // 페이지당 항목 개수
     int totalPages = (int) Math.ceil(lastpage / (double) itemsPerPage);
+    
     for (int i = 1; i <= totalPages; i++) {
-      out.print("<a href='adminProductSelect.jsp?vpage=" + i + "'>" + i + "</a> ");
+      out.print("<a href='adminindex.do?vpage=" + i + "'>" + i + "</a> ");
     }
   %>
 </div>
