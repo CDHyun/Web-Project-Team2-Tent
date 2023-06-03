@@ -5,7 +5,10 @@
 <!-- Header Area -->
 <header class="header_area">
 	<script src="js/jquery.min.js"></script>
+  	<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+  	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 	<script type="text/javascript">
+	
 	function loginCheck() {
 		var luid = $("#luid").val();
 		var luPassword = $("#luPassword").val();
@@ -171,17 +174,23 @@
 		const ruPassword = $('#ruPassword').val();
 		const ruRePass = $('#ruRePass').val();
 		const ruName = $('#ruName').val();
+		const ruNickName = $('#ruNickName').val();
 		const ruPhone = $('#ruPhone').val();
 		const ruEmail = $('#ruEmail').val();
 		const ruAddress = $('#ruAddress').val();
+		const ruDetailAddress = $('#ruDetailAddress').val();
+		const ruGender = $('ruGender').val();
+		const ruBirthday = $('ruBirthday').val();
 		const regExpAdmin = /^(?!.*(?:admin|root|insert|update|delete|select)).*$/
 		const regExpuid = /^[a-z|A-Z|0-9]*$/;
 		const regExpuPass = /^[a-z|A-Z|0-9]*$/;
 		const regExpuName = /^[a-z|A-Z|가-힣]*$/;
+		const regExpuNickName = /^[a-z|A-Z|가-힣]*$/;
 		const regExpuPhone = /^\d{3}-\d{3,4}-\d{4}$/;
 		const regExpuEmail = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
 		const regExpuAddress = /^[가-힣|0-9|a-z|A-Z|-|\s]*$/;
 	
+		/* Admin등 아이디 유효성 검사*/
 		if (!regExpAdmin.test(ruid.toLowerCase())) {
 			Toast.fire({
 				icon : 'warning',
@@ -191,6 +200,7 @@
 			return;
 		}
 	
+		/* ID 입력 확인 */
 		if (ruid.trim().length === 0) {
 			Toast.fire({
 				icon : 'warning',
@@ -198,7 +208,6 @@
 			});
 			return;
 		}
-	
 		if (!regExpuid.test(ruid)) {
 			Toast.fire({
 				icon : 'warning',
@@ -209,6 +218,7 @@
 	
 		}
 	
+		/* 비밀번호 입력 확인 */
 		if (ruPassword.trim().length === 0) {
 			Toast.fire({
 				icon : 'warning',
@@ -225,7 +235,6 @@
 			return
 	
 		}
-	
 		if (ruRePass.trim().length === 0) {
 			Toast.fire({
 				icon : 'warning',
@@ -252,8 +261,15 @@
 	
 		}
 	
+		/* 이름, 닉네임 입력 확인 */
 		if (ruName.trim().length === 0) {
 			Toast.fire({icon : 'warning',title : "이름을 입력해주세요."});
+			form.ruName.focus();
+			return;
+		}
+		if (ruNickName.trim().length === 0) {
+			Toast.fire({icon : 'warning',title : "닉네임을 입력해주세요."});
+			form.ruNickName.focus();
 			return;
 		}
 		if (!regExpuName.test(ruName)) {
@@ -263,9 +279,23 @@
 			});
 			form.ruName.select();
 			return
-	
+		}
+		if (!regExpuNickName.test(ruNickName)) {
+			Toast.fire({
+				icon : 'warning',
+				title : "닉네임은 한글과 영문만 입력 할 수 있습니다."
+			});
+			form.ruNickName.select();
+			return
 		}
 	
+		/* 생일 입력 확인 */
+		if (!ruBirthday) {
+			Toast.fire({icon : 'warning', title : "생일을 선택해주세요."});
+			return;
+		}
+		
+		/* 전화번호 입력 확인 */
 		if (ruPhone.trim().length === 0) {
 			Toast.fire({
 				icon : 'warning',
@@ -273,41 +303,43 @@
 			});
 			return;
 		}
-	
 		if (!regExpuPhone.test(ruPhone)) {
 			Toast.fire({icon : 'warning', title : "전화번호를 확인해주세요.\n ex)010-1234-5678"});
 			form.ruPhone.select();
 			return
 		}
-	
+		
 		if (ruEmail.trim().length === 0) {
 			Toast.fire({icon : 'warning', title : "이메일을 입력해주세요."});
 			return;
 		}
 		if (!regExpuEmail.test(ruEmail)) {
 			Toast.fire({icon : 'warning', title : "이메일 형식을 확인해주세요. \n ex) id@domain.com"});
-			form.ruEmail.select();
+			ruEmail.select();
 			return
 		}
-	
+		
+		
 		if (ruAddress.trim().length === 0) {
 			Toast.fire({icon : 'warning', title : "주소를 입력해주세요."});
 			return;
 		}
 		if (!regExpuAddress.test(ruAddress)) {
 			Toast.fire({icon : 'warning', title : "주소는 영문/한글/숫자/- 만 입력 가능합니다."});
-			form.ruAddress.select();
+			ruAddress.select();
 			return
 		}
 		console.log(ruid);
 		$.ajax({
 			type : 'POST',
-			url : '/UserRegisterCommand',
+			url : '/UserSignUpCommand',
 			data : {
 				ruid : ruid,
 				ruPassword : ruPassword,
 				ruName : ruName,
 				ruNickName : ruNickName,
+				ruGender : ruGender,
+				ruBirthday : ruBirthday,
 				ruPhone : ruPhone,
 				ruEmail : ruEmail,
 				ruAddress : ruAddress,
@@ -332,7 +364,6 @@
 				showAlert("오류가 발생했습니다. 다시 시도해주세요.");
 			}
 		});
-	
 	}
 </script>
 
@@ -417,14 +448,14 @@
 								<li><a href="index.do">Home</a></li>
 								<li><a href="product_list.do" id="shop_main_menu">Shop</a></li>
 								<c:if test="${empty SUID}">
-									<li><a href="" class="login_check">Orders</a></li>
+									<li><a onclick="emptySessionUser()">Orders</a></li>
 								</c:if>
 								<c:if test="${!empty SUID}">
 									<li><a href="purchase_list.do">Orders</a></li>
 								</c:if>
 								<li><a href="faq">FAQ</a></li>
 								<c:if test="${empty SUID}">
-									<li><a href="" class="login_check">Board</a></li>
+									<li><a onclick="emptySessionUser()">Board</a></li>
 								</c:if>
 								<c:if test="${!empty SUID}">
 									<li><a href="qna_list">Board</a></li>
@@ -454,7 +485,7 @@
 						<!-- Wishlist -->
 						<div class="wishlist-area">
 							<c:if test="${empty SUID}">
-								<a href="#" class="wishlist-btn login_check"><i
+								<a onclick="emptySessionUser()"><i
 									class="icofont-heart"></i></a>
 							</c:if>
 							<c:if test="${!empty SUID}">
@@ -468,7 +499,7 @@
 						<div class="cart-area">
 							<div class="cart--btn">
 								<c:if test="${empty SUID}">
-									<a href="#" class="login_check"><i class="icofont-cart"></i></a>
+									<a onclick="emptySessionUser()"><i class="icofont-cart"></i></a>
 								</c:if>
 								<c:if test="${!empty SUID}">
 									<a href="cart_view"><i class="icofont-cart"></i><span
@@ -616,47 +647,55 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="container">
-				<h5 class="mb-3" style="display: inline-block">SingUp</h5>
+				<h5 class="mb-3" style="display: inline-block; text-align: center;">SingUp</h5>
 				<span style="color: red">${l_msg}</span>
 				<form id="user_register_form" action="" method="post">
 					<div class="form-group">
-						<div class="input-form-group">
-							<input type="text" class="form-control" id="ruid" name="ruid" placeholder="아이디">
-							<button type="button" class="btn btn-primary btn-sm" onclick="checkDuplicateId()">중복확인</button>
+						  <div class="input-form-group" style="display: flex; align-items: center;">
+						  	<input type="text" class="form-control" id="ruid" name="ruid" placeholder="ID">
+						    <button type="button" class="btn btn-primary btn-sm" onclick="checkDuplicateId()" style="margin-left: 15px;">Check</button>
+						  </div>
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" id="ruPassword" name="ruPassword" placeholder="Password">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" id="ruRePass" name="ruRePass" placeholder="RePassword">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="ruName" name="ruName" placeholder="Name">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="ruNickName" name="ruNickName" placeholder="Nickname">
+					</div>
+					<div class="form-group">
+						<input type="radio" id="ruGender" name="ruGender" value="1" checked="checked"> Male
+						<input type="radio" id="ruGender" name="ruGender" value="2"> Female
+					</div>
+					<div class="form-group">
+						<input type="date" class="form-control" id="ruBirthday" name="ruBirthday" placeholder="Birthday">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="ruPhone" name="ruPhone" placeholder="Phone (ex: 010-1234-5678) ">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" id="ruEmail" name="ruEmail" placeholder="ex) Email@domain.com">
+					</div>
+					<div class="form-group">
+						<div class="input-form-group" style="display: flex; align-items: center;">
+							<input type="text" class="form-control address" id="ruAddress" name="ruAddress" placeholder="Address">
+							<button type="button" class="btn btn-outline-primary mb-1 searchAddr" style="margin-left: 15px;">search</button>
 						</div>
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" id="ruPassword" name="ruPassword" placeholder="비밀번호">
+						<input type="text" class="form-control" id="ruDetailAddress" name="ruDetailAddress" placeholder="Detailed Address">
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" id="ruRePass" name="ruRePass" placeholder="비밀번호 확인">
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" id="ruName" name="ruName" placeholder="이름">
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" id="ruNickName" name="ruNickName" placeholder="닉네임">
-					</div>
-					<div class="form-group">
-						<input type="email" class="form-control" id="ruEmail" name="ruEmail" placeholder="이메일">
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control address" id="ruAddress" name="ruAddress" placeholder="주소">
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" id="ruDetailAddress" name="ruDetailAddress" placeholder="상세 주소">
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control postcode" id="ruZipCode" name="ruZipCode" placeholder="우편번호">
-						<button type="button"
-							class="btn btn-outline-primary mb-1 searchAddr">search</button>
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" id="ruPhone" name="ruPhone" placeholder="전화번호(ex: 010-1234-5678) ">
+						<input type="text" class="form-control postcode" id="ruZipCode" name="ruZipCode" placeholder="Zipcode">
 					</div>
 					<div class="button-container">
 					<button type="button" class="btn btn-primary btn-sm" onclick="registerCheck()">Register</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">Cancle</button>
 					</div>
 				</form>
 			</div>
@@ -664,6 +703,3 @@
 	</div>
 </div>
 <!-- SignUpModal End -->
-
-
-

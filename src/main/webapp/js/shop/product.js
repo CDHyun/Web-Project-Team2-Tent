@@ -55,10 +55,14 @@ $(".row.justify-content-center").on("click", ".list_add_to_cart_btn", function(e
 /*
 detail -> Add to Cart 
 */
-function detail_addToCart(e){
-	let params = $("#addcart_and_buynow_form").serialize(); // p_no, qty
-	$(e.target).blur();
-	addToCart(params);
+function detail_addToCart(){
+	ToastConfirm.fire({ icon: 'question', 
+				title: "주문을 진행하시겠습니까?"}).then((result) => {
+				if(result.isConfirmed){
+					$("#addcart_and_buynow_form").attr("action", "checkout_2");
+					$("#addcart_and_buynow_form").submit(); // p_no, qty, buyType(direct)
+				}
+			});
 }
 
 /*
