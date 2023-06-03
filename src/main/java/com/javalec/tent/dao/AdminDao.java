@@ -102,8 +102,8 @@ public class AdminDao {
 			
 			String WhereDefault = "select p.pCode, p.pBrandName, p.pName ,po.pColor, p.pPrice, po.pStock, p.pinsertdate, pf.pfName, pf.pfRealName  from product p, productoption po, productfile pf ";
 			String WhereDefault2 = " where p.pCode = po.pCode and p.pCode = pf.pCode and " + queryName + " like '%" +queryContent + "%'";
-			//String WhereDefault3 = " Limit 0,7";
-			preparedStatement = connection.prepareStatement(WhereDefault+WhereDefault2);
+			String WhereDefault3 = " Limit 0,7";
+			preparedStatement = connection.prepareStatement(WhereDefault+WhereDefault2+WhereDefault3);
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()) {

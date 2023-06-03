@@ -72,7 +72,7 @@
      <td>
   <select name="status">
     <option value="-1">주문취소</option>
-    <option value="0">상품준비중</option>
+    <option value="0" selected="selected">상품준비중</option>
     <option value="1">배송중</option>
     <option value="2">배송완료</option>
   </select>

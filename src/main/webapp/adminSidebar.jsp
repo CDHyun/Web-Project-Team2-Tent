@@ -22,10 +22,10 @@
   input[id="menuicon"]:checked + label + div {left:0;}
   .sidebar ul {list-style-type: none; margin: 0; padding: 0;}
   .sidebar li {padding: 10px; color: #000; cursor: pointer;}
-  .sidebar li:hover {background-color: #555;}
+  .sidebar li:hover {background-color: #228B22;} /* 변경된 부분: 메뉴에 마우스를 올렸을 때 색상 변경 */
   .sidebar h2 {color: #000; padding: 10px;}
   .sub-menu {display: none; color:#228B22; }
-  .sidebar li:hover .sub-menu {display: block;}
+  .sidebar li.active .sub-menu {display: block;}
   
 </style>
 <body>
@@ -37,7 +37,7 @@
 </label>
 <div class="sidebar">
   <br/><br/><br/><br/><br/><br/><ul>
-    <li><a href="adminindex.do">상품관리</a>
+    <li class="active"><a href="adminindex.do">상품관리</a>
       <ul class="sub-menu">
         <li><a href="adminProductInsert.jsp">상품추가</a></li>
         <li><a href="adminUpdate.do">상품수정</a></li>
