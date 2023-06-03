@@ -389,4 +389,36 @@ public class AdminDao {
 	}
 	
 	
+	//주문 상태 변경 메서드
+	public void statusUpdate(int pcStatus) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		try {
+			connection = dataSource.getConnection();
+			String query = "update purchase pc, user u set pcStatus =? where u.uid = pc.uid";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, pcStatus);
+			
+			
+			
+			preparedStatement.executeUpdate();
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
 }

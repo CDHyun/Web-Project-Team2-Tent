@@ -15,6 +15,7 @@ import com.javalec.tent.command.AdminContentCommand;
 import com.javalec.tent.command.AdminDeleteCommand;
 import com.javalec.tent.command.AdminInputCommand;
 import com.javalec.tent.command.AdminPurchaseStatusCommand;
+import com.javalec.tent.command.AdminStatusChangeCommand;
 import com.javalec.tent.command.AdminUpdateCommand;
 import com.javalec.tent.command.CartCommand;
 import com.javalec.tent.command.CartDeleteCommand;
@@ -163,6 +164,11 @@ public class HomeController extends HttpServlet {
 			command = new AdminPurchaseStatusCommand();
 			command.execute(request, response);
 			viewPage = "adminPurchaseStatus.jsp";
+			break;
+		case "/adminStatusChange.do": //주문상태 변경 메커니즘
+			command = new AdminStatusChangeCommand();
+			command.execute(request, response);
+			viewPage = "adminpurchaseCheck.do";
 			break;
 		
 		default:
