@@ -298,8 +298,8 @@
 	                                <div class="single-product-area mb-30">
 	                                    <div class="product_image">
 	                                        <!-- Product Image -->
-	                                        <a href="product_detail.do$pCode=${product.pCode}"><img class="normal_img" src="images/product/${product.pfRealName}" alt=""></a>
-	                                         <a href="product_detail.do$pCode=${product.pCode}"><img class="hover_img" src="images/product/${product.pfHoverRealName}" alt=""></a>
+	                                        <a href="product_detail.do?pCode=${product.pCode}"><img class="normal_img" src="images/product/${product.pfRealName}" alt=""></a>
+	                                         <a href="product_detail.do?pCode=${product.pCode}"><img class="hover_img" src="images/product/${product.pfHoverRealName}" alt=""></a>
 		
 	                                        <!-- Product Badge -->
 	                                        <div class="product_badge">
@@ -322,7 +322,6 @@
 	
 	                                        <!-- Quick View -->
 	                                        <div class="product_quick_view">
-	                                        <button pCode ="${product.pCode}" onclick="$('#quickview').modal('show');">Quick View</button>
 	                                            <a data-toggle="modal" data-target="#quickview" pCode="${product.pCode}" onclick="clickQuickView('${product.pCode}')"><i class="icofont-eye-alt"></i> Quick View</a>
 	                                        </div>
 	

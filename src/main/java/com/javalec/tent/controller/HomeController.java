@@ -92,6 +92,7 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "index.do";
 			break;
+			/* 로그아웃 후 메인 페이지로 이동 */
 		/* 마이 페이지로 이동 */
 		case "/user_my_account.do":
 			command = new UserInfoCommand();
