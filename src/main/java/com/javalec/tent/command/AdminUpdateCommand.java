@@ -20,6 +20,16 @@ public class AdminUpdateCommand implements TentCommand {
 		String pfRealName =request.getParameter("file");
 		String fileName = request.getParameter("fileName");
 		
+		System.out.println(pCode);
+		System.out.println(pBrandName);
+		System.out.println(pName);
+		System.out.println(pPrice);
+		System.out.println(pColor);
+		System.out.println(pStock);
+		System.out.println(pfName);
+		System.out.println(pfRealName);
+		System.out.println(fileName);
+		
 		AdminDao dao  = new AdminDao();
 		dao.updateAction(pCode, pBrandName, pName, pPrice, pColor, pStock, pfName, pfRealName);
 		

@@ -47,7 +47,7 @@
 	</div>
 	<!-- Header End -->
 
-<form action="adminInsert.do" method="get" enctype="multipart/form-data" class="content">
+<form action="adminInsert.do" method="post" enctype="multipart/form-data" class="content">
 	 			
 				pCode <input type="text" name="pCode" size="30"><br/>
 				pBrandName <input type="text" name="pBrandName" size="30"><br/>

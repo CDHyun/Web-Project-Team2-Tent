@@ -13,13 +13,12 @@ public class FileDao {
 	
 	
 	public FileDao() {
-	    try {
-	        Context initContext = new InitialContext();
-	        Context envContext = (Context) initContext.lookup("java:comp/env");
-	        dataSource = (DataSource) envContext.lookup("jdbc/tent");
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+		try {
+			Context context = new InitialContext();
+			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/tent");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	
@@ -32,7 +31,7 @@ public class FileDao {
 
 	    try {
 	        connection = dataSource.getConnection();
-	        String query = "INSERT INTO productfile (pfName, pfRealName, pCode) SELECT ?, ?, ? FROM product";
+	        String query = "INSERT INTO productfile (pfName, pfRealName, pCode) SELECT ?, ?, ? FROM product limit 1";
 	        preparedStatement = connection.prepareStatement(query);
 	        preparedStatement.setString(1, fileName);
 	        preparedStatement.setString(2, fileRealName);
