@@ -15,7 +15,7 @@ public class CartCommand implements TentCommand {
 		// TODO Auto-generated method stub
 		CartDao dao = new CartDao();
 		ArrayList<CartDto> dtos= dao.cart("uid");
-		double totalPrice = dao.totalPrice("uid");
+		double totalPrice = dao.totalPrice("uid", "pCode");
 		request.setAttribute("cart", dtos);
 		request.setAttribute("TOTALPRICE", totalPrice);
 	}
