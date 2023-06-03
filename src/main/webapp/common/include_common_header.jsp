@@ -175,18 +175,26 @@
 		const ruRePass = $('#ruRePass').val();
 		const ruName = $('#ruName').val();
 		const ruNickName = $('#ruNickName').val();
-		const ruPhone = $('#ruPhone').val();
+		const ruPhone1 = $('#ruPhone1').val();
+		const ruPhone2 = $('#ruPhone2').val();
+		const ruPhone3 = $('#ruPhone3').val();
+		const ruPhone = ruPhone1 + '-' + ruPhone2 + '-' + ruPhone3;
+		console.log(ruPhone);
+		
 		const ruEmail = $('#ruEmail').val();
 		const ruAddress = $('#ruAddress').val();
 		const ruDetailAddress = $('#ruDetailAddress').val();
-		const ruGender = $('ruGender').val();
-		const ruBirthday = $('ruBirthday').val();
+		const ruGender = $('input[name="gender"]:checked').val();
+		const ruBirthday = $('#ruBirthday').val();
+		const ruZipcode = $('#ruZipcode').val();
+		console.log(ruBirthday);
 		const regExpAdmin = /^(?!.*(?:admin|root|insert|update|delete|select)).*$/
 		const regExpuid = /^[a-z|A-Z|0-9]*$/;
 		const regExpuPass = /^[a-z|A-Z|0-9]*$/;
 		const regExpuName = /^[a-z|A-Z|가-힣]*$/;
 		const regExpuNickName = /^[a-z|A-Z|가-힣]*$/;
 		const regExpuPhone = /^\d{3}-\d{3,4}-\d{4}$/;
+		const regExpuPhone2 = /^[0-9]*$/;
 		const regExpuEmail = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
 		const regExpuAddress = /^[가-힣|0-9|a-z|A-Z|-|\s]*$/;
 	
@@ -290,21 +298,37 @@
 		}
 	
 		/* 생일 입력 확인 */
-		if (!ruBirthday) {
+		if (ruBirthday.length === 0) {
 			Toast.fire({icon : 'warning', title : "생일을 선택해주세요."});
 			return;
 		}
-		
 		/* 전화번호 입력 확인 */
-		if (ruPhone.trim().length === 0) {
+		if (ruPhone2.trim().length === 0) {
 			Toast.fire({
 				icon : 'warning',
 				title : "전화번호를 입력해주세요."
 			});
 			return;
 		}
+		if (ruPhone3.trim().length === 0) {
+			Toast.fire({
+				icon : 'warning',
+				title : "전화번호를 입력해주세요."
+			});
+			return;
+		}
+		if (!regExpuPhone2.test(ruPhone2)) {
+			Toast.fire({icon : 'warning', title : "전화번호는 숫자만 가능합니다."});
+			form.ruPhone2.select();
+			return
+		}
+		if (!regExpuPhone2.test(ruPhone3)) {
+			Toast.fire({icon : 'warning', title : "전화번호는 숫자만 가능합니다."});
+			form.ruPhone3.select();
+			return
+		}
 		if (!regExpuPhone.test(ruPhone)) {
-			Toast.fire({icon : 'warning', title : "전화번호를 확인해주세요.\n ex)010-1234-5678"});
+			Toast.fire({icon : 'warning', title : "전화번호를 확인해주세요."});
 			form.ruPhone.select();
 			return
 		}
@@ -319,12 +343,11 @@
 			return
 		}
 		
-		
-		if (ruAddress.trim().length === 0) {
+		if (ruDetailAddress.trim().length === 0) {
 			Toast.fire({icon : 'warning', title : "주소를 입력해주세요."});
 			return;
 		}
-		if (!regExpuAddress.test(ruAddress)) {
+		if (!regExpuAddress.test(ruDetailAddress)) {
 			Toast.fire({icon : 'warning', title : "주소는 영문/한글/숫자/- 만 입력 가능합니다."});
 			ruAddress.select();
 			return
@@ -332,7 +355,7 @@
 		console.log(ruid);
 		$.ajax({
 			type : 'POST',
-			url : '/UserSignUpCommand',
+			url : './UserSignUpCommand',
 			data : {
 				ruid : ruid,
 				ruPassword : ruPassword,
@@ -352,16 +375,17 @@
 					ToastConfirm.fire({ icon: 'question', 
 						title: "회원가입을 축하합니다! \n바로 로그인 하시겠습니까?"}).then((result) => {
 						if(result.isConfirmed){
+							$('#signUpModal').modal('hide');
 							openLoginModal();
 						}
 					});
 				} else {
-					showAlert("회원 가입에 실패했습니다. 중복을 확인해주세요.");
+					Toast.fire({icon : 'warning', title : "회원 가입에 실패했습니다. 중복을 확인해주세요."});
 					return;
 				}
 			},
 			error : function() {
-				showAlert("오류가 발생했습니다. 다시 시도해주세요.");
+					Toast.fire({icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요."});
 			}
 		});
 	}
@@ -649,7 +673,7 @@
 			<div class="container">
 				<h5 class="mb-3" style="display: inline-block; text-align: center;">SingUp</h5>
 				<span style="color: red">${l_msg}</span>
-				<form id="user_register_form" action="" method="post">
+				<form id="user_singUp_form" action="" method="post">
 					<div class="form-group">
 						  <div class="input-form-group" style="display: flex; align-items: center;">
 						  	<input type="text" class="form-control" id="ruid" name="ruid" placeholder="ID">
@@ -668,15 +692,25 @@
 					<div class="form-group">
 						<input type="text" class="form-control" id="ruNickName" name="ruNickName" placeholder="Nickname">
 					</div>
+						<input type="radio" name="gender" id="gender-male" value="1" checked="checked"> <label for="gender-male">Male</label>
+						<input type="radio" name="gender" id="gender-female" value="2"> <label for="gender-female">Female</label>
 					<div class="form-group">
-						<input type="radio" id="ruGender" name="ruGender" value="1" checked="checked"> Male
-						<input type="radio" id="ruGender" name="ruGender" value="2"> Female
+						<input type="date" class="form-control" id="ruBirthday" name="ruBirthday" placeholder="Birthday" min="1900-01-01" max="2010-01-01">
 					</div>
 					<div class="form-group">
-						<input type="date" class="form-control" id="ruBirthday" name="ruBirthday" placeholder="Birthday">
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" id="ruPhone" name="ruPhone" placeholder="Phone (ex: 010-1234-5678) ">
+					  <div class="input-form-group" style="display: flex; align-items: center; text-align: center;">
+					    <select id="ruPhone1" name="ruPhone1">
+					      <option>010</option>
+					      <option>011</option>
+					      <option>012</option>
+					      <option>014</option>
+					      <option>017</option>
+					    </select>
+					    <span style="margin-left: 20px; font-size: 18px;">-</span>
+					    <input type="text" class="form-control" id="ruPhone2" name="ruPhone2" placeholder="Phone" style="margin-left: 15px;">
+					    <span style="margin-left: 20px; font-size: 18px;">-</span>
+					    <input type="text" class="form-control" id="ruPhone3" name="ruPhone3" placeholder="Phone" style="margin-left: 15px;">
+					  </div>
 					</div>
 					<div class="form-group">
 						<input type="text" class="form-control" id="ruEmail" name="ruEmail" placeholder="ex) Email@domain.com">
@@ -691,7 +725,7 @@
 						<input type="text" class="form-control" id="ruDetailAddress" name="ruDetailAddress" placeholder="Detailed Address">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control postcode" id="ruZipCode" name="ruZipCode" placeholder="Zipcode">
+						<input type="text" class="form-control postcode" id="ruZipCode" name="ruZipCode" placeholder="Zipcode" readonly="readonly">
 					</div>
 					<div class="button-container">
 					<button type="button" class="btn btn-primary btn-sm" onclick="registerCheck()">Register</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

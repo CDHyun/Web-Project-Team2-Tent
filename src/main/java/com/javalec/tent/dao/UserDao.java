@@ -74,8 +74,8 @@ public class UserDao {
 	        addressPs = con.prepareStatement(sql2);
 	        addressPs.setString(1, uid);
 	        addressPs.setString(2, uAddress);
-	        addressPs.setString(3, uZipcode);
-	        addressPs.setString(4, uDetailAddress);
+	        addressPs.setString(3, uDetailAddress);
+	        addressPs.setString(4, uZipcode);
 	        userAddressCount = addressPs.executeUpdate();
 
 	        if (userCount > 0 && userAddressCount > 0) {

@@ -46,7 +46,7 @@ public class UserSignUpCommand extends HttpServlet implements TentCommand {
 		String uid = request.getParameter("ruid");
 		String uPassword = request.getParameter("ruPassword");
 		String uName = request.getParameter("ruName");
-		String uNickName = request.getParameter("ruNiceName");
+		String uNickName = request.getParameter("ruNickName");
 		String uPhone = request.getParameter("ruPhone");
 		String uEmail = request.getParameter("ruEmail");
 		int uGender = Integer.parseInt(request.getParameter("ruGender"));
