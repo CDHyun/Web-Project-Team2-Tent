@@ -1,15 +1,15 @@
 package com.javalec.tent.dto;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class AdminDto {
 	int pCode;
 	String pName;
 	String pBrandName;
 	int pPrice;
-	Timestamp pInsertdate;
-	Timestamp pupdatedate;
-	Timestamp pdeletedate;
+	Date pInsertdate;
+	Date pupdatedate;
+	Date pdeletedate;
 	String pfName;
 	String pfRealName;
 	int cgNo;
@@ -22,7 +22,7 @@ public class AdminDto {
 	String uid;
 	int pcQty;
 	int pcStatus;
-	Timestamp pcInsertdate;
+	Date pcInsertdate;
 	
 	
 	public AdminDto() {
@@ -40,7 +40,7 @@ public class AdminDto {
 	
 
 
-	public AdminDto(int pcNo, String uid, int pCode, String pColor, int pcQty, int pcStatus, Timestamp pcInsertdate) {
+	public AdminDto(int pcNo, String uid, int pCode, String pColor, int pcQty, int pcStatus, Date pcInsertdate) {
 		super();
 		this.pCode = pCode;
 		this.pColor = pColor;
@@ -92,17 +92,17 @@ public class AdminDto {
 	}
 
 
-	public Timestamp getPcInsertdate() {
+	public Date getPcInsertdate() {
 		return pcInsertdate;
 	}
 
 
-	public void setPcInsertdate(Timestamp pcInsertdate) {
+	public void setPcInsertdate(Date pcInsertdate) {
 		this.pcInsertdate = pcInsertdate;
 	}
 
 
-	public AdminDto(int pCode, String pBrandName,  String pName,String pColor,int pPrice,int pStock, Timestamp pInsertdate, String pfName, String pfRealName) {
+	public AdminDto(int pCode, String pBrandName,  String pName,String pColor,int pPrice,int pStock, Date pInsertdate, String pfName, String pfRealName) {
 		super();
 		this.pCode = pCode;
 		this.pName = pName;
@@ -202,32 +202,32 @@ public class AdminDto {
 	}
 
 
-	public Timestamp getpInsertdate() {
+	public Date getpInsertdate() {
 		return pInsertdate;
 	}
 
 
-	public void setpInsertdate(Timestamp pInsertdate) {
+	public void setpInsertdate(Date pInsertdate) {
 		this.pInsertdate = pInsertdate;
 	}
 
 
-	public Timestamp getPupdatedate() {
+	public Date getPupdatedate() {
 		return pupdatedate;
 	}
 
 
-	public void setPupdatedate(Timestamp pupdatedate) {
+	public void setPupdatedate(Date pupdatedate) {
 		this.pupdatedate = pupdatedate;
 	}
 
 
-	public Timestamp getPdeletedate() {
+	public Date getPdeletedate() {
 		return pdeletedate;
 	}
 
 
-	public void setPdeletedate(Timestamp pdeletedate) {
+	public void setPdeletedate(Date pdeletedate) {
 		this.pdeletedate = pdeletedate;
 	}
 
