@@ -1,3 +1,5 @@
+<%@page import="com.javalec.tent.dto.UserDto"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -64,9 +66,9 @@
                         <h5 class="mb-3">My Account</h5>
 						
 						<c:forEach items="${userInfo}" var="user">
-						<h3>${user.uid}</h3>
+						<h3>기본 회원정보<span style="color: gray; font-size: 16px">&nbsp;필수</span> </h3>
 						
-                        <form id="user_account_form" action="member_account_update_action" method="post">
+                        <form id="user_account_form" action="" method="post">
                             <div class="row">
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
@@ -98,19 +100,57 @@
 											</div>
                                     </div>
                                 </div>
-                              
                                 <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="emailAddress">Email Address *</label>
-                                        <input type="email" class="form-control m_u_check" id="uEmail" name="uEmail" placeholder="이메일" value="${user.uEmail}">
-                                    </div>
+	                                <div class="form-group">
+	                                        <label for="Name">Email Address *</label>
+		                                        <div class="input-form-group" style="display: flex; align-items: center;">
+													<%
+													    ArrayList<UserDto> userInfo = (ArrayList<UserDto>) request.getAttribute("userInfo");
+													    String userEmail = userInfo.get(0).getuEmail();
+													    String[] parts = userEmail.split("@");
+													    String username = parts[0];
+													    String domain = parts[1];
+													    
+													    int maskLength = Math.max(3, username.length() - 3);
+													    String maskedUsername = username.substring(0, maskLength) + "*".repeat(username.length() - maskLength);
+													    
+													    int domainMaskStart = Math.max(0, domain.indexOf('.') - 10); // 첫 번째 점 이전부터 마스킹할 위치 계산
+													    int domainMaskEnd = domain.indexOf('.'); // 첫 번째 점까지 마스킹할 위치 계산
+													    
+													    StringBuilder maskedDomainBuilder = new StringBuilder(domain);
+													    for (int i = domainMaskStart; i < domainMaskEnd; i++) {
+													        maskedDomainBuilder.setCharAt(i, '*'); // 마스킹
+													    }
+													    String maskedDomain = maskedDomainBuilder.toString();
+													    
+													    String maskedEmail = maskedUsername + "@" + maskedDomain;
+													%>
+		                                        	<input type="text" class="form-control" id="uEmail" name="uEmail" placeholder="Email" value="<%=maskedEmail%>" readonly="readonly">
+		                                        	<c:if test="${empty CONFIRM}">
+														<button type="button" class="btn btn-primary btn-sm" onclick="openPasswordCheckModal()" style="margin-left: 15px;">Modify</button>
+		                                        	</c:if>
+		                                        	<c:if test="${!empty CONFIRM}">
+														<button type="button" class="btn btn-primary btn-sm" onclick="openUserReEmailModal()" style="margin-left: 15px;">Modify</button>
+		                                        	</c:if>
+												</div>
+	                                    </div>
                                 </div>
-                                
                                 <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="Phone">Phone *</label>
-                                        <input type="text" class="form-control m_u_check phone_number" id="uPhone" name="uPhone" placeholder="전화번호" value="${user.uPhone}">
-                                    </div>
+	                                <div class="form-group">
+	                                        <label for="Name">Phone *</label>
+		                                        <div class="input-form-group" style="display: flex; align-items: center;">
+													<c:set var="phoneNumber" value="${user.uPhone}" />
+													<c:set var="cleanedNumber" value="${phoneNumber.replaceAll('[^0-9]', '')}" />
+													<c:set var="maskedNumber" value="${fn:substring(cleanedNumber, 0, 3)}-${fn:substring(cleanedNumber, 3, 5)}**-${fn:substring(cleanedNumber, 7, 9)}**" />
+			                                        <input type="text" class="form-control m_u_check phone_number" id="uPhone" name="uPhone" placeholder="전화번호" value="${maskedNumber}" readonly="readonly">
+		                                        	<c:if test="${empty CONFIRM}">
+														<button type="button" class="btn btn-primary btn-sm" onclick="openPasswordCheckModal()" style="margin-left: 15px;">Modify</button>
+		                                        	</c:if>
+		                                        	<c:if test="${!empty CONFIRM}">
+														<button type="button" class="btn btn-primary btn-sm" onclick="openUserRePhoneModal()" style="margin-left: 15px;">Modify</button>
+		                                        	</c:if>
+												</div>
+	                                    </div>
                                 </div>
                                 
                                  <div class="col-12">
@@ -175,6 +215,7 @@
     </section>
     <!-- My Account Area -->
     
+	<!-- 비밀번호 체크 모달 -->
     <div class="modal" id="passwordCheckModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -193,6 +234,7 @@
 			</div>
 		</div>
 	</div>
+	<!-- 이름 변경 모달 -->
     <div class="modal" id="userRenameModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -200,11 +242,61 @@
 					<h5 class="mb-3" style="display: inline-block; text-align: center;">User Rename</h5>
 					<span style="color: red">${l_msg}</span>
 						<div class="form-group">
-							<label for="Password">Please enter the name you want to change.</label>
-							<input type="text" class="form-control postcode" id="uReName" name="uReName" placeholder="name">
+							<label for="text">Please enter the name you want to change.</label>
+							<input type="text" class="form-control" id="uReName" name="uReName" placeholder="name">
 						</div>
 						<div class="button-container">
 							<button type="button" class="btn btn-primary btn-sm" onclick="userRename()">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">Cancle</button>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 이메일 변경 모달 -->
+	<div class="modal" id="userReEmailModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="container">
+					<h5 class="mb-3" style="display: inline-block; text-align: center;">User Email Modify</h5>
+					<span style="color: red">${l_msg}</span>
+						<div class="form-group">
+							<label >Please enter the Email you want to change.</label><br/>
+							<input type="email" class="form-control" id="uReEmail" name="uReEmail" placeholder="email">
+						</div>
+						<div class="button-container">
+							<button type="button" class="btn btn-primary btn-sm" onclick="userReEmail()">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">Cancle</button>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 이메일 변경 모달 -->
+	<div class="modal" id="userRePhoneModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="container">
+					<h5 class="mb-3" style="display: inline-block; text-align: center;">User Phone Number Modify</h5>
+					<span style="color: red">${l_msg}</span>
+						<div class="form-group">
+							<label>Please enter the Phone Number you want to change.</label><br/>
+					  <div class="input-form-group" style="display: flex; align-items: center; text-align: center;">
+					    <select id="uPhone1" name="uPhone1">
+					      <option>010</option>
+					      <option>011</option>
+					      <option>012</option>
+					      <option>014</option>
+					      <option>017</option>
+					    </select>
+					    <span style="margin-left: 20px; font-size: 18px;">-</span>
+					    <input type="text" class="form-control" id="uPhone2" name="uPhone2" placeholder="Phone" style="margin-left: 15px;">
+					    <span style="margin-left: 20px; font-size: 18px;">-</span>
+					    <input type="text" class="form-control" id="uPhone3" name="uPhone3" placeholder="Phone" style="margin-left: 15px;">
+					  </div>
+					</div>
+						<div class="button-container">
+							<button type="button" class="btn btn-primary btn-sm" onclick="userRePhone()">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">Cancle</button>
 						</div>
 				</div>
@@ -236,6 +328,7 @@
 			});
 			return;
 		}
+		
 		$.ajax({
 			type : 'POST',
 			url : './UserPasswordCheck',
@@ -253,12 +346,10 @@
 					return;
 				}
 				if (result === "1") {
-					Toast.fire({
-						icon : 'success',
-						title : "비밀번호가 확인 되었습니다."
-					});
-					$('#passwordCheckModal').modal('hide');
-					window.location.href = "user_my_account.do";
+					Toast.fire({ icon: 'success', title: "비밀번호가 확인 되었습니다." }).then(() => {
+					    $('#passwordCheckModal').modal('hide');
+					    window.location.href = "user_my_account.do";
+					  });
 				}
 			},
 			error : function() {
@@ -266,6 +357,18 @@
 			}
 		});
 	}
+	/* 
+			const regExpPass = /^[a-z|A-Z|0-9]*$/;
+		if (!regExpPass.test(uPassword)) {
+			Toast.fire({
+				icon : 'warning',
+				title : "비밀번호는 영문&숫자만 사용 가능합니다."
+			});
+			form.ruPassword.select();
+			return
+	
+		}
+	*/
 	
 	function openUserRenameModal() {
 		$('#userRenameModal').modal('show');
@@ -273,41 +376,150 @@
 	
 	function userRename() {
 		var uReName = $("#uReName").val();
-		if ($("#cPassword").val() == "") {
+		const regExpName = /^[a-z|A-Z|가-힣]*$/;
+		if ($("#uReName").val() == "") {
 			Toast.fire({ icon : 'warning', title : "변경하실 이름을 입력해주세요", target : '#toastContainer' });
 			return;
+		}
+		if (!regExpName.test(uReName)) {
+			Toast.fire({ icon : 'warning', title : "이름은 한글과 영문만 입력 가능합니다." });
+			$("#uReName").select();
+			return
 		}
 		$.ajax({
 			type : 'POST',
 			url : './UserRename',
 			data : {
-				uid : uid,
-				uPassword : uPassword
+				uReName : uReName
 			},
 			success : function(result) {
 				console.log(result);
 				if (result === "0") {
 					Toast.fire({
 						icon : 'warning',
-						title : "비밀번호를 확인해주세요."
+						title : "변경 중 문제가 발생했습니다."
 					});
 					return;
 				}
 				if (result === "1") {
-					Toast.fire({
-						icon : 'success',
-						title : "비밀번호가 확인 되었습니다."
-					});
-					$('#passwordCheckModal').modal('hide');
-					window.location.href = "user_my_account.do";
+					Toast.fire({ icon: 'success', title: "이름이 변경 되었습니다." }).then(() => {
+						  $('#userRenameModal').modal('hide');
+						  window.location.href = "user_my_account.do";
+						});
 				}
 			},
 			error : function() {
 				showAlert("오류가 발생했습니다. 다시 시도해주세요.");
 			}
 		});
+	}
+	/* Email*/
+	function openUserReEmailModal() {
+		$('#userReEmailModal').modal('show');
+	}
+	
+	function userReEmail() {
+		var uReEmail = $("#uReEmail").val();
+		const regExpEmail = /^\w+@[a-zA-Z_]+?\.(com|co\.kr|net)$/;
+		if ($("#uReEmail").val() == "") {
+			Toast.fire({ icon : 'warning', title : "변경하실 이메일을 입력해주세요", target : '#toastContainer' });
+			return;
+		}
+		if (!regExpEmail.test(uReEmail)) {
+			Toast.fire({icon : 'warning', title : "이메일 형식을 확인해주세요. \n ex) id@domain.com"});
+			$("#uReEmail").select();
+			return
+		}
+		$.ajax({
+			type : 'POST',
+			url : './UserEmailModify',
+			data : {
+				uReEmail : uReEmail
+			},
+			success : function(result) {
+				console.log(result);
+				if (result === "0") {
+					Toast.fire({
+						icon : 'warning',
+						title : "변경 중 문제가 발생했습니다."
+					});
+					return;
+				}
+				if (result === "1") {
+					Toast.fire({ icon: 'success', title: "이메일이 변경 되었습니다." }).then(() => {
+						  $('#userReEmailModal').modal('hide');
+						  window.location.href = "user_my_account.do";
+						});
+				}
+			},
+			error : function() {
+				showAlert("오류가 발생했습니다. 다시 시도해주세요.");
+			}
+		});
+	}
+	
+	/* Phone*/
+	function openUserRePhoneModal() {
+		$('#userRePhoneModal').modal('show');
+	}
+	
+	function userRePhone() {
+		const uPhone1 = $('#uPhone1').val();
+		const uPhone2 = $('#uPhone2').val();
+		const uPhone3 = $('#uPhone3').val();
+		const uPhone = uPhone1 + '-' + uPhone2 + '-' + uPhone3;
 		
+		const regExpuPhone = /^\d{3}-\d{3,4}-\d{4}$/;
+		const regExpuPhone2 = /^[0-9]*$/;
 		
+		if ($("#uPhone2").val() == "") {
+			Toast.fire({ icon : 'warning', title : "변경하실 핸드폰 번호를 입력해주세요.", target : '#toastContainer' });
+			return;
+		}
+		if ($("#uPhone3").val() == "") {
+			Toast.fire({ icon : 'warning', title : "변경하실 핸드폰 번호를 입력해주세요.", target : '#toastContainer' });
+			return;
+		}
+		
+		if (!regExpuPhone2.test(uPhone2)) {
+			Toast.fire({icon : 'warning', title : "전화번호는 숫자만 가능합니다."});
+			return
+		}
+		if (!regExpuPhone2.test(uPhone3)) {
+			Toast.fire({icon : 'warning', title : "전화번호는 숫자만 가능합니다."});
+			return
+		}
+		if (!regExpuPhone.test(uPhone)) {
+			Toast.fire({icon : 'warning', title : "전화번호를 확인해주세요."});
+			return
+		}
+		
+		$.ajax({
+			type : 'POST',
+			url : './UserPhoneModify',
+			data : {
+				uPhone : uPhone
+			},
+			success : function(result) {
+				console.log(result);
+				if (result === "0") {
+					Toast.fire({
+						icon : 'warning',
+						title : "변경 중 문제가 발생했습니다."
+					});
+					return;
+				}
+				if (result === "1") {
+					Toast.fire({ icon: 'success', title: "핸드폰 번호가 변경 되었습니다." }).then(() => {
+						  $('#userRePhoneModal').modal('hide');
+						  window.location.href = "user_my_account.do";
+						});
+				}
+			},
+			error : function() {
+				showAlert("오류가 발생했습니다. 다시 시도해주세요.");
+			}
+		});
 	}
 	
 </script>

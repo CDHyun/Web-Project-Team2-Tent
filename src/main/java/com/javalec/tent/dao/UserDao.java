@@ -87,9 +87,9 @@ public class UserDao {
 	        e.printStackTrace();
 	    } finally {
 	        try {
-	            if (con != null) con.close();
-	            if (userPs != null) userPs.close();
-	            if (addressPs != null) addressPs.close();
+	            if(con != null) con.close();
+	            if(userPs != null) userPs.close();
+	            if(addressPs != null) addressPs.close();
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
@@ -120,12 +120,9 @@ public class UserDao {
 			System.out.println("ERROR");
 		} finally {
 			try {
-				if (con != null)
-					con.close();
-				if (ps != null)
-					ps.close();
-				if (rs != null)
-					rs.close();
+				if(con != null) con.close();
+				if(ps != null) ps.close();
+				if(rs != null) rs.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -242,12 +239,9 @@ public class UserDao {
 			System.out.println("ERROR");
 		} finally {
 			try {
-				if (con != null)
-					con.close();
-				if (ps != null)
-					ps.close();
-				if (rs != null)
-					rs.close();
+				if(con != null) con.close();
+				if(ps != null) ps.close();
+				if(rs != null) rs.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -285,10 +279,8 @@ public class UserDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (con != null)
-					con.close();
-				if (ps != null)
-					ps.close();
+				if(con != null) con.close();
+				if(ps != null) ps.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -315,10 +307,8 @@ public class UserDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (con != null)
-					con.close();
-				if (ps != null)
-					ps.close();
+				if(con != null) con.close();
+				if(ps != null) ps.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -345,10 +335,9 @@ public class UserDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (con != null)
-					con.close();
-				if (ps != null)
-					ps.close();
+				if(con != null) con.close();
+				if(ps != null) ps.close();
+				if(rs != null) rs.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -381,10 +370,87 @@ public class UserDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (con != null)
-					con.close();
-				if (ps != null)
-					ps.close();
+				if(con != null) con.close();
+				if(ps != null) ps.close();
+				if(rs != null) rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public int userReName(String uid, String uReName) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int result = 0;
+		try {
+			con = dataSource.getConnection();
+			
+			String query = "update user set uName = ? where uid = ?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, uReName);
+			ps.setString(2, uid);
+			result = ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) con.close();
+				if (ps != null) ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public int userEmailModify(String uid, String uReMail) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int result = 0;
+		try {
+			con = dataSource.getConnection();
+			
+			String query = "update user set uEmail = ? where uid = ?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, uReMail);
+			ps.setString(2, uid);
+			result = ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) con.close();
+				if (ps != null) ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public int userPhoneModify(String uid, String uPhone) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int result = 0;
+		try {
+			con = dataSource.getConnection();
+			
+			String query = "update user set uPhone = ? where uid = ?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, uPhone);
+			ps.setString(2, uid);
+			result = ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) con.close();
+				if (ps != null) ps.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

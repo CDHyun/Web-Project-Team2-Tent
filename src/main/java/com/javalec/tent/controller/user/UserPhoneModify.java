@@ -1,4 +1,7 @@
-package com.javalec.tent.command;
+package com.javalec.tent.controller.user;
+
+import com.javalec.tent.command.TentCommand;
+import com.javalec.tent.dao.UserDao;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -6,20 +9,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.javalec.tent.dao.UserDao;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class UserSignUpCommand
+ * Servlet implementation class UserPhoneModify
  */
-@WebServlet("/UserSignUpCommand")
-public class UserSignUpCommand extends HttpServlet implements TentCommand {
+@WebServlet("/UserPhoneModify")
+public class UserPhoneModify extends HttpServlet implements TentCommand {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserSignUpCommand() {
+    public UserPhoneModify() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,23 +45,12 @@ public class UserSignUpCommand extends HttpServlet implements TentCommand {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String uid = request.getParameter("ruid");
-		String uPassword = request.getParameter("ruPassword");
-		String uName = request.getParameter("ruName");
-		String uNickName = request.getParameter("ruNickName");
-		String uPhone = request.getParameter("ruPhone");
-		String uEmail = request.getParameter("ruEmail");
-		int uGender = Integer.parseInt(request.getParameter("ruGender"));
-		String uBirthday = request.getParameter("ruBirthday");
-		String uAddress = request.getParameter("ruAddress");
-		String uDetailAddress = request.getParameter("ruDetailAddress");
-		String uZipcode = request.getParameter("ruZipcode");
-		
+		HttpSession session = request.getSession();
+		String uid = (String)session.getAttribute("SUID");
+		String uPhone = request.getParameter("uPhone");
 		UserDao userDao = new UserDao();
-		
-		int result = userDao.signUp(uid, uPassword, uName, uNickName, uPhone, uEmail, uGender, uBirthday, uAddress, uDetailAddress, uZipcode);
+		int result = userDao.userPhoneModify(uid, uPhone);
 		response.getWriter().write(result + "");
-		
 	}
 
 }

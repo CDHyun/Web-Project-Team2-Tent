@@ -178,7 +178,6 @@
 		const ruPhone2 = $('#ruPhone2').val();
 		const ruPhone3 = $('#ruPhone3').val();
 		const ruPhone = ruPhone1 + '-' + ruPhone2 + '-' + ruPhone3;
-		console.log(ruPhone);
 		
 		const ruEmail = $('#ruEmail').val();
 		const ruAddress = $('#ruAddress').val();
@@ -186,7 +185,7 @@
 		const ruGender = $('input[name="gender"]:checked').val();
 		const ruBirthday = $('#ruBirthday').val();
 		const ruZipcode = $('#ruZipcode').val();
-		console.log(ruBirthday);
+		console.log(ruZipcode);
 		const regExpAdmin = /^(?!.*(?:admin|root|insert|update|delete|select)).*$/
 		const regExpuid = /^[a-z|A-Z|0-9]*$/;
 		const regExpuPass = /^[a-z|A-Z|0-9]*$/;
@@ -194,7 +193,7 @@
 		const regExpuNickName = /^[a-z|A-Z|가-힣]*$/;
 		const regExpuPhone = /^\d{3}-\d{3,4}-\d{4}$/;
 		const regExpuPhone2 = /^[0-9]*$/;
-		const regExpuEmail = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+		const regExpuEmail = /^\w+@[a-zA-Z_]+?\.(com|co\.kr|net)$/;
 		const regExpuAddress = /^[가-힣|0-9|a-z|A-Z|-|\s]*$/;
 	
 		/* Admin등 아이디 유효성 검사*/
@@ -723,7 +722,7 @@
 						<input type="text" class="form-control" id="ruDetailAddress" name="ruDetailAddress" placeholder="Detailed Address">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control postcode" id="ruZipCode" name="ruZipCode" placeholder="Zipcode" readonly="readonly">
+						<input type="text" class="form-control postcode" id="ruZipcode" name="ruZipcode" placeholder="Zipcode" readonly="readonly">
 					</div>
 					<div class="button-container">
 					<button type="button" class="btn btn-primary btn-sm" onclick="registerCheck()">Register</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

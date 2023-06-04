@@ -1,12 +1,15 @@
 package com.javalec.tent.controller.user;
 
 import com.javalec.tent.command.TentCommand;
+import com.javalec.tent.dao.UserDao;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class UserRename
@@ -42,8 +45,12 @@ public class UserRename extends HttpServlet implements TentCommand {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		HttpSession session = request.getSession();
+		String uid = (String)session.getAttribute("SUID");
+		String uReName = request.getParameter("uReName");
+		UserDao userDao = new UserDao();
+		int result = userDao.userReName(uid, uReName);
+		response.getWriter().write(result + "");
 	}
 
 }

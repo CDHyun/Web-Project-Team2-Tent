@@ -1,4 +1,7 @@
-package com.javalec.tent.command;
+package com.javalec.tent.controller.user;
+
+import com.javalec.tent.command.TentCommand;
+import com.javalec.tent.dao.UserDao;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,19 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.javalec.tent.dao.UserDao;
-
 /**
- * Servlet implementation class UserPasswordCheck
+ * Servlet implementation class UserEmailModify
  */
-@WebServlet("/UserPasswordCheck")
-public class UserPasswordCheck extends HttpServlet implements TentCommand {
+@WebServlet("/UserEmailModify")
+public class UserEmailModify extends HttpServlet implements TentCommand {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserPasswordCheck() {
+    public UserEmailModify() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,19 +45,12 @@ public class UserPasswordCheck extends HttpServlet implements TentCommand {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String uid = request.getParameter("uid");
-		String uPassword = request.getParameter("uPassword");
-		UserDao userDao = new UserDao();
 		HttpSession session = request.getSession();
-		int result = userDao.userPasswordConfirm(uid, uPassword);
-		if(result == 1) {
-			session.setAttribute("CONFIRM", result);
-			response.getWriter().write(result + "");
-		} else {
-			response.getWriter().write(result + "");
-		}
-		
+		String uid = (String)session.getAttribute("SUID");
+		String uReEmail = request.getParameter("uReEmail");
+		UserDao userDao = new UserDao();
+		int result = userDao.userEmailModify(uid, uReEmail);
+		response.getWriter().write(result + "");
 	}
 
 }

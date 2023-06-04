@@ -16,7 +16,6 @@ public class UserInfoCommand implements TentCommand {
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String uid = (String)session.getAttribute("SUID");
-		System.out.println("USER ID : "+uid);
 //		String uid = request.getParameter("uid");
 		UserDao userDao = new UserDao();
 		ArrayList<UserDto> userinfo = new ArrayList<UserDto>();
