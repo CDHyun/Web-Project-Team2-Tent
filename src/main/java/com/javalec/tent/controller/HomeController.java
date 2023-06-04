@@ -14,6 +14,8 @@ import com.javalec.tent.command.AdminCommand;
 import com.javalec.tent.command.AdminContentCommand;
 import com.javalec.tent.command.AdminDeleteCommand;
 import com.javalec.tent.command.AdminInputCommand;
+import com.javalec.tent.command.AdminNoticeInsert;
+import com.javalec.tent.command.AdminNoticeSelect;
 import com.javalec.tent.command.AdminPurchaseStatusCommand;
 import com.javalec.tent.command.AdminStatusChangeCommand;
 import com.javalec.tent.command.AdminUpdateCommand;
@@ -169,6 +171,19 @@ public class HomeController extends HttpServlet {
 			command = new AdminStatusChangeCommand();
 			command.execute(request, response);
 			viewPage = "adminpurchaseCheck.do";
+			break;
+		case "/adminNotice.do": //고객관리열기
+			command = new AdminNoticeSelect();
+			command.execute(request, response);
+			viewPage = "adminNoticeBoard.jsp";
+			break;
+		case "/adminWriteNotice.do": //공지작성페이지이동
+			viewPage = "adminWriteNotice.jsp";
+			break;
+		case "/adminNoticeEnd.do": //작성한 공지를 db에 넣음
+			command = new AdminNoticeInsert();
+			command.execute(request, response);
+			viewPage = "adminNotice.do";
 			break;
 		
 		default:

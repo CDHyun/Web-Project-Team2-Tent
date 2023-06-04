@@ -422,4 +422,68 @@ public class AdminDao {
 		
 	}
 	
+	
+	
+	
+	
+	// 공지가져오기 메서드
+	public ArrayList<AdminDto> noticeSearch(String aid) {
+		
+		
+		ArrayList<AdminDto> dtos = new ArrayList<AdminDto>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			
+			String WhereDefault = "INSERT INTO notice (aid, nCgNo, nTitle, nContent, nInsertDate) \r\n"
+					+ "SELECT a.aid, 1, '안녕하세요', '반갑습니다.', NOW()\r\n"
+					+ "FROM admin a\r\n"
+					+ "WHERE a.aid = ?";
+			
+			
+				
+			preparedStatement = connection.prepareStatement(WhereDefault);
+			preparedStatement.setString(1, aid);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				//String aid = resultSet.getString(1);
+				int nCgNo = resultSet.getInt(2);
+				String nTitle = resultSet.getString(3);
+				String nContent = resultSet.getString(4);
+				Date nInsertDate = resultSet.getDate(5);
+				
+		
+				AdminDto dto = new AdminDto(aid, nCgNo, nTitle, nContent, nInsertDate);
+				dtos.add(dto);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet != null){ // 무언가 들어가 있으면close
+					resultSet.close();
+				}
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return dtos;
+	
+	
+	}
+	
+	
+	
 }
