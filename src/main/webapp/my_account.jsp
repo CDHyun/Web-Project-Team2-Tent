@@ -152,28 +152,13 @@
 												</div>
 	                                    </div>
                                 </div>
+		                                        	<c:if test="${empty CONFIRM}">
+														<button type="button" class="btn btn-primary btn-sm" onclick="openPasswordCheckModal()" style="margin-left: 15px;">배송지 관리</button>
+		                                        	</c:if>
+		                                        	<c:if test="${!empty CONFIRM}">
+														<a href="user_address.do"><button type="button" class="btn btn-primary btn-sm" style="margin-left: 15px;">배송지 관리</button></a>
+		                                        	</c:if>
                                 
-                                 <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="Address">Address *</label>
-                                        <input type="text" class="form-control address m_u_check" id="uaAddress" name="uaAddress"  placeholder="주소" value="${user.uaAddress}">
-                                    </div>
-                                </div>
-                                 <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="Address">DetailAddress *</label>
-                                        <input type="text" class="form-control address m_u_check" id="uaDetailAddress" name="uaDetailAddress"  placeholder="주소" value="${user.uaDetailAddress}">
-                                    </div>
-                                </div>
-                                
-                                 <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="Post">Post *</label><br>
-                                        <input type="text" class="form-control postcode m_u_check" id="uaZipcode" name="uaZipcode" placeholder="우편번호" value="${user.uaZipcode}">
-                                    	<button type="button" class="btn btn-outline-primary mb-1 searchAddr">search</button>
-                                    </div>
-                                </div>
-
                                 
                                 <div class="col-12">
                                     <div class="form-group">

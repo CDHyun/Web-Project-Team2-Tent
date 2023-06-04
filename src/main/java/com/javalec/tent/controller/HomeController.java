@@ -26,6 +26,7 @@ import com.javalec.tent.command.IndexCommand;
 import com.javalec.tent.command.ProductDetailCommand;
 import com.javalec.tent.command.PurchaserInfoCommand;
 import com.javalec.tent.command.TentCommand;
+import com.javalec.tent.command.UserAddressListCommand;
 import com.javalec.tent.command.UserInfoCommand;
 import com.javalec.tent.command.UserLogoutCommand;
 
@@ -95,12 +96,17 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "index.do";
 			break;
-			/* 로그아웃 후 메인 페이지로 이동 */
 		/* 마이 페이지로 이동 */
 		case "/user_my_account.do":
 			command = new UserInfoCommand();
 			command.execute(request, response);
 			viewPage = "my_account.jsp";
+			break;
+			/* 마이 페이지로 이동 */
+		case "/user_address.do":
+			command = new UserAddressListCommand();
+			command.execute(request, response);
+			viewPage = "my_address.jsp";
 			break;
 		case "/product_detail.do":
 			command = new ProductDetailCommand();

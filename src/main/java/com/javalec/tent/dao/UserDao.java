@@ -33,6 +33,7 @@ public class UserDao {
 	String uaZipcode;					// 유저 우편 번호
 	String uaAddress;					// 유저 주소(API가 주는 값)
 	String uaDetailAddress;				// 유저 상세 주소(직접 입력)
+	String uaContent;					// 유저 배송지 내용
 
 	DataSource dataSource;
 
@@ -451,6 +452,94 @@ public class UserDao {
 			try {
 				if (con != null) con.close();
 				if (ps != null) ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public ArrayList<UserDto> userAddressInfo(String uid) {
+		ArrayList<UserDto> addressList = new ArrayList<UserDto>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int result = 0;
+		try {
+			con = dataSource.getConnection();
+			
+			String query = "select u.uid, ua.uaNo, u.uPhone, ua.uaAddress, ua.uaDetailAddress, ua.uaZipcode, ua.uaContent "
+					+ "from user u, userAddress ua "
+					+ "where u.uid = ua.uid and u.uid = ?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, uid);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				String wkuid = rs.getString(1);
+				int wkuaNo = rs.getInt(2);
+				String wkuPhone = rs.getString(3);
+				String wkuAddress = rs.getString(4);
+				String wkuDetailAddress = rs.getString(5);
+				String wkuZipcode = rs.getString(6);
+				String wkuContent = rs.getString(7);
+				UserDto userDto = new UserDto(wkuid, wkuPhone, wkuaNo, wkuZipcode, wkuAddress, wkuDetailAddress, wkuContent);
+				addressList.add(userDto);
+				
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) con.close();
+				if (ps != null) ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return addressList;
+	}
+	
+	public int userAddressAdd(String uid, String uaAddress, String uaDetailAddress, String uaZipcode, String uaContent) {
+		Connection con = null;
+		PreparedStatement maxUaNoStatement = null;
+		PreparedStatement insertStatement = null;
+		int result = 0;
+		try {
+			con = dataSource.getConnection();
+			
+            // uaNo 값을 조회하기 위한 서브쿼리를 실행하여 결과를 변수에 저장
+            String maxUaNoQuery = "SELECT COALESCE(MAX(uaNo), 0) + 1 FROM userAddress WHERE uid = ?";
+            maxUaNoStatement = con.prepareStatement(maxUaNoQuery);
+            maxUaNoStatement.setString(1, uid);
+            int maxUaNo;
+            try (ResultSet resultSet = maxUaNoStatement.executeQuery()) {
+                resultSet.next();
+                maxUaNo = resultSet.getInt(1);
+            }
+
+            // INSERT 문 실행
+            String insertQuery = "INSERT INTO userAddress (uid, uaNo, uaAddress, uaDetailAddress, uaZipcode, uaContent) VALUES (?, ?, ?, ?, ?, ?)";
+            insertStatement = con.prepareStatement(insertQuery);
+            insertStatement.setString(1, uid);
+            insertStatement.setInt(2, maxUaNo);
+            insertStatement.setString(3, uaAddress);
+            insertStatement.setString(4, uaDetailAddress);
+            insertStatement.setString(5, uaZipcode);
+            insertStatement.setString(6, uaContent);
+            int rowsAffected = insertStatement.executeUpdate();
+            if(rowsAffected > 0) {
+            	result = 1;
+            }
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) con.close();
+				if (maxUaNoStatement != null) maxUaNoStatement.close();
+				if (insertStatement != null) insertStatement.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

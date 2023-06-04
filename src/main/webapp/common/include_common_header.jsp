@@ -341,8 +341,16 @@
 			return
 		}
 		
-		if (ruDetailAddress.trim().length === 0) {
+		if (ruAddress.trim().length === 0) {
 			Toast.fire({icon : 'warning', title : "주소를 입력해주세요."});
+			return;
+		}
+		if (ruDetailAddress.trim().length === 0) {
+			Toast.fire({icon : 'warning', title : "상세 주소를 입력해주세요."});
+			return;
+		}
+		if (ruZipcode.length === 0) {
+			Toast.fire({icon : 'warning', title : "우편번호를 입력해주세요."});
 			return;
 		}
 		if (!regExpuAddress.test(ruDetailAddress)) {

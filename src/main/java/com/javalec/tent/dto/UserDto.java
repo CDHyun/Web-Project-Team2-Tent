@@ -21,6 +21,7 @@ public class UserDto {
 	String uaZipcode;					// 유저 우편 번호
 	String uaAddress;					// 유저 주소(API가 주는 값)
 	String uaDetailAddress;				// 유저 상세 주소(직접 입력)
+	String uaContent;					// 유저 배송지 정보
 
 	
 	/* Constructor */
@@ -49,16 +50,20 @@ public class UserDto {
 		this.uaDetailAddress = uaDetailAddress;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/* 사용자 배송지 리스트 조회 */
+	public UserDto(String uid, String uPhone, int uaNo, String uaZipcode, String uaAddress, String uaDetailAddress,
+		String uaContent) {
+	super();
+	this.uid = uid;
+	this.uPhone = uPhone;
+	this.uaNo = uaNo;
+	this.uaZipcode = uaZipcode;
+	this.uaAddress = uaAddress;
+	this.uaDetailAddress = uaDetailAddress;
+	this.uaContent = uaContent;
+}
+
+
 	/* getter & setter */
 	public String getUid() {
 		return uid;
@@ -216,6 +221,16 @@ public class UserDto {
 
 	public void setuGender(int uGender) {
 		this.uGender = uGender;
+	}
+
+
+	public String getUaContent() {
+		return uaContent;
+	}
+
+
+	public void setUaContent(String uaContent) {
+		this.uaContent = uaContent;
 	}
 	
 	
