@@ -87,9 +87,9 @@ public class UserDao {
 	        e.printStackTrace();
 	    } finally {
 	        try {
-	            if (con != null) con.close();
-	            if (userPs != null) userPs.close();
-	            if (addressPs != null) addressPs.close();
+	            if(con != null) con.close();
+	            if(userPs != null) userPs.close();
+	            if(addressPs != null) addressPs.close();
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
@@ -120,12 +120,9 @@ public class UserDao {
 			System.out.println("ERROR");
 		} finally {
 			try {
-				if (con != null)
-					con.close();
-				if (ps != null)
-					ps.close();
-				if (rs != null)
-					rs.close();
+				if(con != null) con.close();
+				if(ps != null) ps.close();
+				if(rs != null) rs.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -209,25 +206,32 @@ public class UserDao {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		int rowCount = 0;
 
 		try {
 			con = dataSource.getConnection();
 
-			String query = "select u.uid, u.uPassword, u.uName, u.uNickName, u.uPhone, u.uEmail, u.uGender, u.uBirthday, u.uInsertDate, ua.uaNo, ua.uaAddress, ua.uaDetailAddress, ua.uaZipCode from user u, userAddress ua where u.uid = ua.uid and u.uid = ?";
+			String query = "select u.uid, u.uPassword, u.uName, u.uNickName, u.uPhone, u.uEmail, u.uGender,"
+					+ " u.uBirthday, u.uInsertDate, ua.uaNo, ua.uaAddress, ua.uaDetailAddress, ua.uaZipcode"
+					+ " from user u, userAddress ua where u.uid = ua.uid and u.uid = ? and ua.uaNo = 1";
 			ps = con.prepareStatement(query);
 			ps.setString(1, uid);
 			rs = ps.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				String wkid = rs.getString(1);
 				String wkPassword = rs.getString(2);
 				String wkName = rs.getString(3);
-				String wkPhone = rs.getString(4);
-				String wkAddress = rs.getString(5);
+				String wkNickName = rs.getString(4);
+				String wkPhone = rs.getString(5);
 				String wkEmail = rs.getString(6);
-				String wkInsertDate = rs.getString(7);
-//				UserDto userDto = new UserDto(wkid, wkPassword, wkName, wkPhone, wkAddress, wkEmail, wkInsertDate);
-//				beanList.add(userDto);
+				int wkGender = rs.getInt(7);
+				String wkBirthday = rs.getString(8);
+				String wkInsertDate = rs.getString(9);
+				int wkuaNo = rs.getInt(10);
+				String wkuaAddress = rs.getString(11);
+				String wkuaDetailAddress = rs.getString(12);
+				String wkuaZipCode = rs.getString(13);
+				UserDto userDto = new UserDto(wkid, wkPassword, wkName, wkNickName, wkPhone, wkBirthday, wkGender, wkEmail, wkInsertDate, wkuaNo, wkuaZipCode, wkuaAddress, wkuaDetailAddress);
+				beanList.add(userDto);
 			}
 
 		} catch (Exception e) {
@@ -235,12 +239,9 @@ public class UserDao {
 			System.out.println("ERROR");
 		} finally {
 			try {
-				if (con != null)
-					con.close();
-				if (ps != null)
-					ps.close();
-				if (rs != null)
-					rs.close();
+				if(con != null) con.close();
+				if(ps != null) ps.close();
+				if(rs != null) rs.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -278,10 +279,8 @@ public class UserDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (con != null)
-					con.close();
-				if (ps != null)
-					ps.close();
+				if(con != null) con.close();
+				if(ps != null) ps.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -308,10 +307,8 @@ public class UserDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (con != null)
-					con.close();
-				if (ps != null)
-					ps.close();
+				if(con != null) con.close();
+				if(ps != null) ps.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -319,4 +316,146 @@ public class UserDao {
 		return result;
 	}
 
+	public String userNickName(String uid) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String uNickname = "";
+		try {
+			con = dataSource.getConnection();
+
+			String query = "select uNickName from user where uid = ?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, uid);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				uNickname = rs.getString(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(con != null) con.close();
+				if(ps != null) ps.close();
+				if(rs != null) rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return uNickname;
+	}
+	
+	public int userPasswordConfirm(String uid, String uPassword) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String dbPassword = "";
+		int result = 0;
+		try {
+			con = dataSource.getConnection();
+
+			String query = "select uPassword from user where uid = ?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, uid);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				dbPassword = rs.getString(1);
+			}
+			
+			if(dbPassword.equals(uPassword)) {
+				result = 1;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(con != null) con.close();
+				if(ps != null) ps.close();
+				if(rs != null) rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public int userReName(String uid, String uReName) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int result = 0;
+		try {
+			con = dataSource.getConnection();
+			
+			String query = "update user set uName = ? where uid = ?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, uReName);
+			ps.setString(2, uid);
+			result = ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) con.close();
+				if (ps != null) ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public int userEmailModify(String uid, String uReMail) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int result = 0;
+		try {
+			con = dataSource.getConnection();
+			
+			String query = "update user set uEmail = ? where uid = ?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, uReMail);
+			ps.setString(2, uid);
+			result = ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) con.close();
+				if (ps != null) ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public int userPhoneModify(String uid, String uPhone) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int result = 0;
+		try {
+			con = dataSource.getConnection();
+			
+			String query = "update user set uPhone = ? where uid = ?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, uPhone);
+			ps.setString(2, uid);
+			result = ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) con.close();
+				if (ps != null) ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 } // End Class
