@@ -427,7 +427,7 @@ public class AdminDao {
 	
 	
 	// 공지가져오기 메서드
-	public ArrayList<AdminDto> noticeSearch(String aid) {
+	public ArrayList<AdminDto> noticeSearch(String aaid) {
 		
 		
 		ArrayList<AdminDto> dtos = new ArrayList<AdminDto>();
@@ -438,26 +438,20 @@ public class AdminDao {
 		try {
 			connection = dataSource.getConnection();
 			
-			String WhereDefault = "INSERT INTO notice (aid, nCgNo, nTitle, nContent, nInsertDate) \r\n"
-					+ "SELECT a.aid, 1, '안녕하세요', '반갑습니다.', NOW()\r\n"
-					+ "FROM admin a\r\n"
-					+ "WHERE a.aid = ?";
+			String WhereDefault = "select n.nNo, n.aid, n.nTitle, n.nInsertDate from notice n,admin a where n.aid = a.aid";
 			
 			
-				
 			preparedStatement = connection.prepareStatement(WhereDefault);
-			preparedStatement.setString(1, aid);
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()) {
-				//String aid = resultSet.getString(1);
-				int nCgNo = resultSet.getInt(2);
+				int nNo = resultSet.getInt(1);
+				String aid = resultSet.getString(2);
 				String nTitle = resultSet.getString(3);
-				String nContent = resultSet.getString(4);
-				Date nInsertDate = resultSet.getDate(5);
+				Date nInsertDate = resultSet.getDate(4);
 				
 		
-				AdminDto dto = new AdminDto(aid, nCgNo, nTitle, nContent, nInsertDate);
+				AdminDto dto = new AdminDto(nNo, aid, nTitle, nInsertDate);
 				dtos.add(dto);
 			}
 		}catch(Exception e) {
@@ -484,6 +478,42 @@ public class AdminDao {
 	
 	}
 	
+	
+	// 공지글 작성메서드
+	public void noticeInsert(String aid, String nTitle, String nContent) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try {
+	        connection = dataSource.getConnection();
+	        String query = "INSERT INTO notice (aid, nTitle, nContent, nInsertDate) SELECT ?,  ?, ?, NOW() FROM admin a WHERE a.aid = ?";
+	        preparedStatement = connection.prepareStatement(query);
+	        preparedStatement.setString(1, aid);
+	        preparedStatement.setString(2, nTitle);
+	        preparedStatement.setString(3, nContent);
+	        preparedStatement.setString(4, aid);
+	        preparedStatement.executeUpdate();
+
+	   
+
+		
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
 	
 	
 }
