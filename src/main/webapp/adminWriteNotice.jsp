@@ -12,7 +12,8 @@
 <title>공지작성</title>
 </head>
 <body>
-<form action="" method="post">
+<form action="adminNoticeEnd.do" method="post">
+
 	<div class="container">
 		<div class="row">
 			<table class="table" style="text-align: center; border: 1px solid #dddddd">
@@ -23,14 +24,16 @@
 				</thead>
 					<tr>
 						<td><input type="text" name="title" size="20" placeholder="제목을 작성하세요" style="width: 100%"></td>
-					</tr><br/>
+					</tr>
 					<tr>
 						<td><textarea rows="5" cols="20" name="content" placeholder="200자 이내로 입력하세요" style="width: 100%"></textarea></td>
 					</tr>
-					<tr>
-						<td colspan="2" class="text-right"><a href="adminNotice.do" class="btn btn-primary">작성완료</a></td>
-					</tr>
-			</table>	
+					
+			</table>
+				
+			<a  href="adminNoticeEnd.do"><button type="button" class="btn btn-primary">작성완료</button></a>&nbsp;&nbsp;&nbsp;
+			<a  href="adminNotice.do"><button type="button" class="btn btn-danger">취소</button></a>
+		
 		</div>
 	</div>
 </form>

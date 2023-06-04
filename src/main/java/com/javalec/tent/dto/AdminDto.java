@@ -32,6 +32,8 @@ public class AdminDto {
 	String nTitle;
 	String nContent;
 	Date nInsertdate;
+	int nNo;
+	
 	
 	public AdminDto() {
 		// TODO Auto-generated constructor stub
@@ -78,7 +80,7 @@ public class AdminDto {
 
 
 	
-	
+	//insertNotice
 	public AdminDto(String aid, int nCgNo, String nTitle, String nContent, Date nInsertdate) {
 		super();
 		this.aid = aid;
@@ -91,6 +93,17 @@ public class AdminDto {
 
 	
 	
+	
+	
+	public AdminDto(int nNo, String aid, String nTitle, Date nInsertdate) {
+		super();
+		this.aid = aid;
+		this.nTitle = nTitle;
+		this.nInsertdate = nInsertdate;
+		this.nNo = nNo;
+	}
+
+
 	
 	
 	
@@ -352,6 +365,16 @@ public class AdminDto {
 
 	public void setnInsertdate(Date nInsertdate) {
 		this.nInsertdate = nInsertdate;
+	}
+
+
+	public int getnNo() {
+		return nNo;
+	}
+
+
+	public void setnNo(int nNo) {
+		this.nNo = nNo;
 	}
 
 	

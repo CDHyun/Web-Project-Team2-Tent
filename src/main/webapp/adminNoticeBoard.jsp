@@ -13,6 +13,11 @@
 <title>고객관리</title>
 </head>
 <body>
+<!-- Header Start -->
+  <div class="header">
+    <jsp:include page="/adminSidebar.jsp" />
+  </div>
+  <!-- Header End -->
 	<div class="container">
 		<div class="row">
 			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
@@ -24,12 +29,14 @@
 						<th style="background-color: #eeeeee; text-align: center;">작성일</th>
 					</tr>
 				</thead>
-					<tr>
-						<td>1</td>
-						<td>안녕하세요</td>
-						<td>김욱현</td>
-						<td>2023-06-04</td>
-					</tr>
+					<c:forEach items="${list}" var="dto">
+    					<tr>
+      						<td>${dto.nNo}</td>
+      						<td>${dto.nTitle}</td>
+     						<td>${dto.aid}</td>
+      						<td>${dto.nInsertdate}</td>
+    					</tr>
+  					</c:forEach>
 			</table>	
 			<a href="adminWriteNotice.do" class="btn btn-primary">글쓰기</a>	
 		</div>
