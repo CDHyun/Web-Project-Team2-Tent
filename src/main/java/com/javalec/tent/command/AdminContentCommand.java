@@ -13,9 +13,26 @@ public class AdminContentCommand implements TentCommand {
 		// TODO Auto-generated method stub
 		String pCode =request.getParameter("pCode");
 		
+		//페이징 처리
+		 String vpage = request.getParameter("vpage");
+		    if(vpage==null){
+		    	vpage = "1";
+		    }
+		int v_page = Integer.parseInt(vpage);
+		int index_no = (v_page-1)*7;
+		
+	
+		
 		AdminDao dao  = new AdminDao();
 		
-		AdminDto dto = dao.contentView(pCode);
+		
+		// count select 
+		int daocount = dao.pCount();
+		request.setAttribute("d_count", daocount);
+		
+		
+		
+		AdminDto dto = dao.contentView(pCode ,index_no);
 		request.setAttribute("content_view", dto);
 
 	}

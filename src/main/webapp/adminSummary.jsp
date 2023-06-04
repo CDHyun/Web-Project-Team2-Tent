@@ -3,7 +3,6 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-<!-- <html lang="en" style="height: 100%"> -->
 
 <head>
   <meta charset="UTF-8">
@@ -16,30 +15,60 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 
-<body>
-  <div class="container">
- <canvas id="myChart" style="width: 300px; height: 200px;"></canvas>
+<style>
+  .header {
+    display: flex;
+  }
 
+  .content {
+    margin-left: 350px;
+  }
+
+  table {
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 50%;
+  }
+
+  th,
+  td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+</style>
+
+<body>
+
+  <!-- Header Start -->
+  <div class="header">
+    <jsp:include page="/adminSidebar.jsp" />
   </div>
-<div class="container">
-        <div class="row my-3">
-            <div class="col-12">
-            </div>
+  <!-- Header End -->
+
+
+  <div class="container">
+    <div class="row my-3">
+      <div class="col-lg-6">
+        <canvas id="myChart" style="width: 100%; height: 300px;"></canvas>
+      </div>
+      <div class="col-lg-6">
+        <div class="card" style="width: 100%; height: 300px;">
+          <div class="card-body">
+            <canvas id="myChart2" style="width: 100%; height: 200px;"></canvas>
+          </div>
+          <div class="card card-body text-center bg-primary " style="width: 100%; height: 200px;">
+            <h3>색상별 판매량</h3>
+          </div>
         </div>
-        <div class="row my-2">
-           
-            <div class="col-lg-6">
-                <div class="card" style="width: 300px; height: 300px;">
-                    <div class="card-body">
-                        <canvas id="myChart2" style="width: 300px; height: 200px;"></canvas>
-                    </div>
-                    <div class="card card-body text-center bg-primary ">
-                      <h3>색상별 판매량</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
+
   <!-- 부트스트랩 -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -56,10 +85,10 @@
     var myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['월', '화', '수', '목', '금', '토','일'],
+        labels: ['월', '화', '수', '목', '금', '토', '일'],
         datasets: [{
           label: '# of Votes',
-          data: [125000, 100009, 300000, 500000, 200000, 300000,100000],
+          data: [125000, 100009, 300000, 500000, 200000, 300000, 100000],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -80,45 +109,71 @@
         }]
       },
       options: {
-    	  maintainAspectRatio: true,
-    	  responsive: false,
-    	  scales: {
-    	    yAxes: [{
-    	      ticks: {
-    	        beginAtZero: true
-    	      }
-    	    }]
-    	  }
-    	}
+        maintainAspectRatio: true,
+        responsive: false,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
     });
 
-  </script>
-  
-  <script>
-  data = {
-        datasets: [{
-            backgroundColor: ['Red','Yellow','Blue','Black'],
-            data: [10, 20, 30,40]
-        }],       
-        // 라벨의 이름이 툴팁처럼 마우스가 근처에 오면 나타남
-        labels: ['Red','Yellow','Blue','Black'] 
+    // 막대차트
+    data = {
+      datasets: [{
+        backgroundColor: ['Red', 'Yellow', 'Blue', 'Black'],
+        data: [10, 20, 30, 40]
+      }],
+      // 라벨의 이름이 툴팁처럼 마우스가 근처에 오면 나타남
+      labels: ['Red', 'Yellow', 'Blue', 'Black']
     };
 
-  
-  // 도넛형 차트
-  var ctx2 = document.getElementById("myChart2");
-  var myDoughnutChart = new Chart(ctx2, {
+    // 도넛형 차트
+    var ctx2 = document.getElementById("myChart2");
+    var myDoughnutChart = new Chart(ctx2, {
       type: 'doughnut',
       data: data,
       options: {
-    	  maintainAspectRatio: true,
-    	  responsive: false
-    	}
-  });
+        maintainAspectRatio: true,
+        responsive: false
+      }
+    });
   </script>
   
-  
-  
+  <br/><br/><br/>
+  <table border="" class="content" >
+  <tr>
+    <th>구매번호</th>
+    <th>구매자</th>
+    <th>제품번호</th>
+    <th>색상</th>
+    <th>수량</th>
+    <th>주문날짜</th>
+   	<th>상태</th>
+  </tr>
+  <c:forEach items="${check}" var="dto">
+    <tr>
+      <td>${dto.pcNo}</td>
+      <td>${dto.uid}</td>
+      <td>${dto.pCode}</td>
+      <td>${dto.pColor}</td>
+      <td>${dto.pcQty}</td>
+      <td>${dto.pcInsertdate}</td>
+     <td>
+  		<select name="status">
+  			<option value="-1" ${dto.pcStatus == -1 ? 'selected' : ''}>주문취소</option>
+  			<option value="0" ${dto.pcStatus == 0 ? 'selected' : ''}>상품준비중</option>
+ 			<option value="1" ${dto.pcStatus == 1 ? 'selected' : ''}>배송중</option>
+  			<option value="2" ${dto.pcStatus == 2 ? 'selected' : ''}>배송완료</option>
+		</select>
+	</td>
+    </tr>
+  </c:forEach>
+</table>
+
 </body>
 
 </html>

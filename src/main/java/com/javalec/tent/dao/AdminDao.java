@@ -1,9 +1,9 @@
 package com.javalec.tent.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import javax.naming.Context;
@@ -116,7 +116,7 @@ public class AdminDao {
 				String pColor = resultSet.getString(4);
 				int pPrice = resultSet.getInt(5);
 				int pStock = resultSet.getInt(6);
-				Timestamp pInsertdate = resultSet.getTimestamp(7);
+				Date pInsertdate = resultSet.getDate(7);
 				String pfName = resultSet.getString(8);
 				String pfRealName = resultSet.getString(9);
 				
@@ -149,7 +149,7 @@ public class AdminDao {
 	}
 	
 	//수정, 삭제하기위해 데이터보여주는 메서드
-	public AdminDto contentView(String ppCode) {
+	public AdminDto contentView(String ppCode, int index_no) {
 		AdminDto dto = null;
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -158,7 +158,8 @@ public class AdminDao {
 		try {
 			connection = dataSource.getConnection();
 			String query = "select p.pCode, p.pBrandName, p.pName ,po.pColor, p.pPrice, po.pStock, p.pupdatedate,pf.pfName, pf.pfRealName  from product p, productoption po, productfile pf where p.pCode = po.pCode and p.pCode = pf.pCode and p.pCode=?";
-			preparedStatement = connection.prepareStatement(query);
+			String query1 = " LIMIT " + index_no + ",7";
+			preparedStatement = connection.prepareStatement(query+query1);
 			preparedStatement.setInt(1, Integer.parseInt(ppCode));
 			resultSet = preparedStatement.executeQuery();
 			
@@ -169,7 +170,7 @@ public class AdminDao {
 				String pColor = resultSet.getString(4);
 				int pPrice = resultSet.getInt(5);
 				int pStock = resultSet.getInt(6);
-				Timestamp pUpdatedate = resultSet.getTimestamp(7);
+				Date pUpdatedate = resultSet.getDate(7);
 				String pfName = resultSet.getString(8);
 				String pfRealName = resultSet.getString(9);
 				
@@ -356,7 +357,7 @@ public class AdminDao {
 				int pCode = resultSet.getInt(3);
 				String pColor = resultSet.getString(4);
 				int pcQty = resultSet.getInt(5);
-				Timestamp pcInsertdate = resultSet.getTimestamp(6);
+				Date pcInsertdate = resultSet.getDate(6);
 				int pcStatus = resultSet.getInt(7);
 				
 				
