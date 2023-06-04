@@ -16,6 +16,13 @@
 	<jsp:include page="common/include_common_top.jsp"/>
     <!-- include_common_top -->
 	<link rel="stylesheet" href="css/shop/product.css">
+	<script type="text/javascript">
+		/* 가격 포맷 변환 */
+		var price = parseInt("<c:out value="'${product.pPrice}'"/>");
+		var formattedPrice = price.toLocaleString();
+		console.log(price);
+		console.log(formattedPrice);
+	</script>
 </head>
 
 <body>
@@ -66,24 +73,24 @@
                                         <img class="d-block w-100" src="images/product/${product.pfRealName}" alt="First slide">
                                     </a>
                                     <!-- Product Badge -->
-                                    <div class="product_badge">
+                                   <!--  <div class="product_badge">
                                         <span class="badge-new">New</span>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="carousel-item">
-                                    <a class="gallery_img" href="img/product-img/pd-big-thumb-2.png" title="Second Slide">
-                                        <img class="d-block w-100" src="img/product-img/pd-big-thumb-2.png" alt="Second slide">
+                                    <a class="gallery_img" href="images/product/${product.pfHoverRealName}" title="Second Slide">
+                                        <img class="d-block w-100" src="images/product/${product.pfHoverRealName}" alt="Second slide">
                                     </a>
                                     <!-- Product Badge -->
-                                    <div class="product_badge">
+                                   <!--  <div class="product_badge">
                                         <span class="badge-new">Sale</span>
-                                    </div>
+                                    </div> -->
                                 </div>
-                                <div class="carousel-item">
+                                <!-- <div class="carousel-item">
                                     <a class="gallery_img" href="img/product-img/pd-big-thumb-3.png" title="Third Slide">
                                         <img class="d-block w-100" src="img/product-img/pd-big-thumb-3.png" alt="Third slide">
                                     </a>
-                                    <!-- Product Badge -->
+                                    Product Badge
                                     <div class="product_badge">
                                         <span class="badge-new">-20%</span>
                                     </div>
@@ -92,23 +99,23 @@
                                     <a class="gallery_img" href="img/product-img/pd-big-thumb-4.png" title="Fourth Slide">
                                         <img class="d-block w-100" src="img/product-img/pd-big-thumb-4.png" alt="Fourth slide">
                                     </a>
-                                    <!-- Product Badge -->
+                                    Product Badge
                                     <div class="product_badge">
                                         <span class="badge-new">Hot</span>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
 
                             <!-- Carosel Indicators -->
                             <ol class="carousel-indicators">
-                                <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url(img/product-img/pd-big-thumb-1.png);">
+                                <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url(images/product/${product.pfRealName});">
                                 </li>
-                                <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url(img/product-img/pd-big-thumb-2.png);">
+                                <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url(images/product/${product.pfHoverRealName});">
                                 </li>
-                                <li data-target="#product_details_slider" data-slide-to="2" style="background-image: url(img/product-img/pd-big-thumb-3.png);">
+                                <!-- <li data-target="#product_details_slider" data-slide-to="2" style="background-image: url(img/product-img/pd-big-thumb-3.png);">
                                 </li>
                                 <li data-target="#product_details_slider" data-slide-to="3" style="background-image: url(img/product-img/pd-big-thumb-4.png);">
-                                </li>
+                                </li> -->
                             </ol>
                         </div>
                     </div>
@@ -126,7 +133,7 @@
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <span class="text-muted">(8 Reviews)</span>
                         </div>
-                        <h4 class="price mb-4">$120.99 <span>$190</span></h4>
+                        <h4 class="price mb-4">&#8361;${product.pPrice} <span>$190</span></h4>
 
                         <!-- Overview -->
                         <div class="short_overview mb-4">

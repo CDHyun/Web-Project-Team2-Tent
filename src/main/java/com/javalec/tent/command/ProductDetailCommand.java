@@ -18,7 +18,6 @@ public class ProductDetailCommand implements TentCommand {
 		ArrayList<ProductDto> productInfo = new ArrayList<ProductDto>();
 		ProductDao productDao = new ProductDao();
 		productInfo = productDao.productDetail(pCode);
-		System.out.println("호출 완료");
 		request.setAttribute("productInfo", productInfo);
 		
 		Gson gson = new Gson();

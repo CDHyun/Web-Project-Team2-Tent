@@ -47,7 +47,6 @@ public class ProductDetail extends HttpServlet {
 		ProductDao productDao = new ProductDao();
 		productInfo = productDao.productDetail(pCode);
 		request.setAttribute("productInfo", productInfo);
-		System.out.println("호출 완료");
 		Gson gson = new Gson();
 		String json = gson.toJson(productInfo);
 		response.setContentType("application/json");
