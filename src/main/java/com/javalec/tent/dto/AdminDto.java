@@ -25,6 +25,14 @@ public class AdminDto {
 	Date pcInsertdate;
 	
 	
+	
+	//공지사항에 필요한 변수
+	String aid;
+	int nCgNo;
+	String nTitle;
+	String nContent;
+	Date nInsertdate;
+	
 	public AdminDto() {
 		// TODO Auto-generated constructor stub
 	}
@@ -52,55 +60,7 @@ public class AdminDto {
 	}
 
 
-	public int getPcNo() {
-		return pcNo;
-	}
-
-
-	public void setPcNo(int pcNo) {
-		this.pcNo = pcNo;
-	}
-
-
-	public String getUid() {
-		return uid;
-	}
-
-
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
-
-
-	public int getPcQty() {
-		return pcQty;
-	}
-
-
-	public void setPcQty(int pcQty) {
-		this.pcQty = pcQty;
-	}
-
-
-	public int getPcStatus() {
-		return pcStatus;
-	}
-
-
-	public void setPcStatus(int pcStatus) {
-		this.pcStatus = pcStatus;
-	}
-
-
-	public Date getPcInsertdate() {
-		return pcInsertdate;
-	}
-
-
-	public void setPcInsertdate(Date pcInsertdate) {
-		this.pcInsertdate = pcInsertdate;
-	}
-
+	
 
 	public AdminDto(int pCode, String pBrandName,  String pName,String pColor,int pPrice,int pStock, Date pInsertdate, String pfName, String pfRealName) {
 		super();
@@ -119,13 +79,16 @@ public class AdminDto {
 
 	
 	
-	
-	
+	public AdminDto(String aid, int nCgNo, String nTitle, String nContent, Date nInsertdate) {
+		super();
+		this.aid = aid;
+		this.nCgNo = nCgNo;
+		this.nTitle = nTitle;
+		this.nContent = nContent;
+		this.nInsertdate = nInsertdate;
+	}
 
 
-	
-	
-	
 	
 	
 	
@@ -292,7 +255,105 @@ public class AdminDto {
 	}
 	
 	
-	
+	public int getPcNo() {
+		return pcNo;
+	}
+
+
+	public void setPcNo(int pcNo) {
+		this.pcNo = pcNo;
+	}
+
+
+	public String getUid() {
+		return uid;
+	}
+
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+
+	public int getPcQty() {
+		return pcQty;
+	}
+
+
+	public void setPcQty(int pcQty) {
+		this.pcQty = pcQty;
+	}
+
+
+	public int getPcStatus() {
+		return pcStatus;
+	}
+
+
+	public void setPcStatus(int pcStatus) {
+		this.pcStatus = pcStatus;
+	}
+
+
+	public Date getPcInsertdate() {
+		return pcInsertdate;
+	}
+
+
+	public void setPcInsertdate(Date pcInsertdate) {
+		this.pcInsertdate = pcInsertdate;
+	}
+
+
+	public String getAid() {
+		return aid;
+	}
+
+
+	public void setAid(String aid) {
+		this.aid = aid;
+	}
+
+
+	public int getnCgNo() {
+		return nCgNo;
+	}
+
+
+	public void setnCgNo(int nCgNo) {
+		this.nCgNo = nCgNo;
+	}
+
+
+	public String getnTitle() {
+		return nTitle;
+	}
+
+
+	public void setnTitle(String nTitle) {
+		this.nTitle = nTitle;
+	}
+
+
+	public String getnContent() {
+		return nContent;
+	}
+
+
+	public void setnContent(String nContent) {
+		this.nContent = nContent;
+	}
+
+
+	public Date getnInsertdate() {
+		return nInsertdate;
+	}
+
+
+	public void setnInsertdate(Date nInsertdate) {
+		this.nInsertdate = nInsertdate;
+	}
+
 	
 	
 	

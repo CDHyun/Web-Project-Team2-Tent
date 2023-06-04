@@ -45,12 +45,12 @@
 	
 	
 <form action="adminDelete.do" method="post" class="content">  
-		pCode <input type="text" name="pCode" value="${content_view.pCode }" readonly="readonly"><br/>
-		pBrandName <input type="text" name="pBrandName" value="${content_view.pBrandName }"><br/>
-		pName <input type="text" name="pName" value="${content_view.pName }"><br/>
-		pPrice <input type="text" name="pPrice" value="${content_view.pPrice }" ><br/>
-		pColor <input type="text" name="pColor" value="${content_view.pColor }"><br/>
-		pStock <input type="text" name="pStock" value="${content_view.pStock }"><br/>
+		상품코드 <input type="text" name="pCode" value="${content_view.pCode }" readonly="readonly"><br/>
+		브랜드명 <input type="text" name="pBrandName" value="${content_view.pBrandName }"><br/>
+		상품명 <input type="text" name="pName" value="${content_view.pName }"><br/>
+		가격 <input type="text" name="pPrice" value="${content_view.pPrice }" ><br/>
+		색상 <input type="text" name="pColor" value="${content_view.pColor }"><br/>
+		재고 <input type="text" name="pStock" value="${content_view.pStock }"><br/>
 		파일 : <input type="text" name="fileName" value="${content_view.pfName }"><br/>
 		
 				
