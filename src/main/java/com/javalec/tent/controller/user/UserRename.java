@@ -1,27 +1,24 @@
-package com.javalec.tent.command;
+package com.javalec.tent.controller.user;
 
+import com.javalec.tent.command.TentCommand;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import com.javalec.tent.dao.UserDao;
-
 
 /**
- * Servlet implementation class UserLoginCommand
+ * Servlet implementation class UserRename
  */
-@WebServlet("/UserLoginCommand")
-public class UserLoginCommand extends HttpServlet implements TentCommand {
+@WebServlet("/UserRename")
+public class UserRename extends HttpServlet implements TentCommand {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserLoginCommand() {
+    public UserRename() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,20 +42,8 @@ public class UserLoginCommand extends HttpServlet implements TentCommand {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String uid = request.getParameter("luid");
-		String uPassword = request.getParameter("luPassword");
-		System.out.println("uid : " + uid);
-		System.out.println("uPassword : " + uPassword);
-		UserDao userDao = new UserDao();
-		HttpSession session = request.getSession();
-		int result = userDao.login(uid, uPassword);
-		if(result == 1) {
-			session.setAttribute("SUID", uid);
-			response.getWriter().write(result + "");
-		} else {
-			response.getWriter().write(result + "");
-		}
-		
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

@@ -7,8 +7,7 @@
 	<script src="js/jquery.min.js"></script>
   	<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
   	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
-	<script type="text/javascript">
-	
+<script type="text/javascript">
 	function loginCheck() {
 		var luid = $("#luid").val();
 		var luPassword = $("#luPassword").val();
@@ -24,7 +23,7 @@
 		}
 		$.ajax({
 			type : 'POST',
-			url : './UserLoginCommand',
+			url : './UserLogin',
 			data : {
 				luid : luid,
 				luPassword : luPassword
@@ -509,7 +508,7 @@
 						<!-- Wishlist -->
 						<div class="wishlist-area">
 							<c:if test="${empty SUID}">
-								<a onclick="emptySessionUser()"><i
+								<a onclick="emptySessionUser()" class="wishlist-btn"><i
 									class="icofont-heart"></i></a>
 							</c:if>
 							<c:if test="${!empty SUID}">
@@ -608,8 +607,7 @@
 							</div>
 							<c:if test="${!empty SUID}">
 								<ul class="user-meta-dropdown">
-									<li class="user-title"><span>Hello,</span>
-										${sMember.m_name} 🙂</li>
+									<li class="user-title"><span>Hello,&nbsp;</span>${SUNICKNAME}😉</li>
 									<li><a href="user_my_account.do">My Account</a></li>
 									<li><a href="order_list">Orders List</a></li>
 									<li><a href="wishlist_view">Wishlist</a></li>

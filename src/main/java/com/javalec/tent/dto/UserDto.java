@@ -31,7 +31,7 @@ public class UserDto {
 	
 //	u.uid, u.uPassword, u.uName, u.uNickName, u.uPhone, u.uEmail, u.uGender, u.uBirthday, u.uInsertDate, ua.uaNo, ua.uaAddress, ua.uaDetailAddress, ua.uaZipCode from user u, userAddress
 	/* 사용자 정보 조회 */
-	public UserDto(String uid, String uPassword, String uName, String uNickName, String uPhone, String uBirthday,
+	public UserDto(String uid, String uPassword, String uName, String uNickName, String uPhone, String uBirthday, int uGender,
 			String uEmail, String uInsertDate, int uaNo, String uaZipcode, String uaAddress, String uaDetailAddress) {
 		super();
 		this.uid = uid;
@@ -40,6 +40,7 @@ public class UserDto {
 		this.uNickName = uNickName;
 		this.uPhone = uPhone;
 		this.uBirthday = uBirthday;
+		this.uGender = uGender;
 		this.uEmail = uEmail;
 		this.uInsertDate = uInsertDate;
 		this.uaNo = uaNo;

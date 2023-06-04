@@ -215,7 +215,7 @@ public class UserDao {
 
 			String query = "select u.uid, u.uPassword, u.uName, u.uNickName, u.uPhone, u.uEmail, u.uGender,"
 					+ " u.uBirthday, u.uInsertDate, ua.uaNo, ua.uaAddress, ua.uaDetailAddress, ua.uaZipcode"
-					+ " from user u, userAddress ua where u.uid = ua.uid and u.uid = ?";
+					+ " from user u, userAddress ua where u.uid = ua.uid and u.uid = ? and ua.uaNo = 1";
 			ps = con.prepareStatement(query);
 			ps.setString(1, uid);
 			rs = ps.executeQuery();
@@ -233,9 +233,7 @@ public class UserDao {
 				String wkuaAddress = rs.getString(11);
 				String wkuaDetailAddress = rs.getString(12);
 				String wkuaZipCode = rs.getString(13);
-				System.out.println(wkid);
-				System.out.println(wkPassword);
-				UserDto userDto = new UserDto(wkid, wkPassword, wkName, wkNickName, wkPhone, wkBirthday, wkEmail, wkInsertDate, wkuaNo, wkuaZipCode, wkuaAddress, wkuaDetailAddress);
+				UserDto userDto = new UserDto(wkid, wkPassword, wkName, wkNickName, wkPhone, wkBirthday, wkGender, wkEmail, wkInsertDate, wkuaNo, wkuaZipCode, wkuaAddress, wkuaDetailAddress);
 				beanList.add(userDto);
 			}
 
@@ -328,4 +326,70 @@ public class UserDao {
 		return result;
 	}
 
+	public String userNickName(String uid) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String uNickname = "";
+		try {
+			con = dataSource.getConnection();
+
+			String query = "select uNickName from user where uid = ?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, uid);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				uNickname = rs.getString(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null)
+					con.close();
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return uNickname;
+	}
+	
+	public int userPasswordConfirm(String uid, String uPassword) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String dbPassword = "";
+		int result = 0;
+		try {
+			con = dataSource.getConnection();
+
+			String query = "select uPassword from user where uid = ?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, uid);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				dbPassword = rs.getString(1);
+			}
+			
+			if(dbPassword.equals(uPassword)) {
+				result = 1;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null)
+					con.close();
+				if (ps != null)
+					ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 } // End Class

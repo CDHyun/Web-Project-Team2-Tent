@@ -1,4 +1,4 @@
-package com.javalec.tent.command;
+package com.javalec.tent.controller.user;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -6,18 +6,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.javalec.tent.command.TentCommand;
+import com.javalec.tent.dao.UserDao;
+
 
 /**
- * Servlet implementation class UserLoginForm
+ * Servlet implementation class UserLoginCommand
  */
-@WebServlet("/login_form")
-public class UserLoginForm extends HttpServlet implements TentCommand {
+@WebServlet("/UserLogin")
+public class UserLogin extends HttpServlet implements TentCommand {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserLoginForm() {
+    public UserLogin() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,15 +39,29 @@ public class UserLoginForm extends HttpServlet implements TentCommand {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.sendRedirect("login_form.jsp");
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.sendRedirect("login_form.jsp");
+		String uid = request.getParameter("luid");
+		String uPassword = request.getParameter("luPassword");
+		System.out.println("uid : " + uid);
+		System.out.println("uPassword : " + uPassword);
+		UserDao userDao = new UserDao();
+		HttpSession session = request.getSession();
+		int result = userDao.login(uid, uPassword);
+		String uNickName = userDao.userNickName(uid);
+		if(result == 1) {
+			session.setAttribute("SUID", uid);
+			session.setAttribute("SUNICKNAME", uNickName);
+			response.getWriter().write(result + "");
+		} else {
+			response.getWriter().write(result + "");
+		}
+		
 	}
 
 }

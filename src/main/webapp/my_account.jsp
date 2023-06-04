@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,14 +12,9 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <!-- include_common_top -->
 	<jsp:include page="common/include_common_top.jsp"/>
-    <!-- include_common_top -->
     <link rel="stylesheet" href="css/shop/user.css">
-	<!-- jQuery (Necessary for All JavaScript Plugins) -->
-	<jsp:include page="common/include_common_script.jsp"/>
+
 	<script src="js/shop/user.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script type="text/javascript">
-	</script>
 
 </head>
 
@@ -81,8 +77,25 @@
                                 
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="firstName">Name *</label>
-                                        <input type="text" class="form-control" id="uName" name="uName" placeholder="이름" value="${user.uName}">
+                                        <label for="Name">Name *</label>
+	                                        <div class="input-form-group" style="display: flex; align-items: center;">
+	                                        	<c:set var="name" value="${user.uName}" />
+												<c:set var="length" value="${fn:length(name)}" />
+												<c:set var="firstChar" value="${fn:substring(name, 0, 1)}" />
+												<c:set var="lastChar" value="${fn:substring(name, length - 1, length)}" />
+												<c:set var="middleMask" value="" />
+												<c:forEach var="i" begin="1" end="${length - 2}">
+												  <c:set var="middleMask" value="${middleMask}*"/>
+												</c:forEach>
+												<c:set var="maskedName" value="${firstChar}${middleMask}${lastChar}" />
+	                                        	<input type="text" class="form-control" id="uName" name="uName" placeholder="이름" value="${maskedName}" readonly="readonly">
+	                                        	<c:if test="${empty CONFIRM}">
+													<button type="button" class="btn btn-primary btn-sm" onclick="openPasswordCheckModal()" style="margin-left: 15px;">Rename</button>
+	                                        	</c:if>
+	                                        	<c:if test="${!empty CONFIRM}">
+													<button type="button" class="btn btn-primary btn-sm" onclick="openUserRenameModal()" style="margin-left: 15px;">Rename</button>
+	                                        	</c:if>
+											</div>
                                     </div>
                                 </div>
                               
@@ -96,7 +109,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="Phone">Phone *</label>
-                                        <input type="text" class="form-control m_u_check phone_number" id="m_phone" name="m_phone" placeholder="전화번호" value="${user.uPhone}">
+                                        <input type="text" class="form-control m_u_check phone_number" id="uPhone" name="uPhone" placeholder="전화번호" value="${user.uPhone}">
                                     </div>
                                 </div>
                                 
@@ -116,7 +129,7 @@
                                  <div class="col-12">
                                     <div class="form-group">
                                         <label for="Post">Post *</label><br>
-                                        <input type="text" class="form-control postcode m_u_check" id="m_post" name="m_post" placeholder="우편번호" value="${user.uaZipcode}">
+                                        <input type="text" class="form-control postcode m_u_check" id="uaZipcode" name="uaZipcode" placeholder="우편번호" value="${user.uaZipcode}">
                                     	<button type="button" class="btn btn-outline-primary mb-1 searchAddr">search</button>
                                     </div>
                                 </div>
@@ -161,11 +174,144 @@
         </div>
     </section>
     <!-- My Account Area -->
+    
+    <div class="modal" id="passwordCheckModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="container">
+					<h5 class="mb-3" style="display: inline-block; text-align: center;">Password Confirm</h5>
+					<span style="color: red">${l_msg}</span>
+						<div class="form-group">
+							<label for="Password">Please enter your password to change the information.</label>
+							<input type="password" class="form-control" id="cPassword" name="cPassword" placeholder="your password">
+						</div>
+						<div class="button-container">
+							<button type="button" class="btn btn-primary btn-sm" onclick="passwordCheck()">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">Cancle</button>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div class="modal" id="userRenameModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="container">
+					<h5 class="mb-3" style="display: inline-block; text-align: center;">User Rename</h5>
+					<span style="color: red">${l_msg}</span>
+						<div class="form-group">
+							<label for="Password">Please enter the name you want to change.</label>
+							<input type="text" class="form-control postcode" id="uReName" name="uReName" placeholder="name">
+						</div>
+						<div class="button-container">
+							<button type="button" class="btn btn-primary btn-sm" onclick="userRename()">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">Cancle</button>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
     <!-- Footer Area -->
  	<jsp:include page="common/include_common_bottom.jsp"/>
     <!-- Footer Area -->
+	<!-- jQuery (Necessary for All JavaScript Plugins) -->
+	<jsp:include page="common/include_common_script.jsp"/>
+	
+<script type="text/javascript">
 
+	function openPasswordCheckModal() {
+		$('#passwordCheckModal').modal('show');
+	}
+	
+	function passwordCheck() {
+		var uid = $("#uid").val();
+		var uPassword = $("#cPassword").val();
+
+		if ($("#cPassword").val() == "") {
+			Toast.fire({
+				icon : 'warning',
+				title : "비밀번호를 입력해주세요",
+				target : '#toastContainer'
+			});
+			return;
+		}
+		$.ajax({
+			type : 'POST',
+			url : './UserPasswordCheck',
+			data : {
+				uid : uid,
+				uPassword : uPassword
+			},
+			success : function(result) {
+				console.log(result);
+				if (result === "0") {
+					Toast.fire({
+						icon : 'warning',
+						title : "비밀번호를 확인해주세요."
+					});
+					return;
+				}
+				if (result === "1") {
+					Toast.fire({
+						icon : 'success',
+						title : "비밀번호가 확인 되었습니다."
+					});
+					$('#passwordCheckModal').modal('hide');
+					window.location.href = "user_my_account.do";
+				}
+			},
+			error : function() {
+				showAlert("오류가 발생했습니다. 다시 시도해주세요.");
+			}
+		});
+	}
+	
+	function openUserRenameModal() {
+		$('#userRenameModal').modal('show');
+	}
+	
+	function userRename() {
+		var uReName = $("#uReName").val();
+		if ($("#cPassword").val() == "") {
+			Toast.fire({ icon : 'warning', title : "변경하실 이름을 입력해주세요", target : '#toastContainer' });
+			return;
+		}
+		$.ajax({
+			type : 'POST',
+			url : './UserRename',
+			data : {
+				uid : uid,
+				uPassword : uPassword
+			},
+			success : function(result) {
+				console.log(result);
+				if (result === "0") {
+					Toast.fire({
+						icon : 'warning',
+						title : "비밀번호를 확인해주세요."
+					});
+					return;
+				}
+				if (result === "1") {
+					Toast.fire({
+						icon : 'success',
+						title : "비밀번호가 확인 되었습니다."
+					});
+					$('#passwordCheckModal').modal('hide');
+					window.location.href = "user_my_account.do";
+				}
+			},
+			error : function() {
+				showAlert("오류가 발생했습니다. 다시 시도해주세요.");
+			}
+		});
+		
+		
+	}
+	
+</script>
+	
 </body>
 
 </html>

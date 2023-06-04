@@ -315,3 +315,4 @@ $(".related_product_add_wishList").on("click", function(e){
 	});
 	e.preventDefault();  
 });
+

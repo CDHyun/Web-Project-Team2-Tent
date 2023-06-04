@@ -124,7 +124,7 @@
                 <!-- Single Product Description -->
                 <div class="col-12 col-lg-6">
                     <div class="single_product_desc">
-                        <h4 class="title mb-2">Floral V-Neck Dress</h4>
+                        <h4 class="title mb-2">${product.pName}</h4>
                         <div class="single_product_ratings mb-2">
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <i class="fa fa-star" aria-hidden="true"></i>
@@ -163,13 +163,13 @@
                                 </div>
                                 <div class="custom-control custom-radio">
                                     <input type="radio" id="customRadio5" name="customRadio" class="custom-control-input">
-                                    <label class="custom-control-label white" for="customRadio5"></label>
+                                    <label class="custom-control-label beige" for="customRadio5"></label>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Size Option -->
-                        <div class="widget p-0 size mb-3">
+                        <!-- <div class="widget p-0 size mb-3">
                             <h6 class="widget-title">Size</h6>
                             <div class="widget-desc">
                                 <ul>
@@ -180,14 +180,15 @@
                                     <li><a href="#">XL</a></li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <!-- Add to Cart Form -->
+                        <!-- Add to Cart/Buy Form -->
                         <form class="cart clearfix my-5 d-flex flex-wrap align-items-center" method="post">
                             <div class="quantity">
                                 <input type="number" class="qty-text form-control" id="qty2" step="1" min="1" max="12" name="quantity" value="1">
                             </div>
-                            <button type="submit" name="addtocart" value="5" class="btn btn-primary mt-1 mt-md-0 ml-1 ml-md-3">Add to cart</button>
+                            <button type="button" name="addtocart" value="5" class="btn btn-primary mt-1 mt-md-0 ml-1 ml-md-3">Add to cart</button>
+                            <button type="button" name="buy" value="5" class="btn btn-primary mt-1 mt-md-0 ml-1 ml-md-3">Buy</button>
                         </form>
 
                         <!-- Others Info -->
@@ -198,7 +199,7 @@
                         </div>
 
                         <!-- Size Guide -->
-                        <div class="sizeguide">
+                       <!--  <div class="sizeguide">
                             <h6>Size Guide</h6>
                             <div class="size_guide_thumb d-flex">
                                 <a class="size_guide_img" href="img/bg-img/size-1.png" style="background-image: url(img/bg-img/size-1.png);">
@@ -208,7 +209,7 @@
                                 <a class="size_guide_img" href="img/bg-img/size-3.png" style="background-image: url(img/bg-img/size-3.png);">
                                 </a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
