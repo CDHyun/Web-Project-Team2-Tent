@@ -11,8 +11,9 @@ public class CartDeleteCommand implements TentCommand {
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		int pCode = Integer.parseInt(request.getParameter("pCode"));
+		String uid =request.getParameter("uid");
 		CartDao dao = new CartDao();
-		dao.cartDeleteAction(pCode);
+		dao.cartDeleteAction(pCode, uid);
 	}
 
 }

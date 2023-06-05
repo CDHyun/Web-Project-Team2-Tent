@@ -71,7 +71,7 @@ DataSource dataSource;
 		return dtos;
 	}
 	
-	public void cartDeleteAction(int pCode){
+	public void cartDeleteAction(int pCode, String uid){
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -79,9 +79,10 @@ DataSource dataSource;
 	
 		try {
 			connection = dataSource.getConnection();
-			String query = " delete from cart where pCode =?";
+			String query = " delete from cart where uid =? and pCode =?";
 			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setInt(1, pCode);
+			preparedStatement.setString(1, uid);
+			preparedStatement.setInt(2, pCode);
 			preparedStatement.executeUpdate();
 			
 		}catch(Exception e) {

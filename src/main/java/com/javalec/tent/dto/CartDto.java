@@ -47,6 +47,12 @@ public class CartDto {
 		}
 	
 	
+	
+	public CartDto(String uid, int pCode) {
+		super();
+		this.uid = uid;
+		this.pCode = pCode;
+	}
 	public int getcNo() {
 		return cNo;
 	}
