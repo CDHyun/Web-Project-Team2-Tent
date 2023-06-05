@@ -39,14 +39,15 @@ public PurchaseDao() {
  		try {
  			connection = dataSource.getConnection();
  			String query = "select uName, uPhone, uEmail, uaAddress, uaZipcode "
- 					+ "from user u , useraddress ua "
+ 					+ "from user u, userAddress ua "
  					+ "where u.uid = ua.uid and u.uid = ?";
  			preparedStatement = connection.prepareStatement(query); 
  			preparedStatement.setString(1, uid);
  			resultSet = preparedStatement.executeQuery();
-
+ 			
  			while (resultSet.next()) {
  				String uName = resultSet.getString(1);
+ 				System.out.println("USER NAME : " + resultSet.getString(1));
  				String uPhone = resultSet.getString(2);
  				String uEmail = resultSet.getString(3);
  				String uaAddress = resultSet.getString(4);

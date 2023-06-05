@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!doctype html>
 <html lang="en">
 
@@ -20,7 +21,6 @@
 
 <body>
 
-<c:set var="users" value="${selectUser}" />
 
 		<%-- <% request.setCharacterEncoding("utf-8"); 
 		String pcDM = request.getParameter(“pcDM”); 
@@ -71,11 +71,12 @@
                 <div class="col-12">
                     <div class="checkout_details_area clearfix">
                         <h5 class="mb-4">Orderer Info</h5>
+                        <c:set var="user" value="${selectUser}"/>
                         <form id="orderer_info_form" method="post">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="first_name">ID</label>
-                                    <input type="text" class="form-control o_check" id="first_name" name="m_id" readonly value="${users[0].uid}" >
+                                    <input type="text" class="form-control o_check" id="first_name" name="m_id" value="${user[0].uid}" readonly="readonly">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="last_name">Name</label>
@@ -113,9 +114,7 @@
 									</form>
 								</div>
 							</div>
-                                
-                                
-                                
+                               
                                 
                                 
                             

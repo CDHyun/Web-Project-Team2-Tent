@@ -125,7 +125,7 @@
                         </div>
                         <div class="checkout_pagination d-flex justify-content-end mt-3">
                             <a href="http://localhost:8080/Web-Project-Team2-Tent/payment.do" class="btn btn-primary mt-2 ml-2 d-none d-sm-inline-block order_back" id="back_payment">Go Back</a>
-                            <a href="http://localhost:8080/Web-Project-Team2-Tent/purchase_complete.do" class="btn btn-primary mt-2 ml-2" id="purchase_complete_btn" >Order</a>
+                            <a href="http://localhost:8080/Web-Project-Team2-Tent/purchaseinsert.do" class="btn btn-primary mt-2 ml-2" id="purchase_complete_btn" >Order</a>
                         </div>     
                         <form id="order_create_form" method="post">
                         	<input type="hidden" name="total_price" value="${tot_price}">
