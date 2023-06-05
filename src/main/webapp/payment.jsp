@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix='c' uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html lang="en">
 
@@ -18,6 +19,10 @@
 </head>
 
 <body>
+
+		
+
+
     <!-- Preloader -->
     <div id="preloader">
         <div class="spinner-grow" role="status">
@@ -46,11 +51,11 @@
     <!-- Breadcumb Area -->
 
     <div class="checkout_steps_area">
-        <a class="complated"><i class="icofont-check-circled"></i> Orderer</a>
-        <a class="complated"><i class="icofont-check-circled"></i> Reciever</a>
+        <a class="Completed"><i class="icofont-check-circled"></i> Orderer</a>
+        <a class="Completed"><i class="icofont-check-circled"></i> Receiver</a>
         <a class="active"><i class="icofont-check-circled"></i> Payment</a>
         <a><i class="icofont-check-circled"></i> Confirm</a>
-        <a><i class="icofont-check-circled"></i> Complate</a>
+        <a><i class="icofont-check-circled"></i> Complete</a>
     </div>
 
     <!-- Checkout Area -->
@@ -157,11 +162,10 @@
 		             </div>
 
                 <div class="col-12">
-                    <div class="checkout_pagination d-flex justify-content-end mt-30">
-                        <a href="" class="btn btn-primary mt-2 ml-2 order_back" id="back_payment">Go Back</a>
-                        <a href="" class="btn btn-primary mt-2 ml-2 order_next" id="payment_next_btn">Final Step</a>
+                <div class="checkout_pagination d-flex justify-content-end mt-30">
+                        <a href="http://localhost:8080/Web-Project-Team2-Tent/purchase_info.jsp" class="btn btn-primary mt-2 ml-2 order_back" id="back_payment">Go Back</a>
+                        <a href="http://localhost:8080/Web-Project-Team2-Tent/purchase_check.jsp" class="btn btn-primary mt-2 ml-2 order_next" id="payment_next_btn">Final Step</a>
                     </div>
-                </div>
             </div>
         </div>
     </div>
