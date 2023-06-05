@@ -18,6 +18,7 @@ import com.javalec.tent.command.AdminNoticeInsert;
 import com.javalec.tent.command.AdminNoticeSelect;
 import com.javalec.tent.command.AdminPurchaseStatusCommand;
 import com.javalec.tent.command.AdminStatusChangeCommand;
+import com.javalec.tent.command.AdminSummaryCommand;
 import com.javalec.tent.command.AdminUpdateCommand;
 import com.javalec.tent.command.CartCommand;
 import com.javalec.tent.command.CartDeleteCommand;
@@ -209,6 +210,12 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "purchase_complete.jsp";
 			break;
+		case("/adminfirst.do"):
+			command = new AdminSummaryCommand();
+			command.execute(request, response);
+			viewPage = "adminSummary.jsp";
+			break;
+			
 		default:
 			break;
 		}
