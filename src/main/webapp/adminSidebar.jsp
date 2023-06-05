@@ -52,12 +52,12 @@
   .sidebar ul {list-style-type: none; margin: 0; padding: 0;}
   .sidebar li {
     padding: 10px;
-    color: #000;
+    color: black;
     cursor: pointer;
   }
   .sidebar li:hover {background-color: #228B22;}
   .sidebar h2 {
-    color: #000;
+    color: black;
     padding: 10px;
   }
   .sub-menu {display: none; color: #228B22;}
@@ -65,6 +65,7 @@
   
   a {
   text-decoration: none;
+  
 	}
 </style>
 
@@ -78,16 +79,17 @@
   <div class="sidebar">
     <br/><br/><br/><br/><br/><br/>
     <ul>
-      <li class="active"><a href="adminindex.do">상품관리</a>
+      <li><a href="adminfirst.do" style="color: #000000;">메인</a></li>
+      <li class="active"><a href="adminindex.do" style="color: #000000;">상품관리</a>
         <ul class="sub-menu">
-          <li><a href="adminProductInsert.jsp">상품추가</a></li>
-          <li><a href="adminUpdate.do">상품수정</a></li>
-          <li><a href="adminDelete.do">상품삭제</a></li>
+          <li><a href="adminProductInsert.jsp" style="color: #000000;">상품추가</a></li>
+          <li><a href="adminUpdate.do" style="color: #000000;">상품수정</a></li>
+          <li><a href="adminDelete.do" style="color: #000000;">상품삭제</a></li>
         </ul>
       </li>
-      <li><a href="adminpurchaseCheck.do">주문처리</a></li>
+      <li><a href="adminpurchaseCheck.do" style="color: #000000;">주문처리</a></li>
       <li>리뷰관리</li>
-      <li><a href="adminNotice.do">고객관리</a></li>
+      <li><a href="adminNotice.do" style="color: #000000;">고객관리</a></li>
     </ul>
   </div>
 </body>

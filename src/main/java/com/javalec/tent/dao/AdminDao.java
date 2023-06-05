@@ -631,6 +631,82 @@ public class AdminDao {
 	}
 	
 	
+	// 날짜별 매출 계산하기 위한 메서드
+	public ArrayList<AdminDto> dailySale(String startDate, String endDate) {
+//		if(startDate == null){ // 첫화면인 경우
+//			startDate = "1950-01-01";
+//			endDate = "3000-12-30";
+//		}
+		
+		ArrayList<AdminDto> dtos = new ArrayList<AdminDto>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			
+			if(startDate != null && !startDate.equals(null)) {
+			connection = dataSource.getConnection();
+			
+			String WhereDefault = "select pc.pcInsertDate, p.pBrandName, p.pName, pc.pcQty, pc.pcQty*p.pPrice from product p, purchase pc where p.pCode = pc.pCode and pc.pcInsertDate between ? and ?";
+			
+			
+			preparedStatement = connection.prepareStatement(WhereDefault);
+			preparedStatement.setString(1, startDate);
+			preparedStatement.setString(2, endDate);
+
+			resultSet = preparedStatement.executeQuery();
+			
+			}else {
+				connection = dataSource.getConnection();
+				
+				String WhereDefault = "select pc.pcInsertDate, p.pBrandName, p.pName, pc.pcQty, pc.pcQty*p.pPrice from product p, purchase pc where p.pCode = pc.pCode and pc.pcInsertDate";
+				
+				
+				preparedStatement = connection.prepareStatement(WhereDefault);
+
+				resultSet = preparedStatement.executeQuery();
+				
+			}
+			
+			
+			while(resultSet.next()) {
+				Date pcInsertdate = resultSet.getDate(1);
+				String pBrandName= resultSet.getString(2);
+				String pName= resultSet.getString(3);
+				int pcQty = resultSet.getInt(4);
+				int sum = resultSet.getInt(5);
+				
+				
+				
+				
+				AdminDto dto = new AdminDto(pcInsertdate, pBrandName, pName, pcQty, sum);
+				dtos.add(dto);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet != null){ // 무언가 들어가 있으면close
+					resultSet.close();
+				}
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return dtos;
+		
+		
+	}
+	
 	
 	
 	

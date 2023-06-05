@@ -40,6 +40,13 @@ public class AdminDto {
 	int daySum;
 	int colorSum;
 	
+	
+	// 날짜별매출에 필요한 변수
+	int sum;
+	
+	
+	
+	
 	public AdminDto() {
 		// TODO Auto-generated constructor stub
 	}
@@ -53,6 +60,19 @@ public class AdminDto {
 	
 	
 	
+	
+	
+	
+
+
+	public AdminDto(Date pcInsertdate, String pBrandName ,String pName, int pPrice, int sum ) {
+		super();
+		this.pName = pName;
+		this.pBrandName = pBrandName;
+		this.pPrice = pPrice;
+		this.sum = sum;
+		this.pcInsertdate = pcInsertdate;
+	}
 
 
 	public AdminDto(String dayName, int daySum) { //요일별합계
@@ -417,6 +437,16 @@ public class AdminDto {
 
 	public void setColorSum(int colorSum) {
 		this.colorSum = colorSum;
+	}
+
+
+	public int getSum() {
+		return sum;
+	}
+
+
+	public void setSum(int sum) {
+		this.sum = sum;
 	}
 
 	
