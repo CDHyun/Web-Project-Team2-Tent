@@ -61,8 +61,8 @@
 		가격 <input type="text" name="pPrice" id="pPrice" value="${content_view.pPrice }" ><br/>
 		색상 <input type="text" name="pColor" id="pColor" value="${content_view.pColor }"><br/>
 		재고 <input type="text" name="pStock" id="pStock" value="${content_view.pStock }"><br/>
-		파일명 : <input type="text" name="fileName" id="fileName" value="${file }"><br/>
-		<input type="file" name="file"><br/>
+		파일명 : <input type="file" name="file"><br/>
+		<input type="text" name="lastfile" id="lastfile" value="${content_view.pfRealName }" >
 		
 			
 		

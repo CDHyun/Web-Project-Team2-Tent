@@ -57,6 +57,39 @@ public class FileDao {
 	        }
 	    }
 	}
+	//파일업로드 수정
+	public void uploading(String fileName, String fileRealName, String pCode) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			String query = "update productfile pf, product p set pf.pfName=?, pf.pfRealName=? where p.pCode = pf.pCode and p.pCode=?";	  
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, fileName);
+			preparedStatement.setString(2, fileRealName);
+			preparedStatement.setString(3, pCode);
+			preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// 사용한 자원을 해제합니다.
+			if (preparedStatement != null) {
+				try {
+					preparedStatement.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if (connection != null) {
+				try {
+					connection.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 	
 }
