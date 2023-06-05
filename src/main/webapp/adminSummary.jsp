@@ -60,7 +60,7 @@
           <div class="card-body">
             <canvas id="myChart2" style="width: 100%; height: 200px;"></canvas>
           </div>
-          <div class="card card-body text-center bg-primary " style="width: 100%; height: 200px;">
+          <div class="card card-body text-center  " style="width: 100%; height: 200px;">
             <h3>색상별 판매량</h3>
           </div>
         </div>
@@ -80,57 +80,65 @@
     crossorigin="anonymous"></script>
   <!-- 차트 -->
   <script>
-    var ctx = document.getElementById('myChart');
-    var myChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['월', '화', '수', '목', '금', '토', '일'],
-        datasets: [{
-          label: '# of Votes',
-          data: [${summary.daySum[0]}, ${summary.daySum[1]}, ${summary.daySum[2]}, ${summary.daySum[3]}, ${summary.daySum[4]}, ${summary.daySum[5]}, ${summary.daySum[6]}],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
+  var ctx = document.getElementById('myChart');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['월', '화', '수', '목', '금', '토', '일'],
+      datasets: [{
+        label: '# of Votes',
+        data: [${data}],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      maintainAspectRatio: true,
+      responsive: false,
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
         }]
-      },
-      options: {
-        maintainAspectRatio: true,
-        responsive: false,
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
       }
-    });
+    }
+  });
 
-    // 막대차트
+    // 도넛차트
+    var donut = [${datas}];
+    for (var i = 0; i < donut.length; i++){
+    	console.log(donut[i])
+    } 
+
+    
     data = {
       datasets: [{
-        backgroundColor: ['Red', 'Yellow', 'Blue', 'Black'],
-        data: [10, 20, 30, 40]
+        backgroundColor: ['Red', 'Yellow', 'Blue', 'Black','Orange'],   // 색상은 나중에 고정되면 정해야함
+        data: [1,2,3]
       }],
       // 라벨의 이름이 툴팁처럼 마우스가 근처에 오면 나타남
-      labels: ['Red', 'Yellow', 'Blue', 'Black']
+      labels: ['Red', 'Yellow', 'Blue', 'Black','Orange'] // 범례
     };
 
     // 도넛형 차트
+    
+    
     var ctx2 = document.getElementById("myChart2");
     var myDoughnutChart = new Chart(ctx2, {
       type: 'doughnut',
