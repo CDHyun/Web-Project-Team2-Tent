@@ -8,9 +8,12 @@ import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 import com.javalec.tent.dto.AdminDto;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 public class AdminDao {
 	DataSource dataSource;
@@ -103,7 +106,7 @@ public class AdminDao {
 			connection = dataSource.getConnection();
 			
 			String WhereDefault = "select p.pCode, p.pBrandName, p.pName ,po.pColor, p.pPrice, po.pStock, p.pinsertdate, pf.pfName, pf.pfRealName  from product p, productoption po, productfile pf ";
-			String WhereDefault2 = " where p.pCode = po.pCode and p.pCode = pf.pCode and " + queryName + " like '%" +queryContent + "%'";
+			String WhereDefault2 = " where p.pCode = po.pCode and p.pCode = pf.pCode and p.pDeleted=0 and  " + queryName + " like '%" +queryContent + "%'";
 			String WhereDefault3 = " LIMIT " + index_no + ",7";
 				
 			preparedStatement = connection.prepareStatement(WhereDefault+WhereDefault2+WhereDefault3);
@@ -200,10 +203,12 @@ public class AdminDao {
 	
 	
 	
-	// 데이터수정메서드
-	public void updateAction(String pCode, String pBrandName,String pName, String pPrice, String pColor, String pStock, String pfName, String pfRealName) {
+	// 데이터수정메서드  이미지를 변경하지 않을때,,
+	public void updateAction(String pCode, String pBrandName,String pName, String pPrice, String pColor, String pStock, String lastfile) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		
+		
 		try {
 			connection = dataSource.getConnection();
 			String query = "update product p,productoption po, productfile pf set p.pBrandName= ? ,p.pName=?, p.pPrice =? , po.pStock=?, pf.pfName=?, pf.pfRealName=? where p.pCode = po.pCode and p.pCode = pf.pCode and p.pCode =? and po.pcolor=?";
@@ -212,13 +217,18 @@ public class AdminDao {
 			preparedStatement.setString(2, pName);
 			preparedStatement.setString(3, pPrice);
 			preparedStatement.setString(4, pStock);
-			preparedStatement.setString(5, pfName);
-			preparedStatement.setString(6, pfRealName);
+			preparedStatement.setString(5, lastfile);
+			preparedStatement.setString(6, lastfile);
 			preparedStatement.setString(7, pCode);
 			preparedStatement.setString(8, pColor);
 			
 			
 			preparedStatement.executeUpdate();
+			
+
+			
+		
+		
 		
 		}catch(Exception e) {
 			e.printStackTrace();

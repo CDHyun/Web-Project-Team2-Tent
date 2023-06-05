@@ -24,7 +24,6 @@ public class AdminInputCommand implements TentCommand {
 	        ServletContext application = request.getServletContext();
 	        String directory = application.getRealPath("/images/product");
 
-	        System.out.println(directory);
 
 	        int maxSize = 1024 * 1024 * 10;
 	        String encoding = "UTF-8";
@@ -51,7 +50,10 @@ public class AdminInputCommand implements TentCommand {
 	            dao1.upload(pfName, pfRealName, pCode);
 
 	            // 추가 폴더에도 저장 이 주소를 자신의 컴퓨터의 프로젝트폴더경로로 바꿔줘야함
-	            String additionalDirectory = "C:/Users/kwh10/git/Web-Project-Team2-Tent/src/main/webapp/images/product";
+	            String additionalDirectory = "C:\\Users\\ahyun\\git\\Web-Project-Team2-Tent\\src\\main\\webapp\\images\\product";
+	            //String additionalDirectory = ".../src/main/webapp/images/product/";
+
+	            
 	            File additionalDirectoryFile = new File(additionalDirectory);
 	            if (!additionalDirectoryFile.exists()) {
 	                additionalDirectoryFile.mkdirs();
