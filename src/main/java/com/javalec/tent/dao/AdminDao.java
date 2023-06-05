@@ -404,14 +404,15 @@ public class AdminDao {
 	
 	
 	//주문 상태 변경 메서드
-	public void statusUpdate(int pcStatus) {
+	public void statusUpdate(String pcStatus, String pcNo) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
 			connection = dataSource.getConnection();
-			String query = "update purchase pc, user u set pcStatus =? where u.uid = pc.uid";
+			String query = "update purchase pc, user u set pc.pcStatus =? where u.uid = pc.uid and pc.pcNo = ?";
 			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setInt(1, pcStatus);
+			preparedStatement.setString(1, pcStatus);
+			preparedStatement.setString(2, pcNo);
 			
 			
 			
@@ -633,11 +634,7 @@ public class AdminDao {
 	
 	// 날짜별 매출 계산하기 위한 메서드
 	public ArrayList<AdminDto> dailySale(String startDate, String endDate) {
-//		if(startDate == null){ // 첫화면인 경우
-//			startDate = "1950-01-01";
-//			endDate = "3000-12-30";
-//		}
-		
+
 		ArrayList<AdminDto> dtos = new ArrayList<AdminDto>();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -645,7 +642,7 @@ public class AdminDao {
 		
 		try {
 			
-			if(startDate != null && !startDate.equals(null)) {
+			if((startDate != null && !startDate.equals(null))&& !startDate.equals("")) {
 			connection = dataSource.getConnection();
 			
 			String WhereDefault = "select pc.pcInsertDate, p.pBrandName, p.pName, pc.pcQty, pc.pcQty*p.pPrice from product p, purchase pc where p.pCode = pc.pCode and pc.pcInsertDate between ? and ?";
@@ -655,30 +652,24 @@ public class AdminDao {
 			preparedStatement.setString(1, startDate);
 			preparedStatement.setString(2, endDate);
 
-			resultSet = preparedStatement.executeQuery();
+			
 			
 			}else {
 				connection = dataSource.getConnection();
 				
 				String WhereDefault = "select pc.pcInsertDate, p.pBrandName, p.pName, pc.pcQty, pc.pcQty*p.pPrice from product p, purchase pc where p.pCode = pc.pCode and pc.pcInsertDate";
 				
-				
 				preparedStatement = connection.prepareStatement(WhereDefault);
-
-				resultSet = preparedStatement.executeQuery();
 				
 			}
 			
-			
+			resultSet = preparedStatement.executeQuery();
 			while(resultSet.next()) {
 				Date pcInsertdate = resultSet.getDate(1);
 				String pBrandName= resultSet.getString(2);
 				String pName= resultSet.getString(3);
 				int pcQty = resultSet.getInt(4);
 				int sum = resultSet.getInt(5);
-				
-				
-				
 				
 				AdminDto dto = new AdminDto(pcInsertdate, pBrandName, pName, pcQty, sum);
 				dtos.add(dto);

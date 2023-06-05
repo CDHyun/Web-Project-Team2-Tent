@@ -430,6 +430,9 @@ public class AdminDto {
 	}
 
 
+	
+
+
 	public int getColorSum() {
 		return colorSum;
 	}
