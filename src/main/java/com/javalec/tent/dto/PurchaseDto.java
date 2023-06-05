@@ -27,12 +27,21 @@ public class PurchaseDto {
 	int pcQty;                          //상품 수량
 	int pStock;                         //상품 재고
 	int cgNo;				            //카테고리 번호
-	String pImage;                      //상품 이미지
+	String pName;						// 상품명
 	String pBrandName;                  //상품 브랜드 이름
 	Timestamp pcInsertDate;             //상품 주문 날짜
 	Timestamp pcDeleteDate;		        //상품 주문 취소 날짜
 	String pcStatus;                    //상품 주문 상태 
 	String pcDM;
+	
+	
+	/* ProductFile */
+	String pfName;			// 올린 상품 이미지 이름
+	String pfRealName;		// 프로젝트에 저장된 실제 파일 이름
+	String pfHoverName;		// 올린 호버 이미지 이름
+	String pfHoverRealName;	// 프로젝트에 저장되는 실제 호버 이미지 이름
+	
+	
 	
 	//constructor
 	public PurchaseDto() {
@@ -54,14 +63,7 @@ public class PurchaseDto {
 	}
 
 
-	public PurchaseDto(int pcNo, int pCode, int pPrice, int pcQty, String pBrandName) {
-		super();
-		this.pcNo = pcNo;
-		this.pCode = pCode;
-		this.pPrice = pPrice;
-		this.pcQty = pcQty;
-		this.pBrandName = pBrandName;
-	}
+	
 
 
 	public PurchaseDto(String uid, int pCode, int pcQty, Timestamp pcInsertDate, String pcDM) {
@@ -71,6 +73,21 @@ public class PurchaseDto {
 		this.pcQty = pcQty;
 		this.pcInsertDate = pcInsertDate;
 		this.pcDM = pcDM;
+	}
+
+
+
+	public PurchaseDto(String uid, int pcNo, int pCode, int pPrice, int pcQty, String pName, String pfRealName,
+			String pfHoverRealName) {
+		super();
+		this.uid = uid;
+		this.pcNo = pcNo;
+		this.pCode = pCode;
+		this.pPrice = pPrice;
+		this.pcQty = pcQty;
+		this.pName = pName;
+		this.pfRealName = pfRealName;
+		this.pfHoverRealName = pfHoverRealName;
 	}
 
 
@@ -317,16 +334,16 @@ public class PurchaseDto {
 
 
 
-	public String getpImage() {
-		return pImage;
+	public String getpName() {
+		return pName;
 	}
 
 
 
 
 
-	public void setpImage(String pImage) {
-		this.pImage = pImage;
+	public void setpName(String pName) {
+		this.pName = pName;
 	}
 
 
@@ -413,6 +430,75 @@ public class PurchaseDto {
 
 
 
+	public String getPfName() {
+		return pfName;
+	}
+
+
+
+
+
+	public void setPfName(String pfName) {
+		this.pfName = pfName;
+	}
+
+
+
+
+
+	public String getPfRealName() {
+		return pfRealName;
+	}
+
+
+
+
+
+	public void setPfRealName(String pfRealName) {
+		this.pfRealName = pfRealName;
+	}
+
+
+
+
+
+	public String getPfHoverName() {
+		return pfHoverName;
+	}
+
+
+
+
+
+	public void setPfHoverName(String pfHoverName) {
+		this.pfHoverName = pfHoverName;
+	}
+
+
+
+
+
+	public String getPfHoverRealName() {
+		return pfHoverRealName;
+	}
+
+
+
+
+
+	public void setPfHoverRealName(String pfHoverRealName) {
+		this.pfHoverRealName = pfHoverRealName;
+	}
+
+
+
+
+	
+	
+	
+	
+	
+	
 	
 	
 	

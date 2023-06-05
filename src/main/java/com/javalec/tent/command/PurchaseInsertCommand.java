@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 import com.javalec.tent.command.TentCommand;
 import com.javalec.tent.dao.PurchaseDao;
 
-public class PurchaseDmInsertCommand implements TentCommand {
+public class PurchaseInsertCommand implements TentCommand {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
@@ -21,6 +21,8 @@ public class PurchaseDmInsertCommand implements TentCommand {
 		
 		
 		PurchaseDao dao = new PurchaseDao();
+		dao.purchaseinsert(uid, pCode, pcQty, sdm);
+		
 	
 		
 	}

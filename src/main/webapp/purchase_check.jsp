@@ -82,11 +82,11 @@
                                     
                                     <!-- order item start -->
                                     <c:set var="tot_price" value="0" />
-                                    <c:forEach var="o_cart" items="${purchaseItemList}">
+                                    <c:forEach var="o_cart" items="${purchaseList}">
                                     <c:set var="tot_price" value="${tot_price + o_cart.product.pPrice * o_cart.pcQty}" />
                                         <tr>
                                             <td>
-                                                <img src="img/p_img/${o_cart.product.imageList[0].im_name}" alt="Product">
+                                                <img src="img/p_img/${o_cart.imageList[0].im_name}" alt="Product">
                                             </td>
                                             <td>
                                                 <a href="#">${o_cart.product.pName}</a>
