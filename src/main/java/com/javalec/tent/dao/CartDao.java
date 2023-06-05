@@ -129,7 +129,7 @@ DataSource dataSource;
 	}
 	
 	// 작동 되는지 봐야함
-	public double totalPrice(String uid, String pCode){
+	public double totalPrice(String uid, int pCode){
 	    Connection connection = null;
 	    PreparedStatement preparedStatement = null;
 	    ResultSet resultSet = null;
@@ -142,7 +142,7 @@ DataSource dataSource;
 	        String query = "SELECT SUM(p.pPrice * c.cQty) AS total FROM cart c JOIN product p ON c.pCode = p.pCode WHERE c.uid = ?";
 	        preparedStatement = connection.prepareStatement(query);
 	        preparedStatement.setString(1, uid);
-	        preparedStatement.setString(2, pCode);
+	        preparedStatement.setInt(2, pCode);
 	        resultSet = preparedStatement.executeQuery();
 
 	        if(resultSet.next()) {
