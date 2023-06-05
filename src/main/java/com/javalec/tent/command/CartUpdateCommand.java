@@ -13,8 +13,10 @@ public class CartUpdateCommand implements TentCommand {
 		int cQty =Integer.parseInt(request.getParameter("cQty"));
 		int cNo =Integer.parseInt(request.getParameter("cNo"));
 		int pStock =Integer.parseInt(request.getParameter("pStock"));
+		String uid = request.getParameter("uid");
+		int pCode = Integer.parseInt(request.getParameter("pCode"));
 		CartDao dao = new CartDao();
-		dao.cartUpdateAction(cQty, cNo, pStock);
+		dao.cartUpdateAction(cQty, cNo, pStock, uid, pCode);
 		
 	}
 

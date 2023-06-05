@@ -39,11 +39,13 @@ public class CartDto {
 	
 	
 	
-	public CartDto(int cQty, int pStock, int cNo) {
+	public CartDto(int cQty, int pStock, int cNo, int pCode, String uid) {
 			super();
 			this.cQty = cQty;
 			this.pStock = pStock;
 			this.cNo = cNo;
+			this.pCode = pCode;
+			this.uid = uid;
 		}
 	
 	
