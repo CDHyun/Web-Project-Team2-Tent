@@ -9,7 +9,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.javalec.tent.dto.CartDto;
+
 import com.javalec.tent.dto.WishlistDto;
 
 public class WishlistDao {
