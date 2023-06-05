@@ -81,7 +81,7 @@
                                	</c:if>
                                 <c:set var="tot_price" value="0" />
                                 <c:forEach var="cart" items="${cart}">
-                                <c:set var="tot_price" value="${tot_price + cart.product.pPrice * cart.cQty}" />
+                                <c:set var="tot_price" value="${total + cart.product.pPrice * cart.cQty}" />
                                     <tr id="cart_item_${cart.cNo}">
                                         <th scope="row">
                                             <input type="checkbox" cNo="${cart.cNo}">
@@ -118,16 +118,16 @@
 	                                <tbody>
 	                                    <tr>
 	                                        <td>Sub Total</td>
-	                                        <td id="sub_total">&#8361; ${tot_price}</td> 
+	                                        <td id="sub_total">&#8361; ${total}</td> 
 	                                    </tr> 
 	                                    <tr>
 	                                        <td>Shipping</td>
 	                                        <td id="shipping_pay">
-	                                        <c:if test="${tot_price < 50000 and tot_price > 0}">
+	                                        <c:if test="${shopping_price < 50000 and total > 0}">
 	                                        	&#8361;2500/>
 	                                        	<c:set var="shipping_price" value="2500" />
 	                                        </c:if>
-	                                        <c:if test="${tot_price >= 50000 or tot_price == 0}">
+	                                        <c:if test="${shopping_price >= 50000 or total == 0}">
 	                                        	&#8361;0
 	                                        	<c:set var="shipping_price" value="0" />
 	                                        </c:if>
@@ -135,8 +135,8 @@
 	                                    </tr>
 	                                    <tr>
 	                                        <td>Total</td>
-	                                        <c:set var="all_total" value="${tot_price + shipping_price}" />
-	                                        <td id="cart_total">&#8361;${all_total}</td>
+	                                        <c:set var="all_total" value="${total + shipping_price}" />
+	                                        <td id="cart_total">&#8361;${total}</td>
 	                                    </tr>
 	                                </tbody>
 	                            </table>

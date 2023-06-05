@@ -17,9 +17,10 @@ public class CartCommand implements TentCommand {
 		ArrayList<CartDto> dtos= dao.cart("uid");
 		request.setAttribute("cart", dtos);
 		
-		
-		double totalPrice = dao.totalPrice("uid", "pCode");
-		request.setAttribute("TOTALPRICE", totalPrice);
+		String uid = request.getParameter("uid");
+		int pCode =Integer.parseInt(request.getParameter("pCode"));
+		double total = dao.totalPrice(uid, pCode);
+		request.setAttribute("total", total);
 	}
-
+	 
 }
