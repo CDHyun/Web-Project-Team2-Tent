@@ -546,7 +546,7 @@ public class AdminDao {
 		try {
 			connection = dataSource.getConnection();
 			
-			String WhereDefault = "SELECT DAYNAME(pc.pcInsertDate) AS weekday, SUM(p.pPrice * pc.pcQty) AS totalAmount FROM purchase pc, product p GROUP BY DAYNAME(pc.pcInsertDate)";
+			String WhereDefault = "SELECT DAYNAME(pc.pcInsertDate), SUM(p.pPrice * pc.pcQty) FROM purchase pc, product p GROUP BY DAYNAME(pc.pcInsertDate)";
 			
 			
 			preparedStatement = connection.prepareStatement(WhereDefault);
@@ -582,6 +582,55 @@ public class AdminDao {
 		return dtos;
 	
 	
+	}
+	//도넛차트 데이터 가져오기
+	public ArrayList<AdminDto> donut() {
+		
+		
+		ArrayList<AdminDto> dtos = new ArrayList<AdminDto>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			
+			String WhereDefault = "select pc.pColor, SUM(p.pPrice * pc.pcQty) FROM purchase pc, product p,productoption po where p.pCode = pc.pCode and po.pCode = pc.pCode GROUP BY pc.pColor";
+			
+			
+			preparedStatement = connection.prepareStatement(WhereDefault);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				String pColor = resultSet.getString(1);
+				int colorSum = resultSet.getInt(2);
+				
+				
+				AdminDto dto = new AdminDto(pColor, colorSum);
+				dtos.add(dto);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet != null){ // 무언가 들어가 있으면close
+					resultSet.close();
+				}
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return dtos;
+		
+		
 	}
 	
 	
