@@ -164,9 +164,9 @@
                 <div class="col-12">
                 <div class="checkout_pagination d-flex justify-content-end mt-30">
        
-							<button type="button" class="btn btn-primary mt-2 ml-2 order_back" onclick="http://localhost:8080/Web-Project-Team2-Tent/purchase_info.do">Go Back</button>
+							<a href="purchase_info.do"><button type="button" class="btn btn-primary mt-2 ml-2" id="payment_before_btn" >Go Back</button></a>
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<button type="button" class="btn btn-primary mt-2 ml-2 order_next" id="payment_next_btn" onclick="http://localhost:8080/Web-Project-Team2-Tent/purchase_check_info.do">Final Step</button>
+							<a href="purchase_check_info.do"><button type="button" class="btn btn-primary mt-2 ml-2" id="payment_next_btn">Final Step</button></a>
                     </div>
             </div>
         </div>

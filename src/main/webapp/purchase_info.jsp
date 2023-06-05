@@ -71,7 +71,7 @@
                 <div class="col-12">
                     <div class="checkout_details_area clearfix">
                         <h5 class="mb-4">Orderer Info</h5>
-                        <%-- <c:set var="user" value="${selectUser}"/> --%>\
+                        <%-- <c:set var="user" value="${selectUser}"/> --%>
                         <c:forEach items="${selectUser}" var="user">
                         <form id="orderer_info_form" method="post">
                             <div class="row">
@@ -138,15 +138,11 @@
 
 							<div class="col-12">
 								<div class="checkout_pagination mt-3 d-flex justify-content-end align-items-center clearfix">
-									<form id="back_Receiver" action="product_detail.do"
-										name="Go Back">
-										<input type="button" class="btn btn-primary ml-2 order_next"
-											value="Go Back">
+									<form id="back_Receiver" action="product_detail.do" method="post" name="Go Back">
+										<input type="submit" class="btn btn-primary ml-2" value="Go Back">
 									</form>
-									<form id="Receiver_next_btn" action="payment.do"
-										name="Continue">
-										<input type="button" class="btn btn-primary ml-2 order_next"
-											value="Continue">
+									<form id="Receiver_next_btn" action="payment.do" method="post" name="Continue">
+										<input type="submit" class="btn btn-primary ml-2" value="Continue">
 									</form>
 								</div>
 							</div>

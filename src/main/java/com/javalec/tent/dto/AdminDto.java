@@ -35,6 +35,11 @@ public class AdminDto {
 	int nNo;
 	
 	
+	//차트에 필요한 변수
+	String dayName;
+	int daySum;
+	int colorSum;
+	
 	public AdminDto() {
 		// TODO Auto-generated constructor stub
 	}
@@ -50,10 +55,10 @@ public class AdminDto {
 	
 
 
-	public AdminDto(String pName, int pCode) { //요일별합계
+	public AdminDto(String dayName, int daySum) { //요일별합계
 		super();
-		this.pName = pName;
-		this.pCode = pCode;
+		this.dayName = dayName;
+		this.daySum = daySum;
 	}
 
 
@@ -382,6 +387,36 @@ public class AdminDto {
 
 	public void setnNo(int nNo) {
 		this.nNo = nNo;
+	}
+
+
+	public String getDayName() {
+		return dayName;
+	}
+
+
+	public void setDayName(String dayName) {
+		this.dayName = dayName;
+	}
+
+
+	public int getDaySum() {
+		return daySum;
+	}
+
+
+	public void setDaySum(int daySum) {
+		this.daySum = daySum;
+	}
+
+
+	public int getColorSum() {
+		return colorSum;
+	}
+
+
+	public void setColorSum(int colorSum) {
+		this.colorSum = colorSum;
 	}
 
 	

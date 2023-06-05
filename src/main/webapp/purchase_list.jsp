@@ -83,7 +83,7 @@
                                 		</tr>
                                 	</c:if>
                                     <c:forEach items="${orderList}" var="order">
-                                        <tr id="order_${order.o_no}">
+                                        <tr id="order_${order.pfRealName}">
                                             <th scope="row">
                                                 ${order.o_desc}
                                             </th>
