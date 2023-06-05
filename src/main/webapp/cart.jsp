@@ -118,16 +118,16 @@
 	                                <tbody>
 	                                    <tr>
 	                                        <td>Sub Total</td>
-	                                        <td id="sub_total">&#8361; ${total}</td> 
+	                                        <td id="sub_total">&#8361; ${TOTAL}</td> 
 	                                    </tr> 
 	                                    <tr>
 	                                        <td>Shipping</td>
 	                                        <td id="shipping_pay">
-	                                        <c:if test="${shopping_price < 50000 and total > 0}">
+	                                        <c:if test="${shopping_price < 70000 and TOTAL > 0}">
 	                                        	&#8361;2500/>
 	                                        	<c:set var="shipping_price" value="2500" />
 	                                        </c:if>
-	                                        <c:if test="${shopping_price >= 50000 or total == 0}">
+	                                        <c:if test="${shopping_price >= 70000 or TOTAL == 0}">
 	                                        	&#8361;0
 	                                        	<c:set var="shipping_price" value="0" />
 	                                        </c:if>
@@ -135,7 +135,7 @@
 	                                    </tr>
 	                                    <tr>
 	                                        <td>Total</td>
-	                                        <c:set var="all_total" value="${total + shipping_price}" />
+	                                        <c:set var="all_total" value="${TOTAL + shipping_price}" />
 	                                        <td id="cart_total">&#8361;${total}</td>
 	                                    </tr>
 	                                </tbody>
