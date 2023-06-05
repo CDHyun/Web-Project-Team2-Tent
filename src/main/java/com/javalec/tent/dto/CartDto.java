@@ -10,6 +10,7 @@ public class CartDto {
 	String pfName;
 	String pBrandName;
 	String pColor;
+	int pStock;
 	public CartDto() {
 		// TODO Auto-generated constructor stub
 	}
@@ -38,9 +39,11 @@ public class CartDto {
 	
 	
 	
-	public CartDto(int cQty) {
+	public CartDto(int cQty, int pStock, int cNo) {
 			super();
 			this.cQty = cQty;
+			this.pStock = pStock;
+			this.cNo = cNo;
 		}
 	
 	
@@ -98,8 +101,14 @@ public class CartDto {
 	public void setpColor(String pColor) {
 		this.pColor = pColor;
 	}
-	
+	public int getpStock() {
+		return pStock;
 	}
+	public void setpStock(int pStock) {
+			this.pStock = pStock;
+	}
+	}
+
 	
 	
 	

@@ -96,7 +96,7 @@ DataSource dataSource;
 			}
 		}
 	}
-	public void cartUpdateAction(int cQty) {
+	public void cartUpdateAction(int cQty, int pStock, int cNo) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -104,9 +104,11 @@ DataSource dataSource;
 	
 		try {
 			connection = dataSource.getConnection();
-			String query = " update cart set cQty=?";
+			String query =" UPDATE cart c JOIN product p ON c.pCode = p.pCode SET c.cQty = ? WHERE c.cNo = ? AND c.cQty <= p.pStock";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setInt(1, cQty);
+			preparedStatement.setInt(2, cNo);
+			
 			preparedStatement.executeUpdate();
 			
 		}catch(Exception e) {
@@ -133,7 +135,7 @@ DataSource dataSource;
 	        connection = dataSource.getConnection();
 
 	        // 선택한 물건 가격 계산
-	        String query = "SELECT SUM(p.pPrice * c.cQty) AS total FROM cart c JOIN product p ON c.pCode = p.pCode WHERE c.uid = ? AND c.pCode = ?";
+	        String query = "SELECT SUM(p.pPrice * c.cQty) AS total FROM cart c JOIN product p ON c.pCode = p.pCode WHERE c.uid = ?";
 	        preparedStatement = connection.prepareStatement(query);
 	        preparedStatement.setString(1, uid);
 	        preparedStatement.setString(2, pCode);
