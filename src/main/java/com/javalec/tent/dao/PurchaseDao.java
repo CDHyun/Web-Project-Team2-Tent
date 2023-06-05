@@ -81,20 +81,22 @@ public PurchaseDao() {
 
  		try {
  			connection = dataSource.getConnection();
- 			String query = "SELECT u.uid, pcNo, p.pCode, pBrandName, pPrice, pcQty"
- 							+ "FROM purchase pc, product p, user u " 
- 							+ "WHERE pc.pCode = p.pCode and u.uid = pc.uid and u.uid = ? ";
+ 			String query = "SELECT u.uid, pc.pcNo, p.pCode, p.pName, p.pPrice, pc.pcQty, pf.pfRealName, pf.pfHoverRealName"
+ 							+ "FROM purchase pc, product p, user u, productfile pf" 
+ 							+ "WHERE pc.pCode = p.pCode and pf.pCode = p.pCode and u.uid = pc.uid and u.uid = ? ";
  			preparedStatement = connection.prepareStatement(query);
  			preparedStatement.setString(1, uid);
  			resultSet = preparedStatement.executeQuery();
 
  			while (resultSet.next()) {
- 				int pcNo = resultSet.getInt("PcNo");
- 				int pCode = resultSet.getInt("pCode");
- 				String pBrandName = resultSet.getString("pBrandName");
- 				int pPrice = resultSet.getInt("pPrice");
- 				int pcQty = resultSet.getInt("pcQty");
- 				PurchaseDto purchaseDto = new PurchaseDto(pcNo, pCode, pPrice, pcQty, pBrandName);
+ 				int pcNo = resultSet.getInt(1);
+ 				int pCode = resultSet.getInt(2);
+ 				String pName = resultSet.getString(3);
+ 				int pPrice = resultSet.getInt(4);
+ 				int pcQty = resultSet.getInt(5);
+ 				String pfRealName = resultSet.getString(6);
+				String pfHoverRealName = resultSet.getString(7);
+ 				PurchaseDto purchaseDto = new PurchaseDto(uid, pcNo, pCode, pPrice, pcQty, pName, pfRealName, pfHoverRealName);
  				dtos.add(purchaseDto);
  			}
 
