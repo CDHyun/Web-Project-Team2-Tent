@@ -194,7 +194,7 @@
 	                                        <div class="input-form-group" style="display: flex; align-items: center;">
 												<c:set var="dateString" value="${user.uInsertDate}" />
 												<fmt:parseDate var="date" value="${dateString}" pattern="yyyy-MM-dd HH:mm:ss" />
-												<fmt:formatDate var="formattedDate" value="${date}" type="date" pattern="yyyy-MM-dd" />
+												<fmt:formatDate var="formattedDate" value="${date}" type="date" pattern="yyyy년-MM월-dd일" />
 	                                        	<input type="text" class="form-control" id="uInsertDate" name="uInsertDate" placeholder="join date" value="${formattedDate}" readonly="readonly">
 											</div>
 	                                    </div>
@@ -766,8 +766,8 @@
 	}
 	
 	function deleteAcount() {
-		var password = $("#dpassword").val();
-		if($("#dpassword").length === 0){
+		var password = $("#dPassword").val();
+		if($("#dPassword").length === 0){
 			Toast.fire({ icon : 'warning', title : "비밀번호를 입력해주세요." });
 			return;
 		}
@@ -790,7 +790,7 @@
 				if (result === "1") {
 					Toast.fire({ icon: 'success', title: "탈퇴가 완료 되었습니다. 이용해주셔서 감사합니다." }).then(() => {
 						  $('#deletePasswordCheckModal').modal('hide');
-						  window.location.href = "index.do";
+						  window.location.href = "logout.do";
 						});
 				}
 			},

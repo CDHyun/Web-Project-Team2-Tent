@@ -71,49 +71,54 @@
                 <div class="col-12">
                     <div class="checkout_details_area clearfix">
                         <h5 class="mb-4">Orderer Info</h5>
-                        <c:set var="user" value="${selectUser}"/>
+                        <%-- <c:set var="user" value="${selectUser}"/> --%>\
+                        <c:forEach items="${selectUser}" var="user">
                         <form id="orderer_info_form" method="post">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="first_name">ID</label>
-                                    <input type="text" class="form-control o_check" id="first_name" name="m_id" value="${user[0].uid}" readonly="readonly">
+                                    <input type="text" class="form-control o_check" id="puid" name="puid" value="${user.uid}" readonly="readonly">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="last_name">Name</label>
-                                    <input type="text" class="form-control o_check" id="last_name" name="m_name" placeholder="Name" value="${users[0].uName}" >
+                                    <input type="text" class="form-control o_check" id="puName" name="puName" placeholder="Name" value="${user.uName}" >
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="email_address">Email</label>
-                                    <input type="email" class="form-control o_check" name="m_email" id="email_address" placeholder="Email Address" value="${users[0].uEmail}" >
+                                    <input type="email" class="form-control o_check" name="pEmail" id="puEmail" placeholder="Email Address" value="${user.uEmail}" >
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="phone_number">Phone Number</label>
-                                    <input type="text" class="form-control o_check phone_number" name="m_phone" id="phone_number" min="0" value="${users[0].uPhone}" placeholder="- 제외 입력해주세요">
+                                    <input type="text" class="form-control o_check phone_number" name="puPhone" id="puPhone" min="0" value="${user.uPhone}" placeholder="- 제외 입력해주세요">
                                 </div>
                                 <div class="col-md-12 mb-3">
-												<label for="street_address">Address</label> <input
-													type="text" class="form-control address o_check"
-													name="o_rv_address" placeholder="Address" value="${users[0].uaAddress}">
-											</div>
-											<div class="col-md-6 mb-3">
-												<label for="postcode">Postcode</label> <input type="text"
-													class="form-control postcode o_check" name="o_rv_post"
-													placeholder="Postcode" value="${users[0].uaZipcode}">
-											</div>
-											<div class="col-md-6 mb-3 search">
-												<button type="button"
-													class="btn btn-outline-primary mb-1 searchAddr">search</button>
-											</div>
-											<div class="col-md-12">
-												<label for="order-notes">Message</label>
-												<textarea class="form-control" name="o_message"
-													id="order-notes" cols="30" rows="10"
-													placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+									<label for="street_address">Address</label> <input type="text" class="form-control address o_check" id="puaAddress" name="puAddress" placeholder="Address" value="${user.uaAddress}">
+								</div>
+                                <div class="col-md-12 mb-3">
+									<label for="street_address">Detail Address</label> <input type="text" class="form-control address o_check" name="puaDetailAddress" placeholder="Address" value="${user.uaDetailAddress}">
+								</div>
+								<div class="col-md-6 mb-3">
+									<label for="postcode">Postcode</label> <input type="text"
+										class="form-control postcode o_check" id="puZipcode" name="puZipcode"
+										placeholder="Postcode" value="${user.uaZipcode}">
+								</div>
+								<div class="col-md-6 mb-3 search">
+									<button type="button"
+										class="btn btn-outline-primary mb-1 searchAddr">search</button>
+								</div>
+								<div class="col-md-12">
+									<label for="order-notes">Message</label>
+									<textarea class="form-control" name="o_message"
+										id="order-notes" cols="30" rows="10"
+										placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
 											</div>
 										</div>
 									</form>
 								</div>
 							</div>
+                        
+                        </c:forEach>
+                        
                                
                                 
                                 

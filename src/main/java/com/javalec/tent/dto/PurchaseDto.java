@@ -52,7 +52,7 @@ public class PurchaseDto {
 
 
 
-	public PurchaseDto(String uid, String uName, String uPhone, String uEmail, String uaZipcode, String uaAddress) {
+	public PurchaseDto(String uid, String uName, String uPhone, String uEmail, String uaZipcode, String uaAddress, String uaDetailAddress) {
 		super();
 		this.uid = uid;
 		this.uName = uName;
@@ -60,6 +60,7 @@ public class PurchaseDto {
 		this.uEmail = uEmail;
 		this.uaZipcode = uaZipcode;
 		this.uaAddress = uaAddress;
+		this.uaDetailAddress = uaDetailAddress;
 	}
 
 
