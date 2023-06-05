@@ -39,23 +39,21 @@ public class PurchaseDto {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	public PurchaseDto(String uid, String uName, String uPhone, String uEmail) {
+
+	public PurchaseDto(String uid, String pcStatus) {
+		super();
+		this.uid = uid;
+		this.pcStatus = pcStatus;
+	}
+
+
+
+	public PurchaseDto(String uid, String uName, String uPhone, String uEmail, String uaZipcode, String uaAddress, String uaDetailAddress) {
 		super();
 		this.uid = uid;
 		this.uName = uName;
 		this.uPhone = uPhone;
 		this.uEmail = uEmail;
-	}
-
-
-	public PurchaseDto(int pcNo, int pCode, int pPrice, int pcQty, String pBrandName) {
-		super();
-		this.pcNo = pcNo;
-		this.pCode = pCode;
-		this.pPrice = pPrice;
-		this.pcQty = pcQty;
-		this.pBrandName = pBrandName;
 	}
 
 
@@ -70,6 +68,18 @@ public class PurchaseDto {
 
 
 
+	public PurchaseDto(String uid, int pCode, int pPrice, int pcQty, String pName, Timestamp pcInsertDate,
+			String pfRealName, String pfHoverRealName) {
+		super();
+		this.uid = uid;
+		this.pCode = pCode;
+		this.pPrice = pPrice;
+		this.pcQty = pcQty;
+		this.pName = pName;
+		this.pcInsertDate = pcInsertDate;
+		this.pfRealName = pfRealName;
+		this.pfHoverRealName = pfHoverRealName;
+	}
 
 
 

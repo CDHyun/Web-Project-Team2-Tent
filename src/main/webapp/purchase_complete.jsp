@@ -19,7 +19,7 @@
 
 <body>
 
-<c:set var="users" value="${selectUser}" />
+<c:set var="users" value="${completeList}" />
     <!-- Preloader -->
     <div id="preloader">
         <div class="spinner-grow" role="status">
@@ -55,7 +55,7 @@
                     <div class="order_complated_area clearfix">
                         <h5>Thank You For Your Order.</h5>
                         <p>주문이 정상적으로 접수되었습니다 🙂</p>
-                        <p class="orderid mb-0">${users[0].uid}님의 주문은 [${pcStatus}] 상태입니다</p>
+                        <p class="orderid mb-0">${complete.uid}님의 주문은 [${complete.pcStatus}] 상태입니다</p>
                         <br>
                         <input type="button" class="order_list_btn" value="order list" onclick="location.href='order_list'">
                     </div>

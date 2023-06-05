@@ -146,9 +146,90 @@ public PurchaseDao() {
 		}
 	}
 	
-     
-  
+ 	public ArrayList<PurchaseDto> completeList(String uid) {
+ 		ArrayList<PurchaseDto> beanList = new ArrayList<PurchaseDto>();
+ 		Connection connection = null;
+ 		PreparedStatement preparedStatement = null;
+ 		ResultSet resultSet = null;
 
+ 		try {
+ 			connection = dataSource.getConnection();
+ 			String query = "select u.uid pc.pcstatus "
+ 					+ "from user u, purchase pc "
+ 					+ "where u.uid = pc.uid and u.uid = ?";
+ 			preparedStatement = connection.prepareStatement(query); 
+ 			preparedStatement.setString(1, uid);
+ 			resultSet = preparedStatement.executeQuery();
+ 			
+ 			while (resultSet.next()) {
+ 				String pcStatus = resultSet.getString(6);
+ 				PurchaseDto dto = new PurchaseDto(uid, pcStatus);
+ 				beanList.add(dto);
+ 			}
+
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		} finally {
+ 			try {
+ 				if (resultSet != null)
+ 					resultSet.close();
+ 				if (preparedStatement != null)
+ 					preparedStatement.close();
+ 				if (connection != null)
+ 					connection.close();
+ 			} catch (Exception e) {
+ 				e.printStackTrace();
+ 			}
+ 		}
+ 		return beanList;
+ 	}
+  
+ 	 public ArrayList<PurchaseDto> orderList(String uid) {
+  		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
+  		Connection connection = null;
+  		PreparedStatement preparedStatement = null;
+  		ResultSet resultSet = null;
+
+  		try {
+  			connection = dataSource.getConnection();
+  			String query = "SELECT u.uid, p.pCode, p.pName, p.pPrice, pc.pcQty, pf.pfRealName, pf.pfHoverRealName, pc.pcInsertDate "
+  							+ "FROM purchase pc, product p, user u, productfile pf " 
+  							+ "WHERE pc.pCode = p.pCode and pf.pCode = p.pCode and u.uid = pc.uid and u.uid = ?";
+  			preparedStatement = connection.prepareStatement(query);
+  			preparedStatement.setString(1, uid);
+  			resultSet = preparedStatement.executeQuery();
+
+  			while (resultSet.next()) {
+  				int pCode = resultSet.getInt(1);
+  				String pName = resultSet.getString(2);
+  				int pPrice = resultSet.getInt(3);
+  				int pcQty = resultSet.getInt(4);
+  				String pfRealName = resultSet.getString(5);
+ 				String pfHoverRealName = resultSet.getString(6);
+ 				Timestamp insertDate = resultSet.getTimestamp(7);
+ 				
+  				PurchaseDto purchaseDto = new PurchaseDto(uid, pCode, pPrice, pcQty, pName, insertDate, pfRealName, pfHoverRealName);
+  				dtos.add(purchaseDto);
+  			}
+
+  		} catch (Exception e) {
+  			e.printStackTrace();
+  		} finally {
+  			try {
+  				if (resultSet != null)
+  					resultSet.close();
+  				if (preparedStatement != null)
+  					preparedStatement.close();
+  				if (connection != null)
+  					connection.close();
+  			} catch (Exception e) {
+  				e.printStackTrace();
+  			}
+  		}
+
+  		return dtos;
+
+  	}
 
 
 

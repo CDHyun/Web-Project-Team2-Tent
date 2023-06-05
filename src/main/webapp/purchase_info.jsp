@@ -71,6 +71,8 @@
                 <div class="col-12">
                     <div class="checkout_details_area clearfix">
                         <h5 class="mb-4">Orderer Info</h5>
+                        <%-- <c:set var="user" value="${selectUser}"/> --%>
+                        <c:forEach items="${selectUser}" var="user">
                         <form id="orderer_info_form" method="post">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
@@ -173,18 +175,22 @@
                     </div>
                 </div>
 
-                <div class="col-12">
-                    <div class="checkout_pagination mt-3 d-flex justify-content-end clearfix">
-                        <a href="" class="btn btn-primary mt-2 ml-2 order_back_btn order_back"  id="back_Receiver">Go Back</a>
-                        <a href="" id="Receiver_next_btn" class="btn btn-primary mt-2 ml-2 order_next">Continue</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-                        </form>
-                    </div>
-                </div>
-<!-- 
+
+							<div class="col-12">
+								<div class="checkout_pagination mt-3 d-flex justify-content-end align-items-center clearfix">
+									<form id="back_Receiver" action="product_detail.do" method="post" name="Go Back">
+										<input type="submit" class="btn btn-primary ml-2" value="Go Back">
+									</form>
+									<form id="Receiver_next_btn" action="payment.do" method="post" name="Continue">
+										<input type="submit" class="btn btn-primary ml-2" value="Continue">
+									</form>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<!-- 
                 <div class="col-12">
                     <div class="checkout_pagination mt-3 d-flex justify-content-end clearfix">
                         <a href="" class="btn btn-primary mt-2 ml-2 order_back_btn order_back"  id="back_receiver">Go Back</a>
