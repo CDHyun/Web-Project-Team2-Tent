@@ -19,8 +19,10 @@
 	<script src="js/shop/user.js"></script>
 	<script type="text/javascript">
 	function addModalOpen() {
-		var form = document.getElementById('insert_address_form');
 		$('#userAddressAddModal').modal('show');
+		}
+	function modifyModalOpen() {
+		$('#userModifyAddressModal').modal('show');
 		}
 	  
 	function userAddressAdd() {
@@ -75,13 +77,102 @@
 				}
 			},
 			error : function() {
-				showAlert("오류가 발생했습니다. 다시 시도해주세요.");
+				Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
 			}
 		});
 		
 		  
 	}
-	  
+	
+	function userModifyAddress() {
+		var uaNo = $('#m_uaNo').val();
+		var uaAddress = $('#m_uaAddress').val();
+		var uaDetailAddress = $('#m_uaDetailAddress').val();
+		var uaZipcode = $('#m_uaZipcode').val();
+		var uaContent = $('#m_uaContent').val();
+		var regExpuAddress = /^[가-힣|0-9|a-z|A-Z|-|\s]*$/;
+		
+		if (uaAddress.trim().length === 0) {
+			Toast.fire({icon : 'warning', title : "주소를 입력해주세요."});
+			return;
+		}
+		if (uaDetailAddress.trim().length === 0) {
+			Toast.fire({icon : 'warning', title : "상세 주소를 입력해주세요."});
+			return;
+		}
+		if (uaZipcode.length === 0) {
+			Toast.fire({icon : 'warning', title : "우편번호를 입력해주세요."});
+			return;
+		}
+		
+		if (!regExpuAddress.test(uaDetailAddress)) {
+			Toast.fire({icon : 'warning', title : "주소는 영문/한글/숫자/- 만 입력 가능합니다."});
+			ruAddress.select();
+			return
+		}
+		
+		$.ajax({
+			type : 'POST',
+			url : './UserModifyAddress',
+			data : {
+				uaNo : uaNo,
+				uaAddress : uaAddress,
+				uaDetailAddress : uaDetailAddress,
+				uaZipcode : uaZipcode,
+				uaContent : uaContent
+			},
+			success : function(result) {
+				console.log(result);
+				if (result === "0") {
+					Toast.fire({
+						icon : 'warning',
+						title : "배송지 정보 변경 중 문제가 발생했습니다."
+					});
+					return;
+				}
+				if (result === "1") {
+					Toast.fire({ icon: 'success', title: "배송지 정보가 변경 되었습니다." }).then(() => {
+						  $('#userModifyAddressModal').modal('hide');
+						  window.location.href = "user_address.do";
+						});
+				}
+			},
+			error : function() {
+				Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
+			}
+		});
+	}
+	
+	
+	function userDeleteAddress() {
+		var uaNo = $('#d_uaNo').val();
+		ToastConfirm.fire({ icon: 'question', title: "배송지를 삭제 하시겠습니까?" }).then((result) => {
+			if(result.isConfirmed){
+				$.ajax({
+					type : 'POST',
+					url : './UserDeleteAddress',
+					data : {
+						uaNo : uaNo,
+					},
+					success : function(result) {
+						console.log(result);
+						if (result === "0") {
+							Toast.fire({ icon : 'warning', title : "배송지 정보 삭제 중 문제가 발생했습니다." });
+							return;
+						}
+						if (result === "1") {
+							Toast.fire({ icon: 'success', title: "배송지 삭제 되었습니다." }).then(() => {
+								  window.location.href = "user_address.do";
+								});
+						}
+					},
+					error : function() {
+						Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
+					 }
+			    });
+			}
+		});
+	}
 	  
 	</script>
 
@@ -120,7 +211,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="shortcodes_title mb-30">
-                        <h4>My Addresses</h4>
+                        <h5 class="mb-3">My Account</h5>
                     </div>
                     <div class="shortcodes_content">
                         <div class="table-responsive">
@@ -134,7 +225,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="qna_list_tbody">
-                                
                                 	<!-- board start -->
                                 	<c:forEach var="address" items="${addressList}" varStatus="loop">
 									  <tr>
@@ -143,16 +233,61 @@
 									    <td style="vertical-align: middle;">${address.uPhone}</td>
 									    <td style="vertical-align: middle;">
 									   		<c:if test="${address.uaNo == 1}">
-										      <button type="button" class="btn btn-primary btn-sm" onclick="openPasswordCheckModal()">Modify</button>
+										      <button type="button" class="btn btn-primary btn-sm" onclick="modifyModalOpen()">Modify</button>
 									   		</c:if>
 									   		<c:if test="${address.uaNo > 1}">
-										      <button type="button" class="btn btn-primary btn-sm" onclick="openPasswordCheckModal()">Modify</button>
-									      	<button type="button" class="btn btn-primary btn-sm delete-button">Delete</button>
+										    	<button type="button" class="btn btn-primary btn-sm" onclick="modifyModalOpen()">Modify</button>
+										    	<input type="hidden" id="d_uaNo" name="d_uaNo" value="${address.uaNo}">
+									      		<button type="button" class="btn btn-primary btn-sm delete-button" onclick="userDeleteAddress()">Delete</button>
 									   		</c:if>
 									    </td>
 									  </tr>
+									  <!-- 배송지 수정 모달 -->
+										<div class="modal" id="userModifyAddressModal" tabindex="-1" role="dialog">
+											<div class="modal-dialog" role="document">
+												<div class="modal-content">
+													<div class="container">
+														<h5 class="mb-3" style="display: inline-block; text-align: center;">User Add Address</h5>
+														<span style="color: red">${l_msg}</span>
+												            <div class="col-12">
+													            <div class="form-group">
+													                <label for="Address">Address *</label>
+													                <input type="hidden" id="m_uaNo" name="m_uaNo" value="${address.uaNo}">
+													                <input type="text" class="form-control address m_u_check" id="m_uaAddress" name="m_uaAddress" value="${address.uaAddress}" placeholder="Address" readonly="readonly">
+													            </div>
+													        </div>
+													         <div class="col-12">
+													            <div class="form-group">
+													                <label for="Address">DetailAddress *</label>
+													                <input type="text" class="form-control" id="m_uaDetailAddress" name="m_uaDetailAddress" value="${address.uaDetailAddress}" placeholder="Detailed Address">
+													            </div>
+													        </div>
+													         <div class="col-12">
+													             <div class="form-group">
+														                <label for="Post">Post *</label><br>
+														             <div class="input-form-group" style="display: flex; align-items: center;">
+													                	<input type="text" class="form-control postcode m_u_check" id="m_uaZipcode" name="m_uaZipcode" value="${address.uaZipcode}" placeholder="Zipcode" readonly="readonly">
+																		<button type="button" class="btn btn-outline-primary btn-sm searchAddr" style="margin-left: 15px;">search</button>
+																	</div>
+											                	</div>
+											                </div>
+											                <div class="col-12">
+													            <div class="form-group">
+													                <label for="Address">Shipping address<span style="color: gray; font-size: 14px">&nbsp;Optional</span></label>
+													                <input type="text" class="form-control" id="m_uaContent" name="m_uaContent" value="${address.uaContent}" placeholder="Shipping address">
+													            </div>
+													        </div>
+													        <div class="button-container">
+											            		<button type="button" class="btn btn-primary btn-sm" onclick="userModifyAddress()">Modify</button>&nbsp;&nbsp;&nbsp;&nbsp;
+																<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">Cancle</button>
+															</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- 배송지 수정 모달 -->
 									</c:forEach>
-
+									</div>
 
                                    <!-- board end -->
                                 </tbody>
@@ -162,6 +297,7 @@
                     </div>
                     <br/>
 					<button type="button" class="btn btn-primary btn-sm" onclick="addModalOpen()">배송지 추가</button>
+					<a href="user_my_account.do"><button type="button" class="btn btn-secondary btn-sm" onclick="">뒤로 가기</button></a>
                 </div>
             </div>
             
@@ -172,7 +308,6 @@
 							<div class="container">
 								<h5 class="mb-3" style="display: inline-block; text-align: center;">User Add Address</h5>
 								<span style="color: red">${l_msg}</span>
-								<form id="insert_address_form">
 						            <div class="col-12">
 							            <div class="form-group">
 							                <label for="Address">Address *</label>
@@ -200,13 +335,17 @@
 							                <input type="text" class="form-control" id="uaContent" name="uaContent"  placeholder="Shipping address">
 							            </div>
 							        </div>
-				            		<button type="button" class="btn btn-primary btn-sm" onclick="userAddressAdd()">Add</button>
-						        </form>
+							        <div class="button-container">
+					            		<button type="button" class="btn btn-primary btn-sm" onclick="userAddressAdd()">Add</button>&nbsp;&nbsp;&nbsp;&nbsp;
+										<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">Cancle</button>
+									</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- 이메일 변경 모달 -->
+            	<!-- 배송지 추가 모달 -->
+			</div>
+		</div>
             
             
     <!-- Footer Area -->

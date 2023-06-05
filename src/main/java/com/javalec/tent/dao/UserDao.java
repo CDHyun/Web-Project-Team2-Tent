@@ -388,7 +388,7 @@ public class UserDao {
 		try {
 			con = dataSource.getConnection();
 			
-			String query = "update user set uName = ? where uid = ?";
+			String query = "update user set uName = ?, uUpdateDate = now() where uid = ?";
 			ps = con.prepareStatement(query);
 			ps.setString(1, uReName);
 			ps.setString(2, uid);
@@ -414,7 +414,7 @@ public class UserDao {
 		try {
 			con = dataSource.getConnection();
 			
-			String query = "update user set uEmail = ? where uid = ?";
+			String query = "update user set uEmail = ?, uUpdateDate = now() where uid = ?";
 			ps = con.prepareStatement(query);
 			ps.setString(1, uReMail);
 			ps.setString(2, uid);
@@ -440,7 +440,7 @@ public class UserDao {
 		try {
 			con = dataSource.getConnection();
 			
-			String query = "update user set uPhone = ? where uid = ?";
+			String query = "update user set uPhone = ?, uUpdateDate = now() where uid = ?";
 			ps = con.prepareStatement(query);
 			ps.setString(1, uPhone);
 			ps.setString(2, uid);
@@ -540,6 +540,103 @@ public class UserDao {
 				if (con != null) con.close();
 				if (maxUaNoStatement != null) maxUaNoStatement.close();
 				if (insertStatement != null) insertStatement.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public int userModifyAddress(int uaNo, String uid, String uaAddress, String uaDetailAddress, String uaZipcode, String uaContent) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int result = 0;
+		try {
+			con = dataSource.getConnection();
+			
+			String query = "update userAddress set uaAddress = ?, uaDetailAddress = ?, uaZipcode = ?, uaContent = ? where uid = ? and uaNo = ?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, uaAddress);
+			ps.setString(2, uaDetailAddress);
+			ps.setString(3, uaZipcode);
+			ps.setString(4, uaContent);
+			ps.setString(5, uid);
+			ps.setInt(6, uaNo);
+			result = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) con.close();
+				if (ps != null) ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	public int userDeleteAddress(int uaNo, String uid) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int result = 0;
+		try {
+			con = dataSource.getConnection();
+			
+			String query = "delete from userAddress where uid = ? and uaNo = ?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, uid);
+			ps.setInt(2, uaNo);
+			result = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) con.close();
+				if (ps != null) ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public int userChangePassword(String uid, String password, String newPassword) {
+		Connection con = null;
+		PreparedStatement confirmPs = null;
+		PreparedStatement changePs = null;
+		ResultSet confirmRs = null;
+		String dbPassword = "";
+		int result = 0;
+		try {
+			con = dataSource.getConnection();
+			
+			String sql1 = "select uPassword from user where uid = ?";
+			confirmPs = con.prepareStatement(sql1);
+			confirmPs.setString(1, uid);
+			confirmRs = confirmPs.executeQuery();
+			if(confirmRs.next()) {
+				dbPassword = confirmRs.getString(1);
+			}
+			
+			if(!dbPassword.equals(password)) {
+				result = -1;
+			} else {
+				String sql2 = "update user set uPassword = ?, uUpdateDate = now() where uid = ?";
+				changePs = con.prepareStatement(sql2);
+				changePs.setString(1, newPassword);
+				changePs.setString(2, uid);
+				changePs.executeUpdate();
+				result = 1;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) con.close();
+				if (confirmPs != null) confirmPs.close();
+				if (confirmRs != null) confirmRs.close();
+				if (changePs != null) changePs.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

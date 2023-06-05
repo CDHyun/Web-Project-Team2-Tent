@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="css/shop/user.css">
 
 	<script src="js/shop/user.js"></script>
-
 </head>
 
 <body>
@@ -52,10 +51,10 @@
     <section class="my-account-area section_padding_100_50">
         <div class="container">
             <div class="row">
-				<div class="col-12 col-lg-3">
+				<div class="col-12 col-lg-3" >
 				    <div class="my-account-navigation mb-50">
 				        <ul>
-				            <li><a href="user_my_account.do$uid=${SUID}">My Account</a></li>
+				            <li><a href="user_my_account.do?uid=${SUID}">My Account</a></li>
 				            <li><a href="purchase_list.do">Orders</a></li>
 				            <li><a href="logout.do">Logout</a></li>
 				        </ul>
@@ -63,10 +62,10 @@
 				</div>
                 <div class="col-12 col-lg-9">
                     <div class="my-account-content mb-50">
+					<c:forEach items="${userInfo}" var="user">
                         <h5 class="mb-3">My Account</h5>
 						
-						<c:forEach items="${userInfo}" var="user">
-						<h3>기본 회원정보<span style="color: gray; font-size: 16px">&nbsp;필수</span> </h3>
+						<h3>기본 회원정보<span style="color: gray; font-size: 16px">&nbsp; * : 필수</span> </h3>
 						
                         <form id="user_account_form" action="" method="post">
                             <div class="row">
@@ -92,10 +91,10 @@
 												<c:set var="maskedName" value="${firstChar}${middleMask}${lastChar}" />
 	                                        	<input type="text" class="form-control" id="uName" name="uName" placeholder="이름" value="${maskedName}" readonly="readonly">
 	                                        	<c:if test="${empty CONFIRM}">
-													<button type="button" class="btn btn-primary btn-sm" onclick="openPasswordCheckModal()" style="margin-left: 15px;">Rename</button>
+													<button type="button" class="btn btn-info btn-sm" onclick="openPasswordCheckModal()" style="margin-left: 15px;">Rename</button>
 	                                        	</c:if>
 	                                        	<c:if test="${!empty CONFIRM}">
-													<button type="button" class="btn btn-primary btn-sm" onclick="openUserRenameModal()" style="margin-left: 15px;">Rename</button>
+													<button type="button" class="btn btn-info btn-sm" onclick="openUserRenameModal()" style="margin-left: 15px;">Rename</button>
 	                                        	</c:if>
 											</div>
                                     </div>
@@ -127,10 +126,10 @@
 													%>
 		                                        	<input type="text" class="form-control" id="uEmail" name="uEmail" placeholder="Email" value="<%=maskedEmail%>" readonly="readonly">
 		                                        	<c:if test="${empty CONFIRM}">
-														<button type="button" class="btn btn-primary btn-sm" onclick="openPasswordCheckModal()" style="margin-left: 15px;">Modify</button>
+														<button type="button" class="btn btn-info btn-sm" onclick="openPasswordCheckModal()" style="margin-left: 15px;">Modify</button>
 		                                        	</c:if>
 		                                        	<c:if test="${!empty CONFIRM}">
-														<button type="button" class="btn btn-primary btn-sm" onclick="openUserReEmailModal()" style="margin-left: 15px;">Modify</button>
+														<button type="button" class="btn btn-info btn-sm" onclick="openUserReEmailModal()" style="margin-left: 15px;">Modify</button>
 		                                        	</c:if>
 												</div>
 	                                    </div>
@@ -144,55 +143,89 @@
 													<c:set var="maskedNumber" value="${fn:substring(cleanedNumber, 0, 3)}-${fn:substring(cleanedNumber, 3, 5)}**-${fn:substring(cleanedNumber, 7, 9)}**" />
 			                                        <input type="text" class="form-control m_u_check phone_number" id="uPhone" name="uPhone" placeholder="전화번호" value="${maskedNumber}" readonly="readonly">
 		                                        	<c:if test="${empty CONFIRM}">
-														<button type="button" class="btn btn-primary btn-sm" onclick="openPasswordCheckModal()" style="margin-left: 15px;">Modify</button>
+														<button type="button" class="btn btn-info btn-sm" onclick="openPasswordCheckModal()" style="margin-left: 15px;">Modify</button>
 		                                        	</c:if>
 		                                        	<c:if test="${!empty CONFIRM}">
-														<button type="button" class="btn btn-primary btn-sm" onclick="openUserRePhoneModal()" style="margin-left: 15px;">Modify</button>
+														<button type="button" class="btn btn-info btn-sm" onclick="openUserRePhoneModal()" style="margin-left: 15px;">Modify</button>
 		                                        	</c:if>
 												</div>
 	                                    </div>
                                 </div>
+                                <div class="col-12 col-lg-6">
+	                                <div class="form-group">
+	                                        <label for="Name">Gender *</label>
+		                                        <div class="input-form-group" style="display: flex; align-items: center;">
+		                                        <c:if test="${user.uGender == 1}">
+		                                        	<c:set var="gender" value="남자"></c:set>
+		                                        </c:if>
+		                                        <c:if test="${user.uGender == 2}">
+		                                        	<c:set var="gender" value="여자"></c:set>
+		                                        </c:if>
+		                                        	<input type="text" class="form-control" id="uGender" name="uGender" placeholder="uGender" value="${gender}" readonly="readonly">
 		                                        	<c:if test="${empty CONFIRM}">
-														<button type="button" class="btn btn-primary btn-sm" onclick="openPasswordCheckModal()" style="margin-left: 15px;">배송지 관리</button>
+														<button type="button" class="btn btn-info btn-sm" onclick="openPasswordCheckModal()" style="margin-left: 15px;">Modify</button>
 		                                        	</c:if>
 		                                        	<c:if test="${!empty CONFIRM}">
-														<a href="user_address.do"><button type="button" class="btn btn-primary btn-sm" style="margin-left: 15px;">배송지 관리</button></a>
+														<button type="button" class="btn btn-info btn-sm" onclick="openUserGenderModal()" style="margin-left: 15px;">Modify</button>
 		                                        	</c:if>
-                                
-                                
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="currentPass">Password *</label>
-                                        <input type="password" class="form-control m_u_check" name="m_password" id="currentPass" value="">
-                                    </div>
+												</div>
+	                                    </div>
                                 </div>
-                                
-                                &nbsp;&nbsp;&nbsp; <span style="color:red"> ✔️ 비밀번호 변경을 원할 시 작성해주세요</span>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="newPass">New Password</label>
-                                        <input type="password" class="form-control" name="new_password" id="newPass" value="">
-                                    </div>
+                                <div class="col-12 col-lg-6">
+	                                <div class="form-group">
+	                                        <label for="Name">Birthday</label>
+		                                        <div class="input-form-group" style="display: flex; align-items: center;">
+		                                        	<input type="text" class="form-control" id="uBirthday" name="uBirthday" placeholder="uBirthday" value="${user.uBirthday}" readonly="readonly">
+		                                        	<c:if test="${empty CONFIRM}">
+														<button type="button" class="btn btn-info btn-sm" onclick="openPasswordCheckModal()" style="margin-left: 15px;">Modify</button>
+		                                        	</c:if>
+		                                        	<c:if test="${!empty CONFIRM}">
+														<button type="button" class="btn btn-info btn-sm" onclick="openUserGenderModal()" style="margin-left: 15px;">Modify</button>
+		                                        	</c:if>
+												</div>
+	                                    </div>
                                 </div>
-                                
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="confirmPass">Confirm New Password</label>
-                                        <input type="password" class="form-control" id="confirmPass" value="">
-                                    </div>
+                                <div class="col-12 col-lg-6">
+	                                <div class="form-group">
+	                                        <label for="Name">Nickname *</label>
+		                                        <div class="input-form-group" style="display: flex; align-items: center;">
+		                                        	<input type="text" class="form-control" id="uNickName" name="uNickName" placeholder="nickname" value="${user.uNickName}" readonly="readonly">
+		                                        	<c:if test="${empty CONFIRM}">
+														<button type="button" class="btn btn-info btn-sm" onclick="openPasswordCheckModal()" style="margin-left: 15px;">Modify</button>
+		                                        	</c:if>
+		                                        	<c:if test="${!empty CONFIRM}">
+														<button type="button" class="btn btn-info btn-sm" onclick="openUserNickNameModal()" style="margin-left: 15px;">Modify</button>
+		                                        	</c:if>
+												</div>
+	                                    </div>
                                 </div>
-                                
-                                <div class="col-12">
-                                    <button type="button" class="btn btn-primary" id="member_update_btn">Save Changes</button>
-                                    <button type="button" class="btn btn-outline-primary mb-1" id="withdrawal_btn" style="float:right">Withdrawal</button>
+                                <div class="col-12 col-lg-6">
+	                                <div class="form-group">
+	                                        <label for="Name">Join Date</label>
+		                                        <div class="input-form-group" style="display: flex; align-items: center;">
+		                                        	<input type="text" class="form-control" id="uInsertDate" name="uInsertDate" placeholder="join date" value="${user.uInsertDate}" readonly="readonly">
+												</div>
+	                                    </div>
                                 </div>
+                               <div class="col-12">
+                               <br/>
+	                                <div class="form-group">
+	                                <div class="button-container">
+										<c:if test="${empty CONFIRM}">
+											<button type="button" class="btn btn-success mb-1" onclick="openPasswordCheckModal()">배송지 관리</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<button type="button" class="btn btn-primary mb-1" onclick="openUserChangePasswordModal()">Password Change</button>
+										</c:if>
+										<c:if test="${!empty CONFIRM}">
+											<br />
+											<a href="user_address.do"><button type="button" class="btn btn-success mb-1">배송지 관리</button></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<button type="button" class="btn btn-primary mb-1" onclick="openUserChangePasswordModal()">ChangePassword</button>
+										</c:if>
+											</div>
+	                                </div>
+                                </div> 
                             </div>
                         </form>
 						</c:forEach>
-                        <form id="member_withdrawal_form" action="member_account_delete_action" method="post">
-
-                        	<input type="hidden" name="m_id" value="" />
-                        </form>
                     </div>
                 </div>
             </div>
@@ -257,7 +290,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- 이메일 변경 모달 -->
+	<!-- 전화번호 변경 모달 -->
 	<div class="modal" id="userRePhoneModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -282,6 +315,58 @@
 					</div>
 						<div class="button-container">
 							<button type="button" class="btn btn-primary btn-sm" onclick="userRePhone()">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">Cancle</button>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 비밀번호 변경 모달 -->
+	<div class="modal" id="userChangePasswordModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="container">
+					<h5 class="mb-3" style="display: inline-block; text-align: center;">User Change Password</h5>
+					<span style="color: red">${l_msg}</span>
+						<div class="form-group">
+							<label>Please enter the Password you want to change.</label><br/>
+					    <input type="password" class="form-control" id="c_uPassword" name="c_uPassword" placeholder="your password">
+					</div>
+					<div class="form-group">
+				    	<input type="password" class="form-control" id="c_uChangePass" name="c_uChangePass" placeholder="New password">
+					</div>
+					<div class="form-group">
+					    <input type="password" class="form-control" id="c_uConfrimChangePass" name="c_uConfrimChangePass" placeholder="new password">
+					    <span id="passwordMatch"></span>
+					</div>
+						<div class="button-container">
+							<button type="button" class="btn btn-primary btn-sm" onclick="userChangePassword()">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">Cancle</button>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 성별 변경 모달 -->
+	<div class="modal" id="userChangeGenderModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="container">
+					<h5 class="mb-3" style="display: inline-block; text-align: center;">User Change Gender</h5>
+					<span style="color: red">${l_msg}</span>
+						<div class="form-group">
+							<label>Please enter the Password you want to change.</label><br/>
+					    <input type="password" class="form-control" id="c_uPassword" name="c_uPassword" placeholder="your password">
+					</div>
+					<div class="form-group">
+				    	<input type="password" class="form-control" id="c_uChangePass" name="c_uChangePass" placeholder="New password">
+					</div>
+					<div class="form-group">
+					    <input type="password" class="form-control" id="c_uConfrimChangePass" name="c_uConfrimChangePass" placeholder="new password">
+					    <span id="passwordMatch"></span>
+					</div>
+						<div class="button-container">
+							<button type="button" class="btn btn-primary btn-sm" onclick="userChangePassword()">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">Cancle</button>
 						</div>
 				</div>
@@ -338,7 +423,7 @@
 				}
 			},
 			error : function() {
-				showAlert("오류가 발생했습니다. 다시 시도해주세요.");
+				Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
 			}
 		});
 	}
@@ -394,7 +479,7 @@
 				}
 			},
 			error : function() {
-				showAlert("오류가 발생했습니다. 다시 시도해주세요.");
+				Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
 			}
 		});
 	}
@@ -438,7 +523,7 @@
 				}
 			},
 			error : function() {
-				showAlert("오류가 발생했습니다. 다시 시도해주세요.");
+				Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
 			}
 		});
 	}
@@ -502,9 +587,107 @@
 				}
 			},
 			error : function() {
-				showAlert("오류가 발생했습니다. 다시 시도해주세요.");
+				Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
 			}
 		});
+	}
+	
+	/* Password */
+	function openUserChangePasswordModal() {
+		ToastConfirm.fire({ icon: 'question', title: "비밀번호를 변경하시겠습니까?" }).then((result) => {
+			if(result.isConfirmed){
+				$('#userChangePasswordModal').modal('show');
+			}
+			});
+	}
+	
+	var passwordInput = $("#c_uChangePass");
+	var confirmPasswordInput = $("#c_uConfrimChangePass");
+
+	/* passwordInput.on("input", checkPasswordMatch); */
+	confirmPasswordInput.on("input", checkPasswordMatch);
+
+	function checkPasswordMatch() {
+	  var password = $("#c_uPassword").val();
+	  var changePassword = $("#c_uChangePass").val();
+	  var confirmPassword = $("#c_uConfrimChangePass").val();
+	  var passwordMatchElement = document.getElementById("passwordMatch");
+
+	  if (changePassword === confirmPassword) {
+	    passwordMatchElement.textContent = "Password Match";
+	    passwordMatchElement.style.color = "green";
+	  } else {
+	    passwordMatchElement.textContent = "Password Mismatch";
+	    passwordMatchElement.style.color = "red";
+	  }
+	}
+
+	
+	function userChangePassword() {
+		var password = $("#c_uPassword").val();
+		var changePassword = $("#c_uChangePass").val();
+		var confirmPassword = $("#c_uConfrimChangePass").val();
+		var regExpuPass = /^[a-z|A-Z|0-9]*$/;
+		if (!regExpuPass.test(password)) {
+			Toast.fire({
+				icon : 'warning',
+				title : "비밀번호는 영문&숫자만 사용 가능합니다."
+			});
+			return
+		}
+		if (!regExpuPass.test(changePassword)) {
+			Toast.fire({
+				icon : 'warning',
+				title : "비밀번호는 영문&숫자만 사용 가능합니다."
+			});
+			return
+		}
+		if (!regExpuPass.test(confirmPassword)) {
+			Toast.fire({
+				icon : 'warning',
+				title : "비밀번호는 영문&숫자만 사용 가능합니다."
+			});
+			return
+		}
+		
+		if (!changePassword === confirmPassword) {
+			Toast.fire({
+				icon : 'warning',
+				title : "입력하신 비밀번호와 비밀번호 확인이 일치하지 않습니다."
+			});
+			return
+		}
+		
+		
+		$.ajax({
+			type : 'POST',
+			url : './UserChangePassword',
+			data : {
+				password : password,
+				changePassword : changePassword
+			},
+			success : function(result) {
+				console.log(result);
+				if (result === "-1") {
+					Toast.fire({ icon : 'warning', title : "비밀번호가 일치하지 않습니다." });
+					return;
+				}
+				if (result === "0") {
+					Toast.fire({ icon : 'warning', title : "변경 중 문제가 발생했습니다." });
+					return;
+				}
+				if (result === "1") {
+					Toast.fire({ icon: 'success', title: "비밀번호가 변경 되었습니다." }).then(() => {
+						  $('#userChangePasswordModal').modal('hide');
+						  window.location.href = "user_my_account.do";
+						});
+				}
+			},
+			error : function() {
+				Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
+			}
+		});
+		
 	}
 	
 </script>

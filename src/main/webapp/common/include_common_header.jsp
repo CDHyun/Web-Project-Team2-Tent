@@ -185,7 +185,6 @@
 		const ruGender = $('input[name="gender"]:checked').val();
 		const ruBirthday = $('#ruBirthday').val();
 		const ruZipcode = $('#ruZipcode').val();
-		console.log(ruZipcode);
 		const regExpAdmin = /^(?!.*(?:admin|root|insert|update|delete|select)).*$/
 		const regExpuid = /^[a-z|A-Z|0-9]*$/;
 		const regExpuPass = /^[a-z|A-Z|0-9]*$/;
@@ -239,7 +238,6 @@
 			});
 			form.ruPassword.select();
 			return
-	
 		}
 		if (ruRePass.trim().length === 0) {
 			Toast.fire({
@@ -395,6 +393,31 @@
 			}
 		});
 	}
+	
+
+	document.addEventListener("DOMContentLoaded", function() {
+		  var passwordInput = document.getElementById("ruPassword");
+		  var confirmPasswordInput = document.getElementById("ruRePass");
+
+		  confirmPasswordInput.addEventListener("input", confirmPasswordMatch);
+
+		  function confirmPasswordMatch() {
+		    var password = document.getElementById("ruPassword").value;
+		    var confirmPassword = document.getElementById("ruRePass").value;
+		    var passwordMatchEl = document.getElementById("passwordConfirm");
+
+		    if (password === confirmPassword) {
+		      passwordMatchEl.textContent = "Password Match";
+		      passwordMatchEl.style.color = "green";
+		    } else {
+		      passwordMatchEl.textContent = "Password Mismatch";
+		      passwordMatchEl.style.color = "red";
+		    }
+		  }
+		});
+
+
+
 </script>
 
 
@@ -690,6 +713,7 @@
 					</div>
 					<div class="form-group">
 						<input type="password" class="form-control" id="ruRePass" name="ruRePass" placeholder="RePassword">
+						<span id="passwordConfirm"></span>
 					</div>
 					<div class="form-group">
 						<input type="text" class="form-control" id="ruName" name="ruName" placeholder="Name">
@@ -733,8 +757,8 @@
 						<input type="text" class="form-control postcode" id="ruZipcode" name="ruZipcode" placeholder="Zipcode" readonly="readonly">
 					</div>
 					<div class="button-container">
-					<button type="button" class="btn btn-primary btn-sm" onclick="registerCheck()">Register</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">Cancle</button>
+						<button type="button" class="btn btn-primary btn-sm" onclick="registerCheck()">Register</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">Cancle</button>
 					</div>
 				</form>
 			</div>
