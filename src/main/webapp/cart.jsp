@@ -84,7 +84,7 @@
                                 <c:set var="tot_price" value="${tot_price + cart.product.pPrice * cart.cQty}" />
                                     <tr id="cart_item_${cart.cNo}">
                                         <th scope="row">
-                                            <input type="checkbox" c_no="${cart.cNo}">
+                                            <input type="checkbox" cNo="${cart.cNo}">
                                         </th>
                                         <td>
                                             <img src="img/p_img/${cart.product.imageList[0].pfName}" alt="Product">
