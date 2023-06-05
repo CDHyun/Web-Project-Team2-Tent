@@ -20,9 +20,6 @@ public class UserInfoCommand implements TentCommand {
 		UserDao userDao = new UserDao();
 		ArrayList<UserDto> userinfo = new ArrayList<UserDto>();
 		userinfo = userDao.userinfo(uid);
-		for(int i=0; i<userinfo.size(); i++) {
-			System.out.println(userinfo.get(i).getUaAddress());
-		}
 		request.setAttribute("userInfo", userinfo);
 
 	}

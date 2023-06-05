@@ -459,6 +459,75 @@ public class UserDao {
 		return result;
 	}
 	
+	public int userChangeNickName(String uid, String uNickName) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int result = 0;
+		try {
+			con = dataSource.getConnection();
+			
+			String query = "update user set uNickName = ?, uUpdateDate = now() where uid = ?";
+			ps = con.prepareStatement(query);
+			ps.setString(1, uNickName);
+			ps.setString(2, uid);
+			result = ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) con.close();
+				if (ps != null) ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public int userDeleteAccount(String uid, String uPassword) {
+		Connection con = null;
+		PreparedStatement confirmPs = null;
+		PreparedStatement deletePs = null;
+		ResultSet confirmRs = null;
+		String dbPassword = "";
+		int result = 0;
+		try {
+			con = dataSource.getConnection();
+			
+			String sql1 = "select uPassword from user where uid = ?";
+			confirmPs = con.prepareStatement(sql1);
+			confirmPs.setString(1, uid);
+			confirmRs = confirmPs.executeQuery();
+			if(confirmRs.next()) {
+				dbPassword = confirmRs.getString(1);
+			}
+			
+			if(!dbPassword.equals(uPassword)) {
+				result = -1;
+			} else {
+				String sql2 = "update user set uSecessionStatus = 1, uDeleteDate = now() where uid = ?";
+				deletePs = con.prepareStatement(sql2);
+				deletePs.setString(1, uid);
+				deletePs.executeUpdate();
+				result = 1;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) con.close();
+				if (confirmPs != null) confirmPs.close();
+				if (confirmRs != null) confirmRs.close();
+				if (deletePs != null) deletePs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 	public ArrayList<UserDto> userAddressInfo(String uid) {
 		ArrayList<UserDto> addressList = new ArrayList<UserDto>();
 		Connection con = null;
