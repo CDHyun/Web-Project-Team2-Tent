@@ -532,4 +532,65 @@ public class AdminDao {
 	}
 	
 	
+	
+	
+	//막대차트 데이터 가져오기
+	public ArrayList<AdminDto> chart() {
+		
+		
+		ArrayList<AdminDto> dtos = new ArrayList<AdminDto>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			
+			String WhereDefault = "SELECT DAYNAME(pc.pcInsertDate) AS weekday, SUM(p.pPrice * pc.pcQty) AS totalAmount FROM purchase pc, product p GROUP BY DAYNAME(pc.pcInsertDate)";
+			
+			
+			preparedStatement = connection.prepareStatement(WhereDefault);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				String dayName = resultSet.getString(1);
+				int daySum = resultSet.getInt(2);
+				
+		
+				AdminDto dto = new AdminDto(dayName, daySum);
+				dtos.add(dto);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet != null){ // 무언가 들어가 있으면close
+					resultSet.close();
+				}
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return dtos;
+	
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
 }

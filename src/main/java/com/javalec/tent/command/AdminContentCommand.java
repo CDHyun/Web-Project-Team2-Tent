@@ -12,6 +12,10 @@ public class AdminContentCommand implements TentCommand {
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		String pCode =request.getParameter("pCode");
+		//검색기능에 필요한 변수
+		String queryName = request.getParameter("query");
+		String queryContent = request.getParameter("content");
+				
 		
 		//페이징 처리
 		 String vpage = request.getParameter("vpage");
@@ -27,7 +31,7 @@ public class AdminContentCommand implements TentCommand {
 		
 		
 		// count select 
-		int daocount = dao.pCount();
+		int daocount = dao.pCount(queryName,queryContent);
 		request.setAttribute("d_count", daocount);
 		
 		
