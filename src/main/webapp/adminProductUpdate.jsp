@@ -53,7 +53,7 @@
 	<!-- Header End -->
 	
 	
-<form action="adminUpdateAction.do" method="post" class="content" >
+<form action="adminUpdateAction.do" method="post" class="content" enctype="multipart/form-data" >
  				<img alt="image" src="images/product/${content_view.pfName}" width="250" height="250"><br/>
 		상품코드 <input type="text" name="pCode" id="pCode" value="${content_view.pCode }" readonly="readonly"><br/>
 		브랜드명 <input type="text" name="pBrandName" id="pBrandName" value="${content_view.pBrandName }"><br/>
@@ -61,8 +61,8 @@
 		가격 <input type="text" name="pPrice" id="pPrice" value="${content_view.pPrice }" ><br/>
 		색상 <input type="text" name="pColor" id="pColor" value="${content_view.pColor }"><br/>
 		재고 <input type="text" name="pStock" id="pStock" value="${content_view.pStock }"><br/>
-		파일명 : <input type="text" name="fileName" id="fileName" value="${file }"><br/>
-		<input type="file" name="file"><br/>
+		파일명 : <input type="file" name="file" ><br/>
+		<input type="hidden" name="lastfile" id="lastfile" value="${content_view.pfRealName }" >
 		
 			
 		

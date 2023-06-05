@@ -87,7 +87,7 @@
         labels: ['월', '화', '수', '목', '금', '토', '일'],
         datasets: [{
           label: '# of Votes',
-          data: [125000, 100009, 300000, 500000, 200000, 300000, 100000],
+          data: [${summary.daySum[0]}, ${summary.daySum[1]}, ${summary.daySum[2]}, ${summary.daySum[3]}, ${summary.daySum[4]}, ${summary.daySum[5]}, ${summary.daySum[6]}],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',

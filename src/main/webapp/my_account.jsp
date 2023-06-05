@@ -3,7 +3,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -78,7 +79,7 @@
                                 
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
-                                        <label for="Name">Name *</label>
+                                        <label for="uName">Name *</label>
 	                                        <div class="input-form-group" style="display: flex; align-items: center;">
 	                                        	<c:set var="name" value="${user.uName}" />
 												<c:set var="length" value="${fn:length(name)}" />
@@ -101,7 +102,7 @@
                                 </div>
                                 <div class="col-12">
 	                                <div class="form-group">
-	                                        <label for="Name">Email Address *</label>
+	                                        <label for="uEmail">Email Address *</label>
 		                                        <div class="input-form-group" style="display: flex; align-items: center;">
 													<%
 													    ArrayList<UserDto> userInfo = (ArrayList<UserDto>) request.getAttribute("userInfo");
@@ -136,7 +137,7 @@
                                 </div>
                                 <div class="col-12">
 	                                <div class="form-group">
-	                                        <label for="Name">Phone *</label>
+	                                        <label for="uPhone">Phone *</label>
 		                                        <div class="input-form-group" style="display: flex; align-items: center;">
 													<c:set var="phoneNumber" value="${user.uPhone}" />
 													<c:set var="cleanedNumber" value="${phoneNumber.replaceAll('[^0-9]', '')}" />
@@ -153,7 +154,21 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
 	                                <div class="form-group">
-	                                        <label for="Name">Gender *</label>
+	                                        <label for="uNickName">Nickname *</label>
+		                                        <div class="input-form-group" style="display: flex; align-items: center;">
+		                                        	<input type="text" class="form-control" id="uNickName" name="uNickName" placeholder="nickname" value="${user.uNickName}" readonly="readonly">
+		                                        	<c:if test="${empty CONFIRM}">
+														<button type="button" class="btn btn-info btn-sm" onclick="openPasswordCheckModal()" style="margin-left: 15px;">Modify</button>
+		                                        	</c:if>
+		                                        	<c:if test="${!empty CONFIRM}">
+														<button type="button" class="btn btn-info btn-sm" onclick="openUserChangeNickNameModal()" style="margin-left: 15px;">Modify</button>
+		                                        	</c:if>
+												</div>
+	                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+	                                <div class="form-group">
+	                                        <label for="uGender">Gender *</label>
 		                                        <div class="input-form-group" style="display: flex; align-items: center;">
 		                                        <c:if test="${user.uGender == 1}">
 		                                        	<c:set var="gender" value="남자"></c:set>
@@ -162,49 +177,26 @@
 		                                        	<c:set var="gender" value="여자"></c:set>
 		                                        </c:if>
 		                                        	<input type="text" class="form-control" id="uGender" name="uGender" placeholder="uGender" value="${gender}" readonly="readonly">
-		                                        	<c:if test="${empty CONFIRM}">
-														<button type="button" class="btn btn-info btn-sm" onclick="openPasswordCheckModal()" style="margin-left: 15px;">Modify</button>
-		                                        	</c:if>
-		                                        	<c:if test="${!empty CONFIRM}">
-														<button type="button" class="btn btn-info btn-sm" onclick="openUserGenderModal()" style="margin-left: 15px;">Modify</button>
-		                                        	</c:if>
 												</div>
 	                                    </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
 	                                <div class="form-group">
-	                                        <label for="Name">Birthday</label>
+	                                        <label for="uBirthday">Birthday</label>
 		                                        <div class="input-form-group" style="display: flex; align-items: center;">
 		                                        	<input type="text" class="form-control" id="uBirthday" name="uBirthday" placeholder="uBirthday" value="${user.uBirthday}" readonly="readonly">
-		                                        	<c:if test="${empty CONFIRM}">
-														<button type="button" class="btn btn-info btn-sm" onclick="openPasswordCheckModal()" style="margin-left: 15px;">Modify</button>
-		                                        	</c:if>
-		                                        	<c:if test="${!empty CONFIRM}">
-														<button type="button" class="btn btn-info btn-sm" onclick="openUserGenderModal()" style="margin-left: 15px;">Modify</button>
-		                                        	</c:if>
 												</div>
 	                                    </div>
                                 </div>
                                 <div class="col-12 col-lg-6">
 	                                <div class="form-group">
-	                                        <label for="Name">Nickname *</label>
-		                                        <div class="input-form-group" style="display: flex; align-items: center;">
-		                                        	<input type="text" class="form-control" id="uNickName" name="uNickName" placeholder="nickname" value="${user.uNickName}" readonly="readonly">
-		                                        	<c:if test="${empty CONFIRM}">
-														<button type="button" class="btn btn-info btn-sm" onclick="openPasswordCheckModal()" style="margin-left: 15px;">Modify</button>
-		                                        	</c:if>
-		                                        	<c:if test="${!empty CONFIRM}">
-														<button type="button" class="btn btn-info btn-sm" onclick="openUserNickNameModal()" style="margin-left: 15px;">Modify</button>
-		                                        	</c:if>
-												</div>
-	                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-6">
-	                                <div class="form-group">
-	                                        <label for="Name">Join Date</label>
-		                                        <div class="input-form-group" style="display: flex; align-items: center;">
-		                                        	<input type="text" class="form-control" id="uInsertDate" name="uInsertDate" placeholder="join date" value="${user.uInsertDate}" readonly="readonly">
-												</div>
+	                                        <label for="uInsertDate">Join Date</label>
+	                                        <div class="input-form-group" style="display: flex; align-items: center;">
+												<c:set var="dateString" value="${user.uInsertDate}" />
+												<fmt:parseDate var="date" value="${dateString}" pattern="yyyy-MM-dd HH:mm:ss" />
+												<fmt:formatDate var="formattedDate" value="${date}" type="date" pattern="yyyy년-MM월-dd일" />
+	                                        	<input type="text" class="form-control" id="uInsertDate" name="uInsertDate" placeholder="join date" value="${formattedDate}" readonly="readonly">
+											</div>
 	                                    </div>
                                 </div>
                                <div class="col-12">
@@ -212,13 +204,15 @@
 	                                <div class="form-group">
 	                                <div class="button-container">
 										<c:if test="${empty CONFIRM}">
-											<button type="button" class="btn btn-success mb-1" onclick="openPasswordCheckModal()">배송지 관리</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											<button type="button" class="btn btn-primary mb-1" onclick="openUserChangePasswordModal()">Password Change</button>
+											<button type="button" class="btn btn-success btn-sm" onclick="openPasswordCheckModal()">Manage Addresses</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<button type="button" class="btn btn-primary btn-sm" onclick="openUserChangePasswordModal()">Password Change</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<button type="button" class="btn btn-danger btn-sm" onclick="deleteAccountQuestion()">Delete Account</button>
 										</c:if>
 										<c:if test="${!empty CONFIRM}">
 											<br />
-											<a href="user_address.do"><button type="button" class="btn btn-success mb-1">배송지 관리</button></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											<button type="button" class="btn btn-primary mb-1" onclick="openUserChangePasswordModal()">ChangePassword</button>
+											<a href="user_address.do"><button type="button" class="btn btn-success btn-sm">Manage Addresses</button></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<button type="button" class="btn btn-primary btn-sm" onclick="openUserChangePasswordModal()">Change Password</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<button type="button" class="btn btn-danger btn-sm" onclick="deleteAccountQuestion()">Delete Account</button>
 										</c:if>
 											</div>
 	                                </div>
@@ -241,7 +235,7 @@
 					<h5 class="mb-3" style="display: inline-block; text-align: center;">Password Confirm</h5>
 					<span style="color: red">${l_msg}</span>
 						<div class="form-group">
-							<label for="Password">Please enter your password to change the information.</label>
+							<label for="cPassword">Please enter your password to change the information.</label>
 							<input type="password" class="form-control" id="cPassword" name="cPassword" placeholder="your password">
 						</div>
 						<div class="button-container">
@@ -260,7 +254,7 @@
 					<h5 class="mb-3" style="display: inline-block; text-align: center;">User Rename</h5>
 					<span style="color: red">${l_msg}</span>
 						<div class="form-group">
-							<label for="text">Please enter the name you want to change.</label>
+							<label>Please enter the name you want to change.</label>
 							<input type="text" class="form-control" id="uReName" name="uReName" placeholder="name">
 						</div>
 						<div class="button-container">
@@ -279,7 +273,7 @@
 					<h5 class="mb-3" style="display: inline-block; text-align: center;">User Email Modify</h5>
 					<span style="color: red">${l_msg}</span>
 						<div class="form-group">
-							<label >Please enter the Email you want to change.</label><br/>
+							<label>Please enter the Email you want to change.</label><br/>
 							<input type="email" class="form-control" id="uReEmail" name="uReEmail" placeholder="email">
 						</div>
 						<div class="button-container">
@@ -347,32 +341,46 @@
 			</div>
 		</div>
 	</div>
-	<!-- 성별 변경 모달 -->
-	<div class="modal" id="userChangeGenderModal" tabindex="-1" role="dialog">
+	<!-- 닉네임 변경 모달 -->
+	<div class="modal" id="userChangeNickNameModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="container">
-					<h5 class="mb-3" style="display: inline-block; text-align: center;">User Change Gender</h5>
+					<h5 class="mb-3" style="display: inline-block; text-align: center;">User Change Nickname</h5>
 					<span style="color: red">${l_msg}</span>
 						<div class="form-group">
-							<label>Please enter the Password you want to change.</label><br/>
-					    <input type="password" class="form-control" id="c_uPassword" name="c_uPassword" placeholder="your password">
-					</div>
-					<div class="form-group">
-				    	<input type="password" class="form-control" id="c_uChangePass" name="c_uChangePass" placeholder="New password">
-					</div>
-					<div class="form-group">
-					    <input type="password" class="form-control" id="c_uConfrimChangePass" name="c_uConfrimChangePass" placeholder="new password">
-					    <span id="passwordMatch"></span>
+							<label>Please enter the Nickname you want to change.</label><br/>
+					    <input type="text" class="form-control" id="c_uNickName" name="c_uNickName" placeholder="nickname">
 					</div>
 						<div class="button-container">
-							<button type="button" class="btn btn-primary btn-sm" onclick="userChangePassword()">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button type="button" class="btn btn-primary btn-sm" onclick="userChangeNickName()">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">Cancle</button>
 						</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<!-- 비밀번호 체크 모달 -->
+    <div class="modal" id="deletePasswordCheckModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="container">
+					<h5 class="mb-3" style="display: inline-block; text-align: center;">Password Confirm</h5>
+					<span style="color: red">${l_msg}</span>
+						<div class="form-group">
+							<label for="dPassword">If you want to secede, please enter your password.</label>
+							<input type="password" class="form-control" id="dPassword" name="dPassword" placeholder="your password">
+						</div>
+						<div class="button-container">
+							<button type="button" class="btn btn-primary btn-sm" onclick="deleteAcount()">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">Cancle</button>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 
     <!-- Footer Area -->
  	<jsp:include page="common/include_common_bottom.jsp"/>
@@ -601,6 +609,7 @@
 			});
 	}
 	
+	
 	var passwordInput = $("#c_uChangePass");
 	var confirmPasswordInput = $("#c_uConfrimChangePass");
 
@@ -628,6 +637,18 @@
 		var changePassword = $("#c_uChangePass").val();
 		var confirmPassword = $("#c_uConfrimChangePass").val();
 		var regExpuPass = /^[a-z|A-Z|0-9]*$/;
+		if($("#c_uPassword").length === 0){
+			Toast.fire({ icon : 'warning', title : "비밀번호를 입력해주세요." });
+			return;
+		}
+		if($("#c_uChangePass").length === 0){
+			Toast.fire({ icon : 'warning', title : "새 비밀번호를 입력해주세요." });
+			return;
+		}
+		if($("#c_uConfrimChangePass").length === 0){
+			Toast.fire({ icon : 'warning', title : "새 비밀번호 확인을 입력해주세요." });
+			return;
+		}
 		if (!regExpuPass.test(password)) {
 			Toast.fire({
 				icon : 'warning',
@@ -688,6 +709,95 @@
 			}
 		});
 		
+	}
+	
+	
+	/* NickName */
+	function openUserChangeNickNameModal() {
+		ToastConfirm.fire({ icon: 'question', title: "닉네임을 변경하시겠습니까?" }).then((result) => {
+			if(result.isConfirmed){
+				$('#userChangeNickNameModal').modal('show');
+			}
+		});
+	}
+	
+	function userChangeNickName() {
+		var uNickName = $("#c_uNickName").val();
+		const regExpuNickName = /^[a-z|A-Z|가-힣]*$/;
+		if (!regExpuNickName.test(uNickName)) {
+			Toast.fire({
+				icon : 'warning',
+				title : "닉네임은 영문/숫자/한글만 가능합니다."
+			});
+			return
+		}
+		
+		$.ajax({
+			type : 'POST',
+			url : './UserChangeNickName',
+			data : {
+				uNickName : uNickName
+			},
+			success : function(result) {
+				console.log(result);
+				if (result === "0") {
+					Toast.fire({ icon : 'warning', title : "변경 중 문제가 발생했습니다." });
+					return;
+				}
+				if (result === "1") {
+					Toast.fire({ icon: 'success', title: "닉네임이 변경 되었습니다." }).then(() => {
+						  $('#userChangeNickNameModal').modal('hide');
+						  window.location.href = "user_my_account.do";
+						});
+				}
+			},
+			error : function() {
+				Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
+			}
+		});
+	}
+		
+	function deleteAccountQuestion() {
+		ToastConfirm.fire({ icon: 'warning', title: "정말로 탈퇴하시겠습니까?" }).then((result) => {
+			if(result.isConfirmed){
+				$('#deletePasswordCheckModal').modal('show');
+			}
+		});
+	}
+	
+	function deleteAcount() {
+		var password = $("#dPassword").val();
+		if($("#dPassword").length === 0){
+			Toast.fire({ icon : 'warning', title : "비밀번호를 입력해주세요." });
+			return;
+		}
+		$.ajax({
+			type : 'POST',
+			url : './UserDeleteAccount',
+			data : {
+				password : password
+			},
+			success : function(result) {
+				console.log(result);
+				if (result === "-1") {
+					Toast.fire({ icon : 'warning', title : "비밀번호가 일치하지 않습니다." });
+					return;
+				}
+				if (result === "0") {
+					Toast.fire({ icon : 'warning', title : "탈퇴 중 문제가 발생했습니다." });
+					return;
+				}
+				if (result === "1") {
+					Toast.fire({ icon: 'success', title: "탈퇴가 완료 되었습니다. 이용해주셔서 감사합니다." }).then(() => {
+						  $('#deletePasswordCheckModal').modal('hide');
+						  window.location.href = "logout.do";
+						});
+				}
+			},
+			error : function() {
+				Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
+			}
+		});
 	}
 	
 </script>

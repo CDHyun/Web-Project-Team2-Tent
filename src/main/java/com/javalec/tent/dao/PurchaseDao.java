@@ -38,21 +38,22 @@ public PurchaseDao() {
 
  		try {
  			connection = dataSource.getConnection();
- 			String query = "select uName, uPhone, uEmail, uaAddress, uaZipcode "
- 					+ "from user u , useraddress ua "
+ 			String query = "select uName, uPhone, uEmail, uaAddress, uaDetailAddress, uaZipcode "
+ 					+ "from user u, userAddress ua "
  					+ "where u.uid = ua.uid and u.uid = ?";
  			preparedStatement = connection.prepareStatement(query); 
  			preparedStatement.setString(1, uid);
  			resultSet = preparedStatement.executeQuery();
-
+ 			
  			while (resultSet.next()) {
  				String uName = resultSet.getString(1);
  				String uPhone = resultSet.getString(2);
  				String uEmail = resultSet.getString(3);
  				String uaAddress = resultSet.getString(4);
- 				String uaZipcode = resultSet.getString(5);
+ 				String uaDetailAddress = resultSet.getString(5);
+ 				String uaZipcode = resultSet.getString(6);
  				
- 				PurchaseDto dto = new PurchaseDto(uid, uName, uPhone, uEmail, uaZipcode, uaAddress); 
+ 				PurchaseDto dto = new PurchaseDto(uid, uName, uPhone, uEmail, uaZipcode, uaAddress, uaDetailAddress);
  				beanList.add(dto);
  			}
 
@@ -75,15 +76,16 @@ public PurchaseDao() {
 
      public ArrayList<PurchaseDto> purchaseList(String uid) {
  		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
+ 		System.out.println("DAO 호출");
  		Connection connection = null;
  		PreparedStatement preparedStatement = null;
  		ResultSet resultSet = null;
 
  		try {
  			connection = dataSource.getConnection();
- 			String query = "SELECT u.uid, pc.pcNo, p.pCode, p.pName, p.pPrice, pc.pcQty, pf.pfRealName, pf.pfHoverRealName"
- 							+ "FROM purchase pc, product p, user u, productfile pf" 
- 							+ "WHERE pc.pCode = p.pCode and pf.pCode = p.pCode and u.uid = pc.uid and u.uid = ? ";
+ 			String query = "SELECT u.uid, pc.pcNo, p.pCode, p.pName, p.pPrice, pc.pcQty, pf.pfRealName, pf.pfHoverRealName "
+ 							+ "FROM purchase pc, product p, user u, productfile pf " 
+ 							+ "WHERE pc.pCode = p.pCode and pf.pCode = p.pCode and u.uid = pc.uid and u.uid = ?";
  			preparedStatement = connection.prepareStatement(query);
  			preparedStatement.setString(1, uid);
  			resultSet = preparedStatement.executeQuery();

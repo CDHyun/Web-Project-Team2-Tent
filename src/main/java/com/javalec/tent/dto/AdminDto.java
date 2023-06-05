@@ -50,6 +50,13 @@ public class AdminDto {
 	
 
 
+	public AdminDto(String pName, int pCode) { //요일별합계
+		super();
+		this.pName = pName;
+		this.pCode = pCode;
+	}
+
+
 	public AdminDto(int pcNo, String uid, int pCode, String pColor, int pcQty, int pcStatus, Date pcInsertdate) {
 		super();
 		this.pCode = pCode;

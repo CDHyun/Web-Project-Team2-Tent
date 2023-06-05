@@ -82,14 +82,14 @@
                                     
                                     <!-- order item start -->
                                     <c:set var="tot_price" value="0" />
-                                    <c:forEach var="o_cart" items="${purchaseList}">
-                                    <c:set var="tot_price" value="${tot_price + o_cart.product.pPrice * o_cart.pcQty}" />
+                                    <c:forEach var="purchase" items="${purchaseList}">
+                                    <c:set var="tot_price" value="${purchase.pcQty * purchase.pPrice}" />
                                         <tr>
                                             <td>
-                                                <img src="img/p_img/${o_cart.imageList[0].im_name}" alt="Product">
+                                                <img src="images/product/${purchase.pfRealName}" alt="Product">
                                             </td>
                                             <td>
-                                                <a href="#">${o_cart.product.pName}</a>
+                                                <a href="#">${purchase.pName}</a>
                                             </td>
                                             <td>&#8361;<s:eval expression="new java.text.DecimalFormat('#,###').format(o_cart.product.pPrice)"/></td>
                                             <td>
@@ -97,8 +97,7 @@
                                                     <input type="number" readonly class="qty-text" id="qty2" step="1" min="1" max="99" name="quantity" value="${o_cart.pcQty}" readonly>
                                                 </div>
                                             </td>
-                                            <c:set var="item_tot_price" value="${o_cart.product.pPrice * o_cart.pcQty}"></c:set>
-                                            <td>&#8361;<s:eval expression="new java.text.DecimalFormat('#,###').format(item_tot_price)"/></td>
+                                            <c:set var="item_tot_price" value="${purchase.pcQty * purchase.pPrice}"></c:set>
                                         </tr>
                                     </c:forEach> 
                                     <!-- order item end -->
@@ -118,14 +117,14 @@
                                 <tbody>
                                     <tr>
                                         <td> Total</td>
-                                        <td>&#8361;<s:eval expression="new java.text.DecimalFormat('#,##0').format(tot_price)"/></td>
+                                        <td>&#8361;${item_tot_price}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="checkout_pagination d-flex justify-content-end mt-3">
                             <a href="http://localhost:8080/Web-Project-Team2-Tent/payment.do" class="btn btn-primary mt-2 ml-2 d-none d-sm-inline-block order_back" id="back_payment">Go Back</a>
-                            <a href="http://localhost:8080/Web-Project-Team2-Tent/purchase_complete.do" class="btn btn-primary mt-2 ml-2" id="purchase_complete_btn" >Order</a>
+                            <a href="http://localhost:8080/Web-Project-Team2-Tent/purchaseinsert.do" class="btn btn-primary mt-2 ml-2" id="purchase_complete_btn" >Order</a>
                         </div>     
                         <form id="order_create_form" method="post">
                         	<input type="hidden" name="total_price" value="${tot_price}">

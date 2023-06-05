@@ -18,12 +18,15 @@ import com.javalec.tent.command.AdminNoticeInsert;
 import com.javalec.tent.command.AdminNoticeSelect;
 import com.javalec.tent.command.AdminPurchaseStatusCommand;
 import com.javalec.tent.command.AdminStatusChangeCommand;
+import com.javalec.tent.command.AdminSummaryCommand;
 import com.javalec.tent.command.AdminUpdateCommand;
 import com.javalec.tent.command.CartCommand;
 import com.javalec.tent.command.CartDeleteCommand;
 import com.javalec.tent.command.CartUpdateCommand;
 import com.javalec.tent.command.IndexCommand;
 import com.javalec.tent.command.ProductDetailCommand;
+import com.javalec.tent.command.PurchaseCheckInfoCommand;
+import com.javalec.tent.command.PurchaseInsertCommand;
 import com.javalec.tent.command.PurchaserInfoCommand;
 import com.javalec.tent.command.TentCommand;
 import com.javalec.tent.command.UserAddressListCommand;
@@ -191,7 +194,28 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "adminNotice.do";
 			break;
-		
+			/* 결제수단 페이지로 이동 */
+		case("/payment.do"):
+			viewPage = "payment.jsp";
+			break;
+		/* 주문확인, 총구매액 페이지로 이동 */
+		case("/purchase_check_info.do"):
+			command = new PurchaseCheckInfoCommand();
+			command.execute(request, response);
+			viewPage = "purchase_check.jsp";
+			break;
+			/*주문자 정보 입력*/
+		case("/purchaseinsert.do"):
+			command = new PurchaseInsertCommand();
+			command.execute(request, response);
+			viewPage = "purchase_complete.jsp";
+			break;
+		case("/adminfirst.do"):
+			command = new AdminSummaryCommand();
+			command.execute(request, response);
+			viewPage = "adminSummary.jsp";
+			break;
+			
 		default:
 			break;
 		}

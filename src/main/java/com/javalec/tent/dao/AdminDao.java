@@ -8,9 +8,12 @@ import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 import com.javalec.tent.dto.AdminDto;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 public class AdminDao {
 	DataSource dataSource;
@@ -48,17 +51,23 @@ public class AdminDao {
 	
 	// function   
 	
-	public int pCount() {
+	public int pCount(String queryName, String queryContent) {
 	    Connection connection = null;
 	    PreparedStatement preparedStatement = null;
 	    ResultSet resultSet = null;
 	    int p_count = 0; // p_count 변수를 try 블록 외부에서 선언하여 나중에 접근할 수 있도록 합니다.
 	    
+	    
+	    if(queryName == null){ // 첫화면인 경우
+			queryName = "p.pBrandName";
+			queryContent = "";
+		}
+	    
 	    try {
 	        connection = dataSource.getConnection();
 	        String query = "SELECT COUNT(*) AS row_count\r\n"
 	        		+ "FROM product p, productoption po, productfile pf\r\n"
-	        		+ "WHERE p.pCode = po.pCode AND p.pCode = pf.pCode;";
+	        		+ "WHERE p.pCode = po.pCode AND p.pCode = pf.pCode and " + queryName + " like '%" +queryContent + "%'";
 	        preparedStatement = connection.prepareStatement(query);
 	        resultSet = preparedStatement.executeQuery();
 	        
@@ -103,7 +112,7 @@ public class AdminDao {
 			connection = dataSource.getConnection();
 			
 			String WhereDefault = "select p.pCode, p.pBrandName, p.pName ,po.pColor, p.pPrice, po.pStock, p.pinsertdate, pf.pfName, pf.pfRealName  from product p, productoption po, productfile pf ";
-			String WhereDefault2 = " where p.pCode = po.pCode and p.pCode = pf.pCode and " + queryName + " like '%" +queryContent + "%'";
+			String WhereDefault2 = " where p.pCode = po.pCode and p.pCode = pf.pCode and p.pDeleted=0 and  " + queryName + " like '%" +queryContent + "%'";
 			String WhereDefault3 = " LIMIT " + index_no + ",7";
 				
 			preparedStatement = connection.prepareStatement(WhereDefault+WhereDefault2+WhereDefault3);
@@ -200,10 +209,12 @@ public class AdminDao {
 	
 	
 	
-	// 데이터수정메서드
-	public void updateAction(String pCode, String pBrandName,String pName, String pPrice, String pColor, String pStock, String pfName, String pfRealName) {
+	// 데이터수정메서드  이미지를 변경하지 않을때,,
+	public void updateAction(String pCode, String pBrandName,String pName, String pPrice, String pColor, String pStock, String lastfile) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		
+		
 		try {
 			connection = dataSource.getConnection();
 			String query = "update product p,productoption po, productfile pf set p.pBrandName= ? ,p.pName=?, p.pPrice =? , po.pStock=?, pf.pfName=?, pf.pfRealName=? where p.pCode = po.pCode and p.pCode = pf.pCode and p.pCode =? and po.pcolor=?";
@@ -212,13 +223,18 @@ public class AdminDao {
 			preparedStatement.setString(2, pName);
 			preparedStatement.setString(3, pPrice);
 			preparedStatement.setString(4, pStock);
-			preparedStatement.setString(5, pfName);
-			preparedStatement.setString(6, pfRealName);
+			preparedStatement.setString(5, lastfile);
+			preparedStatement.setString(6, lastfile);
 			preparedStatement.setString(7, pCode);
 			preparedStatement.setString(8, pColor);
 			
 			
 			preparedStatement.executeUpdate();
+			
+
+			
+		
+		
 		
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -515,5 +531,66 @@ public class AdminDao {
 		
 	}
 	
+	
+	
+	
+	//막대차트 데이터 가져오기
+	public ArrayList<AdminDto> chart() {
+		
+		
+		ArrayList<AdminDto> dtos = new ArrayList<AdminDto>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			
+			String WhereDefault = "SELECT DAYNAME(pc.pcInsertDate) AS weekday, SUM(p.pPrice * pc.pcQty) AS totalAmount FROM purchase pc, product p GROUP BY DAYNAME(pc.pcInsertDate)";
+			
+			
+			preparedStatement = connection.prepareStatement(WhereDefault);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				String dayName = resultSet.getString(1);
+				int daySum = resultSet.getInt(2);
+				
+		
+				AdminDto dto = new AdminDto(dayName, daySum);
+				dtos.add(dto);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet != null){ // 무언가 들어가 있으면close
+					resultSet.close();
+				}
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return dtos;
+	
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+
 	
 }

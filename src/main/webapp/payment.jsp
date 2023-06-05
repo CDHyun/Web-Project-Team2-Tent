@@ -163,9 +163,10 @@
 
                 <div class="col-12">
                 <div class="checkout_pagination d-flex justify-content-end mt-30">
-                 <button type="button" class="purchase_info" onclick="purchase_info('purchase_info.do')">Go Back</button>
-            <button type="button" class="purchase_check" onclick="purchase_check('purchase_check.jsp')">Final Step</button>
-                     
+       
+							<button type="button" class="btn btn-primary mt-2 ml-2 order_back" onclick="http://localhost:8080/Web-Project-Team2-Tent/purchase_info.do">Go Back</button>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button type="button" class="btn btn-primary mt-2 ml-2 order_next" id="payment_next_btn" onclick="http://localhost:8080/Web-Project-Team2-Tent/purchase_check_info.do">Final Step</button>
                     </div>
             </div>
         </div>
