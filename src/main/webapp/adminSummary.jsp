@@ -53,6 +53,7 @@
   <div class="container">
     <div class="row my-3">
       <div class="col-lg-6">
+      <h3>요일별 판매량</h3>
         <canvas id="myChart" style="width: 100%; height: 300px;"></canvas>
       </div>
       <div class="col-lg-6">
@@ -86,7 +87,7 @@
     data: {
       labels: ['월', '화', '수', '목', '금', '토', '일'],
       datasets: [{
-        label: '# of Votes',
+       label: 'SUM of DailySale', 
         data: [${data}],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
@@ -151,32 +152,36 @@
   </script>
   
   <br/><br/><br/>
+  
+  
+  
+  <form action="adminfirst.do" method="post" class="content">
+  		<label for="startDate">시작일:</label>
+  		<input type="date" id="startDate" name="startDate">&nbsp;&nbsp;
+  		<label for="endDate">종료일:</label>
+  		<input type="date" id="endDate" name="endDate">
+  		<button type="submit">검색</button>
+	</form>
+  
+  
   <table border="" class="content" >
   <tr>
-    <th>구매번호</th>
-    <th>구매자</th>
-    <th>제품번호</th>
-    <th>색상</th>
-    <th>수량</th>
-    <th>주문날짜</th>
-   	<th>상태</th>
+    <th>주문일자</th>
+    <th>브랜드명</th>
+    <th>상품명</th>
+    <th>주문갯수</th>
+    <th>합계</th>
   </tr>
-  <c:forEach items="${check}" var="dto">
+  
+  
+  
+  <c:forEach items="${sales}" var="dto">
     <tr>
-      <td>${dto.pcNo}</td>
-      <td>${dto.uid}</td>
-      <td>${dto.pCode}</td>
-      <td>${dto.pColor}</td>
-      <td>${dto.pcQty}</td>
       <td>${dto.pcInsertdate}</td>
-     <td>
-  		<select name="status">
-  			<option value="-1" ${dto.pcStatus == -1 ? 'selected' : ''}>주문취소</option>
-  			<option value="0" ${dto.pcStatus == 0 ? 'selected' : ''}>상품준비중</option>
- 			<option value="1" ${dto.pcStatus == 1 ? 'selected' : ''}>배송중</option>
-  			<option value="2" ${dto.pcStatus == 2 ? 'selected' : ''}>배송완료</option>
-		</select>
-	</td>
+      <td>${dto.pBrandName}</td>
+      <td>${dto.pName}</td>
+      <td>${dto.pcQty}</td>
+      <td>${dto.sum}</td>
     </tr>
   </c:forEach>
 </table>

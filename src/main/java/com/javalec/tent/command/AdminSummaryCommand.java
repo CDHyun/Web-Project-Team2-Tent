@@ -13,10 +13,15 @@ public class AdminSummaryCommand implements TentCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
+		//skf
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
 		
 		AdminDao dao = new AdminDao();   // dB 연결
 		ArrayList<AdminDto> dtos = dao.chart();
 		request.setAttribute("summary", dtos);
+		
+		
 		
 		
 		 // JSP 페이지로 전달되는 데이터를 JavaScript 배열로 변환
@@ -37,12 +42,15 @@ public class AdminSummaryCommand implements TentCommand {
         }
         request.setAttribute("datas", data1.toString()); 
     
+        
+        
+        // 날짜별 매출
+        ArrayList<AdminDto> dtos2 = dao.dailySale(startDate,endDate);
+        request.setAttribute("sales", dtos2);
        
 	
 		
-	
-        
-        
+      
         
         
 
