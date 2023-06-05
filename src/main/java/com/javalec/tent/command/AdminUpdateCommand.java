@@ -14,44 +14,51 @@ public class AdminUpdateCommand implements TentCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		String pCode =request.getParameter("pCode");
-		String pBrandName =request.getParameter("pBrandName");
-		String pName =request.getParameter("pName");
-		String pPrice = request.getParameter("pPrice");
-		String pColor =request.getParameter("pColor");
-		String pStock =request.getParameter("pStock");
-		String fileName =request.getParameter("file");
-		String lastfile = request.getParameter("lastfile");
 		
-		
-		AdminDao dao  = new AdminDao();
-		dao.updateAction(pCode, pBrandName, pName, pPrice, pColor, pStock, lastfile);
-		
-		
-	
-	
-	
-	
-		 FileDao dao1 = new FileDao();
-	        ServletContext application = request.getServletContext();
-	        String directory = application.getRealPath("/images/product");
+			FileDao dao1 = new FileDao();
+				ServletContext application = request.getServletContext();
+				String directory = application.getRealPath("/images/product");
 
+				int maxSize = 1024 * 1024 * 10;
+				String encoding = "UTF-8";
+		
 
-	        int maxSize = 1024 * 1024 * 10;
-	        String encoding = "UTF-8";
+		
+		
 	        try {
-	            MultipartRequest multipartRequest = new MultipartRequest(request, directory, maxSize, encoding,
+	        	
+	        	MultipartRequest multipartRequest = new MultipartRequest(request, directory, maxSize, encoding,
 	                    new DefaultFileRenamePolicy());
 
-	            String pfName = multipartRequest.getOriginalFileName("file");
-	            String pfRealName = multipartRequest.getFilesystemName("file");
 	            
-	            dao1.uploading(pfName, pfRealName, pCode);
+	            String pCode =multipartRequest.getParameter("pCode");
+	    		String pBrandName =multipartRequest.getParameter("pBrandName");
+	    		String pName =multipartRequest.getParameter("pName");
+	    		String pPrice = multipartRequest.getParameter("pPrice");
+	    		String pColor =multipartRequest.getParameter("pColor");
+	    		String pStock =multipartRequest.getParameter("pStock");
+	    		String lastfile = multipartRequest.getParameter("lastfile");
+	    		
+	    		String pfName = multipartRequest.getOriginalFileName("file");
+	    		String pfRealName = multipartRequest.getFilesystemName("file");
+	    		
+	    		
+	    		AdminDao dao  = new AdminDao();
+	    		dao.updateAction(pCode, pBrandName, pName, pPrice, pColor, pStock, lastfile);
+	    		
+	    		if(!pfRealName.equals("")) {
+	            
+	    		        dao1.uploading(pfName, pfRealName, pCode);
+	    		
+	    		}
+	        
+	        
+	        
 	        }catch (Exception e) {
 				// TODO: handle exception
 			}
 	
-	
+		
 	
 	
 	}

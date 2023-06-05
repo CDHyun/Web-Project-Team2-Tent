@@ -51,17 +51,23 @@ public class AdminDao {
 	
 	// function   
 	
-	public int pCount() {
+	public int pCount(String queryName, String queryContent) {
 	    Connection connection = null;
 	    PreparedStatement preparedStatement = null;
 	    ResultSet resultSet = null;
 	    int p_count = 0; // p_count 변수를 try 블록 외부에서 선언하여 나중에 접근할 수 있도록 합니다.
 	    
+	    
+	    if(queryName == null){ // 첫화면인 경우
+			queryName = "p.pBrandName";
+			queryContent = "";
+		}
+	    
 	    try {
 	        connection = dataSource.getConnection();
 	        String query = "SELECT COUNT(*) AS row_count\r\n"
 	        		+ "FROM product p, productoption po, productfile pf\r\n"
-	        		+ "WHERE p.pCode = po.pCode AND p.pCode = pf.pCode;";
+	        		+ "WHERE p.pCode = po.pCode AND p.pCode = pf.pCode and " + queryName + " like '%" +queryContent + "%'";
 	        preparedStatement = connection.prepareStatement(query);
 	        resultSet = preparedStatement.executeQuery();
 	        

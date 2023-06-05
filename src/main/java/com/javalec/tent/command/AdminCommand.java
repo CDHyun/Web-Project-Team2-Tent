@@ -36,7 +36,7 @@ public class AdminCommand implements TentCommand {
 		
 		
 		// count select 
-		int daocount = dao.pCount();
+		int daocount = dao.pCount(queryName, queryContent);
 		request.setAttribute("d_count", daocount);
 		
 		
