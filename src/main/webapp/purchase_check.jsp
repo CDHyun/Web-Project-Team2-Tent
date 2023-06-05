@@ -19,6 +19,8 @@
 </head>
 
 <body>
+
+
     <!-- Preloader -->
     <div id="preloader">
         <div class="spinner-grow" role="status">
@@ -48,11 +50,11 @@
 
     <!-- Checkout Step Area -->
     <div class="checkout_steps_area">
-        <a class="complated"><i class="icofont-check-circled"></i> Orderer</a>
-        <a class="complated"><i class="icofont-check-circled"></i> Reciever</a>
-        <a class="complated"><i class="icofont-check-circled"></i> Payment</a>
+        <a class="Completed"><i class="icofont-check-circled"></i> Orderer</a>
+        <a class="Completed"><i class="icofont-check-circled"></i> Receiver</a>
+        <a class="Completed"><i class="icofont-check-circled"></i> Payment</a>
         <a class="active"><i class="icofont-check-circled"></i> Confirm</a>
-        <a><i class="icofont-check-circled"></i> Complate</a>
+        <a><i class="icofont-check-circled"></i> Complete</a>
     </div>
     <!-- Checkout Step Area -->
 
@@ -80,22 +82,22 @@
                                     
                                     <!-- order item start -->
                                     <c:set var="tot_price" value="0" />
-                                    <c:forEach var="o_cart" items="${cartItemList}">
-                                    <c:set var="tot_price" value="${tot_price + o_cart.product.p_price * o_cart.c_qty}" />
+                                    <c:forEach var="o_cart" items="${purchaseItemList}">
+                                    <c:set var="tot_price" value="${tot_price + o_cart.product.pPrice * o_cart.pcQty}" />
                                         <tr>
                                             <td>
                                                 <img src="img/p_img/${o_cart.product.imageList[0].im_name}" alt="Product">
                                             </td>
                                             <td>
-                                                <a href="#">${o_cart.product.p_name}</a>
+                                                <a href="#">${o_cart.product.pName}</a>
                                             </td>
-                                            <td>&#8361;<s:eval expression="new java.text.DecimalFormat('#,###').format(o_cart.product.p_price)"/></td>
+                                            <td>&#8361;<s:eval expression="new java.text.DecimalFormat('#,###').format(o_cart.product.pPrice)"/></td>
                                             <td>
                                                 <div class="quantity">
-                                                    <input type="number" readonly class="qty-text" id="qty2" step="1" min="1" max="99" name="quantity" value="${o_cart.c_qty}" readonly>
+                                                    <input type="number" readonly class="qty-text" id="qty2" step="1" min="1" max="99" name="quantity" value="${o_cart.pcQty}" readonly>
                                                 </div>
                                             </td>
-                                            <c:set var="item_tot_price" value="${o_cart.product.p_price * o_cart.c_qty}"></c:set>
+                                            <c:set var="item_tot_price" value="${o_cart.product.pPrice * o_cart.pcQty}"></c:set>
                                             <td>&#8361;<s:eval expression="new java.text.DecimalFormat('#,###').format(item_tot_price)"/></td>
                                         </tr>
                                     </c:forEach> 
@@ -115,42 +117,34 @@
                             <table class="table mb-0">
                                 <tbody>
                                     <tr>
-                                        <td>Sub Total</td>
+                                        <td> Total</td>
                                         <td>&#8361;<s:eval expression="new java.text.DecimalFormat('#,##0').format(tot_price)"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Shipping</td>
-                                        <td>
-	                                       	<c:if test="${tot_price < 50000}">
-	                                        	&#8361;<s:eval expression="new java.text.DecimalFormat('#,##0').format(2500)"/>
-	                                        	<c:set var="shipping_price" value="2500" />
-	                                        </c:if>
-	                                        <c:if test="${tot_price >= 50000}">
-	                                        	&#8361;0
-	                                        	<c:set var="shipping_price" value="0" />
-	                                        </c:if>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Total</td>
-                                        <c:set var="all_total" value="${tot_price + shipping_price}" />
-                                        <td id="cart_total">&#8361;<s:eval expression="new java.text.DecimalFormat('#,##0').format(all_total)"/></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="checkout_pagination d-flex justify-content-end mt-3">
-                            <a href="" class="btn btn-primary mt-2 ml-2 d-none d-sm-inline-block order_back" id="back_confirm">Go Back</a>
-                            <a href="" class="btn btn-primary mt-2 ml-2" id="order_create_btn" >Order</a>
+                            <a href="http://localhost:8080/Web-Project-Team2-Tent/payment.do" class="btn btn-primary mt-2 ml-2 d-none d-sm-inline-block order_back" id="back_payment">Go Back</a>
+                            <a href="http://localhost:8080/Web-Project-Team2-Tent/purchase_complete.do" class="btn btn-primary mt-2 ml-2" id="purchase_complete_btn" >Order</a>
                         </div>     
                         <form id="order_create_form" method="post">
-                        	<input type="hidden" name="total_price" value="${tot_price + shipping_price}">
+                        	<input type="hidden" name="total_price" value="${tot_price}">
                         </form> 
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+    
+    
+    	
+    
+    
+    
+    
+    
+    
     <!-- Checkout Area End -->
 
     <!-- Footer Area -->

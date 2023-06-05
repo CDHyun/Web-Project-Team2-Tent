@@ -22,7 +22,11 @@
 
 <c:set var="users" value="${selectUser}" />
 
-
+		<%-- <% request.setCharacterEncoding("utf-8"); 
+		String pcDM = request.getParameter(“pcDM”); 
+		session.setAttribute(“SDM”, “pcDM”);
+		%> 
+ --%>
 
     <!-- Preloader -->
     <div id="preloader">

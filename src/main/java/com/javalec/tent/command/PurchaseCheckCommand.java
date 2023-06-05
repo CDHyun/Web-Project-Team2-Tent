@@ -2,6 +2,9 @@ package com.javalec.tent.command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.javalec.tent.dao.PurchaseDao;
 
 public class PurchaseCheckCommand implements TentCommand {
 
