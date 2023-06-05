@@ -34,7 +34,7 @@ public class WishlistDao {
 	
 		try {
 			connection = dataSource.getConnection();
-			String query = " select  p.pCode, p.pName, p.pBrandName ,p.pPrice , po.pColor, pf.pfName  from cart c, user u, product p, productOption po, productFile pf where u.uid = c.uid and c.pCode = p.pCode and po.pCode = p.pCode and pf.pCode = p.pCode and u.uid=? order by p.pCode";
+			String query = " insert into wishList select  p.pCode, p.pName, p.pBrandName ,p.pPrice , po.pColor, pf.pfName  from cart c, user u, product p, productOption po, productFile pf where u.uid = c.uid and c.pCode = p.pCode and po.pCode = p.pCode and pf.pCode = p.pCode and u.uid=? values(?, ?, ?, ?, ?, ?)  order by p.pCode";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, uid);
 			resultSet = preparedStatement.executeQuery();
@@ -66,4 +66,30 @@ public class WishlistDao {
 		}
 		return dtos;
 	}
+	public void wishDeleteAction(int pCode, String uid){
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+	
+		try {
+			connection = dataSource.getConnection();
+			String query =" DELETE FROM wishList WHERE uid = ? AND pCode = ?";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, uid);
+			preparedStatement.setInt(2, pCode);
+			preparedStatement.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet != null) resultSet.close();
+				if(preparedStatement != null) preparedStatement.close();
+				if(connection != null) connection.close();
+			}catch(Exception e) 	{
+				e.printStackTrace();
+			}
 	}
+	}
+}

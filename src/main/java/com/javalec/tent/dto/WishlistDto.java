@@ -24,6 +24,12 @@ public WishlistDto(String uid, int pCode, String pName, int pPrice, String pfNam
 	this.pColor = pColor;
 }
 
+public WishlistDto(String uid, int pCode) {
+	super();
+	this.uid = uid;
+	this.pCode = pCode;
+}
+
 public String getUid() {
 	return uid;
 }
