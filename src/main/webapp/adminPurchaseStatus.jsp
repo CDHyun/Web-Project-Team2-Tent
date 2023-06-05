@@ -63,6 +63,7 @@
 	<!-- Header End -->
 	
 	<form action="adminStatusChange.do" method="post" name="statusForm" id="statusForm" class="content">
+		
 	
 	<table border="" >
   <tr>
@@ -75,31 +76,30 @@
    	<th>상태</th>
   </tr>
   <c:forEach items="${check}" var="dto">
-    <tr>
-      <td>${dto.pcNo}</td>
-      <td>${dto.uid}</td>
-      <td>${dto.pCode}</td>
-      <td>${dto.pColor}</td>
-      <td>${dto.pcQty}</td>
-      <td>${dto.pcInsertdate}</td>
-     <td>
-  		<select name="status" id="status">
-  			<option value="-1" ${dto.pcStatus == -1 ? 'selected' : ''}>주문취소</option>
-  			<option value="0" ${dto.pcStatus == 0 ? 'selected' : ''}>상품준비중</option>
- 			<option value="1" ${dto.pcStatus == 1 ? 'selected' : ''}>배송중</option>
-  			<option value="2" ${dto.pcStatus == 2 ? 'selected' : ''}>배송완료</option>
-		</select>
-	</td>
-    </tr>
-  </c:forEach>
+  <tr>
+    <td>${dto.pcNo}</td>
+    <td>${dto.uid}</td>
+    <td>${dto.pCode}</td>
+    <td>${dto.pColor}</td>
+    <td>${dto.pcQty}</td>
+    <td>${dto.pcInsertdate}</td>
+    <td>
+      <select name="status" id="status_${dto.pcNo}">
+        <option value="-1" ${dto.pcStatus == -1 ? 'selected' : ''}>주문취소</option>
+        <option value="0" ${dto.pcStatus == 0 ? 'selected' : ''}>상품준비중</option>
+        <option value="1" ${dto.pcStatus == 1 ? 'selected' : ''}>배송중</option>
+        <option value="2" ${dto.pcStatus == 2 ? 'selected' : ''}>배송완료</option>
+      </select>
+    </td>
+  </tr>
+</c:forEach>
+
 </table><br/><br/>
 	
 	<input type="submit" value="확인" class="content2" onclick="change()"  >
 	
 	</form>
-	
-	
-	
+
 	
 	
 

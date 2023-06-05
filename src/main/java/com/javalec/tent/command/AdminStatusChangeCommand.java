@@ -10,9 +10,18 @@ public class AdminStatusChangeCommand implements TentCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		int pcStatus = Integer.parseInt(request.getParameter("status"));
+		
+		String pcStatus = request.getParameter("status");
+		String pcNo = request.getParameter("pcNo");
+		//pcNo를 받는법을 모르겠다.
+		System.out.println(pcStatus);
+		System.out.println(pcNo);
+		
+		
+		
+		
 		AdminDao dao = new AdminDao();
-		dao.statusUpdate(pcStatus);
+		dao.statusUpdate(pcStatus,pcNo);
 		
 
 	}
