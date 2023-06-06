@@ -104,7 +104,6 @@
 				</div>
                 <div class="col-12 col-lg-9">
                     <div class="my-account-content mb-50">
-                       <input type="button" class="btn btn-primary" value="모달 열기" onclick="openModal()">
                         <div class="cart-table">
                             <div class="table-responsive">
                                 <table class="table table-bordered mb-0">

@@ -83,22 +83,20 @@ public PurchaseDao() {
 
  		try {
  			connection = dataSource.getConnection();
- 			String query = "SELECT u.uid, pc.pcNo, p.pCode, p.pName, p.pPrice, pc.pcQty, pf.pfRealName, pf.pfHoverRealName "
- 							+ "FROM purchase pc, product p, user u, productfile pf " 
- 							+ "WHERE pc.pCode = p.pCode and pf.pCode = p.pCode and u.uid = pc.uid and u.uid = ?";
+ 			String query = "SELECT u.uid, p.pCode, p.pName, p.pPrice, pf.pfRealName, pf.pfHoverRealName "
+ 							+ "FROM product p, user u, productfile pf, purchase pc " 
+ 							+ "WHERE pf.pCode = p.pCode and pc.pCode = p.pCode and u.uid = ?";
  			preparedStatement = connection.prepareStatement(query);
  			preparedStatement.setString(1, uid);
  			resultSet = preparedStatement.executeQuery();
 
- 			while (resultSet.next()) {
- 				int pcNo = resultSet.getInt(1);
+ 		if (resultSet.next()) {
  				int pCode = resultSet.getInt(2);
  				String pName = resultSet.getString(3);
  				int pPrice = resultSet.getInt(4);
- 				int pcQty = resultSet.getInt(5);
- 				String pfRealName = resultSet.getString(6);
-				String pfHoverRealName = resultSet.getString(7);
- 				PurchaseDto purchaseDto = new PurchaseDto(uid, pcNo, pCode, pPrice, pcQty, pName, pfRealName, pfHoverRealName);
+ 				String pfRealName = resultSet.getString(5);
+				String pfHoverRealName = resultSet.getString(6);
+ 				PurchaseDto purchaseDto = new PurchaseDto(uid, pCode, pPrice, pName, pfRealName, pfHoverRealName);
  				dtos.add(purchaseDto);
  			}
 
@@ -121,18 +119,19 @@ public PurchaseDao() {
 
  	}
 
- 	public void purchaseinsert(String uid, int pCode, int pcQty, String pcDM) { 
+ 	public void purchaseinsert(String uid, int pCode, int pcQty, String pcDM, String pColor) { 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		try {
 			connection = dataSource.getConnection();
-			String query = "insert into purchase (uid, pCode, pcInsertDate, pcQty, pcDM) values(?, ?, now(), ?, ?);";
+			String query = "insert into purchase (uid, pCode, pcInsertDate, pcQty, pcDM, pColor) values(?, ?, now(), ?, ?, ?);";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, uid);
 			preparedStatement.setInt(2, pCode);
 			preparedStatement.setInt(3, pcQty);
 			preparedStatement.setString(4, pcDM);
+			preparedStatement.setString(5, pColor);
 			preparedStatement.executeUpdate();
 
 		} catch (Exception e) {
@@ -165,7 +164,7 @@ public PurchaseDao() {
  			resultSet = preparedStatement.executeQuery();
  			
  			while (resultSet.next()) {
- 				String pcStatus = resultSet.getString(6);
+ 				String pcStatus = resultSet.getString(2);
  				PurchaseDto dto = new PurchaseDto(uid, pcStatus);
  				beanList.add(dto);
  			}
@@ -195,23 +194,25 @@ public PurchaseDao() {
 
   		try {
   			connection = dataSource.getConnection();
-  			String query = "SELECT u.uid, p.pCode, p.pName, p.pPrice, pc.pcQty, pf.pfRealName, pf.pfHoverRealName, pc.pcInsertDate "
-  							+ "FROM purchase pc, product p, user u, productfile pf " 
-  							+ "WHERE pc.pCode = p.pCode and pf.pCode = p.pCode and u.uid = pc.uid and u.uid = ?";
+  			String query = "SELECT u.uid, p.pcNo, pc.pColor, p.pCode, p.pName, p.pPrice, pc.pcQty, pf.pfRealName, pf.pfHoverRealName, pc.pcInsertDate "
+  							+ "FROM purchase pc, product p, user u, productfile pf, productOption po " 
+  							+ "WHERE pc.pCode = p.pCode and pf.pCode = p.pCode and po.code = p.pcode and u.uid = pc.uid and u.uid = ?";
   			preparedStatement = connection.prepareStatement(query);
   			preparedStatement.setString(1, uid);
   			resultSet = preparedStatement.executeQuery();
 
   			while (resultSet.next()) {
-  				int pCode = resultSet.getInt(1);
-  				String pName = resultSet.getString(2);
-  				int pPrice = resultSet.getInt(3);
-  				int pcQty = resultSet.getInt(4);
-  				String pfRealName = resultSet.getString(5);
- 				String pfHoverRealName = resultSet.getString(6);
- 				Timestamp insertDate = resultSet.getTimestamp(7);
+  				int pCode = resultSet.getInt(2);
+  				int pcNo = resultSet.getInt(3);
+  				String pColor = resultSet.getString(4);
+  				String pName = resultSet.getString(4);
+  				int pPrice = resultSet.getInt(5);
+  				int pcQty = resultSet.getInt(6);
+  				String pfRealName = resultSet.getString(7);
+ 				String pfHoverRealName = resultSet.getString(8);
+ 				Timestamp insertDate = resultSet.getTimestamp(9);
  				
-  				PurchaseDto purchaseDto = new PurchaseDto(uid, pCode, pPrice, pcQty, pName, insertDate, pfRealName, pfHoverRealName);
+  				PurchaseDto purchaseDto = new PurchaseDto(uid, pcNo, pCode, pPrice, pcQty, pColor, pName, insertDate, pfRealName, pfHoverRealName);
   				dtos.add(purchaseDto);
   			}
 

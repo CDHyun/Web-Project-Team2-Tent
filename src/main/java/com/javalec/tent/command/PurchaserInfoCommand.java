@@ -26,6 +26,12 @@ public class PurchaserInfoCommand implements TentCommand {
 			String pColor = request.getParameter("pColor");
 			
 			System.out.println(pCode + "" + pcQty + "" + pColor + "도착");
+			session.removeAttribute("PCODE");
+			session.removeAttribute("PCQTY");
+			session.removeAttribute("PCOLOR");
+			session.setAttribute("PCODE", pCode);
+			session.setAttribute("PCQTY", pcQty);
+			session.setAttribute("PCOLOR", pColor);
 					
 			
 //			String uid = "donghyun"; //****

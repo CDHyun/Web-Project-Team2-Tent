@@ -74,16 +74,19 @@
                                             <th scope="col">Image</th>
                                             <th scope="col">Product</th>
                                             <th scope="col">Unit Price</th>
+                                            <th scope="col">Color</th>
                                             <th scope="col">Quantity</th>
                                             <th scope="col">Total</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                  
                                     
                                     <!-- order item start -->
                                     <c:set var="tot_price" value="0" />
+                                    <tbody>
                                     <c:forEach var="purchase" items="${purchaseList}">
-                                    <c:set var="tot_price" value="${purchase.pcQty * purchase.pPrice}" />
+                                    <c:set var="item_tot_price" value="${PCQTY * purchase.pPrice}" />
+                                      <c:set var="tot_price" value="${tot_price + item_tot_price}" />
                                         <tr>
                                             <td>
                                                 <img src="images/product/${purchase.pfRealName}" alt="Product">
@@ -91,18 +94,17 @@
                                             <td>
                                                 <a href="#">${purchase.pName}</a>
                                             </td>
-                                            <td>&#8361;<s:eval expression="new java.text.DecimalFormat('#,###').format(o_cart.product.pPrice)"/></td>
-                                            <td>
-                                                <div class="quantity">
-                                                    <input type="number" readonly class="qty-text" id="qty2" step="1" min="1" max="99" name="quantity" value="${o_cart.pcQty}" readonly>
-                                                </div>
-                                            </td>
-                                            <c:set var="item_tot_price" value="${purchase.pcQty * purchase.pPrice}"></c:set>
+                                            <c:set var="item_tot_price" value="${PCQTY * purchase.pPrice}"></c:set>
+                                            <td>${item_tot_price}</td>
+                                           <td>${PCOLOR}</td>
+                                            <td>${PCQTY}</td>
+                                            <td>${PCQTY * purchase.pPrice}</td>
                                         </tr>
                                     </c:forEach> 
+                                    </tbody>
+                              
                                     <!-- order item end -->
                                         
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -117,7 +119,7 @@
                                 <tbody>
                                     <tr>
                                         <td> Total</td>
-                                        <td>&#8361;${item_tot_price}</td>
+                                       <td>&#8361;${tot_price}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -129,7 +131,7 @@
           
                         </div>     
                         <form id="order_create_form" method="post">
-                        	<input type="hidden" name="total_price" value="${tot_price}">
+                        	<input type="hidden" name="total_price" value="${PCQTY * purchase.pPrice}">
                         </form> 
                     </div>
                 </div>
