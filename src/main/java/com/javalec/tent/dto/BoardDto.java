@@ -3,16 +3,17 @@ package com.javalec.tent.dto;
 public class BoardDto {
 
 	/* Field */
-	int qNo; // QNA 작성 번호
-	String uid; // 작성한 유저
-	String uNickName; // 작성한 유저의 닉네임
-	int qCgNo; // QNA 카테고리 번호. 1: , 2:
-	String qTitle; // QNA 제목
-	String qContent; // QNA 내용
-	String qInsertDate; // QNA 작성 일자
-	String qUpdateDate; // QNA 수정 일자
-	String qDeleteDate; // QNA 삭제 일자
-	boolean qDeleted; // QNA 삭제 여부 ( 0 : false 삭제되지 않음, 1 : true 삭제됨. )
+	int qNo; 						// QNA 작성 번호
+	String uid; 					// 작성한 유저
+	String uNickName; 				// 작성한 유저의 닉네임
+	int qCgNo; 						// QNA 카테고리 번호. 1: , 2:
+	String qTitle; 					// QNA 제목
+	String qContent;				// QNA 내용
+	String qInsertDate; 			// QNA 작성 일자
+	String qUpdateDate; 			// QNA 수정 일자
+	String qDeleteDate; 			// QNA 삭제 일자
+	boolean qDeleted; 				// QNA 삭제 여부 ( 0 : false 삭제되지 않음, 1 : true 삭제됨. )
+	int qViewCount;					// QNA 조회수
 
 	/* Constructor */
 	public BoardDto() {
@@ -21,7 +22,7 @@ public class BoardDto {
 
 	//qNo, uid, uNickName, qCgNo, qTitle, qContent, qInsertDate
 	public BoardDto(int qNo, String uid, String uNickName, int qCgNo, String qTitle, String qContent,
-			String qInsertDate) {
+			String qInsertDate, int qViewCount) {
 		super();
 		this.qNo = qNo;
 		this.uid = uid;
@@ -30,17 +31,8 @@ public class BoardDto {
 		this.qTitle = qTitle;
 		this.qContent = qContent;
 		this.qInsertDate = qInsertDate;
+		this.qViewCount = qViewCount;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/* getter & setter */
 	public int getqNo() {
@@ -122,5 +114,15 @@ public class BoardDto {
 	public void setuNickName(String uNickName) {
 		this.uNickName = uNickName;
 	}
+
+	public int getqViewCount() {
+		return qViewCount;
+	}
+
+	public void setqViewCount(int qViewCount) {
+		this.qViewCount = qViewCount;
+	}
+	
+	
 
 }

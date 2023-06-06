@@ -24,6 +24,7 @@ public class BoardDao {
 	String qUpdateDate;				// QNA 수정 일자
 	String qDeleteDate;				// QNA 삭제 일자
 	boolean qDeleted;				// QNA 삭제 여부 ( 0 : false 삭제되지 않음, 1 : true 삭제됨. )
+	int qViewCount;					// QNA 조회수
 	
 	DataSource dataSource;
 	
@@ -46,7 +47,7 @@ public class BoardDao {
 		try {
 			con = dataSource.getConnection();
 
-			String query = "select qNo, uid, uNickName, qCgNo, qTitle, qContent, qInsertDate from qna where qDeleted = 0";
+			String query = "select qNo, uid, uNickName, qCgNo, qTitle, qContent, qInsertDate, qViewCount from qna where qDeleted = 0";
 			ps = con.prepareStatement(query);
 			rs = ps.executeQuery();
 			while(rs.next()) {
@@ -57,7 +58,8 @@ public class BoardDao {
 				String qTitle = rs.getString(5);
 				String qContent = rs.getString(6);
 				String qInsertDate = rs.getString(7);
-				BoardDto boardDto = new BoardDto(qNo, uid, uNickName, qCgNo, qTitle, qContent, qInsertDate);
+				int qViewCount = rs.getInt(8);
+				BoardDto boardDto = new BoardDto(qNo, uid, uNickName, qCgNo, qTitle, qContent, qInsertDate, qViewCount);
 				qnaList.add(boardDto);
 			}
 
@@ -110,6 +112,34 @@ public class BoardDao {
 		return result;
 	}
 	
+	public int IncreaseViewCount(int qNo) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int result = 0;
+
+		try {
+			con = dataSource.getConnection();
+
+			String query = "update qna set qViewCount = qViewCount +1 where qNo = ?";
+			ps = con.prepareStatement(query);
+			ps.setInt(1, qNo);
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(con != null) con.close();
+				if(ps != null) ps.close();
+				if(rs != null) rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
 	
 	
 	

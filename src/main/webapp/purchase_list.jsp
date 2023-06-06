@@ -168,9 +168,7 @@
 	                    </div>
 	                    <div class="modal-body">
 	                        <p class="mb-0">
-	                        
 	                        <!-- order detail data -->
-	                        	
 						    <div class="shortcodes_area section_padding_40">
 						        <div class="container">
 						            <div class="row">
@@ -242,7 +240,6 @@
 						            </div>
 						        </div>
 						    </div>
-						
 						<!-- order detail data -->
 
 						</p>
