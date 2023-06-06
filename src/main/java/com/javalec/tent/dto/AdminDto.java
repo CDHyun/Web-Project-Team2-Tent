@@ -35,6 +35,7 @@ public class AdminDto {
 	int nNo;
 	
 	
+	
 	//차트에 필요한 변수
 	String dayName;
 	int daySum;
@@ -129,12 +130,21 @@ public class AdminDto {
 	
 	
 	
+	public AdminDto(int nNo, String aid, String nTitle, Date nInsertdate, String nContent) {
+		super();
+		this.aid = aid;
+		this.nTitle = nTitle;
+		this.nInsertdate = nInsertdate;
+		this.nNo = nNo;
+		this.nContent = nContent;
+	}
 	public AdminDto(int nNo, String aid, String nTitle, Date nInsertdate) {
 		super();
 		this.aid = aid;
 		this.nTitle = nTitle;
 		this.nInsertdate = nInsertdate;
 		this.nNo = nNo;
+		
 	}
 
 

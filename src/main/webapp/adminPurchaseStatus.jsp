@@ -42,6 +42,7 @@
         }
     </style>
 </head>
+  
 
 <body>
     <!-- Header Start -->
@@ -87,12 +88,7 @@
         <input type="submit" value="확인" class="content2" onclick="change()">
     </form>
     
-    <script type="text/javascript">
-            alert("상태가 변경되었습니다.");
-    	
-    
-    </script>
-
+  
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
