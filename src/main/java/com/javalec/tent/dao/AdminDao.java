@@ -409,7 +409,8 @@ public class AdminDao {
 		PreparedStatement preparedStatement = null;
 		try {
 			connection = dataSource.getConnection();
-			String query = "update purchase pc, user u set pc.pcStatus =? where u.uid = pc.uid and pc.pcNo = ?";
+			//String query = "update purchase pc, user u set pc.pcStatus =? where u.uid = pc.uid and pc.pcNo = ?";
+			String query = "update purchase  set pcStatus =? where pcNo = ?";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, pcStatus);
 			preparedStatement.setString(2, pcNo);

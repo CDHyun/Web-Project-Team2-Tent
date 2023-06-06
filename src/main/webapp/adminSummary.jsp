@@ -134,11 +134,13 @@
     
     data = {
       datasets: [{
-        backgroundColor: ['Red', 'Yellow', 'Blue', 'Black','Orange'],   // 색상은 나중에 고정되면 정해야함
-        data: [1,2,3]
+        backgroundColor: ['Black','Beige','Khakii','White','Grey','Orange'],   // 색상은 나중에 고정되면 정해야함
+        borderColor: 'Black', // 검정색 테두리
+        borderWidth: 1, // 테두리의 너비 설정
+        data: [1,2,3,4,5,6]
       }],
       // 라벨의 이름이 툴팁처럼 마우스가 근처에 오면 나타남
-      labels: ['Red', 'Yellow', 'Blue', 'Black','Orange'] // 범례
+      labels: ['Black','Beige','Khakii','White','Grey','Orange'] // 범례
     };
 
     // 도넛형 차트

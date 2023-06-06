@@ -41,7 +41,7 @@
   div[class="sidebar"] {
     width: 200px;
     height: 100%;
-    background: #228B22;
+    background: #87CEEB;
     position: fixed;
     top: 0;
     left: -300px;
@@ -55,7 +55,7 @@
     color: black;
     cursor: pointer;
   }
-  .sidebar li:hover {background-color: #228B22;}
+  .sidebar li:hover {background-color: #F5F5DC;}
   .sidebar h2 {
     color: black;
     padding: 10px;

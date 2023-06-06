@@ -50,7 +50,7 @@
     </div>
     <!-- Header End -->
 
-    <form action="adminStatusChange.do" method="post" name="statusForm" id="statusForm" class="content">
+    <form action="adminStatusChange.do" method="post" name="statusForm" class="content">
         <table border="">
         <tr>
             <th>구매번호</th>
@@ -61,7 +61,7 @@
             <th>주문날짜</th>
             <th>상태</th>
         </tr>
-        <c:forEach items="${check}" var="dto" varStatus="status">
+        <c:forEach items="${check}" var="dto" >
             <tr>
                 <td>${dto.pcNo}</td>
                 <td>${dto.uid}</td>
@@ -70,31 +70,28 @@
                 <td>${dto.pcQty}</td>
                 <td>${dto.pcInsertdate}</td>
                 <td>
-                    <select name="status" id="status_${status.index}" >
+                    <select name="status" >
                         <option value="-1" ${dto.pcStatus == -1 ? 'selected' : ''}>주문취소</option>
                         <option value="0" ${dto.pcStatus == 0 ? 'selected' : ''}>상품준비중</option>
                         <option value="1" ${dto.pcStatus == 1 ? 'selected' : ''}>배송중</option>
                         <option value="2" ${dto.pcStatus == 2 ? 'selected' : ''}>배송완료</option>
                     </select>
-                    <input type="hidden" name="pcNo_${status.index}" id="pcNo_${status.index}" value="${dto.pcNo}">
+                </td>
+                <td>
+                        <input type="hidden" name="pcNo" value="${dto.pcNo}">
                 </td>
             </tr>
         </c:forEach>
     </table>
         <br /><br />
-        <input type="hidden" id="linkValue" name="linkValue">
-        <input type="submit" value="확인" class="content2" onclick="getStatusValue(this)">
+        <input type="submit" value="확인" class="content2" onclick="change()">
     </form>
     
+    <script type="text/javascript">
+            alert("상태가 변경되었습니다.");
+    	
     
-    <script>
-    function getStatusValue(selectElement) {
-        var selectedIndex = selectElement.selectedIndex;
-        var pcNoElement = document.getElementById("pcNo_" + selectedIndex);
-        var pcNoValue = pcNoElement.value;
-       
-    }
-</script>
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
