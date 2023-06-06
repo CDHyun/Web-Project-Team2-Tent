@@ -50,7 +50,7 @@ public class AdminInputCommand implements TentCommand {
 	            dao1.upload(pfName, pfRealName, pCode);
 
 	            // 추가 폴더에도 저장 이 주소를 자신의 컴퓨터의 프로젝트폴더경로로 바꿔줘야함
-	            String additionalDirectory = "C:\\Users\\ahyun\\git\\Web-Project-Team2-Tent\\src\\main\\webapp\\images\\product";
+	            String additionalDirectory = "C:/Users/ahyun/git/Web-Project-Team2-Tent/src/main/webapp/images/product";
 	            //String additionalDirectory = ".../src/main/webapp/images/product/";
 
 	            

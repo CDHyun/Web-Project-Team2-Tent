@@ -55,11 +55,12 @@ public class AdminSummaryCommand implements TentCommand {
         
         // 날짜별 매출
         ArrayList<AdminDto> dtos2 = dao.dailySale(startDate,endDate);
-        request.setAttribute("sales", dtos2);
+        request.setAttribute("SALES", dtos2);
        
-
-      
-        
+       
+        //매출액 보여주기
+        AdminDto lastDto = dtos2.get(dtos2.size() - 1);
+        request.setAttribute("TOTAL", lastDto.getTotal());
         
 
 	}

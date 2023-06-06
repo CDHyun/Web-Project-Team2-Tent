@@ -1,3 +1,4 @@
+<%@page import="com.javalec.tent.dto.AdminDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -21,6 +22,9 @@
 
   .content {
     margin-left: 350px;
+  }
+  .content2 {
+    margin-left: 950px;
   }
 
   table {
@@ -155,32 +159,38 @@
   
   
   
-  <form action="adminfirst.do" method="post" class="content">
-  		<label for="startDate">시작일:</label>
-  		<input type="date" id="startDate" name="startDate">&nbsp;&nbsp;
-  		<label for="endDate">종료일:</label>
-  		<input type="date" id="endDate" name="endDate">
-  		<button type="submit">검색</button>
-	</form>
   
-  
-  <table border="" class="content" >
+
+<form action="adminfirst.do" method="post" class="content">
+  <label for="startDate">시작일:</label>
+  <input type="date" id="startDate" name="startDate">&nbsp;&nbsp;
+  <label for="endDate">종료일:</label>
+  <input type="date" id="endDate" name="endDate">
+  <button type="submit">검색</button>
+</form>
+
+
+ 
+ 
+<p class="content2">총 매출액 : <input type="text" name="sumAll" id="sumAll" readonly="readonly" size="15" value="${TOTAL }">원</p>
+
+
+
+<table border="" class="content">
   <tr>
     <th>주문일자</th>
     <th>브랜드명</th>
     <th>상품명</th>
-    <th>주문갯수</th>
-    <th>합계</th>
+    <th>합계금액</th>
   </tr>
   
+ 
   
-  
-  <c:forEach items="${sales}" var="dto">
+  <c:forEach items="${SALES}" var="dto">
     <tr>
       <td>${dto.pcInsertdate}</td>
       <td>${dto.pBrandName}</td>
       <td>${dto.pName}</td>
-      <td>${dto.pcQty}</td>
       <td>${dto.sum}</td>
     </tr>
   </c:forEach>
