@@ -453,7 +453,7 @@ public class AdminDao {
 		try {
 			connection = dataSource.getConnection();
 			
-			String WhereDefault = "select n.nNo, n.aid, n.nTitle, n.nInsertDate from notice n,admin a where n.aid = a.aid";
+			String WhereDefault = "select n.nNo, n.aid, n.nTitle, n.nInsertDate from notice n,admin a where n.aid = a.aid and n.nCgNo=1";
 			
 			
 			preparedStatement = connection.prepareStatement(WhereDefault);
@@ -703,6 +703,59 @@ public class AdminDao {
 	
 	
 	
+
+	// FAQ 메서드
+	public ArrayList<AdminDto> faqSearch(String aaid) {
+		
+		
+		ArrayList<AdminDto> dtos = new ArrayList<AdminDto>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			
+			String WhereDefault = "select n.nNo, n.aid, n.nTitle, n.nInsertDate, n.nContent from notice n,admin a where n.aid = a.aid and n.nCgNo=2";
+			
+			
+			preparedStatement = connection.prepareStatement(WhereDefault);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				int nNo = resultSet.getInt(1);
+				String aid = resultSet.getString(2);
+				String nTitle = resultSet.getString(3);
+				Date nInsertDate = resultSet.getDate(4);
+				String nContent = resultSet.getString(5);
+				
+		
+				AdminDto dto = new AdminDto(nNo, aid, nTitle, nInsertDate, nContent);
+				dtos.add(dto);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet != null){ // 무언가 들어가 있으면close
+					resultSet.close();
+				}
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return dtos;
+	
+	
+	}
 	
 	
 	

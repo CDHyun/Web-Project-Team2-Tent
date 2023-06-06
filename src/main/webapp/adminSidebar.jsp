@@ -92,5 +92,33 @@
       <li><a href="adminNotice.do" style="color: #000000;">고객관리</a></li>
     </ul>
   </div>
+
+  <script>
+    // 하위 메뉴를 숨기는 함수
+    function hideSubMenu() {
+      var subMenu = document.querySelector('.sub-menu');
+      subMenu.style.display = 'none';
+    }
+
+    // 하위 메뉴를 보여주는 함수
+    function showSubMenu() {
+      var subMenu = document.querySelector('.sub-menu');
+      subMenu.style.display = 'block';
+    }
+
+    // 초기 로딩 시 하위 메뉴 숨김
+    hideSubMenu();
+
+    // 상품관리 메뉴 클릭 시 하위 메뉴 보이거나 숨김
+    var productMenu = document.querySelector('.sidebar li.active');
+    productMenu.addEventListener('click', function() {
+      var subMenu = document.querySelector('.sub-menu');
+      if (subMenu.style.display === 'block') {
+        hideSubMenu();
+      } else {
+        showSubMenu();
+      }
+    });
+  </script>
 </body>
 </html>
