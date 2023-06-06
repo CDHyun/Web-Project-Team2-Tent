@@ -20,8 +20,8 @@ import com.javalec.tent.command.AdminPurchaseStatusCommand;
 import com.javalec.tent.command.AdminStatusChangeCommand;
 import com.javalec.tent.command.AdminSummaryCommand;
 import com.javalec.tent.command.AdminUpdateCommand;
-import com.javalec.tent.command.BoardListCommand;
-import com.javalec.tent.command.BoardWriteCommand;
+import com.javalec.tent.command.QuestionListCommand;
+import com.javalec.tent.command.QuestionWriteCommand;
 import com.javalec.tent.command.CartCommand;
 import com.javalec.tent.command.CartDeleteCommand;
 import com.javalec.tent.command.CartUpdateCommand;
@@ -120,18 +120,18 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "product_detail.jsp";
 			break;
-		case "/qna_list.do":
-			command = new BoardListCommand();
+		case "/question_list.do":
+			command = new QuestionListCommand();
 			command.execute(request, response);
-			viewPage = "board.jsp";
+			viewPage = "question.jsp";
 			break;
-		case "/qna_write_form.do":
-			viewPage = "board_write_form.jsp";
+		case "/question_write_form.do":
+			viewPage = "question_write_form.jsp";
 			break;
-		case "/qna_write.do":
-			command = new BoardWriteCommand();
+		case "/question_write.do":
+			command = new QuestionWriteCommand();
 			command.execute(request, response);
-			viewPage = "qna_list.do";
+			viewPage = "question_list.do";
 			break;
 		case "/adminindex.do":  // 상품보여주기
 			command = new AdminCommand();

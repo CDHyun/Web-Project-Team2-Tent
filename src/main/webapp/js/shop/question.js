@@ -60,7 +60,7 @@ function changeQnaList(pageno){
 */
 $(".qna_btn.list").on("click", function(){
 	let pageno = $(this).attr("pageno");
-	location.href = `qna_list.do?pageno=${pageno}`;
+	location.href = `question_list.do?pageno=${pageno}`;
 });
 
 /*
@@ -80,7 +80,7 @@ $(".qna_btn.delete").on("click", function(){
 								success:function(resultObj){
 									if(resultObj.errorCode > 0){
 										Toast.fire({ icon: 'success', title: resultObj.errorMsg }).then((result) => {
-												location.href = "qna_list?pageno=" + pageno;
+												location.href = "question_list.do?pageno=" + pageno;
 											});
 									}else{
 										Toast.fire({ icon: 'error', title: resultObj.errorMsg });
@@ -109,7 +109,7 @@ $(".qna_btn.new_write").on("click", function(){
 		Toast.fire({ icon: 'warning', title: "필수 입력값을 입력하지 않았습니다.\n 제목과 내용을 모두 입력해주세요" });
 		return;
 	}
-	$("#qna_write_form").attr("action", "qna_write.do");
+	$("#qna_write_form").attr("action", "question_write.do");
 	$("#qna_write_form").submit();
 });
 
@@ -136,7 +136,7 @@ $(".qna_btn.update").on("click", function(){
 */
 $(".qna_btn.write_form, .qna_btn.reply").on("click", function(){
 	let pageno = $(this).attr("pageno");
-	location.href = "qna_write_form.do?pageno=" + pageno;
+	location.href = "question_write_form.do?pageno=" + pageno;
 });
 
 /*

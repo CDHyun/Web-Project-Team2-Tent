@@ -1,6 +1,6 @@
 package com.javalec.tent.dto;
 
-public class BoardDto {
+public class QuestionDto {
 
 	/* Field */
 	int qNo; 						// QNA 작성 번호
@@ -16,12 +16,12 @@ public class BoardDto {
 	int qViewCount;					// QNA 조회수
 
 	/* Constructor */
-	public BoardDto() {
+	public QuestionDto() {
 		// TODO Auto-generated constructor stub
 	}
 
 	//qNo, uid, uNickName, qCgNo, qTitle, qContent, qInsertDate
-	public BoardDto(int qNo, String uid, String uNickName, int qCgNo, String qTitle, String qContent,
+	public QuestionDto(int qNo, String uid, String uNickName, int qCgNo, String qTitle, String qContent,
 			String qInsertDate, int qViewCount) {
 		super();
 		this.qNo = qNo;

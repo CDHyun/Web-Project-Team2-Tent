@@ -499,21 +499,20 @@
 						<div class="classynav">
 							<ul>
 								<li><a href="index.do">Home</a></li>
-								<li><a href="product_list.do" id="shop_main_menu">Shop</a></li>
 								<c:if test="${empty SUID}">
+									<li><a href="product_list.do" id="shop_main_menu">Shop</a></li>
+									<li><a href="notice.do">Notice</a></li>
 									<li><a onclick="emptySessionUser()">Orders</a></li>
-								</c:if>
-								<c:if test="${!empty SUID}">
-									<li><a href="purchase_list.do">Orders</a></li>
-								</c:if>
-								<li><a href="faq">FAQ</a></li>
-								<c:if test="${empty SUID}">
+									<li><a onclick="emptySessionUser()">QNA</a></li>
 									<li><a onclick="emptySessionUser()">Board</a></li>
 								</c:if>
 								<c:if test="${!empty SUID}">
-									<li><a href="qna_list.do">Board</a></li>
+									<li><a href="product_list.do" id="shop_main_menu">Shop</a></li>
+									<li><a href="notice.do">Notice</a></li>
+									<li><a href="purchase_list.do">Orders</a></li>
+									<li><a href="question_list.do">QNA</a></li>
+									<li><a href="board_list.do">Board</a></li>
 								</c:if>
-
 							</ul>
 						</div>
 					</div>

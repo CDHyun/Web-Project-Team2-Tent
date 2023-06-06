@@ -1,7 +1,7 @@
-package com.javalec.tent.controller.board;
+package com.javalec.tent.controller.question;
 
 import com.javalec.tent.command.TentCommand;
-import com.javalec.tent.dao.BoardDao;
+import com.javalec.tent.dao.QuestionDao;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -46,8 +46,8 @@ public class IncreaseViewCount extends HttpServlet implements TentCommand {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		int qNo = Integer.parseInt(request.getParameter("qNo"));
-		BoardDao boardDao = new BoardDao();
-		int result = boardDao.IncreaseViewCount(qNo);
+		QuestionDao questionDao = new QuestionDao();
+		int result = questionDao.IncreaseViewCount(qNo);
 	}
 
 }

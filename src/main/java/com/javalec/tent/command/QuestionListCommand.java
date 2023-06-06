@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.javalec.tent.dao.BoardDao;
-import com.javalec.tent.dto.BoardDto;
+import com.javalec.tent.dao.QuestionDao;
+import com.javalec.tent.dto.QuestionDto;
 
-public class BoardListCommand implements TentCommand {
+public class QuestionListCommand implements TentCommand {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		
-		ArrayList<BoardDto> qnaList = new ArrayList<BoardDto>();
-		BoardDao boardDao = new BoardDao();
-		qnaList = boardDao.qnaList();
+		ArrayList<QuestionDto> qnaList = new ArrayList<QuestionDto>();
+		QuestionDao questionDao = new QuestionDao();
+		qnaList = questionDao.qnaList();
 		request.setAttribute("qnaList", qnaList);
 
 	}

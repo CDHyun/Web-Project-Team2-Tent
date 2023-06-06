@@ -4,9 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.javalec.tent.dao.BoardDao;
+import com.javalec.tent.dao.QuestionDao;
 
-public class BoardWriteCommand implements TentCommand {
+public class QuestionWriteCommand implements TentCommand {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
@@ -16,7 +16,7 @@ public class BoardWriteCommand implements TentCommand {
 		int qCgNo = Integer.parseInt(request.getParameter("qCgNo"));
 		String qTitle = request.getParameter("qTitle");
 		String qContent = request.getParameter("qContent");
-		BoardDao boardDao = new BoardDao();
+		QuestionDao boardDao = new QuestionDao();
 		int result = boardDao.writeQnA(uid, uNickName, qCgNo, qTitle, qContent);
 
 	}

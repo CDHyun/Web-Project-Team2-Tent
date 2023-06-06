@@ -9,9 +9,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.javalec.tent.dto.BoardDto;
+import com.javalec.tent.dto.QuestionDto;
 
-public class BoardDao {
+public class QuestionDao {
 
 	/* Field */
 	int qNo;						// QNA 작성 번호
@@ -28,7 +28,7 @@ public class BoardDao {
 	
 	DataSource dataSource;
 	
-	public BoardDao() {
+	public QuestionDao() {
 		try {
 			Context context = new InitialContext();
 			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/tent");
@@ -37,8 +37,8 @@ public class BoardDao {
 		}
 	}
 	
-	public ArrayList<BoardDto> qnaList(){
-		ArrayList<BoardDto> qnaList = new ArrayList<BoardDto>();
+	public ArrayList<QuestionDto> qnaList(){
+		ArrayList<QuestionDto> qnaList = new ArrayList<QuestionDto>();
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -47,7 +47,7 @@ public class BoardDao {
 		try {
 			con = dataSource.getConnection();
 
-			String query = "select qNo, uid, uNickName, qCgNo, qTitle, qContent, qInsertDate, qViewCount from qna where qDeleted = 0";
+			String query = "select qNo, uid, uNickName, qCgNo, qTitle, qContent, qInsertDate, qViewCount from question where qDeleted = 0";
 			ps = con.prepareStatement(query);
 			rs = ps.executeQuery();
 			while(rs.next()) {
@@ -59,7 +59,7 @@ public class BoardDao {
 				String qContent = rs.getString(6);
 				String qInsertDate = rs.getString(7);
 				int qViewCount = rs.getInt(8);
-				BoardDto boardDto = new BoardDto(qNo, uid, uNickName, qCgNo, qTitle, qContent, qInsertDate, qViewCount);
+				QuestionDto boardDto = new QuestionDto(qNo, uid, uNickName, qCgNo, qTitle, qContent, qInsertDate, qViewCount);
 				qnaList.add(boardDto);
 			}
 
@@ -88,7 +88,7 @@ public class BoardDao {
 		try {
 			con = dataSource.getConnection();
 
-			String query = "insert into qna(uid, uNickName, qCgNo, qTitle, qContent, qInsertDate) values(?, ?, ?, ?, ?, now())";
+			String query = "insert into question(uid, uNickName, qCgNo, qTitle, qContent, qInsertDate) values(?, ?, ?, ?, ?, now())";
 			ps = con.prepareStatement(query);
 			ps.setString(1, uid);
 			ps.setString(2, uNickName);
@@ -121,7 +121,7 @@ public class BoardDao {
 		try {
 			con = dataSource.getConnection();
 
-			String query = "update qna set qViewCount = qViewCount +1 where qNo = ?";
+			String query = "update question set qViewCount = qViewCount +1 where qNo = ?";
 			ps = con.prepareStatement(query);
 			ps.setInt(1, qNo);
 			ps.executeUpdate();
