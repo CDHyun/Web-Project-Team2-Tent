@@ -43,6 +43,7 @@ public class AdminDto {
 	
 	// 날짜별매출에 필요한 변수
 	int sum;
+	int total;
 	
 	
 	
@@ -65,12 +66,13 @@ public class AdminDto {
 	
 
 
-	public AdminDto(Date pcInsertdate, String pBrandName ,String pName, int pPrice, int sum ) {
+	public AdminDto(Date pcInsertdate, String pBrandName ,String pName, int pPrice, int sum, int total ) {
 		super();
 		this.pName = pName;
 		this.pBrandName = pBrandName;
 		this.pPrice = pPrice;
 		this.sum = sum;
+		this.total = total;
 		this.pcInsertdate = pcInsertdate;
 	}
 
@@ -450,6 +452,16 @@ public class AdminDto {
 
 	public void setSum(int sum) {
 		this.sum = sum;
+	}
+
+
+	public int getTotal() {
+		return total;
+	}
+
+
+	public void setTotal(int total) {
+		this.total = total;
 	}
 
 	

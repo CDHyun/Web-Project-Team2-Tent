@@ -634,7 +634,7 @@ public class AdminDao {
 	
 	// 날짜별 매출 계산하기 위한 메서드
 	public ArrayList<AdminDto> dailySale(String startDate, String endDate) {
-
+		int total= 0;
 		ArrayList<AdminDto> dtos = new ArrayList<AdminDto>();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -657,7 +657,7 @@ public class AdminDao {
 			}else {
 				connection = dataSource.getConnection();
 				
-				String WhereDefault = "select pc.pcInsertDate, p.pBrandName, p.pName, pc.pcQty, pc.pcQty*p.pPrice from product p, purchase pc where p.pCode = pc.pCode and pc.pcInsertDate";
+				String WhereDefault = "select pc.pcInsertDate, p.pBrandName, p.pName, pc.pcQty, pc.pcQty*p.pPrice from product p, purchase pc where p.pCode = pc.pCode";
 				
 				preparedStatement = connection.prepareStatement(WhereDefault);
 				
@@ -670,8 +670,10 @@ public class AdminDao {
 				String pName= resultSet.getString(3);
 				int pcQty = resultSet.getInt(4);
 				int sum = resultSet.getInt(5);
+
+				total +=sum;
 				
-				AdminDto dto = new AdminDto(pcInsertdate, pBrandName, pName, pcQty, sum);
+				AdminDto dto = new AdminDto(pcInsertdate, pBrandName, pName, pcQty, sum,total);
 				dtos.add(dto);
 			}
 		}catch(Exception e) {

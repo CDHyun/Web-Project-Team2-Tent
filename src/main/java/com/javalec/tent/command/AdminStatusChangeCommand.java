@@ -12,11 +12,12 @@ public class AdminStatusChangeCommand implements TentCommand {
 		// TODO Auto-generated method stub
 		
 		String pcStatus = request.getParameter("status");
-		String pcNo = request.getParameter("pcNo");
+		String pcNo = request.getParameter("pcNoValue");
 		//pcNo를 받는법을 모르겠다.
-		System.out.println(pcStatus);
-		System.out.println(pcNo);
 		
+		
+		System.out.println(pcStatus);
+		System.out.println(pcNo);  //1고정 ?
 		
 		
 		
