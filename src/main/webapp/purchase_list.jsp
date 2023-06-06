@@ -16,6 +16,46 @@
 	<jsp:include page="common/include_common_top.jsp"/>
     <!-- include_common_top -->
     <link rel="stylesheet" href="css/shop/order.css">
+<script type="text/javascript">
+
+	
+	function DeletePurchase() {
+		var pcNo = $('#d_pcNo').val();
+		ToastConfirm.fire({ icon: 'question', title: "해당 상품을 주문취소 하시겠습니까?" }).then((result) => {
+			if(result.isConfirmed){
+				$.ajax({
+					type : 'POST',
+					url : './DeletePurchase',
+					data : {
+						pcNo : pcNo,
+					},
+					success : function(result) {
+						console.log(result);
+						if (result === "0") {
+							Toast.fire({ icon : 'warning', title : "주문취소 중 문제가 발생했습니다." });
+							return;
+						}
+						if (result === "1") {
+							Toast.fire({ icon: 'success', title: "주문이 취소 되었습니다." }).then(() => {
+								  window.location.href = "purchase_delete.do";
+								});
+						}
+					},
+					error : function() {
+						Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
+					 }
+			    });
+			}
+		});
+	}
+	  
+	</script>
+	
+	
+	
+	
+
+</script>
 
 </head>
 
@@ -64,6 +104,7 @@
 				</div>
                 <div class="col-12 col-lg-9">
                     <div class="my-account-content mb-50">
+                       <input type="button" class="btn btn-primary" value="모달 열기" onclick="openModal()">
                         <div class="cart-table">
                             <div class="table-responsive">
                                 <table class="table table-bordered mb-0">
@@ -80,6 +121,7 @@
                                     <c:if test="${orderList.size() == 0}">
                                 		<tr>
                                 			<td colspan="5">등록된 주문목록이 없습니다 🙂</td>
+                                			
                                 		</tr>
                                 	</c:if>
                                     <c:forEach items="${orderList}" var="order">
@@ -88,12 +130,12 @@
                                                 ${order.o_desc}
                                             </th>
                                             <td>
-                                                <fmt:formatDate value="${order.o_date}" pattern="yyyy-MM-dd"/>
+                                                <fmt:formatDate value="${order.pcInsertDate}" pattern="yyyy-MM-dd"/>
                                             </td>
                                             <td>
-                                                ${order.o_status}
+                                                ${order.pcStatus}
                                             </td>
-                                            <td>&#8361;<s:eval expression="new java.text.DecimalFormat('#,##0').format(order.o_price)"/></td>
+                                            <td>&#8361;<s:eval expression="new java.text.DecimalFormat('#,##0').format(order.pPrice)"/></td>
                                             <td>
 			                                    <button type="button" class="btn btn-primary" data-toggle="modal" o_no="${order.o_no}" data-target="#order_detail_modal">
 						                            View
@@ -145,8 +187,8 @@
 						                                        <th scope="col">No</th>
 						                                        <th scope="col">Date</th>
 						                                        <th scope="col">Name</th>
-						                                        <th scope="col">Pay</th>
-						                                        <th scope="col">Message</th>
+						                                        <th scope="col">Phone</th>
+						                                        <th scope="col">Address</th>
 						                                    </tr>
 						                                </thead>
 						                                <tbody id="orderer_info_body">
@@ -170,37 +212,6 @@
 						            <div class="row">
 						                <div class="col-12">
 						                    <div class="shortcodes_title mb-30">
-						                        <h6>Receiver Info</h6>
-						                    </div>
-						                    <div class="shortcodes_content">
-						                        <div class="table-responsive">
-						                            <table class="table mb-0 table-bordered">
-						                                <thead>
-						                                    <tr>
-						                                        <th scope="col">Name</th>
-						                                        <th scope="col">phone</th>
-						                                        <th scope="col">address</th>
-						                                    </tr>
-						                                </thead>
-						                                <tbody id="receiver_info_body">
-						                                    <tr>
-						                                        <th scope="row">1</th>
-						                                        <td>Mark</td>
-						                                        <td>Otto</td>
-						                                    </tr>
-						                                </tbody>
-						                            </table>
-						                        </div>
-						                    </div>
-						                </div>
-						            </div>
-						        </div>
-						    </div>
-						    <div class="shortcodes_area section_padding_40">
-						        <div class="container">
-						            <div class="row">
-						                <div class="col-12">
-						                    <div class="shortcodes_title mb-30">
 						                        <h6>Item Info</h6>
 						                    </div>
 						                    <div class="shortcodes_content">
@@ -210,7 +221,7 @@
 						                                    <tr>
 						                                        <th scope="col"></th>
 						                                        <th scope="col">Item</th>
-						                                        <th scope="col">Quentity</th>
+						                                        <th scope="col">Quantity</th>
 						                                        <th scope="col">price</th>
 						                                    </tr>
 						                                </thead>
