@@ -106,7 +106,7 @@ public class PurchaseDto {
 	
 	
 	public PurchaseDto(String uid, String uName, String uPhone, String uaAddress, int pcNo, int pCode, int pPrice,
-			int pcQty, String pColor, String pName, String pcInsertDate, String pfRealName, String pfHoverRealName) {
+			int pcQty, String pColor, String pName, String pcInsertDate, String pfRealName, String pfHoverRealName, String pcStatus) {
 		super();
 		this.uid = uid;
 		this.uName = uName;
@@ -121,6 +121,7 @@ public class PurchaseDto {
 		this.pcInsertDate = pcInsertDate;
 		this.pfRealName = pfRealName;
 		this.pfHoverRealName = pfHoverRealName;
+		this.pcStatus = pcStatus;
 	}
 
 

@@ -86,7 +86,7 @@ public class BoardDao {
 		try {
 			con = dataSource.getConnection();
 
-			String query = "insert into qna(uid, uNickName, qCgNo, qTitle, qContent, qInsertDate) values(?, ?, ?, ?, now())";
+			String query = "insert into qna(uid, uNickName, qCgNo, qTitle, qContent, qInsertDate) values(?, ?, ?, ?, ?, now())";
 			ps = con.prepareStatement(query);
 			ps.setString(1, uid);
 			ps.setString(2, uNickName);

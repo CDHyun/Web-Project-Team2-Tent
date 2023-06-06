@@ -7,7 +7,7 @@ function numberWithCommas(price) {
 
 /*
 날짜 형식 포맷 메서드
-*/
+
 function formatDate(date) { 
 	let d = new Date(date),  
 		month = '' + (d.getMonth() + 1), 
@@ -20,6 +20,7 @@ function formatDate(date) {
 		
 	return [year, month, day].join('-'); 
 }
+*/
 
 /*
 로그인체크  

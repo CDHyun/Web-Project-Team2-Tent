@@ -15,6 +15,42 @@ import com.javalec.tent.dto.PurchaseDto;
 public class PurchaseDao {
 
 	//Field
+	/* User */
+	String uid;							// 유저 아이디
+	String uPassword;					// 유저 비밀번호
+	String uName;						// 유저 이름
+	String uPhone;						// 유저 전화번호
+	String uEmail;						// 유저 이메일
+	
+	
+	/* UserAddress */
+	int uaNo; 							// 유저 주소 번호(1~3까지 둘 생각)
+	String uaZipcode;					// 유저 우편 번호
+	String uaAddress;					// 유저 주소(API가 주는 값)
+	String uaDetailAddress;				// 유저 상세 주소(직접 입력)
+
+	
+	/* Product */
+	int pcNo;                           //상품 주문 번호
+	int pCode;                          //상품 코드
+	int pPrice;                         //상품 가격
+	int pcQty;                          //상품 수량
+	int pStock;                         //상품 재고
+	int cgNo;				            //카테고리 번호
+	String pColor;						//상품 색
+	String pName;						// 상품명
+	String pBrandName;                  //상품 브랜드 이름
+	String pcInsertDate;             //상품 주문 날짜
+	String pcDeleteDate;		        //상품 주문 취소 날짜
+	String pcStatus;                    //상품 주문 상태 
+	String pcDM;
+	
+	
+	/* ProductFile */
+	String pfName;			// 올린 상품 이미지 이름
+	String pfRealName;		// 프로젝트에 저장된 실제 파일 이름
+	String pfHoverName;		// 올린 호버 이미지 이름
+	String pfHoverRealName;	// 프로젝트에 저장되는 실제 호버 이미지 이름
 
 	
 	DataSource dataSource;
@@ -85,7 +121,7 @@ public PurchaseDao() {
  			connection = dataSource.getConnection();
  			String query = "SELECT u.uid, p.pCode, p.pName, p.pPrice, pf.pfRealName, pf.pfHoverRealName "
  							+ "FROM product p, user u, productfile pf, purchase pc " 
- 							+ "WHERE pf.pCode = p.pCode and pc.pCode = p.pCode and u.uid = ?";
+ 							+ "WHERE pf.pCode = p.pCode and pc.pCode = p.pCode and u.uid = ? ";
  			preparedStatement = connection.prepareStatement(query);
  			preparedStatement.setString(1, uid);
  			resultSet = preparedStatement.executeQuery();
@@ -194,7 +230,7 @@ public PurchaseDao() {
 
   		try {
   			connection = dataSource.getConnection();
-  			String query = "SELECT u.uid, pc.pcNo, pc.pColor, p.pCode, p.pName, p.pPrice, pc.pcQty, pf.pfRealName, pf.pfHoverRealName, pc.pcInsertDate, u.uName, u.uPhone, ua.uaAddress " 
+  			String query = "SELECT u.uid, pc.pcNo, pc.pColor, p.pCode, p.pName, p.pPrice, pc.pcQty, pf.pfRealName, pf.pfHoverRealName, pc.pcInsertDate, u.uName, u.uPhone, ua.uaAddress, pc.pcStatus " 
   					+ "FROM purchase pc, product p, user u, productfile pf, productOption po, userAddress ua "
   					+ "WHERE pc.pCode = p.pCode and pf.pCode = p.pCode and po.pCode = p.pCode and u.uid = pc.uid and u.uid = ua.uid and u.uid = ?";
   			
@@ -203,20 +239,22 @@ public PurchaseDao() {
   			resultSet = preparedStatement.executeQuery();
 
   			while (resultSet.next()) {
-  				int pCode = resultSet.getInt(2);
-  				int pcNo = resultSet.getInt(3);
-  				String pColor = resultSet.getString(4);
+  				String wkuid = resultSet.getString(1);
+  				int pcNo = resultSet.getInt(2);
+  				String pColor = resultSet.getString(3);
+  				int pCode = resultSet.getInt(4);
   				String pName = resultSet.getString(5);
   				int pPrice = resultSet.getInt(6);
   				int pcQty = resultSet.getInt(7);
   				String pfRealName = resultSet.getString(8);
  				String pfHoverRealName = resultSet.getString(9);
- 				String pcinsertDate = resultSet.getString(10);
+ 				String pcInsertDate = resultSet.getString(10);
  				String uName = resultSet.getString(11);
  				String uPhone = resultSet.getString(12);
  				String uaAddress = resultSet.getString(13);
+ 				String pcStatus = resultSet.getString(14);
  				
-  				PurchaseDto purchaseDto = new PurchaseDto(uid, uName, uPhone, uaAddress, pcNo, pCode, pPrice, pcQty, pColor, pName, pcinsertDate, pfRealName, pfHoverRealName);
+  				PurchaseDto purchaseDto = new PurchaseDto(wkuid, uName, uPhone, uaAddress, pcNo, pCode, pPrice, pcQty, pColor, pName, pcInsertDate, pfRealName, pfHoverRealName, pcStatus);
   				dtos.add(purchaseDto);
   			}
 

@@ -17,9 +17,6 @@ public class PurchaseListCommand implements TentCommand {
 
 		HttpSession session = request.getSession();
 		String uid = (String)session.getAttribute("SUID");
-		int pCode = (int)session.getAttribute("PCODE");
-		int pcQty = (int)session.getAttribute("PCQTY");
-		String pColor = (String)session.getAttribute("PCOLOR");
 		
 		
 		
@@ -27,7 +24,7 @@ public class PurchaseListCommand implements TentCommand {
 	
 		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
 		dtos = dao.orderList(uid);
-		request.setAttribute("orderList", dtos);
+		request.setAttribute("purchaseList", dtos);
 		
 	}
 

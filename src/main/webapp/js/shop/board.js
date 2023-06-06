@@ -60,7 +60,7 @@ function changeQnaList(pageno){
 */
 $(".qna_btn.list").on("click", function(){
 	let pageno = $(this).attr("pageno");
-	location.href = `qna_list?pageno=${pageno}`;
+	location.href = `qna_list.do?pageno=${pageno}`;
 });
 
 /*

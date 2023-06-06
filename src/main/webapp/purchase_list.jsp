@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>	
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="en">
 
@@ -123,31 +122,32 @@
                                 			
                                 		</tr>
                                 	</c:if>
-                                    <c:forEach items="${orderList}" var="order">
-                                        <tr id="order_${order.pfRealName}">
-                                            <th scope="row">
-                                                ${order.o_desc}
-                                            </th>
-                                            <td>
-                                               <%--  <fmt:formatDate value="${order.pcInsertDate}" pattern="yyyy-MM-dd"/> --%>
-                                            </td>
-                                            <td>
-                                                ${order.pcStatus}
-                                            </td>
-                                            <td>${order.pPrice}</td>
-                                            <td>
-			                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#order_detail_modal">
-						                            View
-						                        </button>
-                                            </td>
-                                        </tr>
-                                       </c:forEach>
+                                	<tr>
+	                                	<c:forEach items="${purchaseList}" var="purchase">
+	                                    		<td>${purchase.pcNo}</td>
+	                                    		<td>${purchase.pcInsertDate}</td>
+	                                    		<c:if test="${purchase.pcStatus == 0}">
+												    <td>
+												        <span class="bigshop-label bigshop-label-info">배송 준비중</span>
+												    </td>
+												</c:if>
+	                                    		<c:if test="${purchase.pcStatus == -1}">
+												    <td>
+												        <span class="bigshop-label bigshop-label-success">취소됨</span>
+												    </td>
+												</c:if>
+	                                            <td>${purchase.pPrice}</td>
+	                                            <td>
+				                                    <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#order_detail_modal">View</button>
+	                                            </td>
+	                                       
+                                	</tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <c:if test="${orderList.size() != 0}">
+                    <c:if test="${purchaseList.size() != 0}">
                      	<button type="button" class="btn btn-primary mb-1" id="order_all_delete_btn">Delete All</button>
                 	</c:if>
                	</div>
@@ -192,11 +192,11 @@
 						                                </thead>
 						                                <tbody id="orderer_info_body">
 						                                    <tr>
-						                                        <th scope="row">1</th>
-						                                        <td>${orderList.pcinsertDate}</td>
-						                                        <td>${orderList.uName}</td>
-						                                        <td>${orderList.uPhone}</td>
-						                                        <td>${orderList.uaAddress}</td>
+						                                        <th scope="row">${purchase.pcNo}</th>
+						                                        <td>${purchase.pcInsertDate}</td>
+						                                        <td>${purchase.pName}</td>
+						                                        <td>${purchase.uPhone}</td>
+						                                        <td>${purchase.uaAddress}</td>
 						                                    </tr>
 						                                </tbody>
 						                            </table>
@@ -227,9 +227,9 @@
 						                                <tbody id="item_info_body">
 						                                    <tr>
 						                                        <th scope="row">1</th>
-						                                        <td>${orderList.pfRealName}</td>
+						                                        <td>${purchase.pName}</td>
 						                                        <td>${PCQTY}</td>
-						                                        <td>${orderList.pPrice}</td>
+						                                        <td>${purchase.pPrice}</td>
 						                                    </tr>
 						                                    <tr>
 						                                        <th scope="row" colspan="4">total</th>
@@ -249,12 +249,13 @@
 	                    </div>
 	                    <div class="modal-footer">
 	                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	                        <button type="button" class="btn btn-primary" id="order_delete_btn" o_no="${orderlist.pcNo}">Delete</button>
+	                        <button type="button" class="btn btn-primary" id="order_delete_btn">Delete</button>
 	                    </div>
 	                </div>
 	            </div>
 	        </div>
 	    </div>
+	    </c:forEach>
 	<!-- 오더상세보기 모달 끝 -->        
     
     <!-- My Account Area -->
@@ -265,7 +266,7 @@
 
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp"/>
-	<script src="js/shop/order.js"></script>
+	<script src="js/shop/order.js?after"></script>
 	<script type = "text/javascript">
 	/********개별주문 삭제***********/
 	$('#order_delete_btn').on('click',function(e){

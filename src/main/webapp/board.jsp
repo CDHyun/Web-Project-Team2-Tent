@@ -82,13 +82,13 @@
 	                                        		</c:if>
 	                                        	</a>
 	                                        </td> --%>
-	                                        <td>${qna.qTitle}</td>
-	                                        <td>${qna.uNickName}</td>
+	                                        <td style="text-align: center;">${qna.qTitle}</td>
+	                                        <td style="text-align: center;">${qna.uNickName}</td>
 	                                        <c:set var="dateString" value="${qna.qInsertDate}" />
 											<fmt:parseDate var="date" value="${dateString}" pattern="yyyy-MM-dd HH:mm:ss" />
 											<fmt:formatDate var="formattedDate" value="${date}" type="date" pattern="yyyy년-MM월-dd일" />
-	                                        <td>${formattedDate}</td>
-	                                        <td>조회수</td>
+	                                        <td style="text-align: center;">${formattedDate}</td>
+	                                        <td style="text-align: center;">조회수</td>
 	                                    </tr>
                                     </c:forEach>
                                    <!-- board end -->
@@ -98,7 +98,9 @@
 						
                         </div>
                     </div>
-					<a href="qna_write_form.do"><input type="button" class="btn btn-primary btn-sm" value="게시글작성" /></a>
+                    <div style="text-align: right;">
+						<a href="qna_write_form.do"><input type="button" class="btn btn-secondary btn-sm" value="게시글작성" /></a>
+                    </div>
                 </div>
             </div>
             <%-- 
@@ -146,7 +148,7 @@
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp"/>
 	<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
-	<script src="js/shop/board.js?new" defer></script>
+	<script src="js/shop/board.js?after" defer></script>
 
 </body>
 
