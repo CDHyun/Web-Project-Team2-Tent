@@ -129,14 +129,14 @@
                                                 ${order.o_desc}
                                             </th>
                                             <td>
-                                                <fmt:formatDate value="${order.pcInsertDate}" pattern="yyyy-MM-dd"/>
+                                               <%--  <fmt:formatDate value="${order.pcInsertDate}" pattern="yyyy-MM-dd"/> --%>
                                             </td>
                                             <td>
                                                 ${order.pcStatus}
                                             </td>
-                                            <td>&#8361;<s:eval expression="new java.text.DecimalFormat('#,##0').format(order.pPrice)"/></td>
+                                            <td>${order.pPrice}</td>
                                             <td>
-			                                    <button type="button" class="btn btn-primary" data-toggle="modal" o_no="${order.o_no}" data-target="#order_detail_modal">
+			                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#order_detail_modal">
 						                            View
 						                        </button>
                                             </td>
@@ -193,10 +193,10 @@
 						                                <tbody id="orderer_info_body">
 						                                    <tr>
 						                                        <th scope="row">1</th>
-						                                        <td>Mark</td>
-						                                        <td>Otto</td>
-						                                        <td>@mdo</td>
-						                                        <td>@mdo</td>
+						                                        <td>${orderList.pcinsertDate}</td>
+						                                        <td>${orderList.uName}</td>
+						                                        <td>${orderList.uPhone}</td>
+						                                        <td>${orderList.uaAddress}</td>
 						                                    </tr>
 						                                </tbody>
 						                            </table>
@@ -227,9 +227,9 @@
 						                                <tbody id="item_info_body">
 						                                    <tr>
 						                                        <th scope="row">1</th>
-						                                        <td>Mark</td>
-						                                        <td>Otto</td>
-						                                        <td>@mdo</td>
+						                                        <td>${orderList.pfRealName}</td>
+						                                        <td>${PCQTY}</td>
+						                                        <td>${orderList.pPrice}</td>
 						                                    </tr>
 						                                    <tr>
 						                                        <th scope="row" colspan="4">total</th>
@@ -249,7 +249,7 @@
 	                    </div>
 	                    <div class="modal-footer">
 	                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	                        <button type="button" class="btn btn-primary" id="order_delete_btn" o_no="${order.o_no}">Delete</button>
+	                        <button type="button" class="btn btn-primary" id="order_delete_btn" o_no="${orderlist.pcNo}">Delete</button>
 	                    </div>
 	                </div>
 	            </div>

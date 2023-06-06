@@ -1,6 +1,5 @@
 package com.javalec.tent.dto;
 
-import java.sql.Timestamp;
 
 public class PurchaseDto {
 
@@ -30,8 +29,8 @@ public class PurchaseDto {
 	String pColor;						//상품 색
 	String pName;						// 상품명
 	String pBrandName;                  //상품 브랜드 이름
-	Timestamp pcInsertDate;             //상품 주문 날짜
-	Timestamp pcDeleteDate;		        //상품 주문 취소 날짜
+	String pcInsertDate;             //상품 주문 날짜
+	String pcDeleteDate;		        //상품 주문 취소 날짜
 	String pcStatus;                    //상품 주문 상태 
 	String pcDM;
 	
@@ -73,7 +72,7 @@ public class PurchaseDto {
 
 	
 
-	public PurchaseDto(String uid, int pCode, int pcQty, String pColor, Timestamp pcInsertDate, String pcDM) {
+	public PurchaseDto(String uid, int pCode, int pcQty, String pColor, String pcInsertDate, String pcDM) {
 		super();
 		this.uid = uid;
 		this.pCode = pCode;
@@ -84,24 +83,35 @@ public class PurchaseDto {
 	}
 
 
+	
+
+	
 
 
-
-	public PurchaseDto(String uid, int pCode, int pPrice, String pName, String pfRealName, String pfHoverRealName) {
+	public PurchaseDto(String uid, int pcNo, int pCode, int pPrice, int pcQty, String pColor, String pName,
+			String pcInsertDate, String pfRealName, String pfHoverRealName) {
 		super();
 		this.uid = uid;
+		this.pcNo = pcNo;
 		this.pCode = pCode;
 		this.pPrice = pPrice;
+		this.pcQty = pcQty;
+		this.pColor = pColor;
 		this.pName = pName;
+		this.pcInsertDate = pcInsertDate;
 		this.pfRealName = pfRealName;
 		this.pfHoverRealName = pfHoverRealName;
 	}
 
-
-	public PurchaseDto(String uid, int pcNo, int pCode, int pPrice, int pcQty, String pColor, String pName,
-			Timestamp pcInsertDate, String pfRealName, String pfHoverRealName) {
+	
+	
+	public PurchaseDto(String uid, String uName, String uPhone, String uaAddress, int pcNo, int pCode, int pPrice,
+			int pcQty, String pColor, String pName, String pcInsertDate, String pfRealName, String pfHoverRealName) {
 		super();
 		this.uid = uid;
+		this.uName = uName;
+		this.uPhone = uPhone;
+		this.uaAddress = uaAddress;
 		this.pcNo = pcNo;
 		this.pCode = pCode;
 		this.pPrice = pPrice;
@@ -294,22 +304,22 @@ public class PurchaseDto {
 	}
 
 
-	public Timestamp getPcInsertDate() {
+	public String getPcInsertDate() {
 		return pcInsertDate;
 	}
 
 
-	public void setPcInsertDate(Timestamp pcInsertDate) {
+	public void setPcInsertDate(String pcInsertDate) {
 		this.pcInsertDate = pcInsertDate;
 	}
 
 
-	public Timestamp getPcDeleteDate() {
+	public String getPcDeleteDate() {
 		return pcDeleteDate;
 	}
 
 
-	public void setPcDeleteDate(Timestamp pcDeleteDate) {
+	public void setPcDeleteDate(String pcDeleteDate) {
 		this.pcDeleteDate = pcDeleteDate;
 	}
 

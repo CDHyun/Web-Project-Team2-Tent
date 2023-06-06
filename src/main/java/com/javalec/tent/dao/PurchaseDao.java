@@ -194,9 +194,10 @@ public PurchaseDao() {
 
   		try {
   			connection = dataSource.getConnection();
-  			String query = "SELECT u.uid, p.pcNo, pc.pColor, p.pCode, p.pName, p.pPrice, pc.pcQty, pf.pfRealName, pf.pfHoverRealName, pc.pcInsertDate "
-  							+ "FROM purchase pc, product p, user u, productfile pf, productOption po " 
-  							+ "WHERE pc.pCode = p.pCode and pf.pCode = p.pCode and po.code = p.pcode and u.uid = pc.uid and u.uid = ?";
+  			String query = "SELECT u.uid, pc.pcNo, pc.pColor, p.pCode, p.pName, p.pPrice, pc.pcQty, pf.pfRealName, pf.pfHoverRealName, pc.pcInsertDate, u.uName, u.uPhone, ua.uaAddress " 
+  					+ "FROM purchase pc, product p, user u, productfile pf, productOption po, userAddress ua "
+  					+ "WHERE pc.pCode = p.pCode and pf.pCode = p.pCode and po.pCode = p.pCode and u.uid = pc.uid and u.uid = ua.uid and u.uid = ?";
+  			
   			preparedStatement = connection.prepareStatement(query);
   			preparedStatement.setString(1, uid);
   			resultSet = preparedStatement.executeQuery();
@@ -205,14 +206,17 @@ public PurchaseDao() {
   				int pCode = resultSet.getInt(2);
   				int pcNo = resultSet.getInt(3);
   				String pColor = resultSet.getString(4);
-  				String pName = resultSet.getString(4);
-  				int pPrice = resultSet.getInt(5);
-  				int pcQty = resultSet.getInt(6);
-  				String pfRealName = resultSet.getString(7);
- 				String pfHoverRealName = resultSet.getString(8);
- 				Timestamp insertDate = resultSet.getTimestamp(9);
+  				String pName = resultSet.getString(5);
+  				int pPrice = resultSet.getInt(6);
+  				int pcQty = resultSet.getInt(7);
+  				String pfRealName = resultSet.getString(8);
+ 				String pfHoverRealName = resultSet.getString(9);
+ 				String pcinsertDate = resultSet.getString(10);
+ 				String uName = resultSet.getString(11);
+ 				String uPhone = resultSet.getString(12);
+ 				String uaAddress = resultSet.getString(13);
  				
-  				PurchaseDto purchaseDto = new PurchaseDto(uid, pcNo, pCode, pPrice, pcQty, pColor, pName, insertDate, pfRealName, pfHoverRealName);
+  				PurchaseDto purchaseDto = new PurchaseDto(uid, uName, uPhone, uaAddress, pcNo, pCode, pPrice, pcQty, pColor, pName, pcinsertDate, pfRealName, pfHoverRealName);
   				dtos.add(purchaseDto);
   			}
 

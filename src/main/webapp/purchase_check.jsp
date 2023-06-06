@@ -95,10 +95,10 @@
                                                 <a href="#">${purchase.pName}</a>
                                             </td>
                                             <c:set var="item_tot_price" value="${PCQTY * purchase.pPrice}"></c:set>
-                                            <td>${item_tot_price}</td>
+                                            <td>${purchase.pPrice}</td>
                                            <td>${PCOLOR}</td>
                                             <td>${PCQTY}</td>
-                                            <td>${PCQTY * purchase.pPrice}</td>
+                                            <td>${item_tot_price}</td>
                                         </tr>
                                     </c:forEach> 
                                     </tbody>
