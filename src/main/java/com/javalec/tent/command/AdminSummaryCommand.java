@@ -50,7 +50,6 @@ public class AdminSummaryCommand implements TentCommand {
         }
         request.setAttribute("colors", data2.toString()); 
        
-        System.out.println(data1.toString());
         
         
         // 날짜별 매출
