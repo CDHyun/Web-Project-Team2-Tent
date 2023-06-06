@@ -44,13 +44,7 @@ public class AdminSummaryCommand implements TentCommand {
         }
         request.setAttribute("datas", data1.toString()); 
         
-        StringBuilder data2 = new StringBuilder();
-        for (AdminDto dto : dtos1) {
-        	data1.append(dto.getpColor()).append(",");
-        }
-        request.setAttribute("colors", data2.toString()); 
        
-        
         
         // 날짜별 매출
         ArrayList<AdminDto> dtos2 = dao.dailySale(startDate,endDate);
