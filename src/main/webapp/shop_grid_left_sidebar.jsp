@@ -1,3 +1,4 @@
+<%@page import="com.javalec.tent.dao.ProductDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
@@ -58,6 +59,37 @@
 </head>
 
 <body>
+<%
+	ProductDao productDao = new ProductDao();
+
+    int currentPage = 1; // 현재 페이지 번호
+    int pageSize = 9; // 페이지당 상품 수
+    int totalProducts = productDao.productCount(); // 전체 상품 수
+
+    // 전체 페이지 수 계산
+    int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+
+    // 페이지 번호가 파라미터로 전달될 경우, 현재 페이지로 설정
+    String pageParam = request.getParameter("page");
+    if (pageParam != null && !pageParam.isEmpty()) {
+        currentPage = Integer.parseInt(pageParam);
+    }
+
+    // 이전 페이지 및 다음 페이지 계산
+    int previousPage = currentPage - 1;
+    int nextPage = currentPage + 1;
+
+    // 이전 페이지가 1보다 작으면 1로 설정
+    if (previousPage < 1) {
+        previousPage = 1;
+    }
+
+    // 다음 페이지가 전체 페이지 수보다 크면 마지막 페이지로 설정
+    if (nextPage > totalPages) {
+        nextPage = totalPages;
+    }
+%>
+
     <!-- Preloader -->
     <div id="preloader">
         <div class="spinner-grow" role="status">
@@ -370,6 +402,34 @@
             </div>
         </div>
     </section>
+    
+    <!-- 페이징 표시 -->
+    <div class="shop_pagination_area mt-30">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination pagination-sm justify-content-center">
+                                <li class="page-item">
+                                    <a class="page-link" href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                                </li>
+								    <%-- 이전 페이지 링크 --%>
+								    <a href="?page=<%= previousPage %>">&laquo;</a>
+								
+								    <%-- 페이지 번호 표시 --%>
+								    <% for (int i = 1; i <= totalPages; i++) { %>
+								        <a href="?page=<%= i %>" <% if (i == currentPage) { %>class="active"<% } %>><%= i %></a>
+								    <% } %>
+								
+								    <%-- 다음 페이지 링크 --%>
+								    <a href="?page=<%= nextPage %>">&raquo;</a>
+                                <li class="page-item">
+                                    <a class="page-link" href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+    
+    
+    
+	
 
     <!-- Footer Area -->
  	<jsp:include page="common/include_common_bottom.jsp"/>

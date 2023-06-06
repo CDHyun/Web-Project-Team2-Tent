@@ -238,7 +238,7 @@
 									   		<c:if test="${address.uaNo > 1}">
 										    	<button type="button" class="btn btn-primary btn-sm" onclick="modifyModalOpen()">Modify</button>
 										    	<input type="hidden" id="d_uaNo" name="d_uaNo" value="${address.uaNo}">
-									      		<button type="button" class="btn btn-primary btn-sm delete-button" onclick="userDeleteAddress()">Delete</button>
+									      		<button type="button" class="btn btn-danger btn-sm delete-button" onclick="userDeleteAddress()">Delete</button>
 									   		</c:if>
 									    </td>
 									  </tr>

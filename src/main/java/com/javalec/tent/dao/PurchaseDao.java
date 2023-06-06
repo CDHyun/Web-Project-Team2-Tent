@@ -45,7 +45,7 @@ public PurchaseDao() {
  			preparedStatement.setString(1, uid);
  			resultSet = preparedStatement.executeQuery();
  			
- 			while (resultSet.next()) {
+ 			if(resultSet.next()) {
  				String uName = resultSet.getString(1);
  				String uPhone = resultSet.getString(2);
  				String uEmail = resultSet.getString(3);

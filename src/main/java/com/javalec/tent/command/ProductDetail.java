@@ -44,9 +44,12 @@ public class ProductDetail extends HttpServlet {
 		HttpSession session = request.getSession();
 		int pCode = Integer.parseInt(request.getParameter("pCode"));
 		ArrayList<ProductDto> productInfo = new ArrayList<ProductDto>();
+		ArrayList<ProductDto> colorList = new ArrayList<ProductDto>();
 		ProductDao productDao = new ProductDao();
 		productInfo = productDao.productDetail(pCode);
+		colorList = productDao.productColorList(pCode);
 		request.setAttribute("productInfo", productInfo);
+		request.setAttribute("colorList", colorList);
 		Gson gson = new Gson();
 		String json = gson.toJson(productInfo);
 		response.setContentType("application/json");

@@ -20,6 +20,14 @@ public class PurchaserInfoCommand implements TentCommand {
 			// TODO Auto-generated method stub
 			HttpSession session = request.getSession();
 			String uid = (String)session.getAttribute("SUID");
+			
+			int pCode = Integer.parseInt(request.getParameter("pCode"));
+			int pcQty = Integer.parseInt(request.getParameter("pcQty"));
+			String pColor = request.getParameter("pColor");
+			
+			System.out.println(pCode + "" + pcQty + "" + pColor + "도착");
+					
+			
 //			String uid = "donghyun"; //****
 			PurchaseDao dao = new PurchaseDao();
 			ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();

@@ -2245,6 +2245,20 @@ textarea:focus,
 .custom-control-input:checked ~ .custom-control-label.orange:before,
 .custom-control-label.orange:before {
   background-color: orange; }
+  
+.custom-control-input:checked ~ .custom-control-label.gray:before,
+.custom-control-label.gray:before {
+  background-color: gray; }
+  
+.custom-control-input:checked ~ .custom-control-label.beige:before,
+.custom-control-label.beige:before {
+  background-color: #F5F5DC;
+}
+  
+.custom-control-input:checked ~ .custom-control-label.khaki:before,
+.custom-control-label.khaki:before {
+  background-color: #556B2F; }
+  
 
 .shop_pagination_area {
   position: relative;

@@ -8,7 +8,7 @@
     <link rel="icon" href="img/core-img/favicon.jpg">
 
     <!-- Style CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?after">
     
     <!-- 주소검색 api -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

@@ -639,7 +639,7 @@
 								<ul class="user-meta-dropdown">
 									<li class="user-title"><span>Hello,&nbsp;</span>${SUNICKNAME}😉</li>
 									<li><a href="user_my_account.do">My Account</a></li>
-									<li><a href="order_list">Orders List</a></li>
+									<li><a href="purchase_list.do">Orders List</a></li>
 									<li><a href="wishlist_view">Wishlist</a></li>
 									<li><a href="logout.do"><i class="icofont-logout"></i>Logout</a></li>
 								</ul>

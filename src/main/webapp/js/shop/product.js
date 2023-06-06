@@ -137,7 +137,6 @@ $( ".slider-range" ).on( "slidechange", function( event, ui ) {
 
 /*
 상품 리스트 변경
-*/
 function changeProductList(pageno){
 	console.log(pageno);
 	let checkJson = setCheckCondition();
@@ -219,19 +218,18 @@ function changeProductList(pageno){
 					$(".row.justify-content-center").html(`<p>해당 조건의 상품이 존재하지 않습니다 😢</p>`);
 					$(".pagination.pagination-sm.justify-content-center").html("");
 				}
-				/*
 				window.scroll({
 				  top: 0,
 				  left: 0,
 				  behavior: 'smooth'
 				});
-				*/
 			}else{
 				Toast.fire({ icon: 'error', title: resultObj.errorMsg });
 			}
 		}
 	});
 }
+*/
 	
 /*
 선택 조건값을 저장 

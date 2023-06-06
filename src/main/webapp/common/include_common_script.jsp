@@ -18,4 +18,4 @@
 <script src="js/jquery.nice-select.min.js"></script>
 <script src="js/wow.min.js"></script>
 <script src="js/default/active.js"></script>
-<script src="js/shop/common.js"></script>
+<script src="js/shop/common.js?after"></script>
