@@ -100,6 +100,19 @@ $(".qna_btn.update_form").on("click", function(){
 	location.href = `qna_update_form?q_no=${q_no}&pageno=${pageno}`;
 });
 
+/*
+게시글 등록
+*/
+
+$(".qna_btn.new_write").on("click", function(){
+	if($("#q_title_txt").val() == "" || CKEDITOR.instances.q_content_area.getData() == ""){
+		Toast.fire({ icon: 'warning', title: "필수 입력값을 입력하지 않았습니다.\n 제목과 내용을 모두 입력해주세요" });
+		return;
+	}
+	$("#qna_write_form").attr("action", "qna_write.do");
+	$("#qna_write_form").submit();
+});
+
 /* 
 게시글 수정 
 */ 
@@ -123,7 +136,7 @@ $(".qna_btn.update").on("click", function(){
 */
 $(".qna_btn.write_form, .qna_btn.reply").on("click", function(){
 	let pageno = $(this).attr("pageno");
-	location.href = "qna_write_form?pageno=" + pageno;
+	location.href = "qna_write_form.do?pageno=" + pageno;
 });
 
 /*
@@ -132,20 +145,9 @@ $(".qna_btn.write_form, .qna_btn.reply").on("click", function(){
 $(".qna_btn.reply").on("click", function(){
 	let pageno = $(this).attr("pageno");
 	let q_no = $(this).attr("q_no");
-	location.href = `qna_reply_form?pageno=${pageno}&q_no=${q_no}`;
+	location.href = `qna_reply_form.do?pageno=${pageno}&q_no=${q_no}`;
 });
 
-/*
-게시글 등록
-*/
-$(".qna_btn.new_write").on("click", function(){
-	if($("#q_title_txt").val() == "" || CKEDITOR.instances.q_content_area.getData() == ""){
-		Toast.fire({ icon: 'warning', title: "필수 입력값을 입력하지 않았습니다.\n 제목과 내용을 모두 입력해주세요" });
-		return;
-	}
-	$("#qna_write_form").attr("action", "qna_new_write");
-	$("#qna_write_form").submit();
-});
 
 /*
 답글 등록

@@ -194,7 +194,7 @@
 	                                        <div class="input-form-group" style="display: flex; align-items: center;">
 												<c:set var="dateString" value="${user.uInsertDate}" />
 												<fmt:parseDate var="date" value="${dateString}" pattern="yyyy-MM-dd HH:mm:ss" />
-												<fmt:formatDate var="formattedDate" value="${date}" type="date" pattern="yyyy년-MM월-dd일" />
+												<fmt:formatDate var="formattedDate" value="${date}" type="date" pattern="yyyy-MM-dd" />
 	                                        	<input type="text" class="form-control" id="uInsertDate" name="uInsertDate" placeholder="join date" value="${formattedDate}" readonly="readonly">
 											</div>
 	                                    </div>

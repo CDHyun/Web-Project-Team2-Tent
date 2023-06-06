@@ -33,7 +33,7 @@
 		
 		function addToCart() {
 			var pCode = $("#pCode").val();
-			var pcQty = $("#qty").val();
+			var pcQty = $("#quantity").val();
 			var radios = document.getElementsByName('customRadio');
 		    var selectedValue = '';
 		    
@@ -64,7 +64,7 @@
 		
 		function buy() {
 			var pCode = $("#pCode").val();
-			var pcQty = $("#qty").val();
+			var pcQty = $("#quantity").val();
 			var radios = document.getElementsByName('customRadio');
 		    var selectedValue = '';
 		    
@@ -76,6 +76,7 @@
 		    }
 		    // 선택된 값 확인
 		    console.log(selectedValue);
+		    console.log(pcQty);
 		    var pColor = selectedValue;
 		    if(pColor == "") {
 		    	Toast.fire({ icon: 'warning', title: "색상을 선택해주세요." });
@@ -87,6 +88,20 @@
 					window.location.href = url;
 				}
 			});
+		  }
+		
+		function increaseQuantity() {
+		    var quantityInput = document.getElementById("quantity");
+		    var currentQuantity = parseInt(quantityInput.value);
+		    quantityInput.value = currentQuantity + 1;
+		  }
+
+		  function decreaseQuantity() {
+		    var quantityInput = document.getElementById("quantity");
+		    var currentQuantity = parseInt(quantityInput.value);
+		    if (currentQuantity > 0) {
+		      quantityInput.value = currentQuantity - 1;
+		    }
 		  }
 
 	</script>
@@ -240,13 +255,16 @@
                         </div>
 
 						<!-- Add to Cart/Buy Form -->
-                        <form class="cart clearfix my-5 d-flex flex-wrap align-items-center" method="post">
-                            <div class="quantity">
-                                <input type="number" class="qty-text form-control" id="qty" step="1" min="1" max="12" name="qty" value="1">
+                            <div class="form-group">
+                            	<div class="input-form-group" style="display: flex; align-items: center;">
+	                            	<button type="button" id="plusQtyBtn" class="btn btn-dark btn-sm" onclick="decreaseQuantity()">-</button>&nbsp;&nbsp;
+	                            	<input type="text" id="quantity" name="quantity" class="form-control" style="width: 45px" value="1" min="1" max="10" readonly="readonly">&nbsp;&nbsp;
+	                            	<button type="button" id="minusQtyBtn" class="btn btn-dark btn-sm" onclick="increaseQuantity()">+</button>
+                            	</div>
+                            	<br/>
+                            	<button type="button" id="cartBtn" name="cartBtn" value="5" class="btn btn-primary btn-sm" onclick="addToCart()">Add to cart</button>&nbsp;&nbsp;&nbsp;
+                            	<button type="button" id="buyBtn" name="buyBtn" value="5" class="btn btn-primary btn-sm" onclick="buy()">Buy</button>
                             </div>
-                            <button type="button" id="cartBtn" name="cartBtn" value="5" class="btn btn-primary mt-1 mt-md-0 ml-1 ml-md-3" onclick="addToCart()">Add to cart</button>
-                            <button type="button" id="buyBtn" name="buyBtn" value="5" class="btn btn-primary mt-1 mt-md-0 ml-1 ml-md-3" onclick="buy()">Buy</button>
-                        </form>
 
                         <!-- Others Info -->
                         <div class="others_info_area mb-3 d-flex flex-wrap">

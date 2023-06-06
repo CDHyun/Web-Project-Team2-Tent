@@ -3,8 +3,6 @@
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>	
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="toDay" class="java.util.Date" />
-<fmt:formatDate var="to_date" value='${toDay}' pattern='yyyy-MM-dd' />
-<fmt:formatDate var="q_date" value='${qna.q_date}' pattern='yyyy-MM-dd' />
 
 <!doctype html>
 <html lang="en">
@@ -73,20 +71,24 @@
                                 <tbody id="qna_list_tbody">
                                 
                                 	<!-- board start -->
-                                	<c:forEach var="qna" items="${qnaList.itemList}">
+                                	<c:forEach var="qna" items="${qnaList}">
 	                                    <tr>
-	                                        <th scope="row">${qna.q_no}</th>
-	                                        <td>
+	                                        <th scope="row">${qna.qNo}</th>
+	                                        <%-- <td>
 	                                        	<a href="qna_view?q_no=${qna.q_no}&pageno=${qnaList.pageMaker.curPage}">
 	                                        		${qna.q_title}
-	                                        		<c:if test="${to_date eq qna.q_date}">
+	                                        		<c:if test="${to_date eq qna.InsertDate}">
 	                                        			&nbsp;&nbsp;<span class="badge badge-danger">new</span>
 	                                        		</c:if>
 	                                        	</a>
-	                                        </td>
-	                                        <td>${qna.m_id}</td>
-	                                        <td>${qna.q_date}</td>
-	                                        <td>${qna.q_count}</td>
+	                                        </td> --%>
+	                                        <td>${qna.qTitle}</td>
+	                                        <td>${qna.uNickName}</td>
+	                                        <c:set var="dateString" value="${qna.qInsertDate}" />
+											<fmt:parseDate var="date" value="${dateString}" pattern="yyyy-MM-dd HH:mm:ss" />
+											<fmt:formatDate var="formattedDate" value="${date}" type="date" pattern="yyyy년-MM월-dd일" />
+	                                        <td>${formattedDate}</td>
+	                                        <td>조회수</td>
 	                                    </tr>
                                     </c:forEach>
                                    <!-- board end -->
@@ -96,10 +98,10 @@
 						
                         </div>
                     </div>
-					<input type="button" class="qna_btn write_form" pageno="${pageno}" value="게시글작성" />
+					<a href="qna_write_form.do"><input type="button" class="btn btn-primary btn-sm" value="게시글작성" /></a>
                 </div>
             </div>
-            
+            <%-- 
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-9">
                     <!-- Shop Pagination Area -->
@@ -131,7 +133,7 @@
                     </div>
                 </div>
             </div>
-            
+             --%>
             
             
          </div>
@@ -144,7 +146,7 @@
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp"/>
 	<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
-	<script src="js/shop/board.js" defer></script>
+	<script src="js/shop/board.js?new" defer></script>
 
 </body>
 

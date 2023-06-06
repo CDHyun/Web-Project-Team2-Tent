@@ -511,7 +511,7 @@
 									<li><a onclick="emptySessionUser()">Board</a></li>
 								</c:if>
 								<c:if test="${!empty SUID}">
-									<li><a href="qna_list">Board</a></li>
+									<li><a href="qna_list.do">Board</a></li>
 								</c:if>
 
 							</ul>
