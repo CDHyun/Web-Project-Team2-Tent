@@ -83,9 +83,18 @@ public class PurchaseDto {
 	}
 
 
-	
 
-	
+	public PurchaseDto(String uid, int pCode, int pPrice, String pName, String pcStatus, String pfRealName,
+			String pfHoverRealName) {
+		super();
+		this.uid = uid;
+		this.pCode = pCode;
+		this.pPrice = pPrice;
+		this.pName = pName;
+		this.pcStatus = pcStatus;
+		this.pfRealName = pfRealName;
+		this.pfHoverRealName = pfHoverRealName;
+	}
 
 
 	public PurchaseDto(String uid, int pcNo, int pCode, int pPrice, int pcQty, String pColor, String pName,

@@ -96,7 +96,7 @@
                                             </td>
                                             <c:set var="item_tot_price" value="${PCQTY * purchase.pPrice}"></c:set>
                                             <td>${purchase.pPrice}</td>
-                                           <td>${PCOLOR}</td>
+                                            <td>${PCOLOR}</td>
                                             <td>${PCQTY}</td>
                                             <td>${item_tot_price}</td>
                                         </tr>

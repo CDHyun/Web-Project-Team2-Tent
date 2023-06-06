@@ -3,7 +3,6 @@ package com.javalec.tent.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import javax.naming.Context;
@@ -119,7 +118,7 @@ public PurchaseDao() {
 
  		try {
  			connection = dataSource.getConnection();
- 			String query = "SELECT u.uid, p.pCode, p.pName, p.pPrice, pf.pfRealName, pf.pfHoverRealName "
+ 			String query = "SELECT u.uid, p.pCode, p.pName, p.pPrice, pf.pfRealName, pf.pfHoverRealName, pc.pcStatus "
  							+ "FROM product p, user u, productfile pf, purchase pc " 
  							+ "WHERE pf.pCode = p.pCode and pc.pCode = p.pCode and u.uid = ? ";
  			preparedStatement = connection.prepareStatement(query);
@@ -132,7 +131,8 @@ public PurchaseDao() {
  				int pPrice = resultSet.getInt(4);
  				String pfRealName = resultSet.getString(5);
 				String pfHoverRealName = resultSet.getString(6);
- 				PurchaseDto purchaseDto = new PurchaseDto(uid, pCode, pPrice, pName, pfRealName, pfHoverRealName);
+				String pcStatus = resultSet.getString(7);
+ 				PurchaseDto purchaseDto = new PurchaseDto(uid, pCode, pPrice, pName, pcStatus, pfRealName, pfHoverRealName);
  				dtos.add(purchaseDto);
  			}
 
