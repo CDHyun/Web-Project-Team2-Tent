@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>	
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="en">
 
@@ -61,7 +62,10 @@
                                     <tr>
                                         <th scope="col" class="board_title">${board.bTitle}</th>
                                         <th scope="col" class="board_writer">${board.uNickName}</th>
-                                        <th scope="col" class="board_date">${board.bInsertDate}</th>
+                                        	<c:set var="dateString" value="${board.bInsertDate}" />
+									        <fmt:parseDate var="date" value="${dateString}" pattern="yyyy-MM-dd HH:mm:ss" />
+									        <fmt:formatDate var="formattedDate" value="${date}" type="date" pattern="yyyy년-MM월-dd일 HH시:mm분" />
+                                        <th scope="col" class="board_date">${formattedDate}</th>
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -121,34 +121,70 @@
                 </div>
             </div>
              
-             <div class="shop_pagination_area mt-30">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination pagination-sm justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                        <li class="page-item"><a class="page-link" href="#">5</a></li>
-                        <li class="page-item"><a class="page-link" href="#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#">8</a></li>
-                        <li class="page-item"><a class="page-link" href="#">9</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+             
+             <!-- PageMaker -->
+    
+<div class="shop_pagination_area mt-30">
+    <nav aria-label="Page navigation">
+        <ul class="pagination pagination-sm justify-content-center">
+            <c:if test="${pageMaker.page > 1}">
+                <li class="page-item">
+                    <a class="page-link" href="board_list.do?pageNo=1"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="board_list.do?pageNo=${pageMaker.page - 1}"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                </li>
+            </c:if>
+            <c:set var="halfDisplayPage" value="${Math.floor(pageMaker.displayPage/2)}" />
+            <c:set var="startPage" value="${pageMaker.page - halfDisplayPage}" />
+            <c:set var="endPage" value="${pageMaker.page + halfDisplayPage}" />
+            <c:if test="${startPage lt 1}">
+                <c:set var="startPage" value="1" />
+                <c:set var="endPage" value="${pageMaker.displayPage}" />
+            </c:if>
+            <c:if test="${endPage gt pageMaker.totalPage}">
+                <c:set var="endPage" value="${pageMaker.totalPage}" />
+                <c:set var="startPage" value="${pageMaker.totalPage - pageMaker.displayPage + 1}" />
+            </c:if>
+            <c:forEach var="pageNum" begin="${startPage}" end="${endPage}" >
+                <c:choose>
+                    <c:when test="${pageNum eq pageMaker.page}">
+                        <li class="page-item active"><a class="page-link" href="board_list.do?pageNo=${pageNum}">${pageNum}</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item"><a class="page-link" href="board_list.do?pageNo=${pageNum}">${pageNum}</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+            <c:if test="${pageMaker.next}">
+                <li class="page-item">
+                    <a class="page-link" href="board_list.do?pageNo=${pageMaker.page + 1}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="board_list.do?pageNo=${pageMaker.totalPage}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                </li>
+            </c:if>
+        </ul>
+    </nav>
+</div>
+
+
+
+
+
+
+<!--  -->
+
+
+            
              
          </div>
     </div>     
     
     <!-- signUpModal Start -->
 	<div class="modal" id="boardWriteModal" tabindex="-1" role="dialog">
-		<div class="modal-dialog modal-fullsize" role="document">
-			<div class="modal-content modal-fullsize">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content modal-xl">
 				<div class="row">
 	                <div class="col-12">
 	                    <div class="shortcodes_title mb-30">
