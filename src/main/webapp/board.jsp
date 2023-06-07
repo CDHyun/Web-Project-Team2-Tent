@@ -80,6 +80,21 @@
                     <div class="shortcodes_title mb-30">
                         <h4>Board</h4>
                     </div>
+                    
+                    <div class="pretty-search-form">
+					  <form action="board_list.do" method="get">
+					    <div class="input-group">
+					      <input type="search" class="form-control" name="queryContent" placeholder="Search">
+					      <div class="input-group-append">
+					        <button type="submit" class="btn btn-secondary btn-sm">
+					          <i class="fa fa-search" style="width: 100%; height: 100% font-size: 30px;"></i>
+					        </button>
+					      </div>
+					    </div>
+					  </form>
+					</div>
+
+                    
                     <div class="shortcodes_content">
                         <div class="table-responsive">
                             <table class="table mb-0 table-bordered">
@@ -97,16 +112,16 @@
                                 	<!-- board start -->
 									<c:forEach var="board" items="${boardList}">
 									    <tr>
-									        <th scope="row" style="text-align: center;">${board.bNo}</th>
-									        <td style="text-align: center;">
+									        <th scope="row" style="text-align: center; vertical-align: middle;">${board.bNo}</th>
+									        <td style="text-align: center; vertical-align: middle;">
 									            <a href="board_detail.do?bNo=${board.bNo}">${board.bTitle}</a>
 									        </td>
-									        <td style="text-align: center;">${board.uNickName}</td>
+									        <td style="text-align: center; vertical-align: middle;">${board.uNickName}</td>
 									        <c:set var="dateString" value="${board.bInsertDate}" />
 									        <fmt:parseDate var="date" value="${dateString}" pattern="yyyy-MM-dd HH:mm:ss" />
 									        <fmt:formatDate var="formattedDate" value="${date}" type="date" pattern="yyyy년-MM월-dd일" />
-									        <td style="text-align: center;">${formattedDate}</td>
-									        <td style="text-align: center;">${board.bViewCount}</td>
+									        <td style="text-align: center; vertical-align: middle;">${formattedDate}</td>
+									        <td style="text-align: center; vertical-align: middle;">${board.bViewCount}</td>
 									    </tr>
 									</c:forEach>
                                    <!-- board end -->
@@ -135,35 +150,31 @@
                     <a class="page-link" href="board_list.do?pageNo=${pageMaker.page - 1}"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
                 </li>
             </c:if>
-            <c:set var="halfDisplayPage" value="${Math.floor(pageMaker.displayPage/2)}" />
-            <c:set var="startPage" value="${pageMaker.page - halfDisplayPage}" />
-            <c:set var="endPage" value="${pageMaker.page + halfDisplayPage}" />
-            <c:if test="${startPage lt 1}">
-                <c:set var="startPage" value="1" />
-                <c:set var="endPage" value="${pageMaker.displayPage}" />
-            </c:if>
-            <c:if test="${endPage gt pageMaker.totalPage}">
-                <c:set var="endPage" value="${pageMaker.totalPage}" />
-                <c:set var="startPage" value="${pageMaker.totalPage - pageMaker.displayPage + 1}" />
-            </c:if>
-            <c:forEach var="pageNum" begin="${startPage}" end="${endPage}" >
-                <c:choose>
-                    <c:when test="${pageNum eq pageMaker.page}">
-                        <li class="page-item active"><a class="page-link" href="board_list.do?pageNo=${pageNum}">${pageNum}</a></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li class="page-item"><a class="page-link" href="board_list.do?pageNo=${pageNum}">${pageNum}</a></li>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
+<c:set var="halfDisplayPage" value="${Math.floor(pageMaker.displayPage/2)}" />
+<c:set var="startPage" value="${pageMaker.page - halfDisplayPage}" />
+<c:set var="endPage" value="${pageMaker.page + halfDisplayPage}" />
+
+<c:if test="${startPage lt 1}">
+    <c:set var="startPage" value="1" />
+</c:if>
+<c:if test="${endPage gt pageMaker.totalPage}">
+    <c:set var="endPage" value="${pageMaker.totalPage}" />
+</c:if>
+
+<c:forEach var="pageNum" begin="${startPage}" end="${endPage}" step="1">
+    <li class="page-item ${pageNum eq pageMaker.page ? 'active' : ''}">
+        <a class="page-link" href="board_list.do?pageNo=${pageNum}">${pageNum}</a>
+    </li>
+</c:forEach>
+
             <c:if test="${pageMaker.next}">
-                <li class="page-item">
-                    <a class="page-link" href="board_list.do?pageNo=${pageMaker.page + 1}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="board_list.do?pageNo=${pageMaker.totalPage}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
-                </li>
-            </c:if>
+			    <li class="page-item">
+			        <a class="page-link" href="board_list.do?pageNo=${pageMaker.page + 1}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+			    </li>
+			    <li class="page-item">
+			        <a class="page-link" href="board_list.do?pageNo=${pageMaker.totalPage}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+			    </li>
+			</c:if>
         </ul>
     </nav>
 </div>

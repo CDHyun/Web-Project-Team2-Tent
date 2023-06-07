@@ -60,12 +60,13 @@
                             <table class="table mb-0 table-bordered">
                                 <thead>
                                     <tr>
-                                        <th scope="col" class="board_title">${board.bTitle}</th>
-                                        <th scope="col" class="board_writer">${board.uNickName}</th>
+                                        <th scope="col" class="board_title" style="vertical-align: middle;">${board.bTitle}</th>
+                                        <th scope="col" class="board_writer" style="vertical-align: middle;">${board.uNickName}</th>
                                         	<c:set var="dateString" value="${board.bInsertDate}" />
 									        <fmt:parseDate var="date" value="${dateString}" pattern="yyyy-MM-dd HH:mm:ss" />
-									        <fmt:formatDate var="formattedDate" value="${date}" type="date" pattern="yyyy년-MM월-dd일 HH시:mm분" />
-                                        <th scope="col" class="board_date">${formattedDate}</th>
+									        <fmt:formatDate var="formattedDate" value="${date}" type="date" pattern="yyyy년-MM월-dd일" />
+									        <fmt:formatDate var="formattedDate2" value="${date}" type="date" pattern="HH시:mm분" />
+                                        <th scope="col" class="board_date" style="vertical-align: middle;">${formattedDate}<br/>${formattedDate2}</th>
                                     </tr>
                                 </thead>
                                 <tbody>

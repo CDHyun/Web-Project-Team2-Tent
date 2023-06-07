@@ -138,7 +138,7 @@ public class BoardDao {
 	                + "SELECT derivedTable.*, ROW_NUMBER() OVER () AS row_num FROM ("
 	                + "SELECT bNo, uid, uNickName, bCgNo, bTitle, bContent, bInsertDate, bViewCount "
 	                + "FROM board "
-	                + "WHERE bDeleted = 0 AND bTitle LIKE ? AND bContent LIKE ?"
+	                + "WHERE bDeleted = 0 AND bTitle LIKE ? or bContent LIKE ?"
 	                + ") AS derivedTable"
 	                + ") AS finalResult "
 	                + "WHERE row_num >= ? AND row_num <= ?";

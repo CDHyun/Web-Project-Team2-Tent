@@ -75,3 +75,35 @@ th {
   min-height: 100%;
   border-radius: 0; 
 }
+
+.pretty-search-form .input-group {
+  position: relative;
+  width: 300px;
+}
+
+.pretty-search-form input[type="search"] {
+  height: 48px;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.pretty-search-form .input-group-append .btn-search {
+  background-color: #f8f9fa;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.pretty-search-form .btn-search i {
+  color: #888;
+}
+
+.pretty-search-form .btn-search:hover i {
+  color: #333;
+}

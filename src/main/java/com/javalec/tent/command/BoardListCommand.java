@@ -42,6 +42,7 @@ public class BoardListCommand implements TentCommand {
         }
         BoardPageMaker boardPageMaker = new BoardPageMaker();
         String queryContent = request.getParameter("queryContent");
+        System.out.println("받은 검색 데이터 : " + queryContent);
         int totalCount = boardDao.boardCount(queryContent);
         boardPageMaker.setPage(pageNo);
         boardPageMaker.setTotalCount(totalCount);

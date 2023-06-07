@@ -519,8 +519,7 @@
 					</div>
 
 					<!-- Hero Meta -->
-					<div
-						class="hero_meta_area ml-auto d-flex align-items-center justify-content-end">
+					<div class="hero_meta_area ml-auto d-flex align-items-center justify-content-end">
 						<!-- Search -->
 						<div class="search-area">
 							<div class="search-btn">
