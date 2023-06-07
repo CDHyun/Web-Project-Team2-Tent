@@ -15,7 +15,7 @@ public class QuestionListCommand implements TentCommand {
 		
 		ArrayList<QuestionDto> qnaList = new ArrayList<QuestionDto>();
 		QuestionDao questionDao = new QuestionDao();
-		qnaList = questionDao.qnaList();
+		qnaList = questionDao.questionList();
 		request.setAttribute("qnaList", qnaList);
 
 	}

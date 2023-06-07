@@ -20,6 +20,9 @@ import com.javalec.tent.command.AdminPurchaseStatusCommand;
 import com.javalec.tent.command.AdminStatusChangeCommand;
 import com.javalec.tent.command.AdminSummaryCommand;
 import com.javalec.tent.command.AdminUpdateCommand;
+import com.javalec.tent.command.BoardDetailCommand;
+import com.javalec.tent.command.BoardListCommand;
+import com.javalec.tent.command.BoardWriteCommand;
 import com.javalec.tent.command.QuestionListCommand;
 import com.javalec.tent.command.QuestionWriteCommand;
 import com.javalec.tent.command.CartCommand;
@@ -132,6 +135,24 @@ public class HomeController extends HttpServlet {
 			command = new QuestionWriteCommand();
 			command.execute(request, response);
 			viewPage = "question_list.do";
+			break;
+		case "/board_list.do":
+			command = new BoardListCommand();
+			command.execute(request, response);
+			viewPage = "board.jsp";
+			break;
+		case "/board_write_form.do":
+			viewPage = "board_write_form.jsp";
+			break;
+		case "/board_write.do":
+			command = new BoardWriteCommand();
+			command.execute(request, response);
+			viewPage = "board_list.do";
+			break;
+		case "/board_detail.do":
+			command = new BoardDetailCommand();
+			command.execute(request, response);
+			viewPage = "board_detail.jsp";
 			break;
 		case "/adminindex.do":  // 상품보여주기
 			command = new AdminCommand();

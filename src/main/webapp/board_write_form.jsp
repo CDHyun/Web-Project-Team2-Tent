@@ -74,30 +74,30 @@
             <div class="row">
                 <div class="col-12">
                     <div class="shortcodes_title mb-30">
-                        <h4>QnA Write</h4>
+                        <h4>Board Write</h4>
                     </div>
                     <div class="shortcodes_content">
                         <div class="table-responsive">
-                        	<form action="qna_write.do" id="qna_write_form" name="qna_write_form" method="post">
+                        	<form action="board_write.do" id="board_write_form" name="board_write_form" method="post">
 	                            <table class="table mb-0 table-bordered">
 	                                <thead>
 	                                    <tr>
 	                                        <th scope="col" class="board_title">
-	                                        	<input type="text" name="qTitle" id="q_title_txt" placeholder=" title" style="vertical-align: middle;"/>
+	                                        	<input type="text" name="bTitle" id="b_title_txt" placeholder=" title" style="vertical-align: middle;"/>
 	                                        </th>
 	                                        <th scope="col" class="board_date" style="vertical-align: middle;"><fmt:formatDate value='${toDay}' pattern='yyyy-MM-dd' /></th>
 	                                        <th scope="col" class="board_writer" style="vertical-align: middle;">${SUNICKNAME}</th>
 	                                        <th scope=col class="board_writer" style="vertical-align: middle;">
-	                                        	<select name="qCgNo" style="vertical-align: middle;">
-	                                        		<option value="1">문의</option>
+	                                        	<select name="bCgNo" style="vertical-align: middle;">
+	                                        		<option value="1">잡담</option>
 	                                        	</select>
 	                                        </th>
 	                                    </tr>
 	                                </thead>
 	                                <tbody>
 	                                    <tr>
-	                                        <td id="qna_content_td" colspan="4">
-	                                        	<textarea name="qContent" id="q_content_area" placeholder=" content"></textarea>
+	                                        <td id="board_content_td" colspan="4">
+	                                        	<textarea name="bContent" id="b_content_area" placeholder=" content"></textarea>
 	                                        </td>
 	                                    </tr>
 	                                </tbody>
@@ -108,9 +108,9 @@
                         </div>
                     </div>
                     	<div id="qna_btn_container">
-							<input class="qna_btn" type="button" value="등록"/>
-							<input class="qna_btn new_write" type="button" value="등록"/>
-							<input class="qna_btn list" type="button" pageno="${pageno}" value="목록" />
+							<input class="board_btn" type="button" value="등록"/>
+							<input class="board_btn new_write" type="button" value="등록"/>
+							<input class="board_btn list" type="button" pageno="${pageno}" value="목록" />
                     	</div>
                 </div>
             </div>
@@ -125,7 +125,7 @@
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp"/>
 	<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
-	<script src="js/shop/board.js?after"></script>
+	<script src="js/shop/board.js"></script>
 
 </body>
 

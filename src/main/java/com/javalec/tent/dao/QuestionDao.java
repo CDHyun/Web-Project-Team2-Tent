@@ -37,7 +37,7 @@ public class QuestionDao {
 		}
 	}
 	
-	public ArrayList<QuestionDto> qnaList(){
+	public ArrayList<QuestionDto> questionList(){
 		ArrayList<QuestionDto> qnaList = new ArrayList<QuestionDto>();
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -108,7 +108,6 @@ public class QuestionDao {
 				e.printStackTrace();
 			}
 		}
-		
 		return result;
 	}
 	
