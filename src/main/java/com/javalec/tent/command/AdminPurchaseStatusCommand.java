@@ -18,10 +18,7 @@ public class AdminPurchaseStatusCommand implements TentCommand {
 		ArrayList<AdminDto> dtos = dao.purchaseCheck();
 		request.setAttribute("check", dtos);
 		
-//		for (AdminDto dto : dtos) {
-//		    System.out.println(dto.getPcNo());
-//		}
-//		
+	
 
 	}
 
