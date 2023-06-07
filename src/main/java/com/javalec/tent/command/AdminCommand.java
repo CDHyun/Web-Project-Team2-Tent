@@ -18,7 +18,6 @@ public class AdminCommand implements TentCommand {
 		String queryContent = request.getParameter("content");
 		
 		
-		
 		//페이징 처리
 		 String vpage = request.getParameter("vpage");
 		    if(vpage==null){
@@ -45,6 +44,8 @@ public class AdminCommand implements TentCommand {
 			request.setAttribute("list", dtos);
 			
 			
+			
+		
 	}		
 
 }
