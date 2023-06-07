@@ -44,7 +44,7 @@
   <jsp:include page="/adminSidebar.jsp" />
 </div>
 <!-- Header End -->
-
+<h3 class="content">상품조회</h3><br/><br/>
 <form action="adminindex.do" method="get" class="content">
   검색 선택 :
   <select name="query">

@@ -14,12 +14,8 @@ public class AdminStatusChangeCommand implements TentCommand {
 		
 		int pcStatus = Integer.parseInt( request.getParameter("status"));
 		int pcNo = Integer.parseInt( request.getParameter("pcNo"));
+	
 		
-		//pcNo를 받는법을 모르겠다.
-		
-		
-		System.out.println("pcStatus : "+pcStatus);
-		System.out.println("pcNo : "+pcNo);  //1고정 ?
 		
 		
 		

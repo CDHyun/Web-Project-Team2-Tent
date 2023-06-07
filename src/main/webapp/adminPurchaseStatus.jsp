@@ -50,8 +50,8 @@
         <jsp:include page="/adminSidebar.jsp" />
     </div>
     <!-- Header End -->
-
-        <table border="">
+<h2 class="content">주문 처리 시스템</h2>
+        <table border="" class="content">
         <tr>
             <th>구매번호</th>
             <th>구매자</th>
@@ -60,7 +60,7 @@
             <th>수량</th>
             <th>주문날짜</th>
             <th>상태</th>
-            <th width="5px">확인</th>
+            <th></th>
         </tr>
         <c:forEach items="${check}" var="dto">
     <form action="adminStatusChange.do" method="post"  class="content">
@@ -82,7 +82,7 @@
            		      <option value="2" ${dto.pcStatus == 2 ? 'selected' : ''}>배송완료</option>
             		</select>
         		</td>
-        		<td><input type="submit" value="확인" class="content2" size="5"></td>
+        		<td><input type="submit" value="확인" class="btn btn-info" size="5"></td>
     		</tr>
     </form>
 		</c:forEach>

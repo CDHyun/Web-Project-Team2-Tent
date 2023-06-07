@@ -55,6 +55,8 @@
     <jsp:include page="/adminSidebar.jsp" />
   </div>
   <!-- Header End -->
+  
+  <h3 class="content2">상품등록</h3><br/><br/>
 <div class="card content2" style="width: 40rem;" >
 	<img alt="no image" src="./img/core-img/logo.png" class="content3">
   <form action="adminInsert.do" method="post" enctype="multipart/form-data" class="content">
