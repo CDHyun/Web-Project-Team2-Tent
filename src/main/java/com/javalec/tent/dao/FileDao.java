@@ -25,17 +25,19 @@ public class FileDao {
 	
 	
 	//파일업로드메서드
-	public void upload(String fileName, String fileRealName, String pCode) {
+	public void upload(String fileName, String fileRealName,String hoverName,String hoverRealName, String pCode) {
 	    Connection connection = null;
 	    PreparedStatement preparedStatement = null;
 
 	    try {
 	        connection = dataSource.getConnection();
-	        String query = "INSERT INTO productfile (pfName, pfRealName, pCode) SELECT ?, ?, ? FROM product limit 1";
+	        String query = "INSERT INTO productfile (pfName, pfRealName,pfHoverName,pfHoverRealName, pCode) SELECT ?, ?, ?,?,? FROM product limit 1";
 	        preparedStatement = connection.prepareStatement(query);
 	        preparedStatement.setString(1, fileName);
 	        preparedStatement.setString(2, fileRealName);
-	        preparedStatement.setInt(3, Integer.parseInt(pCode));
+	        preparedStatement.setString(3, hoverName);
+	        preparedStatement.setString(4, hoverRealName);
+	        preparedStatement.setInt(5, Integer.parseInt(pCode));
 	        preparedStatement.executeUpdate();
 	    } catch (Exception e) {
 	        e.printStackTrace();

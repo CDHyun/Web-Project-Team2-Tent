@@ -16,6 +16,8 @@ public class AdminDto {
 	String cgName;
 	String pColor;
 	int pStock;
+	String pfHoverName;
+	String pfHoverRealName;
 	
 	// 주문처리에 필요한 변수
 	int pcNo;
@@ -472,6 +474,26 @@ public class AdminDto {
 
 	public void setTotal(int total) {
 		this.total = total;
+	}
+
+
+	public String getPfHoverName() {
+		return pfHoverName;
+	}
+
+
+	public void setPfHoverName(String pfHoverName) {
+		this.pfHoverName = pfHoverName;
+	}
+
+
+	public String getPfHoverRealName() {
+		return pfHoverRealName;
+	}
+
+
+	public void setPfHoverRealName(String pfHoverRealName) {
+		this.pfHoverRealName = pfHoverRealName;
 	}
 
 	
