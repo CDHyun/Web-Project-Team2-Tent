@@ -23,7 +23,7 @@ DataSource dataSource;
 	public CartDao() {
 		try {
 			Context context = new InitialContext();
-			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/Tent");
+			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/tent");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -38,7 +38,7 @@ DataSource dataSource;
 	
 		try {
 			connection = dataSource.getConnection();
-			String query = " select c.cNo, p.pCode, p.pName, p.pBrandName, p.pPrice, c.cQty, po.pColor, pf.pfName from user u, cart c,  product p , productFile pf , productOption po  where u.uid = c.uid and c.pCode = p.pCode and po.pCode = p.pCode and po.pCode = p.pCode and pf.pCode = p.pCode and  u.uid ='tjsgh' order by p.pCode";
+			String query = " select c.cNo, p.pCode, p.pName, p.pBrandName, p.pPrice, c.cQty, po.pColor, pf.pfName from user u, cart c,  product p , productFile pf , productOption po  where u.uid = c.uid and c.pCode = p.pCode and po.pCode = p.pCode and and pf.pCode = p.pCode and  u.uid = ? order by p.pCode";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, uid);
 			resultSet = preparedStatement.executeQuery();
@@ -110,8 +110,9 @@ DataSource dataSource;
 			//String query =" update cart c join product p on c.pCode = p.pCode set c.cQty = c.cQty + 2 where c.uid = 'tjsgh' and c.pCode = 1";
 					
 			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, uid);
-			preparedStatement.setInt(2, pCode);
+			preparedStatement.setInt(1, cQty);
+			preparedStatement.setString(2, uid);
+			preparedStatement.setInt(3, pCode);
 			
 			preparedStatement.executeUpdate();
 			
