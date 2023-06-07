@@ -1,0 +1,33 @@
+
+/*
+댓글 등록
+*/
+$(".comment_btn.new_write").on("click", function(){
+	if(CKEDITOR.instances.cm_content_area.getData() == ""){
+		Toast.fire({ icon: 'warning', title: "필수 입력값을 입력하지 않았습니다.\n 제목과 내용을 모두 입력해주세요" });
+		return;
+	}
+	$('#parrentCommentWriteModal').modal('hide');
+	/*$("#parent_comment_form").attr("action", "parent_comment_write.do"); */
+	$("#parent_comment_form").submit();
+});
+
+
+/*
+ckeditor
+*/
+$(() => {
+	if($("#cm_content_area").length != 0){
+		 CKEDITOR.replace('cm_content_area', {
+						height: 500                                                  
+                 	});
+	}
+});
+$(() => {
+	if($("#child_content_area").length != 0){
+		 CKEDITOR.replace('cm_content_area', {
+						height: 500                                                  
+                 	});
+	}
+});
+

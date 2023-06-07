@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>	
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<jsp:useBean id="toDay" class="java.util.Date" />
+
 <!doctype html>
 <html lang="en">
 
@@ -16,6 +19,14 @@
 	<jsp:include page="common/include_common_top.jsp"/>
     <!-- include_common_top -->
     <link rel="stylesheet" href="css/shop/board.css">
+    <link rel="stylesheet" href="css/shop/comment.css">
+
+<script type="text/javascript">
+	function openParentModal() {
+		$('#parrentCommentWriteModal').modal('show');
+	}
+</script>
+
 
 </head>
 
@@ -46,52 +57,219 @@
         </div>
     </div>
     <!-- Breadcumb Area -->
-
-    <div class="shortcodes_area section_padding_100">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="shortcodes_title mb-30">
-                        <h4>Board View</h4>
-                    </div>
-                    <c:forEach items="${boardDetail}" var="board">
-                    <div class="shortcodes_content">
-                        <div class="table-responsive">
-                            <table class="table mb-0 table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="board_title" style="vertical-align: middle;">${board.bTitle}</th>
-                                        <th scope="col" class="board_writer" style="vertical-align: middle;">${board.uNickName}</th>
-                                        	<c:set var="dateString" value="${board.bInsertDate}" />
-									        <fmt:parseDate var="date" value="${dateString}" pattern="yyyy-MM-dd HH:mm:ss" />
-									        <fmt:formatDate var="formattedDate" value="${date}" type="date" pattern="yyyy년-MM월-dd일" />
-									        <fmt:formatDate var="formattedDate2" value="${date}" type="date" pattern="HH시:mm분" />
-                                        <th scope="col" class="board_date" style="vertical-align: middle;">${formattedDate}<br/>${formattedDate2}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td id="board_content_td" colspan="3">${board.bContent}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    	<div id="qna_btn_container">
-                    	<c:if test="${board.uid eq SUID}">
-							<input class="board_btn update_form" type="button" pageno="${pageno}" q_no="${qna.q_no}" value="수정"/>&nbsp;&nbsp;
-							<input class="board_btn delete" type="button" pageno="${pageno}" q_no="${qna.q_no}" value="삭제"/>&nbsp;&nbsp;
+	<div class="shortcodes_area section_padding_100">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="shortcodes_title mb-30">
+						<h4>Board View</h4>
+					</div>
+					<c:forEach items="${boardDetail}" var="board">
+						<c:set var="bNo" value="${board.bNo}"></c:set>
+						<div class="shortcodes_content">
+							<div class="table-responsive">
+								<table class="table mb-0 table-bordered">
+									<thead>
+										<tr>
+											<th scope="col" class="board_title"
+												style="vertical-align: middle;">${board.bTitle}</th>
+											<th scope="col" class="board_writer"
+												style="vertical-align: middle;">${board.uNickName}</th>
+											<c:set var="dateString" value="${board.bInsertDate}" />
+											<fmt:parseDate var="date" value="${dateString}"
+												pattern="yyyy-MM-dd HH:mm:ss" />
+											<fmt:formatDate var="formattedDate" value="${date}"
+												type="date" pattern="yyyy년-MM월-dd일" />
+											<fmt:formatDate var="formattedDate2" value="${date}"
+												type="date" pattern="HH시:mm분" />
+											<th scope="col" class="board_date"
+												style="vertical-align: middle;">${formattedDate}<br />${formattedDate2}</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td id="board_content_td" colspan="3">${board.bContent}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div id="qna_btn_container">
+							<c:if test="${board.uid eq SUID}">
+								<input class="btn btn-primary btn-sm" type="button" value="수정" />&nbsp;&nbsp;
+							<input class="btn btn-primary btn-sm" type="button" value="삭제" />&nbsp;&nbsp;
                     	</c:if>
-							<input class="board_btn reply" type="button" pageno="${pageno}" q_no="${qna.q_no}" value="답글"/>&nbsp;&nbsp;
-							<input class="board_btn list" type="button" pageno="${pageno}" value="목록"/>&nbsp;&nbsp;
-                   	</div>
-                </c:forEach>
-                </div>
-            </div>
-            
-         </div>
-    </div>     
-                      
+							<input class="btn btn-primary btn-sm" type="button" value="댓글 달기"
+								onclick="openParentModal()" />&nbsp;&nbsp; <a
+								href="board_list.do?pageNo=1"><input
+								class="btn btn-primary btn-sm" type="button" value="목록" /></a>&nbsp;&nbsp;
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+
+			<!-- Comment List -->
+			<div class="comment-list-container">
+			<c:set var="cmtCount" value="${commentCount}"></c:set>
+			<h6><i class="fa fa-commenting-o"></i>댓글 : <span style="color: orange;"><c:out value="(${cmtCount})" /></span> </h6>
+			<table class="comment-list">
+			  <tbody>
+			    <c:forEach items="${commentList}" var="cmt">
+			      <tr>
+			        <td>
+			          <c:if test="${cmt.cmStep > 0}">
+			            <c:set var="indentation" value="${cmt.cmStep * 30}px" />
+			          </c:if>
+			          <c:if test="${cmt.cmStep > 0}">
+			            <i class="fa fa-comment-o" aria-hidden="true" style="margin-left: ${indentation}"></i>
+			          </c:if>
+			          <c:if test="${cmt.cmStep == 0}">
+			            <i class="fa fa-comment" aria-hidden="true"></i>
+			          </c:if>
+			          <div style="margin-left: ${indentation}">${cmt.uNickName}</div>
+			          <div style="margin-left: ${indentation}">${cmt.cmInsertDate}</div>
+			        </td>
+			        <td>${cmt.cmContent}</td>
+			        <td>
+			          <div class="button-container">
+			            <c:if test="${cmt.uid eq SUID}">
+			              <input class="btn btn-secondary btn-sm" type="button" value="삭제">
+			              <input class="btn btn-secondary btn-sm" type="button" value="수정">
+			            </c:if>
+			            <c:if test="${!cmt.uid eq SUID}">
+			              <input class="btn btn-secondary btn-sm" type="button" value="추천">
+			              <input class="btn btn-secondary btn-sm" type="button" value="비추천">
+			            </c:if>
+			            <input class="btn btn-secondary btn-sm" type="button" value="답글 달기" onclick="showReplyForm(${SUID})">
+			          </div>
+			          <div id="reply-form-${SUID}" class="reply-form" style="display: none;">
+			            <input type="text" class="reply-input">
+			            <input class="btn btn-secondary btn-sm" type="button" value="등록" onclick="submitReply(${SUID})">
+			          </div>
+			        </td>
+			      </tr>
+					<!-- childCommentWriteModal Start -->
+					<div class="modal" id="childCommentWriteModal" tabindex="-1" role="dialog">
+						<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="container">
+								<h5 class="mb-3" style="display: inline-block; text-align: center;">Comment</h5>
+								<form id="child_comment_form" action="child_comment_write.do?bNo=${bNo}" method="post">
+										<div class="form-group">
+											<label for="uid">작성자 : ${SUNICKNAME}</label>
+										</div>
+										<div class="form-group">
+											<label for="uid">작성일자 : <fmt:formatDate value='${toDay}'
+													pattern='yyyy-MM-dd' /></label>
+										</div>
+										<div class="form-group">
+											<textarea name="c_cmContent" id="child_content_area" placeholder=" content"></textarea>
+										</div>
+									<div class="button-container">
+										<input type="hidden" name="bNo" value="${bNo}">
+										<button type="button" class="btn btn-primary btn-sm comment_btn new_write">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<button type="button" class="btn btn-secondary btn-sm" id="cmCancelBtn" data-dismiss="modal">Cancle</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					</div>
+					<!-- parrentCommentWriteModal End -->
+			    </c:forEach>
+			  </tbody>
+			</table>
+			</div>
+
+
+
+		</div>
+	</div>
+
+	<!-- parrentCommentWriteModal Start -->
+	<div class="modal" id="parrentCommentWriteModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="container">
+				<h5 class="mb-3" style="display: inline-block; text-align: center;">Comment</h5>
+				<form id="parent_comment_form" action="parent_comment_write.do?bNo=${bNo}" method="post">
+						<div class="form-group">
+							<label for="uid">작성자 : ${SUNICKNAME}</label>
+						</div>
+						<div class="form-group">
+							<label for="uid">작성일자 : <fmt:formatDate value='${toDay}'
+									pattern='yyyy-MM-dd' /></label>
+						</div>
+						<div class="form-group">
+							<textarea name="cmContent" id="cm_content_area" placeholder=" content"></textarea>
+						</div>
+					<div class="button-container">
+						<input type="hidden" name="bNo" value="${bNo}">
+						<button type="button" class="btn btn-primary btn-sm comment_btn new_write">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button type="button" class="btn btn-secondary btn-sm" id="cmCancelBtn" data-dismiss="modal">Cancle</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- parrentCommentWriteModal End -->
+	
+    <!-- PageMaker -->
+			<div class="shop_pagination_area mt-30">
+			    <nav aria-label="Page navigation">
+			        <ul class="pagination pagination-sm justify-content-center">
+			            <c:if test="${pageMaker.page > 1}">
+			                <li class="page-item">
+			                    <a class="page-link" href="board_detail.do?bNo=${bNo}&pageNo=1"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
+			                </li>
+			                <li class="page-item">
+			                    <a class="page-link" href="board_detail.do?bNo=${bNo}&pageNo=${pageMaker.page - 1}"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+			                </li>
+			            </c:if>
+						<c:set var="halfDisplayPage" value="${Math.floor(pageMaker.displayPage/2)}" />
+						<c:set var="startPage" value="${pageMaker.page - halfDisplayPage}" />
+						<c:set var="endPage" value="${pageMaker.page + halfDisplayPage}" />
+						
+						<c:if test="${startPage lt 1}">
+						    <c:set var="startPage" value="1" />
+						</c:if>
+						<c:if test="${endPage gt pageMaker.totalPage}">
+						    <c:set var="endPage" value="${pageMaker.totalPage}" />
+						</c:if>
+						
+						<c:forEach var="pageNum" begin="${startPage}" end="${endPage}" step="1">
+						    <li class="page-item ${pageNum eq pageMaker.page ? 'active' : ''}">
+						        <a class="page-link" href="board_detail.do?bNo=${bNo}&pageNo=${pageNum}">${pageNum}</a>
+						    </li>
+						</c:forEach>
+			
+			            <c:if test="${pageMaker.next}">
+						    <li class="page-item">
+						        <a class="page-link" href="board_detail.do?bNo=${bNo}&pageNo=${pageMaker.page + 1}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+						    </li>
+						    <li class="page-item">
+						        <a class="page-link" href="board_detail.do?bNo=${bNo}&pageNo=${pageMaker.totalPage}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+						    </li>
+						</c:if>
+			        </ul>
+			    </nav>
+			</div>
+			
+			<!-- Comment form
+						<div class="comment-container">
+				<form id="comment-form">
+					<div class="input-form-group" style="display: flex; align-items: center; text-align: center;">
+						<i class="fa fa-user-circle" style="vertical-align: middle;">&nbsp;${SUNICKNAME}</i>&nbsp;&nbsp;&nbsp;&nbsp;
+						<textarea id="cmContent" name="cmContent" rows="3" cols="85" placeholder="댓글을 입력하세요" style="width: 85%; height: 6.25em; resize: none;"></textarea>
+						<button class="btn btn-primary btn-xl" style="vertical-align: middle; margin-left: 15px;">등록</button>
+						<input type="hidden" id="uid" name="uid" value="${SUID}">
+					</div>
+				</form>
+			</div>
+			-->
+    
+    
     <!-- Footer Area -->
  	<jsp:include page="common/include_common_bottom.jsp"/>
     <!-- Footer Area -->
@@ -100,6 +278,7 @@
 	<jsp:include page="common/include_common_script.jsp"/>
 	<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 	<script src="js/shop/board.js"></script>
+	<script src="js/shop/comment.js"></script>
 	<script type="text/javascript">
 		
 	</script>

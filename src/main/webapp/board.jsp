@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="toDay" class="java.util.Date" />
 
+
 <!doctype html>
 <html lang="en">
 
@@ -93,7 +94,6 @@
 					    </div>
 					  </form>
 					</div>
-
                     
                     <div class="shortcodes_content">
                         <div class="table-responsive">
@@ -138,46 +138,45 @@
              
              
              <!-- PageMaker -->
-    
-<div class="shop_pagination_area mt-30">
-    <nav aria-label="Page navigation">
-        <ul class="pagination pagination-sm justify-content-center">
-            <c:if test="${pageMaker.page > 1}">
-                <li class="page-item">
-                    <a class="page-link" href="board_list.do?pageNo=1"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="board_list.do?pageNo=${pageMaker.page - 1}"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
-                </li>
-            </c:if>
-<c:set var="halfDisplayPage" value="${Math.floor(pageMaker.displayPage/2)}" />
-<c:set var="startPage" value="${pageMaker.page - halfDisplayPage}" />
-<c:set var="endPage" value="${pageMaker.page + halfDisplayPage}" />
-
-<c:if test="${startPage lt 1}">
-    <c:set var="startPage" value="1" />
-</c:if>
-<c:if test="${endPage gt pageMaker.totalPage}">
-    <c:set var="endPage" value="${pageMaker.totalPage}" />
-</c:if>
-
-<c:forEach var="pageNum" begin="${startPage}" end="${endPage}" step="1">
-    <li class="page-item ${pageNum eq pageMaker.page ? 'active' : ''}">
-        <a class="page-link" href="board_list.do?pageNo=${pageNum}">${pageNum}</a>
-    </li>
-</c:forEach>
-
-            <c:if test="${pageMaker.next}">
-			    <li class="page-item">
-			        <a class="page-link" href="board_list.do?pageNo=${pageMaker.page + 1}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-			    </li>
-			    <li class="page-item">
-			        <a class="page-link" href="board_list.do?pageNo=${pageMaker.totalPage}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
-			    </li>
+			<div class="shop_pagination_area mt-30">
+			    <nav aria-label="Page navigation">
+			        <ul class="pagination pagination-sm justify-content-center">
+			            <c:if test="${pageMaker.page > 1}">
+			                <li class="page-item">
+			                    <a class="page-link" href="board_list.do?pageNo=1"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
+			                </li>
+			                <li class="page-item">
+			                    <a class="page-link" href="board_list.do?pageNo=${pageMaker.page - 1}"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+			                </li>
+			            </c:if>
+			<c:set var="halfDisplayPage" value="${Math.floor(pageMaker.displayPage/2)}" />
+			<c:set var="startPage" value="${pageMaker.page - halfDisplayPage}" />
+			<c:set var="endPage" value="${pageMaker.page + halfDisplayPage}" />
+			
+			<c:if test="${startPage lt 1}">
+			    <c:set var="startPage" value="1" />
 			</c:if>
-        </ul>
-    </nav>
-</div>
+			<c:if test="${endPage gt pageMaker.totalPage}">
+			    <c:set var="endPage" value="${pageMaker.totalPage}" />
+			</c:if>
+			
+			<c:forEach var="pageNum" begin="${startPage}" end="${endPage}" step="1">
+			    <li class="page-item ${pageNum eq pageMaker.page ? 'active' : ''}">
+			        <a class="page-link" href="board_list.do?pageNo=${pageNum}">${pageNum}</a>
+			    </li>
+			</c:forEach>
+			
+			            <c:if test="${pageMaker.next}">
+						    <li class="page-item">
+						        <a class="page-link" href="board_list.do?pageNo=${pageMaker.page + 1}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+						    </li>
+						    <li class="page-item">
+						        <a class="page-link" href="board_list.do?pageNo=${pageMaker.totalPage}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+						    </li>
+						</c:if>
+			        </ul>
+			    </nav>
+			</div>
 
 
 
@@ -250,7 +249,7 @@
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp"/>
 	<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
-	<script src="js/shop/board.js?after" defer></script>
+	<script src="js/shop/board.js" defer></script>
 
 </body>
 

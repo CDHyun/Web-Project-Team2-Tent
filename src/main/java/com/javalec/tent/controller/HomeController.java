@@ -28,7 +28,9 @@ import com.javalec.tent.command.QuestionWriteCommand;
 import com.javalec.tent.command.CartCommand;
 import com.javalec.tent.command.CartDeleteCommand;
 import com.javalec.tent.command.CartUpdateCommand;
+import com.javalec.tent.command.CommentListCommand;
 import com.javalec.tent.command.IndexCommand;
+import com.javalec.tent.command.ParrentCommentWriteCommand;
 import com.javalec.tent.command.ProductDetailCommand;
 import com.javalec.tent.command.PurchaseCheckInfoCommand;
 import com.javalec.tent.command.PurchaseCompleteCommand;
@@ -76,6 +78,7 @@ public class HomeController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String viewPage = null;
 		TentCommand command = null;
+		TentCommand command2 = null;
 		
 		String uri = request.getRequestURI();
 		String conPath = request.getContextPath();
@@ -154,7 +157,14 @@ public class HomeController extends HttpServlet {
 		case "/board_detail.do":
 			command = new BoardDetailCommand();
 			command.execute(request, response);
+			command2 = new CommentListCommand();
+			command2.execute(request, response);
 			viewPage = "board_detail.jsp";
+			break;
+		case "/parent_comment_write.do":
+			command = new ParrentCommentWriteCommand();
+			command.execute(request, response);
+			viewPage = "board_detail.do";
 			break;
 		case "/adminindex.do":  // 상품보여주기
 			command = new AdminCommand();

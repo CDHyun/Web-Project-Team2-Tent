@@ -227,61 +227,61 @@ public class ProductDao {
 		return productCount;
 	}
 	
-	public ArrayList<ProductDto> getProductList(String queryContent, int page, int pageSize) {
-	    ArrayList<ProductDto> products = new ArrayList<>();
-
-	    if (queryContent == null) {
-	        queryContent = "";
-	    }
-
-	    Connection con = null;
-	    PreparedStatement ps = null;
-	    ResultSet rs = null;
-
-	    try {
-	        con = dataSource.getConnection();
-
-	        // 검색어와 페이징을 적용한 SQL 쿼리문
-	        String sql = "SELECT p.pCode, p.cgNo, p.pName, p.pBrandName, p.pPrice, p.pDeleted, pf.pfRealName, pf.pfHoverRealName "
-	                + "FROM product p "
-	                + "LEFT JOIN productFile pf ON p.pCode = pf.pCode "
-	                + "WHERE (p.pName LIKE ? OR p.pBrandName LIKE ?) AND p.pDeleted = 0 "
-	                + "ORDER BY p.pCode ASC LIMIT ? OFFSET ?";
-
-	        ps = con.prepareStatement(sql);
-	        ps.setString(1, "%" + queryContent + "%");
-	        ps.setString(2, "%" + queryContent + "%");
-	        ps.setInt(3, pageSize);
-	        ps.setInt(4, (page - 1) * pageSize);
-	        rs = ps.executeQuery();
-
-	        while (rs.next()) {
-	            int wkpCode = rs.getInt(1);
-	            int wkcgNo = rs.getInt(2);
-	            String wkpName = rs.getString(3);
-	            String wkpBrandName = rs.getString(4);
-	            int wkpPrice = rs.getInt(5);
-	            boolean wkpDeleted = rs.getBoolean(6);
-	            String wkpfRealName = rs.getString(7);
-	            String wkpfHoverRealName = rs.getString(8);
-
-	            ProductDto productDto = new ProductDto(wkcgNo, wkpCode, wkpName, wkpBrandName, wkpPrice, wkpDeleted, wkpfRealName, wkpfHoverRealName);
-	            products.add(productDto);
-	        }
-
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    } finally {
-	        try {
-	            if (rs != null) rs.close();
-	            if (ps != null) ps.close();
-	            if (con != null) con.close();
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	    }
-	    return products;
-	}
+//	public ArrayList<ProductDto> getProductList(String queryContent, int page, int pageSize) {
+//	    ArrayList<ProductDto> products = new ArrayList<>();
+//
+//	    if (queryContent == null) {
+//	        queryContent = "";
+//	    }
+//
+//	    Connection con = null;
+//	    PreparedStatement ps = null;
+//	    ResultSet rs = null;
+//
+//	    try {
+//	        con = dataSource.getConnection();
+//
+//	        // 검색어와 페이징을 적용한 SQL 쿼리문
+//	        String sql = "SELECT p.pCode, p.cgNo, p.pName, p.pBrandName, p.pPrice, p.pDeleted, pf.pfRealName, pf.pfHoverRealName "
+//	                + "FROM product p "
+//	                + "LEFT JOIN productFile pf ON p.pCode = pf.pCode "
+//	                + "WHERE (p.pName LIKE ? OR p.pBrandName LIKE ?) AND p.pDeleted = 0 "
+//	                + "ORDER BY p.pCode ASC LIMIT ? OFFSET ?";
+//
+//	        ps = con.prepareStatement(sql);
+//	        ps.setString(1, "%" + queryContent + "%");
+//	        ps.setString(2, "%" + queryContent + "%");
+//	        ps.setInt(3, pageSize);
+//	        ps.setInt(4, (page - 1) * pageSize);
+//	        rs = ps.executeQuery();
+//
+//	        while (rs.next()) {
+//	            int wkpCode = rs.getInt(1);
+//	            int wkcgNo = rs.getInt(2);
+//	            String wkpName = rs.getString(3);
+//	            String wkpBrandName = rs.getString(4);
+//	            int wkpPrice = rs.getInt(5);
+//	            boolean wkpDeleted = rs.getBoolean(6);
+//	            String wkpfRealName = rs.getString(7);
+//	            String wkpfHoverRealName = rs.getString(8);
+//
+//	            ProductDto productDto = new ProductDto(wkcgNo, wkpCode, wkpName, wkpBrandName, wkpPrice, wkpDeleted, wkpfRealName, wkpfHoverRealName);
+//	            products.add(productDto);
+//	        }
+//
+//	    } catch (Exception e) {
+//	        e.printStackTrace();
+//	    } finally {
+//	        try {
+//	            if (rs != null) rs.close();
+//	            if (ps != null) ps.close();
+//	            if (con != null) con.close();
+//	        } catch (Exception e) {
+//	            e.printStackTrace();
+//	        }
+//	    }
+//	    return products;
+//	}
 
 	
 	
