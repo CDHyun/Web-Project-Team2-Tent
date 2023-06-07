@@ -184,7 +184,7 @@ DataSource dataSource;
 					String pfRealName = resultSet.getString("pfRealName");
 					String pfHoverRealName = resultSet.getString("pfHoverRealName");
 					
-					CartDto product = new CartDto(pCode1, pName, pPrice, pBrandName, pPrice, pfRealName, pfHoverRealName, pColor);
+					CartDto product = new CartDto(pCode1, pName, pPrice, pBrandName, pColor, pPrice, pfRealName, pfHoverRealName);
 					products.add(product);
 				}
 			}catch (Exception e) {

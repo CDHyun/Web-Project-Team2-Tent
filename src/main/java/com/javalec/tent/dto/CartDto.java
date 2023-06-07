@@ -53,7 +53,7 @@ public class CartDto {
 			this.uid = uid;
 		}
 	
-	// 장바구니에서 재고 많은 상품 보여주기
+	// 장바구니에서 재고 많은 상품 보여주기//
 	public CartDto(int pCode, String pName, int pPrice, String pBrandName, String pColor, int cgNo, String pfRealName,
 			String pfHoverRealName) {
 		super();
