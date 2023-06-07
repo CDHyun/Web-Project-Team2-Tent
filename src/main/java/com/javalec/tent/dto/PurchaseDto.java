@@ -1,6 +1,5 @@
 package com.javalec.tent.dto;
 
-import java.sql.Timestamp;
 
 public class PurchaseDto {
 
@@ -27,10 +26,11 @@ public class PurchaseDto {
 	int pcQty;                          //상품 수량
 	int pStock;                         //상품 재고
 	int cgNo;				            //카테고리 번호
+	String pColor;						//상품 색
 	String pName;						// 상품명
 	String pBrandName;                  //상품 브랜드 이름
-	Timestamp pcInsertDate;             //상품 주문 날짜
-	Timestamp pcDeleteDate;		        //상품 주문 취소 날짜
+	String pcInsertDate;             //상품 주문 날짜
+	String pcDeleteDate;		        //상품 주문 취소 날짜
 	String pcStatus;                    //상품 주문 상태 
 	String pcDM;
 	
@@ -69,40 +69,69 @@ public class PurchaseDto {
 	}
 
 
-	public PurchaseDto(String uid, int pCode, int pcQty, Timestamp pcInsertDate, String pcDM) {
+
+	
+
+	public PurchaseDto(String uid, int pCode, int pcQty, String pColor, String pcInsertDate, String pcDM) {
 		super();
 		this.uid = uid;
 		this.pCode = pCode;
 		this.pcQty = pcQty;
+		this.pColor = pColor;
 		this.pcInsertDate = pcInsertDate;
 		this.pcDM = pcDM;
 	}
 
 
 
-	public PurchaseDto(String uid, int pCode, int pPrice, int pcQty, String pName, Timestamp pcInsertDate,
-			String pfRealName, String pfHoverRealName) {
+	public PurchaseDto(String uid, int pCode, int pPrice, String pName, String pcStatus, String pfRealName,
+			String pfHoverRealName) {
 		super();
 		this.uid = uid;
 		this.pCode = pCode;
 		this.pPrice = pPrice;
+		this.pName = pName;
+		this.pcStatus = pcStatus;
+		this.pfRealName = pfRealName;
+		this.pfHoverRealName = pfHoverRealName;
+	}
+
+
+	public PurchaseDto(String uid, int pcNo, int pCode, int pPrice, int pcQty, String pColor, String pName,
+			String pcInsertDate, String pfRealName, String pfHoverRealName) {
+		super();
+		this.uid = uid;
+		this.pcNo = pcNo;
+		this.pCode = pCode;
+		this.pPrice = pPrice;
 		this.pcQty = pcQty;
+		this.pColor = pColor;
 		this.pName = pName;
 		this.pcInsertDate = pcInsertDate;
 		this.pfRealName = pfRealName;
 		this.pfHoverRealName = pfHoverRealName;
 	}
 
-
-
-
-
-
-
-
-
-
-
+	
+	
+	public PurchaseDto(String uid, String uName, String uPhone, String uaAddress, int pcNo, int pCode, int pPrice,
+			int pcQty, String pColor, String pName, String pcInsertDate, String pfRealName, String pfHoverRealName, String pcStatus) {
+		super();
+		this.uid = uid;
+		this.uName = uName;
+		this.uPhone = uPhone;
+		this.uaAddress = uaAddress;
+		this.pcNo = pcNo;
+		this.pCode = pCode;
+		this.pPrice = pPrice;
+		this.pcQty = pcQty;
+		this.pColor = pColor;
+		this.pName = pName;
+		this.pcInsertDate = pcInsertDate;
+		this.pfRealName = pfRealName;
+		this.pfHoverRealName = pfHoverRealName;
+		this.pcStatus = pcStatus;
+	}
 
 
 	public String getUid() {
@@ -110,15 +139,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
-
-
-
 
 
 	public String getuPassword() {
@@ -126,15 +149,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setuPassword(String uPassword) {
 		this.uPassword = uPassword;
 	}
-
-
-
 
 
 	public String getuName() {
@@ -142,15 +159,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setuName(String uName) {
 		this.uName = uName;
 	}
-
-
-
 
 
 	public String getuPhone() {
@@ -158,15 +169,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setuPhone(String uPhone) {
 		this.uPhone = uPhone;
 	}
-
-
-
 
 
 	public String getuEmail() {
@@ -174,15 +179,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setuEmail(String uEmail) {
 		this.uEmail = uEmail;
 	}
-
-
-
 
 
 	public int getUaNo() {
@@ -190,15 +189,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setUaNo(int uaNo) {
 		this.uaNo = uaNo;
 	}
-
-
-
 
 
 	public String getUaZipcode() {
@@ -206,15 +199,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setUaZipcode(String uaZipcode) {
 		this.uaZipcode = uaZipcode;
 	}
-
-
-
 
 
 	public String getUaAddress() {
@@ -222,15 +209,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setUaAddress(String uaAddress) {
 		this.uaAddress = uaAddress;
 	}
-
-
-
 
 
 	public String getUaDetailAddress() {
@@ -238,15 +219,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setUaDetailAddress(String uaDetailAddress) {
 		this.uaDetailAddress = uaDetailAddress;
 	}
-
-
-
 
 
 	public int getPcNo() {
@@ -254,15 +229,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setPcNo(int pcNo) {
 		this.pcNo = pcNo;
 	}
-
-
-
 
 
 	public int getpCode() {
@@ -270,15 +239,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setpCode(int pCode) {
 		this.pCode = pCode;
 	}
-
-
-
 
 
 	public int getpPrice() {
@@ -286,15 +249,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setpPrice(int pPrice) {
 		this.pPrice = pPrice;
 	}
-
-
-
 
 
 	public int getPcQty() {
@@ -302,15 +259,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setPcQty(int pcQty) {
 		this.pcQty = pcQty;
 	}
-
-
-
 
 
 	public int getpStock() {
@@ -318,15 +269,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setpStock(int pStock) {
 		this.pStock = pStock;
 	}
-
-
-
 
 
 	public int getCgNo() {
@@ -334,15 +279,19 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setCgNo(int cgNo) {
 		this.cgNo = cgNo;
 	}
 
 
+	public String getpColor() {
+		return pColor;
+	}
 
+
+	public void setpColor(String pColor) {
+		this.pColor = pColor;
+	}
 
 
 	public String getpName() {
@@ -350,15 +299,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setpName(String pName) {
 		this.pName = pName;
 	}
-
-
-
 
 
 	public String getpBrandName() {
@@ -366,47 +309,29 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setpBrandName(String pBrandName) {
 		this.pBrandName = pBrandName;
 	}
 
 
-
-
-
-	public Timestamp getPcInsertDate() {
+	public String getPcInsertDate() {
 		return pcInsertDate;
 	}
 
 
-
-
-
-	public void setPcInsertDate(Timestamp pcInsertDate) {
+	public void setPcInsertDate(String pcInsertDate) {
 		this.pcInsertDate = pcInsertDate;
 	}
 
 
-
-
-
-	public Timestamp getPcDeleteDate() {
+	public String getPcDeleteDate() {
 		return pcDeleteDate;
 	}
 
 
-
-
-
-	public void setPcDeleteDate(Timestamp pcDeleteDate) {
+	public void setPcDeleteDate(String pcDeleteDate) {
 		this.pcDeleteDate = pcDeleteDate;
 	}
-
-
-
 
 
 	public String getPcStatus() {
@@ -414,15 +339,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setPcStatus(String pcStatus) {
 		this.pcStatus = pcStatus;
 	}
-
-
-
 
 
 	public String getPcDM() {
@@ -430,15 +349,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setPcDM(String pcDM) {
 		this.pcDM = pcDM;
 	}
-
-
-
 
 
 	public String getPfName() {
@@ -446,15 +359,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setPfName(String pfName) {
 		this.pfName = pfName;
 	}
-
-
-
 
 
 	public String getPfRealName() {
@@ -462,15 +369,9 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setPfRealName(String pfRealName) {
 		this.pfRealName = pfRealName;
 	}
-
-
-
 
 
 	public String getPfHoverName() {
@@ -478,23 +379,14 @@ public class PurchaseDto {
 	}
 
 
-
-
-
 	public void setPfHoverName(String pfHoverName) {
 		this.pfHoverName = pfHoverName;
 	}
 
 
-
-
-
 	public String getPfHoverRealName() {
 		return pfHoverRealName;
 	}
-
-
-
 
 
 	public void setPfHoverRealName(String pfHoverRealName) {
@@ -503,18 +395,6 @@ public class PurchaseDto {
 
 
 
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

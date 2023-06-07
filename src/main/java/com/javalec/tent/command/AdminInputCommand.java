@@ -33,6 +33,8 @@ public class AdminInputCommand implements TentCommand {
 
 	            String pfName = multipartRequest.getOriginalFileName("file");
 	            String pfRealName = multipartRequest.getFilesystemName("file");
+	            String pfHoverName = multipartRequest.getOriginalFileName("file1");
+	            String pfHoverRealName = multipartRequest.getFilesystemName("file1");
 
 	            String pName = multipartRequest.getParameter("pName");
 	            String pBrandName = multipartRequest.getParameter("pBrandName");
@@ -47,10 +49,10 @@ public class AdminInputCommand implements TentCommand {
 	            AdminDao dao = new AdminDao();
 	            dao.insert(pName, pBrandName, pPrice, cgNo, pCode, pStock, pColor, pfNo);
 
-	            dao1.upload(pfName, pfRealName, pCode);
+	            dao1.upload(pfName, pfRealName, pfHoverName, pfHoverRealName, pCode);
 
 	            // 추가 폴더에도 저장 이 주소를 자신의 컴퓨터의 프로젝트폴더경로로 바꿔줘야함
-	            String additionalDirectory = "C:\\Users\\ahyun\\git\\Web-Project-Team2-Tent\\src\\main\\webapp\\images\\product";
+	            String additionalDirectory = "C:/Users/ahyun/git/Web-Project-Team2-Tent/src/main/webapp/images/product";
 	            //String additionalDirectory = ".../src/main/webapp/images/product/";
 
 	            
@@ -65,14 +67,31 @@ public class AdminInputCommand implements TentCommand {
 	            FileInputStream inputStream = new FileInputStream(sourceFile);
 	            FileOutputStream outputStream = new FileOutputStream(destinationFile);
 
+	            File sourceFiles = new File(directory, pfHoverRealName);
+	            File destinationFiles = new File(additionalDirectory, pfHoverRealName);
+	            
+	            FileInputStream inputStreams = new FileInputStream(sourceFiles);
+	            FileOutputStream outputStreams = new FileOutputStream(destinationFiles);
+	           
+	           
+	            
 	            byte[] buffer = new byte[1024];
 	            int length;
 	            while ((length = inputStream.read(buffer)) > 0) {
 	                outputStream.write(buffer, 0, length);
 	            }
+	            
+	            byte[] buffers = new byte[1024];
+	            int lengths;
+	            while ((lengths = inputStreams.read(buffers)) > 0) {
+	            	outputStreams.write(buffers, 0, lengths);
+	            }
+	           
 
 	            inputStream.close();
 	            outputStream.close();
+	            inputStreams.close();
+	            outputStreams.close();
 
 	        } catch (IOException e) {
 	            // IOException 처리

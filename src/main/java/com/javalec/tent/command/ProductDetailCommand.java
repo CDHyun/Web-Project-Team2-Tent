@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.javalec.tent.dao.ProductDao;
@@ -14,12 +15,16 @@ public class ProductDetailCommand implements TentCommand {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
+	
+		HttpSession session = request.getSession();
 		int pCode = Integer.parseInt(request.getParameter("pCode"));
 		ArrayList<ProductDto> productInfo = new ArrayList<ProductDto>();
+		ArrayList<ProductDto> colorList = new ArrayList<ProductDto>();
 		ProductDao productDao = new ProductDao();
 		productInfo = productDao.productDetail(pCode);
+		colorList = productDao.productColorList(pCode);
 		request.setAttribute("productInfo", productInfo);
-		
+		request.setAttribute("colorList", colorList);
 		Gson gson = new Gson();
 		String json = gson.toJson(productInfo);
 		response.setContentType("application/json");
@@ -30,7 +35,6 @@ public class ProductDetailCommand implements TentCommand {
 			e.printStackTrace();
 		}
 	}
-	
 	
 	
 	

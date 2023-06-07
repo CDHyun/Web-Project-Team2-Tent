@@ -7,7 +7,7 @@ function numberWithCommas(price) {
 
 /*
 날짜 형식 포맷 메서드
-*/
+
 function formatDate(date) { 
 	let d = new Date(date),  
 		month = '' + (d.getMonth() + 1), 
@@ -20,10 +20,10 @@ function formatDate(date) {
 		
 	return [year, month, day].join('-'); 
 }
+*/
 
 /*
 로그인체크  
-*/
 $(".login_check").on("click", function(e){
 	ToastConfirm.fire({ icon: 'question', 
 			title: "로그인이 필요한 페이지입니다.\n 로그인 하시겠습니까?"}).then((result) => {
@@ -33,10 +33,9 @@ $(".login_check").on("click", function(e){
 		});
 	e.preventDefault();
 });
+*/
 
 /*
-ajax 로그인체크
-*/
 function check_session(){
 	let result = false;
 	$.ajax({
@@ -52,7 +51,7 @@ function check_session(){
 	});
 	return result;
 }
-
+*/
 /*
 파라미터값 얻기
 */
@@ -65,7 +64,6 @@ function getParameterByName(name) {
 
 /*
 상품 장바구니 추가
-*/
 function addToCart(params){
 	if(!check_session()){
 		ToastConfirm.fire({ icon: 'question', 
@@ -94,10 +92,10 @@ function addToCart(params){
 		}
 	});
 }
+*/
 
 /*
 상품 위시리스트 추가  
-*/
 function addToWishList(param){
 	if(!check_session()){
 		ToastConfirm.fire({ icon: 'question', 
@@ -123,6 +121,7 @@ function addToWishList(param){
 		}
 	});
 }
+*/
 
 /*
 공통 헤더 카트 주문 등록
@@ -297,7 +296,6 @@ const ToastConfirm =  Swal.mixin({
 
 /*
 related product -> Add To Cart 
-*/
 $(".related_product_add_cart").on("click", function(e){
 	addToCart({
 		"p_no":$(this).attr("p_no"),
@@ -305,14 +303,15 @@ $(".related_product_add_cart").on("click", function(e){
 	});
 	e.preventDefault();  
 });
+*/
 
 /*
 related product -> Add To WishList 
-*/
 $(".related_product_add_wishList").on("click", function(e){
 	addToWishList({
 		"p_no": $(this).attr("p_no")
 	});
 	e.preventDefault();  
 });
+*/
 

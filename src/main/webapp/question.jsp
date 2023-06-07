@@ -3,8 +3,6 @@
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>	
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="toDay" class="java.util.Date" />
-<fmt:formatDate var="to_date" value='${toDay}' pattern='yyyy-MM-dd' />
-<fmt:formatDate var="q_date" value='${qna.q_date}' pattern='yyyy-MM-dd' />
 
 <!doctype html>
 <html lang="en">
@@ -19,8 +17,55 @@
     <!-- include_common_top -->
 	<jsp:include page="common/include_common_top.jsp"/>
     <!-- include_common_top -->
-    <link rel="stylesheet" href="css/shop/board.css">
-
+    <link rel="stylesheet" href="css/shop/question.css">
+	<script type="text/javascript">
+	
+    var viewedQnas = []; // 조회한 Q&A 번호를 저장할 배열
+    
+    function toggleQnaContent(element) {
+        var contentDiv = $(element).next('.qna-content');
+        contentDiv.slideToggle(function() {
+            if (contentDiv.is(':visible')) {
+                increaseViewCount($(element).closest('tr'));
+            } else {
+                decreaseViewCount($(element).closest('tr'));
+            }
+        });
+    }
+    
+    function increaseViewCount(row) {
+        var qNo = row.find('th').text();
+        if (viewedQnas.includes(qNo)) return; // 이미 조회한 Q&A인 경우 더 이상 증가하지 않도록 처리
+        
+        var viewCountCell = row.find('td:last-child');
+        var viewCount = parseInt(viewCountCell.text());
+        viewCountCell.text(viewCount + 1);
+        
+        viewedQnas.push(qNo); // 조회한 Q&A 번호를 배열에 추가
+        
+        // viewCount 증가를 서버에 요청
+        $.ajax({
+            url: "./increaseViewCount", // 서버의 증가시키는 기능을 처리하는 URL
+            method: "POST",
+            data: { qNo: qNo }, // 서버에 전달할 데이터 (여기서는 qNo를 전달)
+            success: function(response) {
+                console.log("View count increased successfully.");
+            },
+            error: function() {
+                console.log("Error occurred while increasing view count.");
+            }
+        });
+    }
+    
+    function decreaseViewCount(row) {
+        var qNo = row.find('th').text();
+        var index = viewedQnas.indexOf(qNo);
+        if (index > -1) {
+            viewedQnas.splice(index, 1); // 조회한 Q&A 번호를 배열에서 제거
+        }
+    }
+	
+	</script>
 </head>
 
 <body>
@@ -42,7 +87,7 @@
                 <div class="col-12">
                     <h5>Board</h5>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="index.do">Home</a></li>
                         <li class="breadcrumb-item active">Board</li>
                     </ol>
                 </div>
@@ -73,33 +118,33 @@
                                 <tbody id="qna_list_tbody">
                                 
                                 	<!-- board start -->
-                                	<c:forEach var="qna" items="${qnaList.itemList}">
-	                                    <tr>
-	                                        <th scope="row">${qna.q_no}</th>
-	                                        <td>
-	                                        	<a href="qna_view?q_no=${qna.q_no}&pageno=${qnaList.pageMaker.curPage}">
-	                                        		${qna.q_title}
-	                                        		<c:if test="${to_date eq qna.q_date}">
-	                                        			&nbsp;&nbsp;<span class="badge badge-danger">new</span>
-	                                        		</c:if>
-	                                        	</a>
-	                                        </td>
-	                                        <td>${qna.m_id}</td>
-	                                        <td>${qna.q_date}</td>
-	                                        <td>${qna.q_count}</td>
-	                                    </tr>
-                                    </c:forEach>
+									<c:forEach var="qna" items="${qnaList}">
+									    <tr>
+									        <th scope="row">${qna.qNo}</th>
+									        <td>
+									            <a href="#" onclick="toggleQnaContent(this);">${qna.qTitle}</a>
+									            <div class="qna-content" style="display: none;">${qna.qContent}</div>
+									        </td>
+									        <td style="text-align: center;">${qna.uNickName}</td>
+									        <c:set var="dateString" value="${qna.qInsertDate}" />
+									        <fmt:parseDate var="date" value="${dateString}" pattern="yyyy-MM-dd HH:mm:ss" />
+									        <fmt:formatDate var="formattedDate" value="${date}" type="date" pattern="yyyy년-MM월-dd일" />
+									        <td style="text-align: center;">${formattedDate}</td>
+									        <td style="text-align: center;">${qna.qViewCount}</td>
+									    </tr>
+									</c:forEach>
                                    <!-- board end -->
-                 
                                 </tbody>
                             </table>
 						
                         </div>
                     </div>
-					<input type="button" class="qna_btn write_form" pageno="${pageno}" value="게시글작성" />
+                    <div style="text-align: right;">
+						<a href="question_write_form.do"><input type="button" class="btn btn-secondary btn-sm" value="게시글작성" /></a>
+                    </div>
                 </div>
             </div>
-            
+            <%-- 
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-9">
                     <!-- Shop Pagination Area -->
@@ -131,7 +176,7 @@
                     </div>
                 </div>
             </div>
-            
+             --%>
             
             
          </div>
@@ -144,7 +189,7 @@
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp"/>
 	<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
-	<script src="js/shop/board.js" defer></script>
+	<script src="js/shop/question.js?after" defer></script>
 
 </body>
 

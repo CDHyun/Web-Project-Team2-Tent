@@ -19,6 +19,16 @@ public class PurchaseCheckInfoCommand implements TentCommand {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		String uid = (String)session.getAttribute("SUID");
+		int pCode = (int)session.getAttribute("PCODE");
+		int pcQty = (int)session.getAttribute("PCQTY");
+		String pColor = (String)session.getAttribute("PCOLOR");
+		System.out.println("SESSION COLOR : " + pColor);
+		System.out.println("SESSION pCode : " + pCode);
+		System.out.println("SESSION pcQty : " + pcQty);
+		
+		
+		
+	
 		PurchaseDao dao = new PurchaseDao();
 	
 		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();

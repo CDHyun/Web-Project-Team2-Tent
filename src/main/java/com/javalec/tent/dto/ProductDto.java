@@ -17,6 +17,7 @@ public class ProductDto {
 	String pUpdateDate;		// 상품 정보 수정 날짜
 	String pDeleteDate;		// 상품 삭제 처리 날짜
 	boolean pDeleted;		// 상품 삭제 여부(Default 0 : false -> 삭제 되지 않음.)
+	int productCount;		//
 	
 	/* ProductFile */
 	String pfName;			// 올린 상품 이미지 이름
@@ -60,11 +61,18 @@ public class ProductDto {
 		this.pColor = pColor;
 	}
 	
-	
-	
-	
-	
 
+	public ProductDto(String pColor) {
+		super();
+		this.pColor = pColor;
+	}
+
+	public ProductDto(int productCount) {
+		super();
+		this.productCount = productCount;
+	}
+
+	/* getter & setter */
 	public int getCgNo() {
 		return cgNo;
 	}
@@ -191,6 +199,14 @@ public class ProductDto {
 
 	public void setpStock(int pStock) {
 		this.pStock = pStock;
+	}
+
+	public int getProductCount() {
+		return productCount;
+	}
+
+	public void setProductCount(int productCount) {
+		this.productCount = productCount;
 	}
 	
 	

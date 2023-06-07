@@ -15,3 +15,51 @@
 .widget-desc li .widget-desc li a, .widget-desc li i {
 	pointer-events: none;
 }
+
+.item-box {
+    display: none; /* 초기에는 숨김 상태로 설정 */
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+  .quantity-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .quantity-btn {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .quantity-input {
+    width: 50px;
+    height: 30px;
+    text-align: center;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    margin: 0 5px;
+    font-size: 16px;
+  }
+
+  .add-to-cart-btn,
+  .buy-btn {
+    margin-top: 10px;
+  }

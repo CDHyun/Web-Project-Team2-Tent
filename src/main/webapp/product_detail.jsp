@@ -17,11 +17,93 @@
     <!-- include_common_top -->
 	<link rel="stylesheet" href="css/shop/product.css">
 	<script type="text/javascript">
-		/* 가격 포맷 변환 */
+		/* 가격 포맷 변환
 		var price = parseInt("<c:out value="'${product.pPrice}'"/>");
 		var formattedPrice = price.toLocaleString();
 		console.log(price);
 		console.log(formattedPrice);
+		*/
+		
+		// 라디오 버튼에 클릭 이벤트 리스너 추가
+		  var radioButtons = document.querySelectorAll('input[name="customRadio"]');
+		  
+		  for (var i = 0; i < radioButtons.length; i++) {
+		    radioButtons[i].addEventListener('click', getSelectedValue);
+		}
+		
+		function addToCart() {
+			var pCode = $("#pCode").val();
+			var pcQty = $("#quantity").val();
+			var radios = document.getElementsByName('customRadio');
+		    var selectedValue = '';
+		    
+		    for (var i = 0; i < radios.length; i++) {
+		      if (radios[i].checked) {
+		        selectedValue = radios[i].value;
+		        break;
+		      }
+		    }
+		    // 선택된 값 확인
+		    console.log(selectedValue);
+		    var pColor = selectedValue;
+		    
+		    ToastConfirm.fire({ icon: 'question', title: "장바구니에 담으시겠습니까?" }).then((result) => {
+				if(result.isConfirmed){
+					$.ajax({
+						type : 'POST',
+						url : './cart.do',
+						data : {
+							pCode : pCode,
+							pcQty : pcQty,
+							pColor : pColor
+						}
+				    });
+				}
+			});
+		  }
+		
+		function buy() {
+			var pCode = $("#pCode").val();
+			var pcQty = $("#quantity").val();
+			var radios = document.getElementsByName('customRadio');
+		    var selectedValue = '';
+		    
+		    for (var i = 0; i < radios.length; i++) {
+		      if (radios[i].checked) {
+		        selectedValue = radios[i].value;
+		        break;
+		      }
+		    }
+		    // 선택된 값 확인
+		    console.log(selectedValue);
+		    console.log(pcQty);
+		    var pColor = selectedValue;
+		    if(pColor == "") {
+		    	Toast.fire({ icon: 'warning', title: "색상을 선택해주세요." });
+		    	return;
+		    }
+		    ToastConfirm.fire({ icon: 'question', title: "바로 구매하시겠습니까?" }).then((result) => {
+				if(result.isConfirmed){
+					var url = "purchase_info.do?pCode=" + encodeURIComponent(pCode) + "&pcQty=" + encodeURIComponent(pcQty) + "&pColor=" + encodeURIComponent(pColor);
+					window.location.href = url;
+				}
+			});
+		  }
+		
+		function increaseQuantity() {
+		    var quantityInput = document.getElementById("quantity");
+		    var currentQuantity = parseInt(quantityInput.value);
+		    quantityInput.value = currentQuantity + 1;
+		  }
+
+		  function decreaseQuantity() {
+		    var quantityInput = document.getElementById("quantity");
+		    var currentQuantity = parseInt(quantityInput.value);
+		    if (currentQuantity > 0) {
+		      quantityInput.value = currentQuantity - 1;
+		    }
+		  }
+
 	</script>
 </head>
 
@@ -48,7 +130,7 @@
                 <div class="col-12">
                     <h5>Product Details</h5>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="index.do">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">Shop</a></li>
                         <li class="breadcrumb-item active">Product Details</li>
                     </ol>
@@ -64,11 +146,11 @@
                 <div class="col-12 col-lg-6">
                     <div class="single_product_thumb">
                         <div id="product_details_slider" class="carousel slide" data-ride="carousel">
-
                             <c:forEach items="${productInfo}" var="product">
                             <!-- Carousel Inner -->
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
+                                <input type="hidden" id="pCode" name="pCode" value="${product.pCode}">
                                     <a class="gallery_img" href="images/product/${product.pfRealName}" title="First Slide">
                                         <img class="d-block w-100" src="images/product/${product.pfRealName}" alt="First slide">
                                     </a>
@@ -140,56 +222,49 @@
                             <h6>Overview</h6>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum dolores natus laboriosam accusantium, suscipit saepe eum deleniti mollitia at, odio, facere nisi aspernatur doloribus aperiam atque deserunt minima vitae rerum laudantium. Sapiente distinctio ipsam vitae dolorum odit, suscipit, aliquid.</p>
                         </div>
-
-                        <!-- Color Option -->
-                        <div class="widget p-0 color mb-3">
+                        <!-- Color List -->
+					<%-- 	<c:forEach items="${colorList}" var="color">
+						    <div class="custom-control custom-radio">
+						        <input type="radio" id="customRadio${status.index + 1}" name="customRadio" class="custom-control-input" value="${color.pColor}">
+						        <label class="custom-control-label ${color.pColor}" for="customRadio${status.index + 1}"></label>
+						        <input type="button" style="color: ${color.pColor};">
+						    </div>
+						    <div class="custom-control custom-radio">
+						        <input type="radio" id="customRadio${status.index + 1}" name="customRadio" class="custom-control-input" value="${color.pColor}">
+						        <label class="custom-control-label black" for="customRadio${status.index + 1}"></label>
+						    </div>
+						    <div class="custom-control custom-radio">
+						        <input type="radio" id="customRadio${status.index + 1}" name="customRadio" class="custom-control-input" value="${color.pColor}">
+						        <label class="custom-control-label red" for="customRadio${status.index + 1}"></label>
+						    </div>
+						    <div class="custom-control custom-radio">
+						        <input type="radio" id="customRadio${status.index + 1}" name="customRadio" class="custom-control-input" value="${color.pColor}">
+						        <label class="custom-control-label khaki" for="customRadio${status.index + 1}"></label>
+						    </div>
+						</c:forEach> --%>
+						<div class="widget p-0 color mb-3">
                             <h6 class="widget-title">Color</h6>
                             <div class="widget-desc d-flex">
+									<c:forEach items="${colorList}" var="color">
                                 <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                                    <label class="custom-control-label black" for="customRadio1"></label>
+                                    	<input type="radio" id="${color.pColor}" name="customRadio" class="custom-control-input" value="${color.pColor}">
+                                    	<label class="custom-control-label ${color.pColor}" for="${color.pColor}"></label>
                                 </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                                    <label class="custom-control-label pink" for="customRadio2"></label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
-                                    <label class="custom-control-label red" for="customRadio3"></label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio4" name="customRadio" class="custom-control-input">
-                                    <label class="custom-control-label purple" for="customRadio4"></label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="customRadio5" name="customRadio" class="custom-control-input">
-                                    <label class="custom-control-label beige" for="customRadio5"></label>
-                                </div>
+									</c:forEach>
                             </div>
                         </div>
 
-                        <!-- Size Option -->
-                        <!-- <div class="widget p-0 size mb-3">
-                            <h6 class="widget-title">Size</h6>
-                            <div class="widget-desc">
-                                <ul>
-                                    <li><a href="#">XS</a></li>
-                                    <li><a href="#">S</a></li>
-                                    <li><a href="#">M</a></li>
-                                    <li><a href="#">L</a></li>
-                                    <li><a href="#">XL</a></li>
-                                </ul>
+						<!-- Add to Cart/Buy Form -->
+                            <div class="form-group">
+                            	<div class="input-form-group" style="display: flex; align-items: center;">
+	                            	<button type="button" id="plusQtyBtn" class="btn btn-dark btn-sm" onclick="decreaseQuantity()">-</button>&nbsp;&nbsp;
+	                            	<input type="text" id="quantity" name="quantity" class="form-control" style="width: 45px" value="1" min="1" max="10" readonly="readonly">&nbsp;&nbsp;
+	                            	<button type="button" id="minusQtyBtn" class="btn btn-dark btn-sm" onclick="increaseQuantity()">+</button>
+                            	</div>
+                            	<br/>
+                            	<button type="button" id="cartBtn" name="cartBtn" value="5" class="btn btn-primary btn-sm" onclick="addToCart()">Add to cart</button>&nbsp;&nbsp;&nbsp;
+                            	<button type="button" id="buyBtn" name="buyBtn" value="5" class="btn btn-primary btn-sm" onclick="buy()">Buy</button>
                             </div>
-                        </div> -->
-
-                        <!-- Add to Cart/Buy Form -->
-                        <form class="cart clearfix my-5 d-flex flex-wrap align-items-center" method="post">
-                            <div class="quantity">
-                                <input type="number" class="qty-text form-control" id="qty2" step="1" min="1" max="12" name="quantity" value="1">
-                            </div>
-                            <button type="button" name="addtocart" value="5" class="btn btn-primary mt-1 mt-md-0 ml-1 ml-md-3">Add to cart</button>
-                            <button type="button" name="buy" value="5" class="btn btn-primary mt-1 mt-md-0 ml-1 ml-md-3">Buy</button>
-                        </form>
 
                         <!-- Others Info -->
                         <div class="others_info_area mb-3 d-flex flex-wrap">

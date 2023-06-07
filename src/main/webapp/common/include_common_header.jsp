@@ -499,21 +499,20 @@
 						<div class="classynav">
 							<ul>
 								<li><a href="index.do">Home</a></li>
-								<li><a href="product_list.do" id="shop_main_menu">Shop</a></li>
 								<c:if test="${empty SUID}">
+									<li><a href="product_list.do" id="shop_main_menu">Shop</a></li>
+									<li><a href="notice.do">Notice</a></li>
 									<li><a onclick="emptySessionUser()">Orders</a></li>
-								</c:if>
-								<c:if test="${!empty SUID}">
-									<li><a href="purchase_list.do">Orders</a></li>
-								</c:if>
-								<li><a href="faq">FAQ</a></li>
-								<c:if test="${empty SUID}">
+									<li><a onclick="emptySessionUser()">QNA</a></li>
 									<li><a onclick="emptySessionUser()">Board</a></li>
 								</c:if>
 								<c:if test="${!empty SUID}">
-									<li><a href="qna_list">Board</a></li>
+									<li><a href="product_list.do" id="shop_main_menu">Shop</a></li>
+									<li><a href="notice.do">Notice</a></li>
+									<li><a href="purchase_list.do">Orders</a></li>
+									<li><a href="question_list.do">QNA</a></li>
+									<li><a href="board_list.do">Board</a></li>
 								</c:if>
-
 							</ul>
 						</div>
 					</div>
@@ -639,7 +638,7 @@
 								<ul class="user-meta-dropdown">
 									<li class="user-title"><span>Hello,&nbsp;</span>${SUNICKNAME}😉</li>
 									<li><a href="user_my_account.do">My Account</a></li>
-									<li><a href="order_list">Orders List</a></li>
+									<li><a href="purchase_list.do">Orders List</a></li>
 									<li><a href="wishlist_view">Wishlist</a></li>
 									<li><a href="logout.do"><i class="icofont-logout"></i>Logout</a></li>
 								</ul>

@@ -16,6 +16,8 @@ public class AdminDto {
 	String cgName;
 	String pColor;
 	int pStock;
+	String pfHoverName;
+	String pfHoverRealName;
 	
 	// 주문처리에 필요한 변수
 	int pcNo;
@@ -35,10 +37,19 @@ public class AdminDto {
 	int nNo;
 	
 	
+	
 	//차트에 필요한 변수
 	String dayName;
 	int daySum;
 	int colorSum;
+	
+	
+	// 날짜별매출에 필요한 변수
+	int sum;
+	int total;
+	
+	
+	
 	
 	public AdminDto() {
 		// TODO Auto-generated constructor stub
@@ -53,6 +64,20 @@ public class AdminDto {
 	
 	
 	
+	
+	
+	
+
+
+	public AdminDto(Date pcInsertdate, String pBrandName ,String pName, int pPrice, int sum, int total ) {
+		super();
+		this.pName = pName;
+		this.pBrandName = pBrandName;
+		this.pPrice = pPrice;
+		this.sum = sum;
+		this.total = total;
+		this.pcInsertdate = pcInsertdate;
+	}
 
 
 	public AdminDto(String dayName, int daySum) { //요일별합계
@@ -107,12 +132,21 @@ public class AdminDto {
 	
 	
 	
+	public AdminDto(int nNo, String aid, String nTitle, Date nInsertdate, String nContent) {
+		super();
+		this.aid = aid;
+		this.nTitle = nTitle;
+		this.nInsertdate = nInsertdate;
+		this.nNo = nNo;
+		this.nContent = nContent;
+	}
 	public AdminDto(int nNo, String aid, String nTitle, Date nInsertdate) {
 		super();
 		this.aid = aid;
 		this.nTitle = nTitle;
 		this.nInsertdate = nInsertdate;
 		this.nNo = nNo;
+		
 	}
 
 
@@ -410,6 +444,9 @@ public class AdminDto {
 	}
 
 
+	
+
+
 	public int getColorSum() {
 		return colorSum;
 	}
@@ -417,6 +454,46 @@ public class AdminDto {
 
 	public void setColorSum(int colorSum) {
 		this.colorSum = colorSum;
+	}
+
+
+	public int getSum() {
+		return sum;
+	}
+
+
+	public void setSum(int sum) {
+		this.sum = sum;
+	}
+
+
+	public int getTotal() {
+		return total;
+	}
+
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
+
+	public String getPfHoverName() {
+		return pfHoverName;
+	}
+
+
+	public void setPfHoverName(String pfHoverName) {
+		this.pfHoverName = pfHoverName;
+	}
+
+
+	public String getPfHoverRealName() {
+		return pfHoverRealName;
+	}
+
+
+	public void setPfHoverRealName(String pfHoverRealName) {
+		this.pfHoverRealName = pfHoverRealName;
 	}
 
 	

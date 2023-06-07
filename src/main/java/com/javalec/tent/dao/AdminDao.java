@@ -8,12 +8,9 @@ import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 import com.javalec.tent.dto.AdminDto;
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 public class AdminDao {
 	DataSource dataSource;
@@ -407,14 +404,16 @@ public class AdminDao {
 	
 	
 	//주문 상태 변경 메서드
-	public void statusUpdate(int pcStatus) {
+	public void statusUpdate(String pcStatus, String pcNo) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
 			connection = dataSource.getConnection();
-			String query = "update purchase pc, user u set pcStatus =? where u.uid = pc.uid";
+			//String query = "update purchase pc, user u set pc.pcStatus =? where u.uid = pc.uid and pc.pcNo = ?";
+			String query = "update purchase  set pcStatus =? where pcNo = ?";
 			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setInt(1, pcStatus);
+			preparedStatement.setString(1, pcStatus);
+			preparedStatement.setString(2, pcNo);
 			
 			
 			
@@ -454,7 +453,7 @@ public class AdminDao {
 		try {
 			connection = dataSource.getConnection();
 			
-			String WhereDefault = "select n.nNo, n.aid, n.nTitle, n.nInsertDate from notice n,admin a where n.aid = a.aid";
+			String WhereDefault = "select n.nNo, n.aid, n.nTitle, n.nInsertDate from notice n,admin a where n.aid = a.aid and n.nCgNo=1";
 			
 			
 			preparedStatement = connection.prepareStatement(WhereDefault);
@@ -634,8 +633,129 @@ public class AdminDao {
 	}
 	
 	
+	// 날짜별 매출 계산하기 위한 메서드
+	public ArrayList<AdminDto> dailySale(String startDate, String endDate) {
+		int total= 0;
+		ArrayList<AdminDto> dtos = new ArrayList<AdminDto>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			
+			if((startDate != null && !startDate.equals(null))&& !startDate.equals("")) {
+			connection = dataSource.getConnection();
+			
+			String WhereDefault = "select pc.pcInsertDate, p.pBrandName, p.pName, pc.pcQty, pc.pcQty*p.pPrice from product p, purchase pc where p.pCode = pc.pCode and pc.pcInsertDate between ? and ?";
+			
+			
+			preparedStatement = connection.prepareStatement(WhereDefault);
+			preparedStatement.setString(1, startDate);
+			preparedStatement.setString(2, endDate);
+
+			
+			
+			}else {
+				connection = dataSource.getConnection();
+				
+				String WhereDefault = "select pc.pcInsertDate, p.pBrandName, p.pName, pc.pcQty, pc.pcQty*p.pPrice from product p, purchase pc where p.pCode = pc.pCode";
+				
+				preparedStatement = connection.prepareStatement(WhereDefault);
+				
+			}
+			
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				Date pcInsertdate = resultSet.getDate(1);
+				String pBrandName= resultSet.getString(2);
+				String pName= resultSet.getString(3);
+				int pcQty = resultSet.getInt(4);
+				int sum = resultSet.getInt(5);
+
+				total +=sum;
+				
+				AdminDto dto = new AdminDto(pcInsertdate, pBrandName, pName, pcQty, sum,total);
+				dtos.add(dto);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet != null){ // 무언가 들어가 있으면close
+					resultSet.close();
+				}
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return dtos;
+		
+		
+	}
 	
 	
+	
+
+	// FAQ 메서드
+	public ArrayList<AdminDto> faqSearch(String aaid) {
+		
+		
+		ArrayList<AdminDto> dtos = new ArrayList<AdminDto>();
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			connection = dataSource.getConnection();
+			
+			String WhereDefault = "select n.nNo, n.aid, n.nTitle, n.nInsertDate, n.nContent from notice n,admin a where n.aid = a.aid and n.nCgNo=2";
+			
+			
+			preparedStatement = connection.prepareStatement(WhereDefault);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				int nNo = resultSet.getInt(1);
+				String aid = resultSet.getString(2);
+				String nTitle = resultSet.getString(3);
+				Date nInsertDate = resultSet.getDate(4);
+				String nContent = resultSet.getString(5);
+				
+		
+				AdminDto dto = new AdminDto(nNo, aid, nTitle, nInsertDate, nContent);
+				dtos.add(dto);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(resultSet != null){ // 무언가 들어가 있으면close
+					resultSet.close();
+				}
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return dtos;
+	
+	
+	}
 	
 	
 	

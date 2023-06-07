@@ -85,6 +85,8 @@
     
     <label for="file">파일:</label>
     <input type="file" name="file" id="file"><br>
+    <label for="file1">호버파일:</label>
+    <input type="file" name="file1" id="file1"><br>
     
     <input type="submit" value="입력"> 
   </form>

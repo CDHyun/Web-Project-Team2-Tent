@@ -1,3 +1,4 @@
+<%@page import="com.javalec.tent.dto.AdminDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -21,6 +22,9 @@
 
   .content {
     margin-left: 350px;
+  }
+  .content2 {
+    margin-left: 950px;
   }
 
   table {
@@ -53,6 +57,7 @@
   <div class="container">
     <div class="row my-3">
       <div class="col-lg-6">
+      <h3>요일별 판매량</h3>
         <canvas id="myChart" style="width: 100%; height: 300px;"></canvas>
       </div>
       <div class="col-lg-6">
@@ -86,7 +91,7 @@
     data: {
       labels: ['월', '화', '수', '목', '금', '토', '일'],
       datasets: [{
-        label: '# of Votes',
+       label: 'SUM of DailySale', 
         data: [${data}],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
@@ -121,19 +126,19 @@
   });
 
     // 도넛차트
-    var donut = [${datas}];
-    for (var i = 0; i < donut.length; i++){
-    	console.log(donut[i])
-    } 
+   
 
     
     data = {
       datasets: [{
-        backgroundColor: ['Red', 'Yellow', 'Blue', 'Black','Orange'],   // 색상은 나중에 고정되면 정해야함
-        data: [1,2,3]
+        backgroundColor: ['Black','Beige','Khakii','White','Grey','Orange'],   // 색상은 나중에 고정되면 정해야함
+        borderColor: 'Black', // 검정색 테두리
+        borderWidth: 1, // 테두리의 너비 설정
+        data: [1,2,3,4,5,6]
+        //data: [${datas}]
       }],
       // 라벨의 이름이 툴팁처럼 마우스가 근처에 오면 나타남
-      labels: ['Red', 'Yellow', 'Blue', 'Black','Orange'] // 범례
+      labels: ['Black','Beige','Khakii','White','Grey','Orange'] // 범례
     };
 
     // 도넛형 차트
@@ -151,32 +156,42 @@
   </script>
   
   <br/><br/><br/>
-  <table border="" class="content" >
+  
+  
+  
+  
+
+<form action="adminfirst.do" method="post" class="content">
+  <label for="startDate">시작일:</label>
+  <input type="date" id="startDate" name="startDate">&nbsp;&nbsp;
+  <label for="endDate">종료일:</label>
+  <input type="date" id="endDate" name="endDate">
+  <button type="submit">검색</button>
+</form>
+
+
+ 
+ 
+<p class="content2">총 매출액 : <input type="text" name="sumAll" id="sumAll" readonly="readonly" size="15" value="${TOTAL }">원</p>
+
+
+
+<table border="" class="content">
   <tr>
-    <th>구매번호</th>
-    <th>구매자</th>
-    <th>제품번호</th>
-    <th>색상</th>
-    <th>수량</th>
-    <th>주문날짜</th>
-   	<th>상태</th>
+    <th>주문일자</th>
+    <th>브랜드명</th>
+    <th>상품명</th>
+    <th>합계금액</th>
   </tr>
-  <c:forEach items="${check}" var="dto">
+  
+ 
+  
+  <c:forEach items="${SALES}" var="dto">
     <tr>
-      <td>${dto.pcNo}</td>
-      <td>${dto.uid}</td>
-      <td>${dto.pCode}</td>
-      <td>${dto.pColor}</td>
-      <td>${dto.pcQty}</td>
       <td>${dto.pcInsertdate}</td>
-     <td>
-  		<select name="status">
-  			<option value="-1" ${dto.pcStatus == -1 ? 'selected' : ''}>주문취소</option>
-  			<option value="0" ${dto.pcStatus == 0 ? 'selected' : ''}>상품준비중</option>
- 			<option value="1" ${dto.pcStatus == 1 ? 'selected' : ''}>배송중</option>
-  			<option value="2" ${dto.pcStatus == 2 ? 'selected' : ''}>배송완료</option>
-		</select>
-	</td>
+      <td>${dto.pBrandName}</td>
+      <td>${dto.pName}</td>
+      <td>${dto.sum}</td>
     </tr>
   </c:forEach>
 </table>

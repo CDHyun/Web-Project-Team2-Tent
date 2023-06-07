@@ -23,6 +23,13 @@ public class AdminNoticeSelect implements TentCommand {
 		// all product select 
 		ArrayList<AdminDto> dtos = dao.noticeSearch(aid);
 		request.setAttribute("list", dtos);
+		
+		
+		
+		// FAQ Select
+		ArrayList<AdminDto> dtos1 = dao.faqSearch(aid);
+		request.setAttribute("FAQ", dtos1);
+		
 	}
 
 }

@@ -16,12 +16,15 @@ public class PurchaseInsertCommand implements TentCommand {
 		HttpSession session = request.getSession();
 		String uid = (String)session.getAttribute("SUID");
 		String sdm = (String)session.getAttribute("pcDM");
-		int pCode = Integer.parseInt(request.getParameter("pCode"));
-		int pcQty = Integer.parseInt(request.getParameter("pcQty"));
+		int pCode = (int)session.getAttribute("PCODE");
+		int pcQty = (int)session.getAttribute("PCQTY");
+		String pColor = (String)session.getAttribute("PCOLOR");
 		
 		
 		PurchaseDao dao = new PurchaseDao();
-		dao.purchaseinsert(uid, pCode, pcQty, sdm);
+		dao.purchaseinsert(uid, pCode, pcQty, sdm, pColor);
+		
+		
 		
 	
 		

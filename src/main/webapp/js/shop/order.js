@@ -91,7 +91,6 @@ $("#order_create_btn").on("click", function(e){
 
 /*
 주문 상세 모달 출력 전 데이터 조회 
-*/
 $('#order_detail_modal').on('show.bs.modal', function(e){
 	let o_no = $(e.relatedTarget).attr("o_no");
 	$.ajax({
@@ -132,7 +131,6 @@ $('#order_detail_modal').on('show.bs.modal', function(e){
 				}		      
 				itemHtmlBuffer += `</th></tr>`;
 				$("#item_info_body").html(itemHtmlBuffer);
-				/***상세보기삭제버튼에 o_no 넣기 *****/
 				$(e.target).find('#order_delete_btn').attr('o_no',o_no);
 				
 			}else{
@@ -141,6 +139,7 @@ $('#order_detail_modal').on('show.bs.modal', function(e){
 		}
 	});
 });
+*/
 
 /*
 개별 주문 삭제 

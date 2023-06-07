@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>	
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="en">
 
@@ -16,6 +15,46 @@
 	<jsp:include page="common/include_common_top.jsp"/>
     <!-- include_common_top -->
     <link rel="stylesheet" href="css/shop/order.css">
+<script type="text/javascript">
+
+	
+	function DeletePurchase() {
+		var pcNo = $('#d_pcNo').val();
+		ToastConfirm.fire({ icon: 'question', title: "해당 상품을 주문취소 하시겠습니까?" }).then((result) => {
+			if(result.isConfirmed){
+				$.ajax({
+					type : 'POST',
+					url : './DeletePurchase',
+					data : {
+						pcNo : pcNo,
+					},
+					success : function(result) {
+						console.log(result);
+						if (result === "0") {
+							Toast.fire({ icon : 'warning', title : "주문취소 중 문제가 발생했습니다." });
+							return;
+						}
+						if (result === "1") {
+							Toast.fire({ icon: 'success', title: "주문이 취소 되었습니다." }).then(() => {
+								  window.location.href = "purchase_delete.do";
+								});
+						}
+					},
+					error : function() {
+						Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
+					 }
+			    });
+			}
+		});
+	}
+	  
+	</script>
+	
+	
+	
+	
+
+</script>
 
 </head>
 
@@ -80,33 +119,35 @@
                                     <c:if test="${orderList.size() == 0}">
                                 		<tr>
                                 			<td colspan="5">등록된 주문목록이 없습니다 🙂</td>
+                                			
                                 		</tr>
                                 	</c:if>
-                                    <c:forEach items="${orderList}" var="order">
-                                        <tr id="order_${order.pfRealName}">
-                                            <th scope="row">
-                                                ${order.o_desc}
-                                            </th>
-                                            <td>
-                                                <fmt:formatDate value="${order.o_date}" pattern="yyyy-MM-dd"/>
-                                            </td>
-                                            <td>
-                                                ${order.o_status}
-                                            </td>
-                                            <td>&#8361;<s:eval expression="new java.text.DecimalFormat('#,##0').format(order.o_price)"/></td>
-                                            <td>
-			                                    <button type="button" class="btn btn-primary" data-toggle="modal" o_no="${order.o_no}" data-target="#order_detail_modal">
-						                            View
-						                        </button>
-                                            </td>
-                                        </tr>
-                                       </c:forEach>
+                                	<tr>
+	                                	<c:forEach items="${purchaseList}" var="purchase">
+	                                    		<td>${purchase.pcNo}</td>
+	                                    		<td>${purchase.pcInsertDate}</td>
+	                                    		<c:if test="${purchase.pcStatus == 0}">
+												    <td>
+												        <span class="bigshop-label bigshop-label-info">배송 준비중</span>
+												    </td>
+												</c:if>
+	                                    		<c:if test="${purchase.pcStatus == -1}">
+												    <td>
+												        <span class="bigshop-label bigshop-label-success">취소됨</span>
+												    </td>
+												</c:if>
+	                                            <td>${purchase.pPrice}</td>
+	                                            <td>
+				                                    <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#order_detail_modal">View</button>
+	                                            </td>
+	                                       
+                                	</tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <c:if test="${orderList.size() != 0}">
+                    <c:if test="${purchaseList.size() != 0}">
                      	<button type="button" class="btn btn-primary mb-1" id="order_all_delete_btn">Delete All</button>
                 	</c:if>
                	</div>
@@ -127,9 +168,7 @@
 	                    </div>
 	                    <div class="modal-body">
 	                        <p class="mb-0">
-	                        
 	                        <!-- order detail data -->
-	                        	
 						    <div class="shortcodes_area section_padding_40">
 						        <div class="container">
 						            <div class="row">
@@ -145,48 +184,17 @@
 						                                        <th scope="col">No</th>
 						                                        <th scope="col">Date</th>
 						                                        <th scope="col">Name</th>
-						                                        <th scope="col">Pay</th>
-						                                        <th scope="col">Message</th>
+						                                        <th scope="col">Phone</th>
+						                                        <th scope="col">Address</th>
 						                                    </tr>
 						                                </thead>
 						                                <tbody id="orderer_info_body">
 						                                    <tr>
-						                                        <th scope="row">1</th>
-						                                        <td>Mark</td>
-						                                        <td>Otto</td>
-						                                        <td>@mdo</td>
-						                                        <td>@mdo</td>
-						                                    </tr>
-						                                </tbody>
-						                            </table>
-						                        </div>
-						                    </div>
-						                </div>
-						            </div>
-						        </div>
-						    </div>
-						    <div class="shortcodes_area section_padding_40">
-						        <div class="container">
-						            <div class="row">
-						                <div class="col-12">
-						                    <div class="shortcodes_title mb-30">
-						                        <h6>Receiver Info</h6>
-						                    </div>
-						                    <div class="shortcodes_content">
-						                        <div class="table-responsive">
-						                            <table class="table mb-0 table-bordered">
-						                                <thead>
-						                                    <tr>
-						                                        <th scope="col">Name</th>
-						                                        <th scope="col">phone</th>
-						                                        <th scope="col">address</th>
-						                                    </tr>
-						                                </thead>
-						                                <tbody id="receiver_info_body">
-						                                    <tr>
-						                                        <th scope="row">1</th>
-						                                        <td>Mark</td>
-						                                        <td>Otto</td>
+						                                        <th scope="row">${purchase.pcNo}</th>
+						                                        <td>${purchase.pcInsertDate}</td>
+						                                        <td>${purchase.pName}</td>
+						                                        <td>${purchase.uPhone}</td>
+						                                        <td>${purchase.uaAddress}</td>
 						                                    </tr>
 						                                </tbody>
 						                            </table>
@@ -210,16 +218,16 @@
 						                                    <tr>
 						                                        <th scope="col"></th>
 						                                        <th scope="col">Item</th>
-						                                        <th scope="col">Quentity</th>
+						                                        <th scope="col">Quantity</th>
 						                                        <th scope="col">price</th>
 						                                    </tr>
 						                                </thead>
 						                                <tbody id="item_info_body">
 						                                    <tr>
 						                                        <th scope="row">1</th>
-						                                        <td>Mark</td>
-						                                        <td>Otto</td>
-						                                        <td>@mdo</td>
+						                                        <td>${purchase.pName}</td>
+						                                        <td>${PCQTY}</td>
+						                                        <td>${purchase.pPrice}</td>
 						                                    </tr>
 						                                    <tr>
 						                                        <th scope="row" colspan="4">total</th>
@@ -232,19 +240,19 @@
 						            </div>
 						        </div>
 						    </div>
-						
 						<!-- order detail data -->
 
 						</p>
 	                    </div>
 	                    <div class="modal-footer">
 	                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	                        <button type="button" class="btn btn-primary" id="order_delete_btn" o_no="${order.o_no}">Delete</button>
+	                        <button type="button" class="btn btn-primary" id="order_delete_btn">Delete</button>
 	                    </div>
 	                </div>
 	            </div>
 	        </div>
 	    </div>
+	    </c:forEach>
 	<!-- 오더상세보기 모달 끝 -->        
     
     <!-- My Account Area -->
@@ -255,7 +263,7 @@
 
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp"/>
-	<script src="js/shop/order.js"></script>
+	<script src="js/shop/order.js?after"></script>
 	<script type = "text/javascript">
 	/********개별주문 삭제***********/
 	$('#order_delete_btn').on('click',function(e){

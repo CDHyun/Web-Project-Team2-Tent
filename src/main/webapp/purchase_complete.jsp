@@ -55,9 +55,10 @@
                     <div class="order_complated_area clearfix">
                         <h5>Thank You For Your Order.</h5>
                         <p>주문이 정상적으로 접수되었습니다 🙂</p>
-                        <p class="orderid mb-0">${complete.uid}님의 주문은 [${complete.pcStatus}] 상태입니다</p>
+                        <p class="orderid mb-0">${SUID}님의 주문은 
+                        <c:if test="${purchase.pcStatus == 0}">배송 준비중 입니다.</c:if></p>
                         <br>
-                        <input type="button" class="order_list_btn" value="order list" onclick="location.href='order_list'">
+                   <a href="purchase_list.do"><button type="button" class="order_list_btn" id="order list">order list</button></a>
                     </div>
                 </div>
             </div>

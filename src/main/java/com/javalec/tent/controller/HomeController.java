@@ -20,13 +20,20 @@ import com.javalec.tent.command.AdminPurchaseStatusCommand;
 import com.javalec.tent.command.AdminStatusChangeCommand;
 import com.javalec.tent.command.AdminSummaryCommand;
 import com.javalec.tent.command.AdminUpdateCommand;
+import com.javalec.tent.command.BoardDetailCommand;
+import com.javalec.tent.command.BoardListCommand;
+import com.javalec.tent.command.BoardWriteCommand;
+import com.javalec.tent.command.QuestionListCommand;
+import com.javalec.tent.command.QuestionWriteCommand;
 import com.javalec.tent.command.CartCommand;
 import com.javalec.tent.command.CartDeleteCommand;
 import com.javalec.tent.command.CartUpdateCommand;
 import com.javalec.tent.command.IndexCommand;
 import com.javalec.tent.command.ProductDetailCommand;
 import com.javalec.tent.command.PurchaseCheckInfoCommand;
+import com.javalec.tent.command.PurchaseCompleteCommand;
 import com.javalec.tent.command.PurchaseInsertCommand;
+import com.javalec.tent.command.PurchaseListCommand;
 import com.javalec.tent.command.PurchaserInfoCommand;
 import com.javalec.tent.command.TentCommand;
 import com.javalec.tent.command.UserAddressListCommand;
@@ -115,6 +122,37 @@ public class HomeController extends HttpServlet {
 			command = new ProductDetailCommand();
 			command.execute(request, response);
 			viewPage = "product_detail.jsp";
+			break;
+		case "/question_list.do":
+			command = new QuestionListCommand();
+			command.execute(request, response);
+			viewPage = "question.jsp";
+			break;
+		case "/question_write_form.do":
+			viewPage = "question_write_form.jsp";
+			break;
+		case "/question_write.do":
+			command = new QuestionWriteCommand();
+			command.execute(request, response);
+			viewPage = "question_list.do";
+			break;
+		case "/board_list.do":
+			command = new BoardListCommand();
+			command.execute(request, response);
+			viewPage = "board.jsp";
+			break;
+		case "/board_write_form.do":
+			viewPage = "board_write_form.jsp";
+			break;
+		case "/board_write.do":
+			command = new BoardWriteCommand();
+			command.execute(request, response);
+			viewPage = "board_list.do";
+			break;
+		case "/board_detail.do":
+			command = new BoardDetailCommand();
+			command.execute(request, response);
+			viewPage = "board_detail.jsp";
 			break;
 		case "/adminindex.do":  // 상품보여주기
 			command = new AdminCommand();
@@ -215,7 +253,18 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "adminSummary.jsp";
 			break;
-			
+			/* 주문접수 완료 페이지로 이동 */
+		case("/purchase_complete.do"):
+			command = new PurchaseCompleteCommand();
+			command.execute(request, response);
+			viewPage = "purchase_complete.jsp";
+			break;
+	/* 주문내역 페이지로 이동 */
+		case("/purchase_list.do"):
+			command = new PurchaseListCommand();
+			command.execute(request, response);
+			viewPage = "purchase_list.jsp";
+			break;
 		default:
 			break;
 		}

@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>	
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:useBean id="toDay" class="java.util.Date" />
 <!doctype html>
 <html lang="en">
 
@@ -39,8 +37,8 @@
                 <div class="col-12">
                     <h5>Board</h5>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active">Board</li>
+                        <li class="breadcrumb-item"><a href="index.do">Home</a></li>
+                        <li class="breadcrumb-item active">Board Detail</li>
                     </ol>
                 </div>
             </div>
@@ -53,44 +51,42 @@
             <div class="row">
                 <div class="col-12">
                     <div class="shortcodes_title mb-30">
-                        <h4>QnA Write</h4>
+                        <h4>Board View</h4>
                     </div>
+                    <c:forEach items="${boardDetail}" var="board">
                     <div class="shortcodes_content">
                         <div class="table-responsive">
-                        	<form id="qna_write_form" method="post">
-	                            <table class="table mb-0 table-bordered">
-	                                <thead>
-	                                    <tr>
-	                                        <th scope="col" class="board_title">
-	                                        	<input type="text" name="q_title" id="q_title_txt" placeholder=" title" />
-	                                        </th>
-	                                        <th scope="col" class="board_writer">${sM_id}</th>
-	                                        <th scope="col" class="board_date"><fmt:formatDate value='${toDay}' pattern='yyyy-MM-dd' /></th>
-	                                    </tr>
-	                                </thead>
-	                                <tbody>
-	                                    <tr>
-	                                        <td id="qna_content_td" colspan="3">
-	                                        	<textarea name="q_content" id="q_content_area" placeholder=" content"></textarea>
-	                                        </td>
-	                                    </tr>
-	                                </tbody>
-	                            </table>
-                      				<input type="hidden" name="pageno" value="${pageno}" />
-                      				<input type="hidden" name="m_id" value="${sM_id}" />
-                			</form>
+                            <table class="table mb-0 table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="board_title">${board.bTitle}</th>
+                                        <th scope="col" class="board_writer">${board.uNickName}</th>
+                                        <th scope="col" class="board_date">${board.bInsertDate}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="board_content_td" colspan="3">${board.bContent}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     	<div id="qna_btn_container">
-							<input class="qna_btn new_write" type="button" value="등록" />
-							<input class="qna_btn list" type="button" pageno="${pageno}" value="목록" />
-                    	</div>
+                    	<c:if test="${board.uid eq SUID}">
+							<input class="board_btn update_form" type="button" pageno="${pageno}" q_no="${qna.q_no}" value="수정"/>&nbsp;&nbsp;
+							<input class="board_btn delete" type="button" pageno="${pageno}" q_no="${qna.q_no}" value="삭제"/>&nbsp;&nbsp;
+                    	</c:if>
+							<input class="board_btn reply" type="button" pageno="${pageno}" q_no="${qna.q_no}" value="답글"/>&nbsp;&nbsp;
+							<input class="board_btn list" type="button" pageno="${pageno}" value="목록"/>&nbsp;&nbsp;
+                   	</div>
+                </c:forEach>
                 </div>
             </div>
             
          </div>
     </div>     
-            
+                      
     <!-- Footer Area -->
  	<jsp:include page="common/include_common_bottom.jsp"/>
     <!-- Footer Area -->
@@ -99,6 +95,9 @@
 	<jsp:include page="common/include_common_script.jsp"/>
 	<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 	<script src="js/shop/board.js"></script>
+	<script type="text/javascript">
+		
+	</script>
 
 </body>
 
