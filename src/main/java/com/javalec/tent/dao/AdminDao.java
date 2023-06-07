@@ -373,7 +373,6 @@ public class AdminDao {
 				Date pcInsertdate = resultSet.getDate(6);
 				int pcStatus = resultSet.getInt(7);
 				
-				
 		
 				AdminDto dto = new AdminDto(pcNo, uid, pCode, pColor, pcQty, pcStatus, pcInsertdate);
 				dtos.add(dto);
@@ -404,16 +403,16 @@ public class AdminDao {
 	
 	
 	//주문 상태 변경 메서드
-	public void statusUpdate(String pcStatus, String pcNo) {
+	public void statusUpdate(int pcStatus, int pcNo) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
 			connection = dataSource.getConnection();
 			//String query = "update purchase pc, user u set pc.pcStatus =? where u.uid = pc.uid and pc.pcNo = ?";
-			String query = "update purchase  set pcStatus =? where pcNo = ?";
+			String query = "update purchase pc,product p set pc.pcStatus =? where p.pCode= pc.pCode and pc.pcNo = ?";
 			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, pcStatus);
-			preparedStatement.setString(2, pcNo);
+			preparedStatement.setInt(1, pcStatus);
+			preparedStatement.setInt(2, pcNo);
 			
 			
 			

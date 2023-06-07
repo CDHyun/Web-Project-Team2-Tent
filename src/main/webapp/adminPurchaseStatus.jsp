@@ -51,7 +51,6 @@
     </div>
     <!-- Header End -->
 
-    <form action="adminStatusChange.do" method="post" name="statusForm" class="content">
         <table border="">
         <tr>
             <th>구매번호</th>
@@ -61,32 +60,35 @@
             <th>수량</th>
             <th>주문날짜</th>
             <th>상태</th>
+            <th width="5px">확인</th>
         </tr>
-        <c:forEach items="${check}" var="dto" >
-            <tr>
-                <td>${dto.pcNo}</td>
-                <td>${dto.uid}</td>
-                <td>${dto.pCode}</td>
-                <td>${dto.pColor}</td>
-                <td>${dto.pcQty}</td>
-                <td>${dto.pcInsertdate}</td>
-                <td>
-                    <select name="status" >
-                        <option value="-1" ${dto.pcStatus == -1 ? 'selected' : ''}>주문취소</option>
-                        <option value="0" ${dto.pcStatus == 0 ? 'selected' : ''}>상품준비중</option>
-                        <option value="1" ${dto.pcStatus == 1 ? 'selected' : ''}>배송중</option>
-                        <option value="2" ${dto.pcStatus == 2 ? 'selected' : ''}>배송완료</option>
-                    </select>
-                </td>
-                <td>
-                        <input type="hidden" name="pcNo" value="${dto.pcNo}">
-                </td>
-            </tr>
-        </c:forEach>
+        <c:forEach items="${check}" var="dto">
+    <form action="adminStatusChange.do" method="post"  class="content">
+   			 <tr>
+       			 <td>
+    				<input type="hidden" name="pcNo" value="${dto.pcNo}">
+    				${dto.pcNo}
+				</td>
+        		<td>${dto.uid}</td>
+        		<td>${dto.pCode}</td>
+        		<td>${dto.pColor}</td>
+        		<td>${dto.pcQty}</td>
+        		<td>${dto.pcInsertdate}</td>
+        		<td>
+           		 <select name="status">
+               		 <option value="-1" ${dto.pcStatus == -1 ? 'selected' : ''}>주문취소</option>
+              		  <option value="0" ${dto.pcStatus == 0 ? 'selected' : ''}>상품준비중</option>
+            		  <option value="1" ${dto.pcStatus == 1 ? 'selected' : ''}>배송중</option>
+           		      <option value="2" ${dto.pcStatus == 2 ? 'selected' : ''}>배송완료</option>
+            		</select>
+        		</td>
+        		<td><input type="submit" value="확인" class="content2" size="5"></td>
+    		</tr>
+    </form>
+		</c:forEach>
+
     </table>
         <br /><br />
-        <input type="submit" value="확인" class="content2" onclick="change()">
-    </form>
     
   
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
