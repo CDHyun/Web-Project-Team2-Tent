@@ -278,7 +278,7 @@ public PurchaseDao() {
   	}
 
  	 
- 	  public ArrayList<PurchaseDto> purchaseCheckList(int ppcode) {
+ 	  public ArrayList<PurchaseDto> purchaseCheckList(String uuid, int ppcode) {
  	 		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
  	 		System.out.println("DAO 호출");
  	 		Connection connection = null;
@@ -289,9 +289,11 @@ public PurchaseDao() {
  	 			connection = dataSource.getConnection();
  	 			String query = "SELECT u.uid, p.pCode, p.pName, p.pPrice, pf.pfRealName, pf.pfHoverRealName, pc.pcStatus "
  	 							+ "FROM product p, user u, productfile pf, purchase pc " 
- 	 							+ "WHERE pf.pCode = p.pCode and pc.pCode = p.pCode and pc.uid = u.uid and p.pCode = ? ";
+ 	 							+ "WHERE pc.pCode = p.pCode and pc.uid = u.uid and p.pCode = ? and u.uid = ?";
  	 			preparedStatement = connection.prepareStatement(query);
  	 			preparedStatement.setInt(1, ppcode);
+ 	 			preparedStatement.setString(2, uuid);
+ 	 			
  	 			resultSet = preparedStatement.executeQuery();
 
  	 		if (resultSet.next()) {

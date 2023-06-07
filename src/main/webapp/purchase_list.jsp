@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>	
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="en">
 
@@ -136,7 +137,7 @@
 												        <span class="bigshop-label bigshop-label-success">취소됨</span>
 												    </td>
 												</c:if>
-	                                            <td>${purchase.pPrice}</td>
+	                                          <td><fmt:formatNumber value="${purchase.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
 	                                            <td>
 				                                    <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#order_detail_modal">View</button>
 	                                            </td>
