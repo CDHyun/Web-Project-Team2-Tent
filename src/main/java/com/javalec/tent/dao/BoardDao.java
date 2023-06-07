@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 
 import com.javalec.tent.dto.BoardDto;
 import com.javalec.tent.dto.QuestionDto;
+import com.javalec.tent.util.BoardPageMaker;
 
 public class BoardDao {
 
@@ -39,7 +40,6 @@ public class BoardDao {
 	}
 	
 	public int boardCount(String queryContent){
-		ArrayList<BoardDto> boradList = new ArrayList<BoardDto>();
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -75,11 +75,58 @@ public class BoardDao {
 		return boardCount;
 	}	// boardList
 	
+	/*
+	 public List<Member> selectAllMember(int page){
+        //1번 페이지 1~10
+        //2번 페이지 11~20        
+        int startNum = (page-1)*10+1;
+        int endNum = page*10;
+        String sql = "SELECT * FROM ("
+                + "SELECT * FROM ("
+                + "SELECT ROWNUM row_num, member2.* FROM member2"
+                + ") WHERE row_num >= ?"
+                + ") WHERE row_num <= ?";
+        List<Member> list = new ArrayList<Member>();
+        try{
+            conn = DBManager.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, startNum);
+            pstmt.setInt(2, endNum);
+            rs = pstmt.executeQuery();
+            while(rs.next()){
+                Member vo = new Member();
+                vo.setNum(rs.getInt("num"));
+                vo.setId(rs.getString("id"));
+                vo.setPwd(rs.getString("pwd"));
+                vo.setName(rs.getString("name"));
+                vo.setEmail(rs.getString("email"));
+                vo.setPhone(rs.getString("phone"));
+                vo.setIndate(rs.getString("indate"));
+                vo.setAdmin(rs.getInt("admin"));
+                list.add(vo);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            DBManager.Close(rs, stmt, conn);
+        }
+        return list;
+    }
+	  
+	 */
+	
+	
 	public ArrayList<BoardDto> boardList(String queryContent, int pageNo){
 		ArrayList<BoardDto> boradList = new ArrayList<BoardDto>();
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		BoardPageMaker boardPageMaker = new BoardPageMaker();
+		//1번 페이지 1~10
+        //2번 페이지 11~20        
+        int startNum = (pageNo-1)*boardPageMaker.getDisplayRow()+1;
+        int endNum = pageNo*boardPageMaker.getDisplayRow();
+		
 		
 		if(queryContent == null){ // 첫화면인 경우
 			queryContent = "";
@@ -87,12 +134,19 @@ public class BoardDao {
 
 		try {
 			con = dataSource.getConnection();
-			
-			String sql = "select bNo, uid, uNickName, bCgNo, bTitle, bContent, bInsertDate, bViewCount from board where bDeleted = 0 and bTitle like ? and bContent like ? limit ?,10";
+			String sql = "SELECT * FROM ("
+	                + "SELECT derivedTable.*, ROW_NUMBER() OVER () AS row_num FROM ("
+	                + "SELECT bNo, uid, uNickName, bCgNo, bTitle, bContent, bInsertDate, bViewCount "
+	                + "FROM board "
+	                + "WHERE bDeleted = 0 AND bTitle LIKE ? AND bContent LIKE ?"
+	                + ") AS derivedTable"
+	                + ") AS finalResult "
+	                + "WHERE row_num >= ? AND row_num <= ?";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, "%" + queryContent + "%");
 			ps.setString(2, "%" + queryContent + "%");
-			ps.setInt(3, (pageNo - 1) * 10); // 페이징 계산 수정
+			ps.setInt(3, startNum);
+            ps.setInt(4, endNum);
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				int bNo = rs.getInt(1);

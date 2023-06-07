@@ -39,6 +39,8 @@ import com.javalec.tent.command.TentCommand;
 import com.javalec.tent.command.UserAddressListCommand;
 import com.javalec.tent.command.UserInfoCommand;
 import com.javalec.tent.command.UserLogoutCommand;
+import com.javalec.tent.command.WishdeleteActionCommand;
+import com.javalec.tent.command.WishlistCommand;
 
 /**
  * Servlet implementation class HomeController
@@ -264,6 +266,16 @@ public class HomeController extends HttpServlet {
 			command = new PurchaseListCommand();
 			command.execute(request, response);
 			viewPage = "purchase_list.jsp";
+			break;
+		case "/wishlist.do":
+			command = new WishlistCommand();
+			command.execute(request, response);
+			viewPage = "Wishlist.jsp";
+			break;
+		case "/wishlistDelete.do":
+			command = new WishdeleteActionCommand();
+			command.execute(request, response);
+			viewPage = "wishlist.jsp";
 			break;
 		default:
 			break;

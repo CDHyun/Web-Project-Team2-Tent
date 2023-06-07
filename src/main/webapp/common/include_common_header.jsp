@@ -150,6 +150,7 @@
 						icon : 'warning',
 						title : "사용 가능한 아이디입니다."
 					});
+					
 				} else {
 					Toast.fire({
 						icon : 'warning',

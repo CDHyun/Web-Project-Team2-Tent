@@ -19,7 +19,7 @@
 	<script src="js/shop/user.js"></script>
 	<script type="text/javascript">
 	function addModalOpen() {
-		$('#userAddressAddModal').c
+		$('#userAddressAddModal').modal('show');
 		}
 	function modifyModalOpen() {
 		$('#userModifyAddressModal').modal('show');
