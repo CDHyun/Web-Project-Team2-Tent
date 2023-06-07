@@ -161,7 +161,46 @@ DataSource dataSource;
 	    return total;
 	}
 	
-	
+	// 상품 재고 많은순으로 보여주기.
+		public ArrayList<CartDto> recommend(int pCode){
+			ArrayList<CartDto> products = new ArrayList<>();
+			
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			ResultSet resultSet = null;
+			
+			try {
+				connection = dataSource.getConnection();
+				String query = "SELECT p.pCode, p.pName, p.pBrandName, p.pPrice, po.pColor, pf.pfRealName, pf.pfHoverRealName FROM Product p INNER JOIN ProductOption po ON p.pCode = po.pCode INNER JOIN productFile pf ON p.pCode = pf.pCode GROUP BY p.pCode, p.pName, p.pBrandName, p.pPrice, po.pColor, pf.pfRealName, pf.pfHoverRealName ORDER BY SUM(po.pStock) DESC";
+				preparedStatement = connection.prepareStatement(query);
+				resultSet = preparedStatement.executeQuery();
+				
+				while(resultSet.next()) {
+					int pCode1 = resultSet.getInt("pCode");
+					String pName = resultSet.getString("pName");
+					String pBrandName = resultSet.getString("pBrandName");
+					int pPrice = resultSet.getInt("pPrice");
+					String pColor = resultSet.getString("pColor");
+					String pfRealName = resultSet.getString("pfRealName");
+					String pfHoverRealName = resultSet.getString("pfHoverRealName");
+					
+					CartDto product = new CartDto(pCode1, pName, pPrice, pBrandName, pPrice, pfRealName, pfHoverRealName, pColor);
+					products.add(product);
+				}
+			}catch (Exception e) {
+					e.printStackTrace();
+			}finally {
+				try {
+					if(resultSet != null) resultSet.close();	
+					if(preparedStatement != null) preparedStatement.close();
+					if(connection != null) connection.close();
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			}
+			return products;
+		}
 	
 	
 }// End

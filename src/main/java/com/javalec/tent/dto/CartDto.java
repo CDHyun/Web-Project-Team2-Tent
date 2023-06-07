@@ -11,6 +11,11 @@ public class CartDto {
 	String pBrandName;
 	String pColor;
 	int pStock;
+	int cgNo;
+	String pfRealName;
+	String pfHoverRealName;
+	
+	
 	public CartDto() {
 		// TODO Auto-generated constructor stub
 	}
@@ -47,6 +52,20 @@ public class CartDto {
 			this.pCode = pCode;
 			this.uid = uid;
 		}
+	
+	// 장바구니에서 재고 많은 상품 보여주기
+	public CartDto(int pCode, String pName, int pPrice, String pBrandName, String pColor, int cgNo, String pfRealName,
+			String pfHoverRealName) {
+		super();
+		this.pCode = pCode;
+		this.pName = pName;
+		this.pPrice = pPrice;
+		this.pBrandName = pBrandName;
+		this.pColor = pColor;
+		this.cgNo = cgNo;
+		this.pfRealName = pfRealName;
+		this.pfHoverRealName = pfHoverRealName;
+	}
 	
 	
 	
