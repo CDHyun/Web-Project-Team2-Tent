@@ -24,5 +24,5 @@ public class CartCommand implements TentCommand {
 		double total = dao.totalPrice(uid);
 		request.setAttribute("TOTAL", total);
 	}
-	 
+	 //
 }
