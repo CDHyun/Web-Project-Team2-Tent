@@ -23,29 +23,30 @@ public class AdminSummaryCommand implements TentCommand {
 		ArrayList<AdminDto> dtos = dao.chart();
 		request.setAttribute("summary", dtos);
 		
+	
+		
 		 // JSP 페이지로 전달되는 데이터를 JavaScript 배열로 변환
         StringBuilder data = new StringBuilder();
         for (AdminDto dto : dtos) {
             data.append(dto.getDaySum()).append(",");
         }
         request.setAttribute("data", data.toString());
-     
-        
+   
       
         
         //도넛차트데이터가져오기
-        ArrayList<AdminDto> dtos1 = dao.donut();
-        request.setAttribute("donut", dtos1);
-     
-        
-        StringBuilder data1 = new StringBuilder();
-        for (AdminDto dto : dtos1) {
-            data1.append(dto.getColorSum()).append(",");
-        }
-        request.setAttribute("datas", data1.toString()); 
-        
-       
-        
+        ArrayList<AdminDto> dtoss = dao.donut();
+		request.setAttribute("donut", dtoss);
+		
+		ArrayList<Integer> sumColorList = new ArrayList<>();
+		for (AdminDto dto : dtoss) {
+		    int sumColor = dto.getAddColor();
+		    sumColorList.add(sumColor);
+		}
+
+		request.setAttribute("sumColorList", sumColorList);
+
+		
         // 날짜별 매출
         ArrayList<AdminDto> dtos2 = dao.dailySale(startDate,endDate);
         request.setAttribute("SALES", dtos2);
