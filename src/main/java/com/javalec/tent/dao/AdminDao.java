@@ -359,7 +359,7 @@ public class AdminDao {
 			connection = dataSource.getConnection();
 			
 			String WhereDefault = "select pc.pcNo, pc.uid, pc.pCode, po.pColor, pc.pcQty, pc.pcInsertDate, pc.pcStatus from purchase pc, product p, productoption po";
-			String WhereDefault2 = " where p.pCode = pc.pCode and p.pCode = po.pCode and po.pCode = pc.pCode";
+			String WhereDefault2 = " where p.pCode = pc.pCode and p.pCode = po.pCode and po.pCode = pc.pCode and pc.pColor = po.pColor" ;
 			
 			preparedStatement = connection.prepareStatement(WhereDefault+WhereDefault2);
 			resultSet = preparedStatement.executeQuery();
@@ -540,12 +540,18 @@ public class AdminDao {
 		ArrayList<AdminDto> dtos = new ArrayList<AdminDto>();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
+		PreparedStatement preparedStatement1 = null;
 		ResultSet resultSet = null;
 		
 		try {
 			connection = dataSource.getConnection();
 			
-			String WhereDefault = "SELECT DAYNAME(pc.pcInsertDate), SUM(p.pPrice * pc.pcQty) FROM purchase pc, product p GROUP BY DAYNAME(pc.pcInsertDate)";
+			
+			String query = "SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))";
+			preparedStatement1 = connection.prepareStatement(query);
+			resultSet = preparedStatement1.executeQuery();
+			
+			String WhereDefault = "SELECT DAYNAME(pc.pcInsertDate), SUM(p.pPrice * pc.pcQty) FROM purchase pc, product p GROUP BY DAYNAME(pc.pcInsertDate) ORDER BY FIELD(DAYNAME(pc.pcInsertDate), 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')";
 			
 			
 			preparedStatement = connection.prepareStatement(WhereDefault);
@@ -594,7 +600,7 @@ public class AdminDao {
 		try {
 			connection = dataSource.getConnection();
 			
-			String WhereDefault = "select pc.pColor, SUM(p.pPrice * pc.pcQty) FROM purchase pc, product p,productoption po where p.pCode = pc.pCode and po.pCode = pc.pCode GROUP BY pc.pColor";
+			String WhereDefault = "select pc.pColor , sum(p.pPrice * pc.pcQty) from purchase pc , product p where p.pCode = pc.pCode group by pc.pColor";
 			
 			
 			preparedStatement = connection.prepareStatement(WhereDefault);
@@ -602,12 +608,13 @@ public class AdminDao {
 			
 			while(resultSet.next()) {
 				String pColor = resultSet.getString(1);
-				int colorSum = resultSet.getInt(2);
+				int addColor = resultSet.getInt(2);
+				AdminDto dto = new AdminDto( addColor);
 				
-				
-				AdminDto dto = new AdminDto(pColor, colorSum);
 				dtos.add(dto);
+				
 			}
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -646,7 +653,7 @@ public class AdminDao {
 			if((startDate != null && !startDate.equals(null))&& !startDate.equals("")) {
 			connection = dataSource.getConnection();
 			
-			String WhereDefault = "select pc.pcInsertDate, p.pBrandName, p.pName, pc.pcQty, pc.pcQty*p.pPrice from product p, purchase pc where p.pCode = pc.pCode and pc.pcInsertDate between ? and ?";
+			String WhereDefault = "select pc.pcInsertDate, p.pBrandName, p.pName, pc.pcQty, pc.pcQty*p.pPrice from product p, purchase pc where p.pCode = pc.pCode and pc.pcInsertDate between ? and ? order by pc.pcInsertDate";
 			
 			
 			preparedStatement = connection.prepareStatement(WhereDefault);
@@ -658,7 +665,7 @@ public class AdminDao {
 			}else {
 				connection = dataSource.getConnection();
 				
-				String WhereDefault = "select pc.pcInsertDate, p.pBrandName, p.pName, pc.pcQty, pc.pcQty*p.pPrice from product p, purchase pc where p.pCode = pc.pCode";
+				String WhereDefault = "select pc.pcInsertDate, p.pBrandName, p.pName, pc.pcQty, pc.pcQty*p.pPrice from product p, purchase pc where p.pCode = pc.pCode order by pc.pcInsertDate";
 				
 				preparedStatement = connection.prepareStatement(WhereDefault);
 				

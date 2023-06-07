@@ -1,6 +1,7 @@
 <%@page import="com.javalec.tent.dto.AdminDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ page import="java.util.ArrayList" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
@@ -12,7 +13,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <!-- 차트 링크 -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src=	"https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 
 <style>
@@ -126,19 +127,20 @@
   });
 
     // 도넛차트
+ 
    
-
     
     data = {
       datasets: [{
-        backgroundColor: ['Black','Beige','Khakii','White','Grey','Orange'],   // 색상은 나중에 고정되면 정해야함
+        backgroundColor: ['beige','black','brown','gray','khakii','orange'],   // 색상은 나중에 고정되면 정해야함
         borderColor: 'Black', // 검정색 테두리
         borderWidth: 1, // 테두리의 너비 설정
-        data: [1,2,3,4,5,6]
-        //data: [${datas}]
+        //data: [1,2,3,4,5,6]
+        data: [${sumColorList}]
+
       }],
       // 라벨의 이름이 툴팁처럼 마우스가 근처에 오면 나타남
-      labels: ['Black','Beige','Khakii','White','Grey','Orange'] // 범례
+      labels: ['Beige','Black','Brown','Gray','Khakii','Orange'] // 범례
     };
 
     // 도넛형 차트

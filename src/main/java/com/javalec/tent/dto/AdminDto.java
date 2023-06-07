@@ -42,6 +42,7 @@ public class AdminDto {
 	String dayName;
 	int daySum;
 	int colorSum;
+	int addColor;
 	
 	
 	// 날짜별매출에 필요한 변수
@@ -60,13 +61,6 @@ public class AdminDto {
 		// TODO Auto-generated constructor stub
 		this.pCode = pCode;
 	}
-	
-	
-	
-	
-	
-	
-	
 
 
 	public AdminDto(Date pcInsertdate, String pBrandName ,String pName, int pPrice, int sum, int total ) {
@@ -85,8 +79,7 @@ public class AdminDto {
 		this.dayName = dayName;
 		this.daySum = daySum;
 	}
-
-
+	
 	public AdminDto(int pcNo, String uid, int pCode, String pColor, int pcQty, int pcStatus, Date pcInsertdate) {
 		super();
 		this.pCode = pCode;
@@ -164,6 +157,32 @@ public class AdminDto {
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//
+
+	public void setColorSum(int colorSum) {
+		this.colorSum = colorSum;
+	}
+
+	
+	public int getColorSum() {
+		return colorSum;
+	}
 	
 	
 	public String getCgName() {
@@ -447,15 +466,7 @@ public class AdminDto {
 	
 
 
-	public int getColorSum() {
-		return colorSum;
-	}
-
-
-	public void setColorSum(int colorSum) {
-		this.colorSum = colorSum;
-	}
-
+	
 
 	public int getSum() {
 		return sum;
@@ -494,6 +505,16 @@ public class AdminDto {
 
 	public void setPfHoverRealName(String pfHoverRealName) {
 		this.pfHoverRealName = pfHoverRealName;
+	}
+
+
+	public int getAddColor() {
+		return addColor;
+	}
+
+
+	public void setAddColor(int addColor) {
+		this.addColor = addColor;
 	}
 
 	
