@@ -23,8 +23,8 @@
 
 
 		<%-- <% request.setCharacterEncoding("utf-8"); 
-		String pcDM = request.getParameter(“pcDM”); 
-		session.setAttribute(“SDM”, “pcDM”);
+		String pcDM = request.getParameter("pcDM"); 
+		session.setAttribute("SDM", "pcDM");
 		%> 
  --%>
 

@@ -277,6 +277,160 @@ public PurchaseDao() {
 
   	}
 
+ 	 
+ 	  public ArrayList<PurchaseDto> purchaseCheckList(int pcode) {
+ 	 		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
+ 	 		System.out.println("DAO 호출");
+ 	 		Connection connection = null;
+ 	 		PreparedStatement preparedStatement = null;
+ 	 		ResultSet resultSet = null;
+
+ 	 		try {
+ 	 			connection = dataSource.getConnection();
+ 	 			String query = "SELECT u.uid, p.pCode, p.pName, p.pPrice, pf.pfRealName, pf.pfHoverRealName, pc.pcStatus "
+ 	 							+ "FROM product p, user u, productfile pf, purchase pc " 
+ 	 							+ "WHERE pf.pCode = p.pCode and pc.pCode = p.pCode and pc.uid = u.uid and p.pCode = ? ";
+ 	 			preparedStatement = connection.prepareStatement(query);
+ 	 			preparedStatement.setInt(1, pcode);
+ 	 			resultSet = preparedStatement.executeQuery();
+
+ 	 		if (resultSet.next()) {
+ 	 				String uid = resultSet.getString(2);
+ 	 				String pName = resultSet.getString(3);
+ 	 				int pPrice = resultSet.getInt(4);
+ 	 				String pfRealName = resultSet.getString(5);
+ 					String pfHoverRealName = resultSet.getString(6);
+ 					String pcStatus = resultSet.getString(7);
+ 	 				PurchaseDto purchaseDto = new PurchaseDto(uid, pcode, pPrice, pName, pcStatus, pfRealName, pfHoverRealName);
+ 	 				dtos.add(purchaseDto);
+ 	 			}
+
+ 	 		} catch (Exception e) {
+ 	 			e.printStackTrace();
+ 	 		} finally {
+ 	 			try {
+ 	 				if (resultSet != null)
+ 	 					resultSet.close();
+ 	 				if (preparedStatement != null)
+ 	 					preparedStatement.close();
+ 	 				if (connection != null)
+ 	 					connection.close();
+ 	 			} catch (Exception e) {
+ 	 				e.printStackTrace();
+ 	 			}
+ 	 		}
+
+ 	 		return dtos;
+
+ 	 	}
+ 	 
+
+ 	    // 주문 취소
+ 	    public void cancelPurchase(int pcNo) {
+ 	    	Connection connection = null;
+ 	 		PreparedStatement preparedStatement = null;
+ 	 		ResultSet resultSet = null;
+
+ 	 		try {
+ 	 			connection = dataSource.getConnection();
+ 	 			String query = "select pCode, pcQty from purchase where pcNo = ? and pcStatus -1";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, pcNo);
+			resultSet = preparedStatement.executeQuery();
+
+ 	            // 주문된 상품 정보 조회
+ 	            if (resultSet.next()) {
+ 	            	int pCode = resultSet.getInt(1);
+ 	            	int pStock = resultSet.getInt(2);
+ 	            	
+ 	                // 재고 수량 증가
+ 	                increaseStockQuantity(pCode, pStock);
+ 	            }
+ 	        }catch (Exception e) {
+	 				e.printStackTrace();
+	 			} finally {
+					 try {
+						 if (resultSet != null)
+		 	 					resultSet.close();
+		 	 				if (preparedStatement != null)
+		 	 					preparedStatement.close();
+		 	 				if (connection != null)
+		 	 					connection.close();
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+				}
+	 		}
+ 	    
+ 	    
+ 	    // 재고 수량 차감
+ 	    private boolean decreaseStockQuantity(int pCode, int pStock) {
+ 	    	Connection connection = null;
+ 	 		PreparedStatement preparedStatement = null;
+ 	 		ResultSet resultSet = null;
+ 	 		boolean result = false;
+
+ 	 		try {
+ 	 			connection = dataSource.getConnection();
+ 	 			String query = "update productOption set pStock = pStock - ? WHERE pCode = ?";
+ 	 			preparedStatement = connection.prepareStatement(query);
+ 	 			preparedStatement.setInt(1, pStock);
+ 	 			preparedStatement.setInt(2, pCode);
+ 	            
+ 	            int affectedRows = preparedStatement.executeUpdate();
+ 	            if(affectedRows > 0) {
+ 	            	result = true;
+ 	            }
+ 	        } catch (Exception e) {
+ 	            e.printStackTrace();
+ 	            // 예외 처리
+ 	            return false;
+ 	        } finally {
+				try {
+					if (resultSet != null)
+ 	 					resultSet.close();
+ 	 				if (preparedStatement != null)
+ 	 					preparedStatement.close();
+ 	 				if (connection != null)
+ 	 					connection.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+ 	 		return result;
+ 	    }
+ 	    
+ 	    // 재고 수량 증가
+ 	    private void increaseStockQuantity(int pCode, int pStock) {
+ 	    	Connection connection = null;
+ 	 		PreparedStatement preparedStatement = null;
+ 	 		ResultSet resultSet = null;
+ 	 		
+ 	        try  {
+ 	 			connection = dataSource.getConnection();
+ 	 			String query = "update productOption set pStock = pStock + ? WHERE pCode = ?";
+ 	 			preparedStatement = connection.prepareStatement(query);
+ 				preparedStatement.setInt(1, pStock);
+ 				preparedStatement.setInt(2, pCode);
+ 				preparedStatement.executeUpdate();
+ 	            
+ 	        } catch (Exception e) {
+ 	            e.printStackTrace();
+ 	            // 예외 처리
+ 	        } finally {
+				try {
+					if (resultSet != null)
+ 	 					resultSet.close();
+ 	 				if (preparedStatement != null)
+ 	 					preparedStatement.close();
+ 	 				if (connection != null)
+ 	 					connection.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+ 	    }
+ 	 
 
 
 	

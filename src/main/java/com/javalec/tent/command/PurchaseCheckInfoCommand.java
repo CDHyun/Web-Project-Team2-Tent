@@ -32,8 +32,8 @@ public class PurchaseCheckInfoCommand implements TentCommand {
 		PurchaseDao dao = new PurchaseDao();
 	
 		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
-		dtos = dao.purchaseList(uid);
-		request.setAttribute("purchaseList", dtos);
+		dtos = dao.purchaseCheckList(pCode);
+		request.setAttribute("purchaseCheckList", dtos);
 		
 		
 		
