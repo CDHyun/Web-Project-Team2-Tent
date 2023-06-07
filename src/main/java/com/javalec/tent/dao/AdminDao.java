@@ -359,7 +359,7 @@ public class AdminDao {
 			connection = dataSource.getConnection();
 			
 			String WhereDefault = "select pc.pcNo, pc.uid, pc.pCode, po.pColor, pc.pcQty, pc.pcInsertDate, pc.pcStatus from purchase pc, product p, productoption po";
-			String WhereDefault2 = " where p.pCode = pc.pCode and p.pCode = po.pCode and po.pCode = pc.pCode and pc.pColor = po.pColor" ;
+			String WhereDefault2 = " where p.pCode = pc.pCode and p.pCode = po.pCode and po.pCode = pc.pCode and pc.pColor = po.pColor order by pc.pcNo desc" ;
 			
 			preparedStatement = connection.prepareStatement(WhereDefault+WhereDefault2);
 			resultSet = preparedStatement.executeQuery();

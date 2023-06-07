@@ -25,7 +25,10 @@
     margin-left: 350px;
   }
   .content2 {
-    margin-left: 950px;
+    margin-left: 1000px;
+  }
+  .content3 {
+    margin-left: 100px;
   }
 
   table {
@@ -161,8 +164,8 @@
   
   
   
-  
-
+  <div class="content3">
+<h3 class="content">기간 매출 조회</h3>
 <form action="adminfirst.do" method="post" class="content">
   <label for="startDate">시작일:</label>
   <input type="date" id="startDate" name="startDate">&nbsp;&nbsp;
@@ -197,7 +200,7 @@
     </tr>
   </c:forEach>
 </table>
-
+</div>
 </body>
 
 </html>

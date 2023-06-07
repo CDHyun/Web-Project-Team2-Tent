@@ -13,42 +13,38 @@
 <title>고객관리</title>
 </head>
 <script type="text/javascript">
-var preContent;
+  var preContent;
 
-function view_content(obj) {
-  var div = obj.parentNode;
-  var nextTable = div.nextElementSibling;
+  function view_content(obj) {
+    var nextTable = obj.nextElementSibling;
 
-  if (preContent && nextTable != preContent) {
-    nextTable.style.display = "block";
-    preContent.style.display = "none";
-  } else if (preContent && nextTable == preContent) {
-    preContent.style.display = (preContent.style.display == "none" ? "block" : "none");
-  } else if (preContent == null) {
-    nextTable.style.display = "block";
+    if (preContent && nextTable != preContent) {
+      nextTable.style.display = "block";
+      preContent.style.display = "none";
+    } else if (preContent && nextTable == preContent) {
+      preContent.style.display = preContent.style.display === "none" ? "block" : "none";
+    } else if (preContent == null) {
+      nextTable.style.display = "block";
+    }
+
+    preContent = nextTable;
   }
 
-  preContent = nextTable;
-}
+  window.onload = function() {
+    var elements = document.getElementsByClassName("faq-question");
 
-window.onload = function() {
-  var elements = document.getElementsByClassName("faq-question");
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].addEventListener("click", function() {
+        view_content(this);
+      });
+    }
 
-  for (var i = 0; i < elements.length; i++) {
-    elements[i].addEventListener("click", function() {
-      view_content(this);
-    });
-  }
-
-  // 초기출력
-  var no = "faq_";
-  if (document.getElementById(no)) {
+    // 초기출력
+    var no = "faq_1";
     var nextTable = document.getElementById(no).nextElementSibling;
     view_content(nextTable);
-  }
-};
+  };
 </script>
-
 
 <body>
 <!-- Header Start -->
@@ -90,55 +86,33 @@ window.onload = function() {
     <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
       <thead>
         <tr>
-          <th style="background-color: #eeeeee; text-align: left ;">제목</th>
+          <th style="background-color: #eeeeee; text-align: left;">제목</th>
         </tr>
       </thead>
       <c:forEach items="${FAQ}" var="dto1" varStatus="loop">
-        <table width=100% cellpadding=0 cellspacing=0 style="border-bottom-style:solid;border-bottom-color:#E6E6E6;border-bottom-width:1;cursor:pointer;" onclick="view_content(this)" id="faq_${loop.index + 1}">
-          <tr height=27 onmouseover=this.style.background="#F7F7F7" onmouseout=this.style.background="">
-            <td width=50 align="center"></td>
-            <td><font color="#007FC8">${dto1.nTitle}</td>
+        <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom-style:solid;border-bottom-color:#E6E6E6;border-bottom-width:1;cursor:pointer;" onclick="view_content(this)">
+          <tr height="27" onmouseover="this.style.background='#F7F7F7'" onmouseout="this.style.background=''">
+            <td width="50" align="center" class="faq-question"></td>
+            <td><font color="#007FC8">${dto1.nTitle}</font></td>
           </tr>
         </table>
-        <table cellpadding=0 cellspacing=0 border=0 style="display:none;">
+        <table cellpadding="0" cellspacing="0" border="0" style="display:none;">
           <tr valign="top">
-            <th style="color:#0000bf;width:40; padding-top:1">
-              <td>${dto1.nContent}</td>
-            </tr>
-          </table><br/>
+            <th style="color:#0000bf;width:40; padding-top:1"></th>
+            <td>${dto1.nContent}</td>
+          </tr>
+        </table>
+        <br/>
       </c:forEach>
     </table>
-   
   </div>
 </div>
+
 
 	
 	
 	
-	<h3 class="container">FAQ</h3>
-	<div class="container">
-		<div class="row">
-			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
-				<thead>
-					<tr>
-						<th style="background-color: #eeeeee; text-align: center;">번호</th>
-						<th style="background-color: #eeeeee; text-align: center;">제목</th>
-						<th style="background-color: #eeeeee; text-align: center;">작성자</th>
-						<th style="background-color: #eeeeee; text-align: center;">작성일</th>
-					</tr>
-				</thead>
-					<c:forEach items="${FAQ}" var="dto1">
-    					<tr>
-      						<td>${dto1.nNo}</td>
-      						<td>${dto1.nTitle}</td>
-     						<td>${dto1.aid}</td>
-      						<td>${dto1.nInsertdate}</td>
-    					</tr>
-  					</c:forEach>
-			</table>	
-			<a href="adminWriteNotice.do" class="btn btn-primary ">글쓰기</a>	
-		</div>
-	</div>
+	
 	
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
