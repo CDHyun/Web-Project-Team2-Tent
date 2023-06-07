@@ -91,20 +91,9 @@
                                     <label for="phone_number">Phone Number</label>
                                     <input type="text" class="form-control o_check phone_number" name="puPhone" id="puPhone" min="0" value="${user.uPhone}" placeholder="- 제외 입력해주세요">
                                 </div>
-                                <div class="col-md-12 mb-3">
-									<label for="street_address">Address</label> <input type="text" class="form-control address o_check" id="puaAddress" name="puAddress" placeholder="Address" value="${user.uaAddress}">
-								</div>
-                                <div class="col-md-12 mb-3">
-									<label for="street_address">Detail Address</label> <input type="text" class="form-control address o_check" name="puaDetailAddress" placeholder="Address" value="${user.uaDetailAddress}">
-								</div>
 								<div class="col-md-6 mb-3">
-									<label for="postcode">Postcode</label> <input type="text"
-										class="form-control postcode o_check" id="puZipcode" name="puZipcode"
-										placeholder="Postcode" value="${user.uaZipcode}">
-								</div>
-								<div class="col-md-6 mb-3 search">
 									<button type="button"
-										class="btn btn-outline-primary mb-1 searchAddr">search</button>
+										class="btn btn-outline-primary mb-1">Address</button>
 								</div>
 								<div class="col-md-12">
 									<label for="order-notes">Message</label>
