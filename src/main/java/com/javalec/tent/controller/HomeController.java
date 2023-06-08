@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.javalec.tent.command.AdminCartCommand;
+import com.javalec.tent.command.AdminCartDeleteCommand;
 import com.javalec.tent.command.AdminCommand;
 import com.javalec.tent.command.AdminContentCommand;
 import com.javalec.tent.command.AdminDeleteCommand;
@@ -297,6 +298,11 @@ public class HomeController extends HttpServlet {
 			break;
 		case "/admin_login.do":
 			viewPage = "adminfirst.do";
+			break;
+		case "/adminCartDelete.do":
+			command = new AdminCartDeleteCommand();
+			command.execute(request, response);
+			viewPage = "cart.do";
 			break;
 		
 		default:

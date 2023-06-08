@@ -14,16 +14,39 @@
 	<jsp:include page="common/include_common_top.jsp"/>
     <!-- include_common_top -->
     <link rel="stylesheet" href="css/shop/cart.css">
-             <script>
-        function selectAll(selectAll)  {
-  		const checkboxes= document.querySelectorAll('input[type="checkbox"]');
-  		checkboxes.forEach((checkbox) => {checkbox.checked = selectAll.checked })
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+       	function selectAll(selectAll)  {
+  			const checkboxes= document.querySelectorAll('input[type="checkbox"]');
+  			checkboxes.forEach((checkbox) => {checkbox.checked = selectAll.checked })
 		}
-                             </script>
+        
+       
+       	function deletecartcontent() {
+			var cNo = $("#cNo").val();
+			var pCode = $("#pCode").val();
+		    
+		   
+		   
+			var url = "adminCartDelete.do?cNo=" + encodeURIComponent(cNo) + "&pCode=" + encodeURIComponent(pCode);
+			window.location.href = url;
+			
+		  }
+		
+       	
+       	
+    </script>
+        
+        
+
 
 </head>
 
 <body>
+
+
+
+
     <!-- Preloader -->
     <div id="preloader">
         <div class="spinner-grow" role="status">
@@ -62,82 +85,70 @@
                            
                            
                            
-                           
                             <table class="table table-bordered mb-30">
-                                <thead>
                                     <tr>
-                                        <th scope="col"><i class="icofont-ui-delete"></i></th>
                                         <th scope="col">Image</th>
                                         <th scope="col">Product</th>
                                         <th scope="col">Unit Price</th>
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Total</th>
+                                        <th scope="col"><i class="icofont-ui-delete"></i></th>
                                     </tr>
-                                </thead>
                                 
                                 
-                                <tbody>
                                     
                                     
                                      <c:forEach items="${cart}" var="dto">
+                           <form action="adminCartDelete.do" method="post">
+                                     
 										    <tr>
-										      <th scope="row">
-                                           		 <i class="icofont-close"></i>
-                                        	 </th>
-										      <td><img alt="no" src="images/product/${dto.pfRealName }"> </td>
+										      <td>
+										      <input type="hidden" name="cNo" id="cNo" value="${dto.cNo}">
+										      <input type="hidden" name="pCode" id="pCode" value="${dto.pCode}">
+										      <img alt="no" src="images/product/${dto.pfRealName }"> </td>
 										      <td>${dto.pName}</td>
 										      <td>${dto.pPrice}</td>
 										      <td>${dto.cQty}</td>
 										      <td>${dto.ctotal}</td>
-										      
-										    </tr>
+										      <td>
+                                           		   <input type="submit" value="x" class="btn btn-danger" size="4">
+                                        	 </td>
+										     </tr> 
+										    
+                           </form>
   									</c:forEach>
                                     
                                     
-                                </tbody>
                             </table>
                             
                             
-                            
                         </div>
                     </div>
                 </div>
 
-                <div class="col-12 col-lg-6">
-                    <div class="cart-apply-coupon mb-30">
-                        <h6>Have a Coupon?</h6>
-                        <p>Enter your coupon code here &amp; get awesome discounts!</p>
-                        <!-- Form -->
-                        <div class="coupon-form">
-                            <form action="#">
-                                <input type="text" class="form-control" placeholder="Enter Your Coupon Code">
-                                <button type="submit" class="btn btn-primary">Apply Coupon</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <div class="col-12 col-lg-5">
-                    <div class="cart-total-area mb-30">
+                    <div class="cart-total-area mb-30 ">
                         <h5 class="mb-3">Cart Totals</h5>
                         <div class="table-responsive">
                             <table class="table mb-3">
                                 <tbody>
                                     <tr>
                                         <td>Sub Total</td>
-                                        <td>$56.00</td>
+                                        <td>₩ ${cartTotal }</td>
                                     </tr>
                                     <tr>
-                                        <td>Shipping</td>
-                                        <td>$10.00</td>
+                                        <td>배송료</td>
+                                        <td>₩ 3000</td>
                                     </tr>
                                     <tr>
                                         <td>VAT (10%)</td>
-                                        <td>$5.60</td>
+                                        <td>₩ ${cartTotal*0.1 }</td>
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td>$71.60</td>
+                                        <td>₩ ${(cartTotal*1.1)+3000 }</td>
                                     </tr>
                                 </tbody>
                             </table>

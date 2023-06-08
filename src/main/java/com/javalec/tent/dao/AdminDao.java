@@ -821,7 +821,7 @@ public class AdminDao {
 			try {
 				connection = dataSource.getConnection();
 				
-				String WhereDefault = "select pf.pfRealName, p.pName, p.pPrice, c.cQty, (c.cQty*p.pPrice)";
+				String WhereDefault = "select c.cNo,c.pCode,pf.pfRealName, p.pName, p.pPrice, c.cQty, (c.cQty*p.pPrice)";
 				String WhereDefault2 = " from product p, cart c, productfile pf, user u, productoption po";
 				String WhereDefault3 = " where pf.pCode = p.pCode and p.pCode = c.pCode and u.uid = c.uid and c.cpColor = po.pColor and pf.pCode = c.pCode and po.pCode = p.pCode and u.uid =?";
 					
@@ -830,14 +830,16 @@ public class AdminDao {
 				resultSet = preparedStatement.executeQuery();
 				
 				while(resultSet.next()) {
-					String pfRealName = resultSet.getString(1);
-					String pName = resultSet.getString(2);
-					int pPrice = resultSet.getInt(3);
-					int cQty = resultSet.getInt(4);
-					int ctotal = resultSet.getInt(5);
+					int cNo = resultSet.getInt(1);
+					int pCode = resultSet.getInt(2);
+					String pfRealName = resultSet.getString(3);
+					String pName = resultSet.getString(4);
+					int pPrice = resultSet.getInt(5);
+					int cQty = resultSet.getInt(6);
+					int ctotal = resultSet.getInt(7);
 					
 			
-					AdminDto dto = new AdminDto(pfRealName, pName, pPrice, cQty, ctotal);
+					AdminDto dto = new AdminDto(cNo,pCode,pfRealName, pName, pPrice, cQty, ctotal);
 					dtos.add(dto);
 				}
 			}catch(Exception e) {
@@ -865,6 +867,93 @@ public class AdminDao {
 		}
 	
 	
-
+		public int cCountSum(String uuid) {
+			int dto = 0;
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			ResultSet resultSet = null;
+			
+			try {
+				connection = dataSource.getConnection();
+				
+				String WhereDefault = " SELECT SUM(subquery.totalPrice) FROM (\r\n"
+						+ "  SELECT c.cQty * p.pPrice AS totalPrice\r\n"
+						+ "  FROM product p, cart c, productfile pf, user u, productoption po\r\n"
+						+ "  WHERE pf.pCode = p.pCode\r\n"
+						+ "    AND p.pCode = c.pCode\r\n"
+						+ "    AND u.uid = c.uid\r\n"
+						+ "    AND c.cpColor = po.pColor\r\n"
+						+ "    AND pf.pCode = c.pCode\r\n"
+						+ "    AND po.pCode = p.pCode\r\n"
+						+ "    AND u.uid = ?\r\n"
+						+ ") AS subquery";
+					
+				preparedStatement = connection.prepareStatement(WhereDefault);
+				preparedStatement.setString(1, uuid);
+				resultSet = preparedStatement.executeQuery();
+				
+				if(resultSet.next()) {
+					int cartTotal = resultSet.getInt(1);
+					
+					dto = cartTotal;
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(resultSet != null){ // 무언가 들어가 있으면close
+						resultSet.close();
+					}
+					if(preparedStatement != null) {
+						preparedStatement.close();
+					}
+					if(connection != null) {
+						connection.close();
+					}
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+			return dto;
+		
+		}
 	
+		
+		
+		// 카트선택항목지우기
+		
+		public void deleteCart(String ccNo) {
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			
+			try {
+				connection = dataSource.getConnection();
+				String query = "delete from cart where cNo =?";
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1 ,ccNo );
+				
+				
+				preparedStatement.executeUpdate();
+			
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					
+					if(preparedStatement != null) {
+						preparedStatement.close();
+					}
+					if(connection != null) {
+						connection.close();
+					}
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+		
 }
