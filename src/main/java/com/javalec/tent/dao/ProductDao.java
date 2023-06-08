@@ -194,7 +194,7 @@ public class ProductDao {
 		return colorList;
 	}
 	
-	/* Page
+	/* Page */
 	public int productCount() {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -206,7 +206,7 @@ public class ProductDao {
 			String sql = "select count(*) from product";
 			
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, pCode);
+//			ps.setInt(1, pCode);
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {
@@ -226,7 +226,6 @@ public class ProductDao {
 		}
 		return productCount;
 	}
-	*/
 	
 //	public ArrayList<ProductDto> getProductList(String queryContent, int page, int pageSize) {
 //	    ArrayList<ProductDto> products = new ArrayList<>();
