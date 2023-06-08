@@ -822,8 +822,8 @@ public class AdminDao {
 				connection = dataSource.getConnection();
 				
 				String WhereDefault = "select pf.pfRealName, p.pName, p.pPrice, c.cQty, (c.cQty*p.pPrice)";
-				String WhereDefault2 = " from product p, cart c, productfile pf, user u";
-				String WhereDefault3 = " where p.pCode = c.pCode and u.uid = c.uid and pf.pCode = c.pCode and c.uid =?";
+				String WhereDefault2 = " from product p, cart c, productfile pf, user u, productoption po";
+				String WhereDefault3 = " where pf.pCode = p.pCode and p.pCode = c.pCode and u.uid = c.uid and c.cpColor = po.pColor and pf.pCode = c.pCode and po.pCode = p.pCode and u.uid =?";
 					
 				preparedStatement = connection.prepareStatement(WhereDefault+WhereDefault2+WhereDefault3);
 				preparedStatement.setString(1, uuid);

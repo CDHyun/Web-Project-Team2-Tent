@@ -195,9 +195,9 @@ public class HomeController extends HttpServlet {
 			viewPage = "purchase_info.jsp";
 			break;
 		case "/cart.do":
-			command = new CartCommand();
+			command = new AdminCartCommand();
 			command.execute(request, response);
-			viewPage = "cart.jsp";
+			viewPage = "adminCart.jsp";
 			break;
 		case "/CartUpdate.do":
 			command = new CartUpdateCommand();
