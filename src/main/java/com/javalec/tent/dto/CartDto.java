@@ -67,7 +67,12 @@ public class CartDto {
 	}
 	
 	
-	
+	// totalPrice
+	public CartDto(int cQty, int pPrice) {
+		super();
+		this.cQty = cQty;
+		this.pPrice = pPrice;
+	}
 	public CartDto(String uid, int pCode) {
 		super();
 		this.uid = uid;

@@ -145,7 +145,12 @@ DataSource dataSource;
 	        preparedStatement.setString(1, uid);
 	        resultSet = preparedStatement.executeQuery();
 
-	        if(resultSet.next()) {
+	        while (resultSet.next()) {
+				int pPrice = resultSet.getInt("pPrice");
+				int cQty = resultSet.getInt("cQty");
+	        
+				CartDto dto = new CartDto(pPrice, cQty);
+				
 	            total = resultSet.getDouble("total");
 	        }
 	    } catch (Exception e) {
