@@ -146,6 +146,11 @@ public class PurchaseDto {
 		this.pfHoverRealName = pfHoverRealName;
 		this.pcStatus = pcStatus;
 	}
+	
+	
+	
+
+	
 
 
 	public String getUid() {

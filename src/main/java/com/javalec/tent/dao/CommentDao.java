@@ -256,105 +256,70 @@ public class CommentDao {
 	    return comment;
 	}
 	
-	public int getAnswerNumSum(int cmRef, int bNo) {
-	    Connection con = null;
+	// 댓글 그룹 내에서 해당 cmRef에 대한 총 대댓글 개수를 가져오는 메서드
+	private int getAnswerNumSum(Connection con, int cmRef, int bNo) throws SQLException {
 	    PreparedStatement ps = null;
 	    ResultSet rs = null;
-	    int answerNumSum = 0;
-
 	    try {
-	        con = dataSource.getConnection();
-	        String sql = "SELECT COUNT(*) FROM comment WHERE cmRef = ? and bNo = ?";
-	        ps = con.prepareStatement(sql);
+	        String query = "SELECT COUNT(*) FROM comment WHERE cmRef = ? AND bNo = ?";
+	        ps = con.prepareStatement(query);
 	        ps.setInt(1, cmRef);
 	        ps.setInt(2, bNo);
 	        rs = ps.executeQuery();
-
 	        if (rs.next()) {
-	            answerNumSum = rs.getInt(1);
+	            return rs.getInt(1);
 	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
 	    } finally {
-	        try {
-	            if (con != null) con.close();
-	            if (ps != null) ps.close();
-	            if (rs != null) rs.close();
-	        } catch (Exception e2) {
-	            e2.printStackTrace();
-	        }
+	        if (rs != null) rs.close();
+	        if (ps != null) ps.close();
 	    }
-
-	    return answerNumSum;
+	    return 0; // 기본값 반환
 	}
 
-	public int getMaxStep(int cmRef) {
-	    Connection con = null;
+	// 댓글 그룹 내에서 최대 step 값을 가져오는 메서드
+	private int getMaxStep(Connection con, int cmRef, int bNo) throws SQLException {
 	    PreparedStatement ps = null;
 	    ResultSet rs = null;
-	    int maxStep = 0;
-
 	    try {
-	        con = dataSource.getConnection();
-	        String sql = "SELECT MAX(cmStep) FROM comment WHERE cmRef = ?";
-	        ps = con.prepareStatement(sql);
+	        String query = "SELECT MAX(cmStep) FROM comment WHERE cmRef = ? AND bNo = ?";
+	        ps = con.prepareStatement(query);
 	        ps.setInt(1, cmRef);
+	        ps.setInt(2, bNo);
 	        rs = ps.executeQuery();
-
 	        if (rs.next()) {
-	            maxStep = rs.getInt(1);
+	            return rs.getInt(1);
 	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
 	    } finally {
-	        try {
-	            if (con != null) con.close();
-	            if (ps != null) ps.close();
-	            if (rs != null) rs.close();
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
+	        if (rs != null) rs.close();
+	        if (ps != null) ps.close();
 	    }
-
-	    return maxStep;
+	    return 0; // 기본값 반환
 	}
 
-	public void updateRefOrderGreaterThan(int cmRef, long refOrder, int bNo) {
-	    Connection con = null;
+	// refOrder 값을 업데이트하는 메서드
+	private void updateRefOrderGreaterThan(Connection con, int cmRef, long refOrder, int bNo) throws SQLException {
 	    PreparedStatement ps = null;
-
 	    try {
-	        con = dataSource.getConnection();
-	        String sql = "UPDATE comment SET cmRefOrder = cmRefOrder + 1 WHERE cmRef = ? AND cmRefOrder > ? and bNo = ?";
-	        ps = con.prepareStatement(sql);
+	        String query = "UPDATE comment SET cmRefOrder = cmRefOrder + 1 WHERE cmRef = ? AND cmRefOrder >= ? AND bNo = ?";
+	        ps = con.prepareStatement(query);
 	        ps.setInt(1, cmRef);
 	        ps.setLong(2, refOrder);
+	        ps.setInt(3, bNo);
 	        ps.executeUpdate();
-	    } catch (Exception e) {
-	        e.printStackTrace();
 	    } finally {
-	        try {
-	            if (con != null) con.close();
-	            if (ps != null) ps.close();
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
+	        if (ps != null) ps.close();
 	    }
 	}
+
+
 	
-	public void saveComment(int bNo, String uid, String uNickName, int cmRef, int cmStep, long refOrder, int cmParentNo, String cmContent) {
-	    Connection con = null;
-	    PreparedStatement iPs = null;
+	
+	// 대댓글을 저장하는 메서드
+	private void saveComment(Connection con, int bNo, String uid, String uNickName, int cmRef, int cmStep, long refOrder, int cmParentNo, String cmContent) throws SQLException {
 	    PreparedStatement ps = null;
-	    
 	    try {
-	        con = dataSource.getConnection();
-	        String increaseCount = "update comment set cmAnswerCount = cmAnswerCount + 1 where cmNo = ?";
-	        iPs = con.prepareStatement(increaseCount);
-	        iPs.setInt(1, cmParentNo);
-	        iPs.executeUpdate();
-	        String sql = "INSERT INTO comment (bNo, uid, uNickName, cmRef, cmStep, cmRefOrder, cmParentNo, cmContent, cmInsertDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, now())";
-	        ps = con.prepareStatement(sql);
+	        String query = "INSERT INTO comment (bNo, uid, uNickName, cmRef, cmStep, cmRefOrder, cmParentNo, cmContent) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	        ps = con.prepareStatement(query);
 	        ps.setInt(1, bNo);
 	        ps.setString(2, uid);
 	        ps.setString(3, uNickName);
@@ -364,16 +329,8 @@ public class CommentDao {
 	        ps.setInt(7, cmParentNo);
 	        ps.setString(8, cmContent);
 	        ps.executeUpdate();
-	    } catch (Exception e) {
-	        e.printStackTrace();
 	    } finally {
-	        try {
-	        	if(con != null) con.close();
-				if(ps != null) ps.close();
-				if(iPs != null) iPs.close();
-			} catch (Exception e2) {
-				// TODO: handle exception
-			}
+	        if (ps != null) ps.close();
 	    }
 	}
 	
@@ -389,6 +346,7 @@ public class CommentDao {
 	        try (ResultSet rs = ps.executeQuery()) {
 	            if (rs.next()) {
 	                maxRef = rs.getInt(1);
+	                System.out.println("getMaxCmRef 메소드에서 구한 값 : " + maxRef);
 	            }
 	        }
 	    }
@@ -397,36 +355,34 @@ public class CommentDao {
 
 
 
-	// 대댓글 저장 이전에 참조 순서를 결정하는 메서드
-	public long getRefOrder(Connection con, int cmRef, int bNo) throws SQLException {
-	    long refOrder = 0L;
-
-	    String sql = "SELECT MAX(cmRefOrder) FROM comment WHERE cmRef = ? AND bNo = ?";
-	    try (PreparedStatement ps = con.prepareStatement(sql)) {
+	// 댓글 그룹 내에서 해당 cmRef에 대한 현재 최대 refOrder 값을 가져오는 메서드
+	private int getRefOrder(Connection con, int cmRef, int bNo) throws SQLException {
+	    PreparedStatement ps = null;
+	    ResultSet rs = null;
+	    try {
+	        String query = "SELECT MAX(cmRefOrder) FROM comment WHERE cmRef = ? AND bNo = ?";
+	        ps = con.prepareStatement(query);
 	        ps.setInt(1, cmRef);
 	        ps.setInt(2, bNo);
-	        try (ResultSet rs = ps.executeQuery()) {
-	            if (rs.next()) {
-	                refOrder = rs.getLong(1);
-	            }
+	        rs = ps.executeQuery();
+	        if (rs.next()) {
+	            return rs.getInt(1);
 	        }
+	    } finally {
+	        if (rs != null) rs.close();
+	        if (ps != null) ps.close();
 	    }
-
-	    return refOrder;
+	    return 0; // 기본값 반환
 	}
-
-
-
-	
-	
 	
 	public void saveReply(int bNo, String uid, String uNickName, String cmContent, int cmParentNo) {
-		 	Connection con = null;
-		    PreparedStatement iPs = null;
-		    PreparedStatement ps = null;
-		    
-		    try {
-		        con = dataSource.getConnection();
+	    Connection con = null;
+	    PreparedStatement iPs = null;
+	    PreparedStatement ps = null;
+
+	    try {
+	        con = dataSource.getConnection();
+	        CommentDto parentComment = getCommentByCmNo(con, cmParentNo);
 	        // 대댓글 저장 로직 구현
 	        int cmStep = 0; // 댓글은 step 0
 
@@ -434,50 +390,53 @@ public class CommentDao {
 	        int maxRef = getMaxCmRef(con, bNo);
 
 	        // 대댓글의 부모댓글 찾기
-	        int cmRef = 0; // Default value
+	        int cmRef = parentComment.getCmRef();
 
-	        CommentDto parentComment = getCommentByCmNo(con, cmParentNo);
-	        cmRef = parentComment.getCmRef(); // Assign the actual value of cmRef
+
 	        if (parentComment != null) {
+	            cmRef = parentComment.getCmRef();
+
 	            // 부모댓글의 step에 +1
 	            cmStep = parentComment.getCmStep() + 1;
 
 	            // 부모댓글의 그룹내 자식댓글 총 갯수 구하기
-	            int answerNumSum = getAnswerNumSum(cmRef, bNo);
+	            int answerNumSum = getAnswerNumSum(con, cmRef, bNo);
 
 	            // 부모댓글의 그룹내 step 컬럼 최댓값 구하기
-	            int maxStep = getMaxStep(parentComment.getCmRef());
+	            int maxStep = getMaxStep(con, cmRef, bNo);
 
 	            // 대댓글의 step이 댓글의 그룹내에서 최대 step보다 작은 경우
 	            if (cmStep < maxStep) {
 	                // refOrder는 answerNumSum + 1
-	                long refOrder = answerNumSum + 1L;
+	                long refOrder = getRefOrder(con, cmRef, bNo) + answerNumSum + 1L;
 	                // 대댓글 저장
-	                saveComment(bNo, uid, uNickName, cmRef, cmStep, refOrder, cmParentNo, cmContent);
+	                saveComment(con, bNo, uid, uNickName, cmRef, cmStep, refOrder, cmParentNo, cmContent);
 	            }
-	         // 대댓글의 step이 댓글의 그룹내에서 최대 step과 같은 경우
+	            // 대댓글의 step이 댓글의 그룹내에서 최대 step과 같은 경우
 	            else if (cmStep == maxStep) {
 	                // 부모댓글의 그룹내 순서와 자식댓글을 더한 값보다 큰 refOrder는 모두 +1 업데이트
-	            	// refOrder는 부모의 refOrder + 1
-	            	long refOrder = getRefOrder(con, cmRef, bNo) + 1L;
-	                updateRefOrderGreaterThan(cmRef, refOrder, bNo);
+	                long refOrder = getRefOrder(con, cmRef, bNo) + answerNumSum + 1L;
+	                updateRefOrderGreaterThan(con, cmRef, refOrder, bNo);
 	                // 대댓글 저장
-	                saveComment(bNo, uid, uNickName, cmRef, cmStep, refOrder, cmParentNo, cmContent);
+	                saveComment(con, bNo, uid, uNickName, cmRef, cmStep, refOrder, cmParentNo, cmContent);
 	            }
 	            // 대댓글의 step이 댓글의 그룹내에서 최대 step보다 큰 경우
 	            else {
-	                // 부모댓글의 그룹내 순서보다 큰 refOrder는 모두 +1 업데이트
-	                updateRefOrderGreaterThan(cmRef, cmRef, bNo);
 	                // refOrder는 refOrder + 1
 	                long refOrder = getRefOrder(con, cmRef, bNo) + 1L;
+	                System.out.println("step이 댓글의 최대 step보다 크다. : " + refOrder);
+	                // 부모댓글의 그룹내 순서보다 큰 refOrder는 모두 +1 업데이트
+	                updateRefOrderGreaterThan(con, cmRef, refOrder, bNo);
 	                // 대댓글 저장
-	                saveComment(bNo, uid, uNickName, cmRef, cmStep, refOrder, cmParentNo, cmContent);
+	                saveComment(con, bNo, uid, uNickName, cmRef, cmStep, refOrder, cmParentNo, cmContent);
 	            }
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
 	}
+
+
 
 
 

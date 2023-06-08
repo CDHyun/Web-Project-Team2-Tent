@@ -206,7 +206,7 @@ public class ProductDao {
 			String sql = "select count(*) from product";
 			
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, pCode);
+//			ps.setInt(1, pCode);
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {

@@ -12,6 +12,7 @@ import com.javalec.tent.dto.BoardDto;
 import com.javalec.tent.dto.CommentDto;
 import com.javalec.tent.dto.QuestionDto;
 import com.javalec.tent.util.BoardPageMaker;
+import com.javalec.tent.util.CommentPageMaker;
 
 public class CommentListCommand implements TentCommand {
 
@@ -37,19 +38,18 @@ public class CommentListCommand implements TentCommand {
 //        dispatcher.forward(req, res);
 		CommentDao commentDao = new CommentDao();
 		int bNo = Integer.parseInt(request.getParameter("bNo"));
-        int pageNo = 1;
-        
-        if(request.getParameter("pageNo") != null) {
+		int pageNo = 1;
+		if(request.getParameter("pageNo") != null) {
         	pageNo = Integer.parseInt(request.getParameter("pageNo"));
         }
-        BoardPageMaker boardPageMaker = new BoardPageMaker();
-        int totalCount = commentDao.commentCount(bNo);
-        boardPageMaker.setPage(pageNo);
-        boardPageMaker.setTotalCount(totalCount);
+		CommentPageMaker commentPageMaker = new CommentPageMaker();
+		int totalCount = commentDao.commentCount(bNo);
+		commentPageMaker.setPage(pageNo);
+		commentPageMaker.setTotalCount(totalCount);
         ArrayList<CommentDto> commentList = new ArrayList<CommentDto>();
         commentList = commentDao.commentList(pageNo, bNo);
 		request.setAttribute("commentList", commentList);
-		request.setAttribute("pageMaker", boardPageMaker);
+		request.setAttribute("pageMaker", commentPageMaker);
 		request.setAttribute("commentCount", totalCount);
 
 	}
