@@ -18,18 +18,13 @@
     }
 
     .content {
-      margin-left: 350px;
+      margin-left: 25%;
     }
     .content2 {
-      margin-left: 500px;
+      margin-left: 35%;
     }
     .content3 {
-  		position: relative;
-  		left: 50px;
-		 top: 100px;
-		 width: 300px;
-		 height: 80px;
-		 
+  		margin-left: 70%;
 	}
     
     table {
@@ -47,6 +42,10 @@
     th {
       background-color: #f2f2f2;
     }
+     label {
+    display: inline-block;
+    width: 100px;
+  }
   </style>
 </head>
 <body>
@@ -58,7 +57,7 @@
   
   <h3 class="content2">상품등록</h3><br/><br/>
 <div class="card content2" style="width: 40rem;" >
-	<img alt="no image" src="./img/core-img/logo.png" class="content3">
+	<img alt="no image" src="./img/core-img/logo.png" class="content"><br/><br/>
   <form action="adminInsert.do" method="post" enctype="multipart/form-data" class="content">
     <!-- 입력 폼 -->
     <label for="pCode">상품코드:</label>
@@ -76,7 +75,7 @@
     <label for="pStock">재고:</label>
     <input type="text" name="pStock" id="pStock" size="30"><br/>
     
-    <label for="cgNo">카테고리번호:</label>
+    <label for="pStock">재고:</label>
     <input type="text" name="cgNo" id="cgNo" size="30"><br/>
     
     <label for="pfNo">파일번호:</label>
@@ -90,7 +89,7 @@
     <label for="file1">호버파일:</label>
     <input type="file" name="file1" id="file1"><br>
     
-    <input type="submit" value="입력"> 
+    <input type="submit" value="입력" class="content3"> 
   </form>
   </div>
   

@@ -21,7 +21,11 @@
  
 
   .content {
-   margin-left: 350px;
+   margin-left: 40%;
+  }
+  
+  .content2 {
+   margin-left: 15%;
   }
   
   table {
@@ -39,6 +43,10 @@
   th {
     background-color: #f2f2f2;
   }
+  label {
+    display: inline-block;
+    width: 100px;
+  }
 </style>
 </head>
 
@@ -52,23 +60,37 @@
 	</div>
 	<!-- Header End -->
 	
-	
-<form action="adminUpdateAction.do" method="post" class="content" enctype="multipart/form-data" >
+	<div class="card content" style="width: 25rem;" >
+<form action="adminUpdateAction.do" method="post" class="content2" enctype="multipart/form-data" >
  				<img alt="image" src="images/product/${content_view.pfName}" width="250" height="250"><br/>
-		상품코드 <input type="text" name="pCode" id="pCode" value="${content_view.pCode }" readonly="readonly"><br/>
-		브랜드명 <input type="text" name="pBrandName" id="pBrandName" value="${content_view.pBrandName }"><br/>
-		상품명 <input type="text" name="pName" id="pName" value="${content_view.pName }"><br/>
-		가격 <input type="text" name="pPrice" id="pPrice" value="${content_view.pPrice }" ><br/>
-		색상 <input type="text" name="pColor" id="pColor" value="${content_view.pColor }"><br/>
-		재고 <input type="text" name="pStock" id="pStock" value="${content_view.pStock }"><br/>
-		파일명 : <input type="file" name="file" ><br/>
-		<input type="hidden" name="lastfile" id="lastfile" value="${content_view.pfRealName }" >
+		 <br/>
+		 <label for="pCode">상품코드:</label>
+		 <input type="text" name="pCode" id="pCode" value="${content_view.pCode }" readonly="readonly"><br/>
+		
+		 <label for="pBrandName">브랜드명:</label>
+		 <input type="text" name="pBrandName" id="pBrandName" value="${content_view.pBrandName }"><br/>
+		
+		 <label for="pName">상품명:</label>
+		 <input type="text" name="pName" id="pName" value="${content_view.pName }"><br/>
+		
+		 <label for="pPrice">가격:</label>
+		 <input type="text" name="pPrice" id="pPrice" value="${content_view.pPrice }" ><br/>
+		 
+		 <label for="pColor">색상:</label>
+		 <input type="text" name="pColor" id="pColor" value="${content_view.pColor }"><br/>
+		
+		 <label for="pStock">재고:</label>
+		 <input type="text" name="pStock" id="pStock" value="${content_view.pStock }"><br/>
+		
+		 <label for="file">파일명:</label> 
+		 <input type="file" name="file" ><br/>
+		 <input type="hidden" name="lastfile" id="lastfile" value="${content_view.pfRealName }" >
 		
 			
 		
 		
 		
-		
+		<br/>
 		<input type="submit" value="수정" class="update" >&nbsp;&nbsp;&nbsp;
 		<a href="adminDeleteAction.do?pCode=${content_view.pCode }&pColor=${content_view.pColor}">삭제</a>
 		
@@ -76,7 +98,7 @@
 	
 
 	</form>
-
+</div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

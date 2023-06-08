@@ -17,7 +17,7 @@
         }
 
         .content {
-            margin-left: 350px;
+            margin-left: 25%;
         }
 
         .content2 {
