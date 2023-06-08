@@ -22,11 +22,44 @@
     <link rel="stylesheet" href="css/shop/comment.css">
 
 <script type="text/javascript">
+	
+	var globalCmNo;
+
+
 	function openParentModal() {
 		$('#parrentCommentWriteModal').modal('show');
 	}
+	function openChildModal(cmNo) {
+		globalCmNo = cmNo;
+		$('#childCommentWriteModal').modal('show');
+	}
+	
+	function childCommentWrite() {
+		console.log(globalCmNo);
+		var cmNo = globalCmNo;
+		var bNo = $("#hidden_bNo").val();
+		var cmContent = CKEDITOR.instances.child_content_area.getData();
+		console.log('bNo : ' + bNo);
+		console.log('cmNo : ' + cmNo)
+		console.log(cmContent);
+		
+		$.ajax({
+	        type: 'POST',
+	        url: './ChildCommentWrite',
+	        data: {
+	            cmNo: cmNo,
+	            bNo: bNo,
+	            cmContent: cmContent
+	        },
+	        success: function() {
+	            window.location.href = "board_detail.do?bNo=" + bNo;
+	        }
+	    });
+		
+	}
+	
 </script>
-
+	
 
 </head>
 
@@ -107,84 +140,77 @@
 					</c:forEach>
 				</div>
 			</div>
-
+			<br/><br/>
 			<!-- Comment List -->
-			<div class="comment-list-container">
-			<c:set var="cmtCount" value="${commentCount}"></c:set>
-			<h6><i class="fa fa-commenting-o"></i>댓글 : <span style="color: orange;"><c:out value="(${cmtCount})" /></span> </h6>
-			<table class="comment-list">
-			  <tbody>
-			    <c:forEach items="${commentList}" var="cmt">
-			      <tr>
-			        <td>
-			          <c:if test="${cmt.cmStep > 0}">
-			            <c:set var="indentation" value="${cmt.cmStep * 30}px" />
-			          </c:if>
-			          <c:if test="${cmt.cmStep > 0}">
-			            <i class="fa fa-comment-o" aria-hidden="true" style="margin-left: ${indentation}"></i>
-			          </c:if>
-			          <c:if test="${cmt.cmStep == 0}">
-			            <i class="fa fa-comment" aria-hidden="true"></i>
-			          </c:if>
-			          <div style="margin-left: ${indentation}">${cmt.uNickName}</div>
-			          <div style="margin-left: ${indentation}">${cmt.cmInsertDate}</div>
-			        </td>
-			        <td>${cmt.cmContent}</td>
-			        <td>
-			          <div class="button-container">
-			            <c:if test="${cmt.uid eq SUID}">
-			              <input class="btn btn-secondary btn-sm" type="button" value="삭제">
-			              <input class="btn btn-secondary btn-sm" type="button" value="수정">
-			            </c:if>
-			            <c:if test="${!cmt.uid eq SUID}">
-			              <input class="btn btn-secondary btn-sm" type="button" value="추천">
-			              <input class="btn btn-secondary btn-sm" type="button" value="비추천">
-			            </c:if>
-			            <input class="btn btn-secondary btn-sm" type="button" value="답글 달기" onclick="showReplyForm(${SUID})">
-			          </div>
-			          <div id="reply-form-${SUID}" class="reply-form" style="display: none;">
-			            <input type="text" class="reply-input">
-			            <input class="btn btn-secondary btn-sm" type="button" value="등록" onclick="submitReply(${SUID})">
-			          </div>
-			        </td>
-			      </tr>
-					<!-- childCommentWriteModal Start -->
-					<div class="modal" id="childCommentWriteModal" tabindex="-1" role="dialog">
-						<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="container">
-								<h5 class="mb-3" style="display: inline-block; text-align: center;">Comment</h5>
-								<form id="child_comment_form" action="child_comment_write.do?bNo=${bNo}" method="post">
-										<div class="form-group">
-											<label for="uid">작성자 : ${SUNICKNAME}</label>
-										</div>
-										<div class="form-group">
-											<label for="uid">작성일자 : <fmt:formatDate value='${toDay}'
-													pattern='yyyy-MM-dd' /></label>
-										</div>
-										<div class="form-group">
-											<textarea name="c_cmContent" id="child_content_area" placeholder=" content"></textarea>
-										</div>
-									<div class="button-container">
-										<input type="hidden" name="bNo" value="${bNo}">
-										<button type="button" class="btn btn-primary btn-sm comment_btn new_write">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<button type="button" class="btn btn-secondary btn-sm" id="cmCancelBtn" data-dismiss="modal">Cancle</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-					</div>
-					<!-- parrentCommentWriteModal End -->
-			    </c:forEach>
-			  </tbody>
-			</table>
-			</div>
-
-
-
+	<div class="comment-list-container">
+	  <c:set var="cmtCount" value="${commentCount}"></c:set>
+	  <h6><i class="fa fa-commenting-o"></i>댓글 : <span style="color: orange;"><c:out value="(${cmtCount})" /></span> </h6>
+	  <table class="comment-list">
+	    <tbody>
+	      <c:forEach items="${commentList}" var="cmt">
+	        <tr>
+	          <td>
+	            <div class="comment-wrapper" style="border: 1px solid black; padding: 10px; margin-left: ${cmt.cmStep * 30}px;">
+	              <div class="comment-header">
+	                <div class="comment-info">
+	                  <div>${cmt.uNickName}</div>
+	                  <div style="color: gray;">${cmt.cmInsertDate}</div>
+	                </div>
+	              </div>
+	              <div class="comment-content">${cmt.cmContent}</div>
+	            </div>
+	            <div class="comment-actions" style="text-align: right;">
+	              <c:if test="${cmt.uid eq SUID}">
+	                <input class="btn btn-danger btn-sm" type="button" value="삭제">
+	                <input class="btn btn-warning btn-sm" type="button" value="수정">
+	              </c:if>
+	              <c:if test="${!cmt.uid eq SUID}">
+	                <input class="btn btn-secondary btn-sm" type="button" value="추천">
+	                <input class="btn btn-secondary btn-sm" type="button" value="비추천">
+	              </c:if>
+	              <input class="btn btn-secondary btn-sm" type="button" value="답글 달기" onclick="openChildModal('${cmt.cmNo}')">
+	            </div>
+	          </td>
+	        </tr>
+	        <!-- childCommentWriteModal Start -->
+		<div class="modal" id="childCommentWriteModal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="container">
+		        <h5 class="mb-3" style="display: inline-block; text-align: center;">Comment</h5>
+		        <form id="child_comment_form" action="child_comment_write.do?bNo=${bNo}&cmParentNo=${cmt.cmNo}" method="post">
+		        <c:out value="${cmt.cmNo}"></c:out>
+		          <div class="form-group">
+		            <label for="uid">작성자 : ${SUNICKNAME}</label>
+		          </div>
+		          <div class="form-group">
+		            <label for="uid">작성일자 : <fmt:formatDate value='${toDay}' pattern='yyyy-MM-dd' /></label>
+		          </div>
+		          <div class="form-group">
+		            <textarea name="c_cmContent" id="child_content_area" placeholder=" content"></textarea>
+		          </div>
+		          <div class="button-container">
+		            <input type="hidden" name="bNo" value="${bNo}">
+		            <button type="button" class="btn btn-primary btn-sm child_btn new_write" onclick="">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		            <button type="button" class="btn btn-secondary btn-sm" id="cmCancelBtn" data-dismiss="modal">Cancel</button>
+		          </div>
+		        </form>
+		      </div>
+		    </div>
+		  </div>
 		</div>
+	      </c:forEach>
+	    </tbody>
+	  </table>
 	</div>
+
+
+
+
+
+</div>
+</div>
+<!-- childCommentWriteModal End -->
 
 	<!-- parrentCommentWriteModal Start -->
 	<div class="modal" id="parrentCommentWriteModal" tabindex="-1" role="dialog">
@@ -204,7 +230,7 @@
 							<textarea name="cmContent" id="cm_content_area" placeholder=" content"></textarea>
 						</div>
 					<div class="button-container">
-						<input type="hidden" name="bNo" value="${bNo}">
+						<input type="hidden" id="hidden_bNo" name="bNo" value="${bNo}">
 						<button type="button" class="btn btn-primary btn-sm comment_btn new_write">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<button type="button" class="btn btn-secondary btn-sm" id="cmCancelBtn" data-dismiss="modal">Cancle</button>
 					</div>
@@ -278,7 +304,7 @@
 	<jsp:include page="common/include_common_script.jsp"/>
 	<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 	<script src="js/shop/board.js"></script>
-	<script src="js/shop/comment.js"></script>
+	<script src="js/shop/comment.js?after"></script>
 	<script type="text/javascript">
 		
 	</script>

@@ -28,12 +28,14 @@ import com.javalec.tent.command.QuestionWriteCommand;
 import com.javalec.tent.command.CartCommand;
 import com.javalec.tent.command.CartDeleteCommand;
 import com.javalec.tent.command.CartUpdateCommand;
+import com.javalec.tent.command.ChildCommentWriteCommand;
 import com.javalec.tent.command.CommentListCommand;
 import com.javalec.tent.command.IndexCommand;
 import com.javalec.tent.command.ParrentCommentWriteCommand;
 import com.javalec.tent.command.ProductDetailCommand;
 import com.javalec.tent.command.PurchaseCheckInfoCommand;
 import com.javalec.tent.command.PurchaseCompleteCommand;
+import com.javalec.tent.command.PurchaseDeleteCommand;
 import com.javalec.tent.command.PurchaseInsertCommand;
 import com.javalec.tent.command.PurchaseListCommand;
 import com.javalec.tent.command.PurchaserInfoCommand;
@@ -286,6 +288,11 @@ public class HomeController extends HttpServlet {
 			command = new WishdeleteActionCommand();
 			command.execute(request, response);
 			viewPage = "wishlist.jsp";
+			break;
+		case "/purchaseDelete.do":
+			command = new PurchaseDeleteCommand();
+			command.execute(request, response);
+			viewPage = "purchase_list.jsp";
 			break;
 		default:
 			break;
