@@ -118,7 +118,7 @@ public PurchaseDao() {
 
  		try {
  			connection = dataSource.getConnection();
- 			String query = "SELECT u.uid, p.pCode, p.pName, p.pPrice, pf.pfRealName, pf.pfHoverRealName, pc.pcStatus "
+ 			String query = "SELECT u.uid, p.pCode, p.pName, p.pPrice, pf.pfRealName, pf.pfHoverRealName, pc.pcStatus, pc.pcInsertDate "
  							+ "FROM product p, user u, productfile pf, purchase pc " 
  							+ "WHERE pf.pCode = p.pCode and pc.pCode = p.pCode and u.uid = ? ";
  			preparedStatement = connection.prepareStatement(query);
@@ -132,7 +132,8 @@ public PurchaseDao() {
  				String pfRealName = resultSet.getString(5);
 				String pfHoverRealName = resultSet.getString(6);
 				String pcStatus = resultSet.getString(7);
- 				PurchaseDto purchaseDto = new PurchaseDto(uid, pCode, pPrice, pName, pcStatus, pfRealName, pfHoverRealName);
+				String pcInsertDate = resultSet.getString(8);
+ 				PurchaseDto purchaseDto = new PurchaseDto(uid, pCode, pPrice, pName, pcStatus, pfRealName, pfHoverRealName, pcInsertDate);
  				dtos.add(purchaseDto);
  			}
 
@@ -434,6 +435,39 @@ public PurchaseDao() {
 				}
 			}
  	    }
+ 	    
+ 	    
+ 		public void purchaseDelete(int pcNo) {
+ 			Connection connection = null;
+ 			PreparedStatement preparedStatement = null;
+ 			
+ 			try {
+ 				connection = dataSource.getConnection();
+ 				String query = "update purchase pc set pcDeleteDate=now() ,pcDeleted =1 where pc.pcNo =?";
+ 				preparedStatement = connection.prepareStatement(query);
+ 				preparedStatement.setInt(1, pcNo);
+ 				
+ 				
+ 				
+ 				preparedStatement.executeUpdate();
+ 			
+ 			}catch(Exception e) {
+ 				e.printStackTrace();
+ 			}finally {
+ 				try {
+ 					
+ 					if(preparedStatement != null) {
+ 						preparedStatement.close();
+ 					}
+ 					if(connection != null) {
+ 						connection.close();
+ 					}
+ 				}catch (Exception e) {
+ 					e.printStackTrace();
+ 				}
+ 			}
+ 		}	
+ 			
  	 
 
 

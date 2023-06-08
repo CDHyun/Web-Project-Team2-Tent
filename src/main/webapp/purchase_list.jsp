@@ -95,8 +95,7 @@
 				<div class="col-12 col-lg-3">
 				    <div class="my-account-navigation mb-50">
 				        <ul>
-				            <li><a href="my_account">My Account</a></li>
-				            <li><a href="account_details">Account Details</a></li>
+				            <li><a href="my_account.do">My Account</a></li>
 				            <li class="active"><a href="order_list">Orders</a></li>
 				            <li><a href="member_logout">Logout</a></li>
 				        </ul>  
@@ -106,7 +105,7 @@
                     <div class="my-account-content mb-50">
                         <div class="cart-table">
                             <div class="table-responsive">
-                                <table class="table table-bordered mb-0">
+                        <!--         <table class="table table-bordered mb-0">
                                     <thead>
                                         <tr>
                                             <th scope="col">Order</th>
@@ -115,36 +114,63 @@
                                             <th scope="col">Total</th>
                                             <th scope="col">Detail</th>
                                         </tr>
-                                    </thead>
-                                    <tbody id="order_list_tbody">
-                                    <c:if test="${orderList.size() == 0}">
-                                		<tr>
-                                			<td colspan="5">등록된 주문목록이 없습니다 🙂</td>
-                                			
-                                		</tr>
-                                	</c:if>
-                                	<tr>
-	                                	<c:forEach items="${purchaseList}" var="purchase">
-	                                    		<td>${purchase.pcNo}</td>
-	                                    		<td>${purchase.pcInsertDate}</td>
-	                                    		<c:if test="${purchase.pcStatus == 0}">
-												    <td>
-												        <span class="bigshop-label bigshop-label-info">배송 준비중</span>
-												    </td>
-												</c:if>
-	                                    		<c:if test="${purchase.pcStatus == -1}">
-												    <td>
-												        <span class="bigshop-label bigshop-label-success">취소됨</span>
-												    </td>
-												</c:if>
-	                                          <td><fmt:formatNumber value="${purchase.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
-	                                            <td>
-				                                    <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#order_detail_modal">View</button>
-	                                            </td>
-	                                       
-                                	</tr>
-                                    </tbody>
-                                </table>
+                                    </thead> -->
+                                <table class="table table-bordered mb-0">
+    <colgroup>
+        <col style="width: 10%">
+        <col style="width: 15%">
+        <col style="width: 20%">
+        <col style="width: 15%">
+        <col style="width: 20%">
+    </colgroup>
+    <thead>
+        <tr>
+            <th scope="col">Order</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Total</th>
+            <th scope="col">Detail</th>
+        </tr>
+    </thead>
+    <tbody id="order_list_tbody">
+        <c:if test="${purchaseList.size() == 0}">
+            <tr>
+                <td colspan="5">등록된 주문목록이 없습니다 🙂</td>
+            </tr>
+        </c:if>
+        <tr>
+            <c:forEach items="${purchaseList}" var="purchase">
+                <td>${purchase.pcNo}</td>
+                <td>${purchase.pcInsertDate}</td>
+                <c:if test="${purchase.pcStatus == 0}">
+                    <td>
+                        <span class="bigshop-label bigshop-label-info">배송 준비중</span>
+                    </td>
+                </c:if>
+                <c:if test="${purchase.pcStatus == -1}">
+                    <td>
+                        <span class="bigshop-label bigshop-label-danger">취소됨</span>
+                    </td>
+                </c:if>
+                 <c:if test="${purchase.pcStatus == 1}">
+                    <td>
+                        <span class="bigshop-label bigshop-label-warning">배송중</span>
+                    </td>
+                </c:if>
+                 <c:if test="${purchase.pcStatus == 2}">
+                    <td>
+                        <span class="bigshop-label bigshop-label-success">배송완료</span>
+                    </td>
+                </c:if>
+                <td><fmt:formatNumber value="${purchase.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
+                <td>
+                    <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#order_detail_modal">View</button>
+                </td>
+            </tr>
+        </c:forEach>
+    </tbody>
+</table>
+<!-- ... -->
                             </div>
                         </div>
                     </div>
@@ -190,6 +216,8 @@
 						                                    </tr>
 						                                </thead>
 						                                <tbody id="orderer_info_body">
+						                                 <c:forEach items="${purchaseList}" var="purchase">
+						                            <c:if test="${purchase.uid eq SUID and purchase.pcNo eq your_desired_order_number}">
 						                                    <tr>
 						                                        <th scope="row">${purchase.pcNo}</th>
 						                                        <td>${purchase.pcInsertDate}</td>
@@ -197,6 +225,8 @@
 						                                        <td>${purchase.uPhone}</td>
 						                                        <td>${purchase.uaAddress}</td>
 						                                    </tr>
+						                                    </c:if>
+						                                    </c:forEach>
 						                                </tbody>
 						                            </table>
 						                        </div>
@@ -224,6 +254,8 @@
 						                                    </tr>
 						                                </thead>
 						                                <tbody id="item_info_body">
+						                                   <c:forEach items="${purchaseList}" var="purchase">
+						                              <c:if test="${purchase.uid eq SUID and purchase.pcNo eq your_desired_order_number}">
 						                                    <tr>
 						                                        <th scope="row">1</th>
 						                                        <td>${purchase.pName}</td>
@@ -233,6 +265,8 @@
 						                                    <tr>
 						                                        <th scope="row" colspan="4">total</th>
 						                                    </tr>
+						                                    </c:if>
+						                                      </c:forEach>
 						                                </tbody>
 						                            </table>
 						                        </div>
@@ -253,7 +287,7 @@
 	            </div>
 	        </div>
 	    </div>
-	    </c:forEach>
+	  
 	<!-- 오더상세보기 모달 끝 -->        
     
     <!-- My Account Area -->
