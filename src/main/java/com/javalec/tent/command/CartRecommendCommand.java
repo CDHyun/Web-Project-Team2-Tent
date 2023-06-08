@@ -13,16 +13,12 @@ public class CartRecommendCommand implements TentCommand {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		
-CartDao dao = new CartDao();
-		
-		
-		int pCode = Integer.parseInt(request.getParameter("pCode"));
+
+		CartDao dao = new CartDao();
 		
 		ArrayList<CartDto> dtos = new ArrayList<CartDto>();
-		dtos = dao.recommend(pCode);
+		dtos = dao.recommend();
 		request.setAttribute("RANDOM", dtos);
-		
 	}
 //
 }

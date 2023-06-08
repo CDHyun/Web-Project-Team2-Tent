@@ -163,7 +163,7 @@ DataSource dataSource;
 	}
 	
 	// 상품 재고 많은순으로 보여주기.
-		public ArrayList<CartDto> recommend(int pCode){
+		public ArrayList<CartDto> recommend(){
 			ArrayList<CartDto> products = new ArrayList<>();
 			
 			Connection connection = null;
@@ -185,7 +185,7 @@ DataSource dataSource;
 					String pfRealName = resultSet.getString("pfRealName");
 					String pfHoverRealName = resultSet.getString("pfHoverRealName");
 					
-					CartDto product = new CartDto(pCode1, pName, pPrice, pBrandName, pColor, pPrice, pfRealName, pfHoverRealName);
+					CartDto product = new CartDto(pCode1, pName, pPrice, pBrandName, pColor, pfRealName, pfHoverRealName);
 					products.add(product);
 				}
 			}catch (Exception e) {
