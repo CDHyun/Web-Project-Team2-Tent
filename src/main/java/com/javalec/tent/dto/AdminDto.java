@@ -52,6 +52,7 @@ public class AdminDto {
 	// cart 에 필요한 변수
 	int cQty;
 	int ctotal;
+	int cNo;
 	
 	
 	public AdminDto() {
@@ -151,13 +152,15 @@ public class AdminDto {
 	
 	
 	
-	public AdminDto( String pfRealName, String pName, int pPrice, int cQty, int ctotal) {
+	public AdminDto(int cNo,int pCode, String pfRealName, String pName, int pPrice, int cQty, int ctotal) {
 		super();
 		this.pName = pName;
 		this.pPrice = pPrice;
 		this.pfRealName = pfRealName;
 		this.cQty = cQty;
 		this.ctotal = ctotal;
+		this.cNo = cNo;
+		this.pCode = pCode;
 	}
 	
 	
@@ -547,6 +550,16 @@ public class AdminDto {
 
 	public void setCtotal(int ctotal) {
 		this.ctotal = ctotal;
+	}
+
+
+	public int getcNo() {
+		return cNo;
+	}
+
+
+	public void setcNo(int cNo) {
+		this.cNo = cNo;
 	}
 
 	
