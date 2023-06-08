@@ -6,7 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javalec.tent.dao.BoardDao;
+import com.javalec.tent.dao.CommentDao;
 import com.javalec.tent.dto.BoardDto;
+import com.javalec.tent.util.BoardPageMaker;
+import com.javalec.tent.util.CommentPageMaker;
 
 public class BoardDetailCommand implements TentCommand {
 

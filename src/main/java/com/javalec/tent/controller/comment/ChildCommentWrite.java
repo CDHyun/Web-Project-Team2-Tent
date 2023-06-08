@@ -45,7 +45,7 @@ public class ChildCommentWrite extends HttpServlet {
 		int cmParentNo = Integer.parseInt(request.getParameter("cmNo"));
 		
 		CommentDao commentDao = new CommentDao();
-		commentDao.saveReply(bNo, uid, uNickName, cmContent, cmParentNo); 
+		commentDao.saveReply(bNo, uid, uNickName, cmContent, cmParentNo);
 		
 		System.out.println("bNo : "+bNo);
 		System.out.println("cmParentNo : "+cmParentNo);

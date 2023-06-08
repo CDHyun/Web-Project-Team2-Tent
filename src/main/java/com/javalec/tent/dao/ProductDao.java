@@ -194,7 +194,7 @@ public class ProductDao {
 		return colorList;
 	}
 	
-	/* Page */
+	/* Page
 	public int productCount() {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -226,6 +226,7 @@ public class ProductDao {
 		}
 		return productCount;
 	}
+	*/
 	
 //	public ArrayList<ProductDto> getProductList(String queryContent, int page, int pageSize) {
 //	    ArrayList<ProductDto> products = new ArrayList<>();
