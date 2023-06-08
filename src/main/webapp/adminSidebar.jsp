@@ -90,6 +90,7 @@
       <li><a href="adminpurchaseCheck.do" style="color: #000000;">주문처리</a></li>
       <li>리뷰관리</li>
       <li><a href="adminNotice.do" style="color: #000000;">고객관리</a></li>
+      <li><a href="index.do" style="color: #000000;">쇼핑몰사이트로 이동</a></li>
     </ul>
   </div>
 
