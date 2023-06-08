@@ -292,7 +292,7 @@ public class HomeController extends HttpServlet {
 		case "/purchaseDelete.do":
 			command = new PurchaseDeleteCommand();
 			command.execute(request, response);
-			viewPage = "purchase_list.jsp";
+			viewPage = "purchase_list.do";
 			break;
 		default:
 			break;
