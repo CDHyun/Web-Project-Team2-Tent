@@ -137,8 +137,8 @@
                 <td colspan="5">등록된 주문목록이 없습니다 🙂</td>
             </tr>
         </c:if>
+        <c:forEach items="${purchaseList}" var="purchase">
         <tr>
-            <c:forEach items="${purchaseList}" var="purchase">
                 <td>${purchase.pcNo}</td>
                 <td>${purchase.pcInsertDate}</td>
                 <c:if test="${purchase.pcStatus == 0}">
@@ -165,8 +165,8 @@
                 <td>
                     <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#order_detail_modal">View</button>
                 </td>
-        </c:forEach>
             </tr>
+        </c:forEach>
     </tbody>
 </table>
 <!-- ... -->
@@ -174,7 +174,7 @@
                         </div>
                     </div>
                     <c:if test="${purchaseList.size() != 0}">
-                     	<button type="button" class="btn btn-primary mb-1" id="order_all_delete_btn">Delete All</button>
+                     	<button type="button" class="btn btn-outline-primary mb-1" id="order_all_delete_btn"><a href="index.do">Check</a></button>
                 	</c:if>
                	</div>
             </div>
@@ -211,16 +211,15 @@
 						                                        <th scope="col">Date</th>
 						                                        <th scope="col">Name</th>
 						                                        <th scope="col">Phone</th>
-						                                        <th scope="col">Address</th>
 						                                    </tr>
 						                                </thead>
 						                                <tbody id="orderer_info_body">
 						                                 <c:forEach items="${purchaseList}" var="purchase"> <tr>
-						                                        <th scope="row">${purchase.pcNo}</th>
-						                                        <td>${purchase.pcInsertDate}</td>
-						                                        <td>${purchase.pName}</td>
-						                                        <td>${purchase.uPhone}</td>
-						                                        <td>${purchase.uaAddress}</td>
+						                                        <th scope="row">${purchase[0].pcNo}</th>
+						                                        <td>${purchase[0].pcInsertDate}</td>
+						                                        <td>${purchase[0].pName}</td>
+						                                        <td>${purchase[0].uPhone}</td>
+						                                        <td>${purchase[0].uaAddress}</td>
 						                                    </tr>
 						                                    </c:forEach>
 						                                </tbody>
@@ -275,8 +274,8 @@
 	                    </div>
 	                    <div class="modal-footer">
 	                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	                     <!--    <button type=submit" class="btn btn-primary" id="order_delete_btn"><a href=".do">Delete</button> -->
-	                   <input type="submit" value="DELETE" class="btn btn-danger" id="order_delete_btn"><a href="purchase_list.do"></a>
+	                     <button type="submit" class="btn btn-danger" id="order_delete_btn"><a href="purchasse_list.do">Delete</a></button>
+	                 <!--   <input type="submit" value="DELETE" class="btn btn-danger" id="order_delete_btn"><a href="purchase_list.do"></a> -->
 	                    </div>
 	                </div>
 	            </div>
@@ -302,9 +301,9 @@
     	order_item_delete_action_rest(params);
 	});
 	/*******주문 전체 삭제 메뉴 이벤트**********/
-	$('#order_all_delete_btn').on('click',function(e){
+/* 	$('#order_all_delete_btn').on('click',function(e){
 		order_all_delete_action_rest();
-	});
+	}); */
 	</script>
 </body>
 

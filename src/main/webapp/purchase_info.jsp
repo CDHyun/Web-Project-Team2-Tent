@@ -206,31 +206,20 @@
     </div> -->
 
 
-							<div class="col-12">
-								<div class="checkout_pagination mt-3 d-flex justify-content-end align-items-center clearfix">
-									<form id="back_Receiver" action="product_detail.do" method="post" name="Go Back">
-										<input type="submit" class="btn btn-primary ml-2" value="Go Back">
-									</form>
-									<form id="Receiver_next_btn" action="payment.do" method="post" name="Continue">
-										<input type="submit" class="btn btn-primary ml-2" value="Continue">
-									</form>
-								</div>
+						<div class="col-12">
+							<div class="checkout_pagination mt-3 d-flex justify-content-end align-items-center clearfix">
+								<form id="back_Receiver" action="product_detail.do" method="post" name="Go Back">
+									<input type="submit" class="btn btn-primary ml-2" value="Go Back">
+								</form>
+								<form id="Receiver_next_btn" action="payment.do" method="post" name="Continue">
+									<input type="submit" class="btn btn-primary ml-2" value="Continue">
+								</form>
 							</div>
 						</div>
-
 					</div>
+
 				</div>
-				<!-- 
-                <div class="col-12">
-                    <div class="checkout_pagination mt-3 d-flex justify-content-end clearfix">
-                        <a href="" class="btn btn-primary mt-2 ml-2 order_back_btn order_back"  id="back_receiver">Go Back</a>
-                        <a href="" id="receiver_next_btn" class="btn btn-primary mt-2 ml-2 order_next">Continue</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    
+			</div>
     
     <!-- *************************************************  -->
  
@@ -256,7 +245,7 @@
                                 	<!-- board start -->
                                 	<c:forEach var="address" items="${addressList}" varStatus="loop">
 									  <tr>
-									    <td>${SUNICKNAME}님의 배송지<br/><span style="color: gray;">${address.uaContent}</span></td>
+									    <td>${SUNICKNAME}님의 배송지<br/><span style="color: gray;">${address.uaNo}</span></td>
 									    <td style="vertical-align: middle;">${address.uaAddress}&nbsp;${address.uaDetailAddress}</td>
 									    <td style="vertical-align: middle;">${address.uPhone}</td>
 									    <td style="vertical-align: middle;">

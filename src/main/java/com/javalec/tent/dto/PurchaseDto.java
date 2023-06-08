@@ -69,8 +69,36 @@ public class PurchaseDto {
 	}
 
 
+	
 
 	
+
+
+
+
+	public PurchaseDto(String uid, String uPhone, int pcNo, int pPrice, int pcQty, String pName, String pcInsertDate,
+			String pcStatus) {
+		super();
+		this.uid = uid;
+		this.uPhone = uPhone;
+		this.pcNo = pcNo;
+		this.pPrice = pPrice;
+		this.pcQty = pcQty;
+		this.pName = pName;
+		this.pcInsertDate = pcInsertDate;
+		this.pcStatus = pcStatus;
+	}
+
+
+	public PurchaseDto(int pCode, int pPrice, String pName, String pfRealName, String pfHoverRealName) {
+		super();
+		this.pCode = pCode;
+		this.pPrice = pPrice;
+		this.pName = pName;
+		this.pfRealName = pfRealName;
+		this.pfHoverRealName = pfHoverRealName;
+	}
+
 
 	public PurchaseDto(String uid, int pCode, int pcQty, String pColor, String pcInsertDate, String pcDM) {
 		super();

@@ -109,7 +109,7 @@ public PurchaseDao() {
  		return beanList;
  	}
 
-     public ArrayList<PurchaseDto> purchaseList(String uuid) {
+     public ArrayList<PurchaseDto> purchaseList(String uid) {
  		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
  		System.out.println("DAO 호출");
  		Connection connection = null;
@@ -118,35 +118,30 @@ public PurchaseDao() {
 
  		try {
  			connection = dataSource.getConnection();
- 			String query = "SELECT u.uid, pc.pcNo, pc.pColor, p.pCode, p.pName, p.pPrice, pc.pcQty, pf.pfRealName, pf.pfHoverRealName, pc.pcStatus, pc.pcInsertDate, u.uName, u.uPhone, ua.uaAddress "
- 							+ "FROM product p, user u, productfile pf, purchase pc, productOption po, userAddress ua " 
- 							+ "WHERE pc.pCode = p.pCode and pf.pCode = p.pCode and po.pCode = p.pCode and u.uid = pc.uid and u.uid = ua.uid and u.uid = ? ";
+ 			String query = "SELECT pc.pcNo, p.pCode, p.pName, p.pPrice, pc.pcQty, pc.pcStatus, pc.pcInsertDate, u.uPhone "
+ 					+"FROM product p, user u, purchase pc "
+ 					+"WHERE pc.pCode = p.pCode and u.uid = pc.uid and u.uid = ?";
  			
 
  			preparedStatement = connection.prepareStatement(query);
- 			preparedStatement.setString(1, uuid);
+ 			preparedStatement.setString(1, uid);
  			resultSet = preparedStatement.executeQuery();
 
- 		if (resultSet.next()) {
+ 		while (resultSet.next()) {
  			
- 				String uid = resultSet.getString(1);
- 				int pcNo = resultSet.getInt(2);
- 				String pColor = resultSet.getString(3);
- 				int pCode = resultSet.getInt(4);
- 				String pName = resultSet.getString(5);
- 				int pPrice = resultSet.getInt(6);
- 				int pcQty = resultSet.getInt(7);
- 				String pfRealName = resultSet.getString(8);
-				String pfHoverRealName = resultSet.getString(9);
-				String pcStatus = resultSet.getString(10);
-				String pcInsertDate = resultSet.getString(11);
-				String uName = resultSet.getString(12);
-				String uPhone = resultSet.getString(13);
-				String uaAddress = resultSet.getString(14);
+ 				
+ 				int pcNo = resultSet.getInt(1);
+ 				int pCode = resultSet.getInt(2);
+ 				String pName = resultSet.getString(3);
+ 				int pPrice = resultSet.getInt(4);
+ 				int pcQty = resultSet.getInt(5);
+ 				String pcStatus = resultSet.getString(6);
+				String pcInsertDate = resultSet.getString(7);
+				String uPhone = resultSet.getString(8);
  				
 				
-				PurchaseDto purchaseDto = new PurchaseDto(uid, uName, uPhone, uaAddress, pcNo, pCode, pPrice, pcQty, pColor, pName, pcInsertDate, pfRealName, pfHoverRealName, pcStatus);
- 				dtos.add(purchaseDto);
+				PurchaseDto purchaseDto = new PurchaseDto(uid, uPhone, pcNo, pPrice, pcQty, pName, pcInsertDate, pcStatus);
+				dtos.add(purchaseDto);
  			}
 
  		} catch (Exception e) {
@@ -291,34 +286,32 @@ public PurchaseDao() {
 //  	}
 //
 // 	 
- 	  public ArrayList<PurchaseDto> purchaseCheckList(String uuid, int ppcode) {  // 주문정보 보여주기 메서드 상품디테일에서 넘어오면 수행
+ 	  public ArrayList<PurchaseDto> purchaseCheckList(int ppcode) {  // 주문정보 보여주기 메서드 상품디테일에서 넘어오면 수행
  	 		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
- 	 		System.out.println("DAO 호출");
+ 	 		System.out.println("DAO 1호출");
  	 		Connection connection = null;
  	 		PreparedStatement preparedStatement = null;
  	 		ResultSet resultSet = null;
-
+ 	 		
  	 		try {
  	 			connection = dataSource.getConnection();
- 	 			String query = "SELECT u.uid, p.pCode, p.pName, p.pPrice, pf.pfRealName, pf.pfHoverRealName, pc.pcStatus "
- 	 							+ "FROM product p, user u, productfile pf, purchase pc " 
- 	 							+ "WHERE pc.pCode = p.pCode and pc.uid = u.uid and pf.pCode = p.pCode and p.pCode = ? and u.uid = ?";
+ 	 			String query = "SELECT p.pName, p.pPrice, pf.pfRealName, pf.pfHoverRealName "
+ 	 							+ "FROM product p, productfile pf " 
+ 	 							+ "WHERE pf.pCode = p.pCode and p.pCode = ? ";
  	 			preparedStatement = connection.prepareStatement(query);
  	 			preparedStatement.setInt(1, ppcode);
- 	 			preparedStatement.setString(2, uuid);
- 	 			
+ 	 			System.out.println("실행 바로 직전");
  	 			resultSet = preparedStatement.executeQuery();
+ 	 			System.out.println("실행 바로 후");
 
- 	 		if (resultSet.next()) {
- 	 			
- 	 				String uid = resultSet.getString(1);
- 	 				int pCode = resultSet.getInt(2);
- 	 				String pName = resultSet.getString(3);
- 	 				int pPrice = resultSet.getInt(4);
- 	 				String pfRealName = resultSet.getString(5);
- 					String pfHoverRealName = resultSet.getString(6);
- 					String pcStatus = resultSet.getString(7);
- 	 				PurchaseDto purchaseDto = new PurchaseDto(uid, pCode, pPrice, pName, pcStatus, pfRealName, pfHoverRealName);
+ 	 			if (resultSet.next()) {
+ 	 				System.out.println("데이터 받기전");
+ 	 				String pName = resultSet.getString(1);
+ 	 				int pPrice = resultSet.getInt(2);
+ 	 				String pfRealName = resultSet.getString(3);
+ 					String pfHoverRealName = resultSet.getString(4);
+ 					System.out.println("uid = " + uid + " pCode = " + pCode + " pName = " + pName + " pPrice = " + pPrice + " pfRealName = " + pfRealName + " pfHover = " + pfHoverRealName + " pcStatus = " + pcStatus);
+ 	 				PurchaseDto purchaseDto = new PurchaseDto(ppcode, pPrice, pName, pfRealName, pfHoverRealName);
  	 				dtos.add(purchaseDto);
  	 				
  	 				
