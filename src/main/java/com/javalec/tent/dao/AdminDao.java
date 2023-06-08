@@ -764,6 +764,43 @@ public class AdminDao {
 	}
 	
 	
+	//데이터 입력메서드
+		public void cartInsert(String uuid, int ppCode, int ppcQty, String ppColor) {
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			try {
+		        connection = dataSource.getConnection();
+		        String query = "INSERT INTO cart (uid, cQty, cpColor, pCode) VALUES (?, ?, ?, ?)";
+		        preparedStatement = connection.prepareStatement(query);
+		        preparedStatement.setString(1, uuid);
+		        preparedStatement.setInt(2, ppCode);
+		        preparedStatement.setInt(3,ppcQty );
+		        preparedStatement.setString(4, ppColor);
+		        preparedStatement.executeUpdate();
+
+		    
+
+
+			
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					
+					if(preparedStatement != null) {
+						preparedStatement.close();
+					}
+					if(connection != null) {
+						connection.close();
+					}
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
+	
 	
 	
 
