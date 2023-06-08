@@ -773,9 +773,9 @@ public class AdminDao {
 		        String query = "INSERT INTO cart (uid, cQty, cpColor, pCode) VALUES (?, ?, ?, ?)";
 		        preparedStatement = connection.prepareStatement(query);
 		        preparedStatement.setString(1, uuid);
-		        preparedStatement.setInt(2, ppCode);
-		        preparedStatement.setInt(3,ppcQty );
-		        preparedStatement.setString(4, ppColor);
+		        preparedStatement.setInt(2, ppcQty);
+		        preparedStatement.setString(3, ppColor);
+		        preparedStatement.setInt(4,ppCode );
 		        preparedStatement.executeUpdate();
 
 		    
@@ -800,7 +800,69 @@ public class AdminDao {
 			
 		}
 		
-	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		public ArrayList<AdminDto> cartSelect(String uuid) {
+			
+			
+			ArrayList<AdminDto> dtos = new ArrayList<AdminDto>();
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			ResultSet resultSet = null;
+			
+			try {
+				connection = dataSource.getConnection();
+				
+				String WhereDefault = "select pf.pfRealName, p.pName, p.pPrice, c.cQty, (c.cQty*p.pPrice)";
+				String WhereDefault2 = " from product p, cart c, productfile pf, user u";
+				String WhereDefault3 = " where p.pCode = c.pCode and u.uid = c.uid and pf.pCode = c.pCode and c.uid =?";
+					
+				preparedStatement = connection.prepareStatement(WhereDefault+WhereDefault2+WhereDefault3);
+				preparedStatement.setString(1, uuid);
+				resultSet = preparedStatement.executeQuery();
+				
+				while(resultSet.next()) {
+					String pfRealName = resultSet.getString(1);
+					String pName = resultSet.getString(2);
+					int pPrice = resultSet.getInt(3);
+					int cQty = resultSet.getInt(4);
+					int ctotal = resultSet.getInt(5);
+					
+			
+					AdminDto dto = new AdminDto(pfRealName, pName, pPrice, cQty, ctotal);
+					dtos.add(dto);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(resultSet != null){ // 무언가 들어가 있으면close
+						resultSet.close();
+					}
+					if(preparedStatement != null) {
+						preparedStatement.close();
+					}
+					if(connection != null) {
+						connection.close();
+					}
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+			return dtos;
+		
+		
+		}
 	
 	
 

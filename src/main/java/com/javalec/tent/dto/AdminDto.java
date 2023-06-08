@@ -49,7 +49,9 @@ public class AdminDto {
 	int sum;
 	int total;
 	
-	
+	// cart 에 필요한 변수
+	int cQty;
+	int ctotal;
 	
 	
 	public AdminDto() {
@@ -149,6 +151,14 @@ public class AdminDto {
 	
 	
 	
+	public AdminDto( String pfRealName, String pName, int pPrice, int cQty, int ctotal) {
+		super();
+		this.pName = pName;
+		this.pPrice = pPrice;
+		this.pfRealName = pfRealName;
+		this.cQty = cQty;
+		this.ctotal = ctotal;
+	}
 	
 	
 	
@@ -174,6 +184,8 @@ public class AdminDto {
 	
 	
 	//
+
+
 
 	public void setColorSum(int colorSum) {
 		this.colorSum = colorSum;
@@ -515,6 +527,26 @@ public class AdminDto {
 
 	public void setAddColor(int addColor) {
 		this.addColor = addColor;
+	}
+
+
+	public int getcQty() {
+		return cQty;
+	}
+
+
+	public void setcQty(int cQty) {
+		this.cQty = cQty;
+	}
+
+
+	public int getCtotal() {
+		return ctotal;
+	}
+
+
+	public void setCtotal(int ctotal) {
+		this.ctotal = ctotal;
 	}
 
 	
