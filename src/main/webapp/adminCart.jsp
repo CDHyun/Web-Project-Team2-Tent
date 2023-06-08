@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <!doctype html>
-<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -76,7 +75,7 @@
                                             <i class="icofont-close"></i>
                                         </th>
                                         <td>
-                                            <img src="img/product-img/onsale-1.png" alt="Product">
+                                            <img src="images/product" alt="image">
                                         </td>
                                         <td>
                                             <a href="#">Bluetooth Speaker</a>
