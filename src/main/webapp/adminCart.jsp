@@ -66,7 +66,7 @@
                     <h5>Cart</h5>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.do">Home</a></li>
-                        <li class="breadcrumb-item active">Cart</li>
+                        <li class="breadcrumb-item active"><a href="product_list.do"> Product</a></li>
                     </ol>
                 </div>
             </div>
@@ -153,7 +153,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <a href="checkout-1.html" class="btn btn-primary d-block">Proceed To Checkout</a>
+                        <a href="cart_to_purchase.do" class="btn btn-primary d-block">Proceed To Checkout</a>
                     </div>
                 </div>
             </div>

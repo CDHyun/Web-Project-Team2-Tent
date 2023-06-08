@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.javalec.tent.command.AdminCartCommand;
 import com.javalec.tent.command.AdminCartDeleteCommand;
+import com.javalec.tent.command.AdminCartUserInfoCommand;
 import com.javalec.tent.command.AdminCommand;
 import com.javalec.tent.command.AdminContentCommand;
 import com.javalec.tent.command.AdminDeleteCommand;
@@ -303,6 +304,11 @@ public class HomeController extends HttpServlet {
 			command = new AdminCartDeleteCommand();
 			command.execute(request, response);
 			viewPage = "cart.do";
+			break;
+		case "/cart_to_purchase.do":
+			command = new AdminCartUserInfoCommand();
+			command.execute(request, response);
+			viewPage = "purchase_info.jsp";
 			break;
 		
 		default:
