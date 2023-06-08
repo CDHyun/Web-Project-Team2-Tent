@@ -298,11 +298,7 @@ public class HomeController extends HttpServlet {
 		case "/admin_login.do":
 			viewPage = "adminfirst.do";
 			break;
-		case "/cartAct.do": // cart insertData 
-			command = new AdminCartCommand();
-			command.execute(request, response);
-			viewPage = "adminCart.jsp";
-			break;
+		
 		default:
 			break;
 		}
