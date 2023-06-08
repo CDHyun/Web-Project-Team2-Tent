@@ -19,11 +19,10 @@ public class PurchaseListCommand implements TentCommand {
 		String uid = (String)session.getAttribute("SUID");
 		
 		
-		
 		PurchaseDao dao = new PurchaseDao();
 	
 		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
-		dtos = dao.orderList(uid);
+		dtos = dao.purchaseList(uid);
 		request.setAttribute("purchaseList", dtos);
 		
 	}

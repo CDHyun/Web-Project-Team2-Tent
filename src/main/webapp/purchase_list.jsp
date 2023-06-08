@@ -55,7 +55,6 @@
 	
 	
 
-</script>
 
 </head>
 
@@ -166,8 +165,8 @@
                 <td>
                     <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#order_detail_modal">View</button>
                 </td>
-            </tr>
         </c:forEach>
+            </tr>
     </tbody>
 </table>
 <!-- ... -->
@@ -216,16 +215,13 @@
 						                                    </tr>
 						                                </thead>
 						                                <tbody id="orderer_info_body">
-						                                 <c:forEach items="${purchaseList}" var="purchase">
-						                            <c:if test="${purchase.uid eq SUID and purchase.pcNo eq your_desired_order_number}">
-						                                    <tr>
+						                                 <c:forEach items="${purchaseList}" var="purchase"> <tr>
 						                                        <th scope="row">${purchase.pcNo}</th>
 						                                        <td>${purchase.pcInsertDate}</td>
 						                                        <td>${purchase.pName}</td>
 						                                        <td>${purchase.uPhone}</td>
 						                                        <td>${purchase.uaAddress}</td>
 						                                    </tr>
-						                                    </c:if>
 						                                    </c:forEach>
 						                                </tbody>
 						                            </table>
@@ -247,7 +243,7 @@
 						                            <table class="table mb-0 table-bordered">
 						                                <thead>
 						                                    <tr>
-						                                        <th scope="col"></th>
+						                                        <th scope="col">No</th>
 						                                        <th scope="col">Item</th>
 						                                        <th scope="col">Quantity</th>
 						                                        <th scope="col">price</th>
@@ -255,9 +251,8 @@
 						                                </thead>
 						                                <tbody id="item_info_body">
 						                                   <c:forEach items="${purchaseList}" var="purchase">
-						                              <c:if test="${purchase.uid eq SUID and purchase.pcNo eq your_desired_order_number}">
 						                                    <tr>
-						                                        <th scope="row">1</th>
+						                                        <th scope="row">${purchase.pcNo}</th>
 						                                        <td>${purchase.pName}</td>
 						                                        <td>${PCQTY}</td>
 						                                        <td>${purchase.pPrice}</td>
@@ -265,7 +260,6 @@
 						                                    <tr>
 						                                        <th scope="row" colspan="4">total</th>
 						                                    </tr>
-						                                    </c:if>
 						                                      </c:forEach>
 						                                </tbody>
 						                            </table>
@@ -281,7 +275,8 @@
 	                    </div>
 	                    <div class="modal-footer">
 	                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	                        <button type="button" class="btn btn-primary" id="order_delete_btn">Delete</button>
+	                     <!--    <button type=submit" class="btn btn-primary" id="order_delete_btn"><a href=".do">Delete</button> -->
+	                   <input type="submit" value="DELETE" class="btn btn-danger" id="order_delete_btn"><a href="purchase_list.do"></a>
 	                    </div>
 	                </div>
 	            </div>

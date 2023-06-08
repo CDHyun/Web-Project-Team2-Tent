@@ -86,19 +86,19 @@
                                     <!-- order item start -->
                                     <c:set var="tot_price" value="0" />
                                     <tbody>
-                                    <c:forEach var="purchase" items="${purchaseCheckList}">
-                                    <c:set var="item_tot_price" value="${PCQTY * purchase.pPrice}" />
+                                    <c:forEach var="purchaseCheck" items="${purchaseCheckList}">
+                                    <c:set var="item_tot_price" value="${PCQTY * purchaseCheck.pPrice}" />
                                       <c:set var="tot_price" value="${tot_price + item_tot_price}" />
                                         <tr>
                                             <td>
-                                                <img src="images/product/${purchase.pfRealName}" alt="Product">
+                                                <img src="images/product/${purchaseCheck.pfRealName}" alt="Product">
                                             </td>
                                             <td>
-                                                <a href="#">${purchase.pName}</a>
+                                                <a href="#">${purchaseCheck.pName}</a>
                                             </td>
-                                            <c:set var="item_tot_price" value="${PCQTY * purchase.pPrice}"></c:set>
+                                            <c:set var="item_tot_price" value="${PCQTY * purchaseCheck.pPrice}"></c:set>
                                             
-                                             <td><fmt:formatNumber value="${purchase.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
+                                             <td><fmt:formatNumber value="${purchaseCheck.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
                                          <%--    <td>${purchase.pPrice}</td> --%>
                                             <td>${PCOLOR}</td>
                                             <td>${PCQTY}</td>
@@ -137,7 +137,7 @@
           
                         </div>     
                         <form id="order_create_form" method="post">
-                        	<input type="hidden" name="total_price" value="${PCQTY * purchase.pPrice}">
+                        	<input type="hidden" name="total_price" value="${PCQTY * purchaseCheck.pPrice}">
                         </form> 
                     </div>
                 </div>
