@@ -75,7 +75,7 @@
     <label for="pStock">재고:</label>
     <input type="text" name="pStock" id="pStock" size="30"><br/>
     
-    <label for="pStock">재고:</label>
+    <label for="pStock">카테고리번호:</label>
     <input type="text" name="cgNo" id="cgNo" size="30"><br/>
     
     <label for="pfNo">파일번호:</label>
