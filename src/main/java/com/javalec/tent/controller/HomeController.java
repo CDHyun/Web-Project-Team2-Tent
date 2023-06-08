@@ -294,6 +294,9 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "purchase_list.do";
 			break;
+		case "/admin_login.do":
+			viewPage = "adminfirst.do";
+			break;
 		default:
 			break;
 		}
