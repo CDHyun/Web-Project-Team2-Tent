@@ -143,10 +143,10 @@
 			        <ul class="pagination pagination-sm justify-content-center">
 			            <c:if test="${pageMaker.page > 1}">
 			                <li class="page-item">
-			                    <a class="page-link" href="board_list.do?pageNo=1"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
+			                    <a class="page-link" href="board_list.do?pageNo=1&queryContent=${param.queryContent}"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
 			                </li>
 			                <li class="page-item">
-			                    <a class="page-link" href="board_list.do?pageNo=${pageMaker.page - 1}"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+			                    <a class="page-link" href="board_list.do?pageNo=${pageMaker.page - 1}&queryContent=${param.queryContent}"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
 			                </li>
 			            </c:if>
 			<c:set var="halfDisplayPage" value="${Math.floor(pageMaker.displayPage/2)}" />
@@ -162,16 +162,16 @@
 			
 			<c:forEach var="pageNum" begin="${startPage}" end="${endPage}" step="1">
 			    <li class="page-item ${pageNum eq pageMaker.page ? 'active' : ''}">
-			        <a class="page-link" href="board_list.do?pageNo=${pageNum}">${pageNum}</a>
+			        <a class="page-link" href="board_list.do?pageNo=${pageNum}&queryContent=${param.queryContent}">${pageNum}</a>
 			    </li>
 			</c:forEach>
 			
 			            <c:if test="${pageMaker.next}">
 						    <li class="page-item">
-						        <a class="page-link" href="board_list.do?pageNo=${pageMaker.page + 1}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+						        <a class="page-link" href="board_list.do?pageNo=${pageMaker.page + 1}&queryContent=${param.queryContent}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
 						    </li>
 						    <li class="page-item">
-						        <a class="page-link" href="board_list.do?pageNo=${pageMaker.totalPage}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+						        <a class="page-link" href="board_list.do?pageNo=${pageMaker.totalPage}&queryContent=${param.queryContent}"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
 						    </li>
 						</c:if>
 			        </ul>

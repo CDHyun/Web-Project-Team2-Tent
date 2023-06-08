@@ -49,15 +49,10 @@
 		    
 		    ToastConfirm.fire({ icon: 'question', title: "장바구니에 담으시겠습니까?" }).then((result) => {
 				if(result.isConfirmed){
-					$.ajax({
-						type : 'POST',
-						url : './cart.do',
-						data : {
-							pCode : pCode,
-							pcQty : pcQty,
-							pColor : pColor
-						}
-				    });
+					if(result.isConfirmed){
+						var url = "cart.do?pCode=" + encodeURIComponent(pCode) + "&pcQty=" + encodeURIComponent(pcQty) + "&pColor=" + encodeURIComponent(pColor);
+						window.location.href = url;
+					}
 				}
 			});
 		  }
