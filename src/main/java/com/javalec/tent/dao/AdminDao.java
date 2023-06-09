@@ -821,7 +821,7 @@ public class AdminDao {
 			try {
 				connection = dataSource.getConnection();
 				
-				String WhereDefault = "select c.cNo,c.pCode,pf.pfRealName, p.pName, p.pPrice, c.cQty, (c.cQty*p.pPrice)";
+				String WhereDefault = "select c.cpColor,c.cNo,c.pCode,pf.pfRealName, p.pName, p.pPrice, c.cQty, (c.cQty*p.pPrice)";
 				String WhereDefault2 = " from product p, cart c, productfile pf, user u, productoption po";
 				String WhereDefault3 = " where pf.pCode = p.pCode and p.pCode = c.pCode and u.uid = c.uid and c.cpColor = po.pColor and pf.pCode = c.pCode and po.pCode = p.pCode and u.uid =?";
 					
@@ -830,16 +830,17 @@ public class AdminDao {
 				resultSet = preparedStatement.executeQuery();
 				
 				while(resultSet.next()) {
-					int cNo = resultSet.getInt(1);
-					int pCode = resultSet.getInt(2);
-					String pfRealName = resultSet.getString(3);
-					String pName = resultSet.getString(4);
-					int pPrice = resultSet.getInt(5);
-					int cQty = resultSet.getInt(6);
-					int ctotal = resultSet.getInt(7);
+					String pColor = resultSet.getString(1);
+					int cNo = resultSet.getInt(2);
+					int pCode = resultSet.getInt(3);
+					String pfRealName = resultSet.getString(4);
+					String pName = resultSet.getString(5);
+					int pPrice = resultSet.getInt(6);
+					int cQty = resultSet.getInt(7);
+					int ctotal = resultSet.getInt(8);
 					
 			
-					AdminDto dto = new AdminDto(cNo,pCode,pfRealName, pName, pPrice, cQty, ctotal);
+					AdminDto dto = new AdminDto(pColor,cNo,pCode,pfRealName, pName, pPrice, cQty, ctotal);
 					dtos.add(dto);
 				}
 			}catch(Exception e) {
@@ -954,6 +955,40 @@ public class AdminDao {
 			}
 		}
 		
+		
+		
+		//카트수량수정메서드
+		public void carUpdateAction(String ccNo, String ccQty) {
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			try {
+				connection = dataSource.getConnection();
+				String query = "update cart set cQty = ? where cNo = ?";
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1, ccQty);
+				preparedStatement.setString(2, ccNo);
+				
+				
+				
+				preparedStatement.executeUpdate();
+			
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					
+					if(preparedStatement != null) {
+						preparedStatement.close();
+					}
+					if(connection != null) {
+						connection.close();
+					}
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}
 		
 		
 }

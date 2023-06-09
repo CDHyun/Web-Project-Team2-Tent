@@ -152,8 +152,9 @@ public class AdminDto {
 	
 	
 	
-	public AdminDto(int cNo,int pCode, String pfRealName, String pName, int pPrice, int cQty, int ctotal) {
+	public AdminDto(String pColor,int cNo,int pCode, String pfRealName, String pName, int pPrice, int cQty, int ctotal) {
 		super();
+		this.pColor = pColor;
 		this.pName = pName;
 		this.pPrice = pPrice;
 		this.pfRealName = pfRealName;
