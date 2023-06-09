@@ -316,6 +316,16 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "purchase_info.jsp";
 			break;
+		case "/cart_to_purchase_to_check.do":
+			command = new AdminCartSelectCommand();
+			command.execute(request, response);
+			viewPage = "adminPurchaseList.jsp";
+			break;
+		case "/adminPurchase.do":
+			command = new AdminCartSelectCommand();
+			command.execute(request, response);
+			viewPage = "adminPurchaseList.jsp";
+			break;
 		
 		default:
 			break;

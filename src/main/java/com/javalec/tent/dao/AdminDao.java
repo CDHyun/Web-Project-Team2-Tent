@@ -990,5 +990,9 @@ public class AdminDao {
 			
 		}
 		
+		public void cartTopurchase() {
+			
+		}
+		
 		
 }
