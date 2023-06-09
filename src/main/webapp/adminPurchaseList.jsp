@@ -1,7 +1,9 @@
+<%@page import="com.javalec.tent.dto.AdminDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.util.ArrayList" %>
 
 <!doctype html>
 <html lang="en">
@@ -82,6 +84,7 @@
                                         </tr>
                                     </thead>
                                   
+                 
                                     
                                     <!-- order item start -->
                                     <c:set var="tot_price" value="0" />
@@ -91,6 +94,8 @@
                                       <c:set var="tot_price" value="${tot_price + item_tot_price}" />
                                         <tr>
                                             <td>
+                                            <input type="hidden" name="cNo" id="cNo" value="${dto.cNo}">
+										      <input type="hidden" name="pCode" id="pCode" value="${dto.pCode}">
                                                 <img src="images/product/${dto.pfRealName}" alt="Product">
                                             </td>
                                             <td>
