@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.javalec.tent.command.AdminCartCommand;
 import com.javalec.tent.command.AdminCartDeleteCommand;
+import com.javalec.tent.command.AdminCartSelectCommand;
 import com.javalec.tent.command.AdminCartUserInfoCommand;
 import com.javalec.tent.command.AdminCommand;
 import com.javalec.tent.command.AdminContentCommand;
@@ -196,8 +197,13 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "purchase_info.jsp";
 			break;
-		case "/cart.do":
+		case "/cart.do":   //카트에 상품담기
 			command = new AdminCartCommand();
+			command.execute(request, response);
+			viewPage = "admincartSelect.do";
+			break;
+		case "/admincartSelect.do":  //카트보여주기
+			command = new AdminCartSelectCommand();
 			command.execute(request, response);
 			viewPage = "adminCart.jsp";
 			break;
@@ -303,7 +309,7 @@ public class HomeController extends HttpServlet {
 		case "/adminCartDelete.do":
 			command = new AdminCartDeleteCommand();
 			command.execute(request, response);
-			viewPage = "cart.do";
+			viewPage = "admincartSelect.do";
 			break;
 		case "/cart_to_purchase.do":
 			command = new AdminCartUserInfoCommand();
