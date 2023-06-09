@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="css/shop/cart.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+    
+    
        	function selectAll(selectAll)  {
   			const checkboxes= document.querySelectorAll('input[type="checkbox"]');
   			checkboxes.forEach((checkbox) => {checkbox.checked = selectAll.checked })
@@ -33,12 +35,31 @@
 			
 		  }
 		
+       	function btnClick() {
+			var form = document.adminCartForm;
+			form.submit();
+ 		}
+	
        	
+
+		function increaseQuantity(cmNo) {
+		    var quantityInput = document.getElementById("quantity_"+cmNo);
+		    var currentQuantity = parseInt(quantityInput.value);
+		    quantityInput.value = currentQuantity + 1;
+		  }
+
+		  function decreaseQuantity(cmNo) {
+		    var quantityInput = document.getElementById("quantity_"+cmNo);
+		    var currentQuantity = parseInt(quantityInput.value);
+		    if (currentQuantity > 0) {
+		      quantityInput.value = currentQuantity - 1;
+		    }
+		  }
+
        	
     </script>
         
         
-
 
 </head>
 
@@ -99,7 +120,7 @@
                                     
                                     
                                      <c:forEach items="${cart}" var="dto">
-                           <form action="adminCartDelete.do" method="post">
+                           				<form name="adminCartForm" action="adminCartDelete.do" method="post">
                                      
 										    <tr>
 										      <td>
@@ -108,10 +129,20 @@
 										      <img alt="no" src="images/product/${dto.pfRealName }"> </td>
 										      <td>${dto.pName}</td>
 										      <td>${dto.pPrice}</td>
-										      <td>${dto.cQty}</td>
+										      <td>
+										      <div class="input-form-group" style="display: flex; align-items: center;">
+	                            					<button type="button" id="plusQtyBtn_${dto.cNo}" class="btn btn-dark btn-sm" onclick="decreaseQuantity('${dto.cNo}')">-</button>&nbsp;&nbsp;
+	                            					<input type="text" id="quantity_${dto.cNo}" name="quantity" class="form-control" style="width: 45px" value="${dto.cQty}" min="1" max="10" readonly="readonly">&nbsp;&nbsp;
+	                            					<button type="button" id="minusQtyBtn_${dto.cNo}" class="btn btn-dark btn-sm" onclick="increaseQuantity('${dto.cNo}')">+</button>
+                            				</div>
+										      
+										      
+										      </td>
 										      <td>${dto.ctotal}</td>
 										      <td>
-                                           		   <input type="submit" value="x" class="btn btn-danger" size="4">
+										      
+                                           		  <input type="submit" value="x" class="fa fa-close" size="4"> 
+                                           		 <!--   <i class="fa fa-close" onclick="btnClick()"></i>-->
                                         	 </td>
 										     </tr> 
 										    
@@ -139,7 +170,7 @@
                                         <td>₩ ${cartTotal }</td>
                                     </tr>
                                     <tr>
-                                        <td>배송료</td>
+                                        <td>Shipping</td>
                                         <td>₩ 3000</td>
                                     </tr>
                                     <tr>
