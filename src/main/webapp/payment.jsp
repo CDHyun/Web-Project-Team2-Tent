@@ -166,6 +166,8 @@
        
 							<a href="purchase_info.do"><button type="button" class="btn btn-primary mt-2 ml-2" id="payment_before_btn" >Go Back</button></a>
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="cart_to_purchase_to_check.do"><button type="button" class="btn btn-primary mt-2 ml-2" id="payment_next_btn">Final Step1</button></a>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<a href="purchase_check_info.do"><button type="button" class="btn btn-primary mt-2 ml-2" id="payment_next_btn">Final Step</button></a>
                     </div>
             </div>
