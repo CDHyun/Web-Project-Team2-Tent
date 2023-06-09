@@ -40,6 +40,7 @@ import com.javalec.tent.command.ProductDetailCommand;
 import com.javalec.tent.command.PurchaseCheckInfoCommand;
 import com.javalec.tent.command.PurchaseCompleteCommand;
 import com.javalec.tent.command.PurchaseDeleteCommand;
+import com.javalec.tent.command.PurchaseInfoModifyCommand;
 import com.javalec.tent.command.PurchaseInsertCommand;
 import com.javalec.tent.command.PurchaseListCommand;
 import com.javalec.tent.command.PurchaserInfoCommand;
@@ -325,6 +326,11 @@ public class HomeController extends HttpServlet {
 			command = new AdminCartSelectCommand();
 			command.execute(request, response);
 			viewPage = "adminPurchaseList.jsp";
+			break;
+		case "/purchaseAddressModify.do":
+			command = new PurchaseInfoModifyCommand();
+			command.execute(request, response);
+			viewPage = "purchase_info.jsp";
 			break;
 		
 		default:

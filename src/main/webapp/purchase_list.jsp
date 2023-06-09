@@ -16,45 +16,26 @@
 	<jsp:include page="common/include_common_top.jsp"/>
     <!-- include_common_top -->
     <link rel="stylesheet" href="css/shop/order.css">
+
+<style>
+    .table-bordered th,
+    .table-bordered td {
+        vertical-align: middle;
+    }
+    
+    .table-bordered th {
+        text-align: center;
+    }
+  
+</style>
 <script type="text/javascript">
-
-	
-	function DeletePurchase() {
-		var pcNo = $('#d_pcNo').val();
-		ToastConfirm.fire({ icon: 'question', title: "해당 상품을 주문취소 하시겠습니까?" }).then((result) => {
-			if(result.isConfirmed){
-				$.ajax({
-					type : 'POST',
-					url : './DeletePurchase',
-					data : {
-						pcNo : pcNo,
-					},
-					success : function(result) {
-						console.log(result);
-						if (result === "0") {
-							Toast.fire({ icon : 'warning', title : "주문취소 중 문제가 발생했습니다." });
-							return;
-						}
-						if (result === "1") {
-							Toast.fire({ icon: 'success', title: "주문이 취소 되었습니다." }).then(() => {
-								  window.location.href = "purchase_delete.do";
-								});
-						}
-					},
-					error : function() {
-						Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
-					 }
-			    });
-			}
-		});
+	var globalPcNo;
+	function openDetailModal(pcNo) {
+		globalPcNo = pcNo;
+		$('#order_detail_modal_'+pcNo).modal('show');
 	}
-	  
-	</script>
-	
-	
-	
-	
 
+</script>
 
 </head>
 
@@ -137,6 +118,8 @@
                 <td colspan="5">등록된 주문목록이 없습니다 🙂</td>
             </tr>
         </c:if>
+        
+        
         <c:forEach items="${purchaseList}" var="purchase">
         <tr>
                 <td>${purchase.pcNo}</td>
@@ -161,12 +144,15 @@
                         <span class="bigshop-label bigshop-label-success">배송완료</span>
                     </td>
                 </c:if>
-                <td><fmt:formatNumber value="${purchase.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
+                <td><fmt:formatNumber value="${purchase.pcQty * purchase.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
                 <td>
-                    <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#order_detail_modal">View</button>
+                   <button type="button" class="btn btn-secondary btn-sm" onclick="openDetailModal('${purchase.pcNo}')">View</button>
+
                 </td>
             </tr>
         </c:forEach>
+    
+    
     </tbody>
 </table>
 <!-- ... -->
@@ -181,9 +167,9 @@
         </div>
    	</section>
    	
-	   	<!-- 오더상세보기 모달 시작 -->        
+	   	<!-- 오더상세보기 모달 시작 -->     
 	    <div class="shortcodes_content mb-100">
-	        <div class="modal fade" id="order_detail_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	        <div class="modal fade" id="order_detail_modal_${purchase.pcNo}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	            <div class="modal-dialog" role="document" style="max-width: 100%; width: auto; display: table;">
 	                <div class="modal-content">
 	                    <div class="modal-header">
@@ -193,7 +179,7 @@
 	                        </button>
 	                    </div>
 	                    <div class="modal-body">
-	                        <p class="mb-0">
+	                        <p class="mb-0"></p>
 	                        <!-- order detail data -->
 						    <div class="shortcodes_area section_padding_40">
 						        <div class="container">
@@ -205,23 +191,30 @@
 						                    <div class="shortcodes_content">
 						                        <div class="table-responsive">
 						                            <table class="table mb-0 table-bordered">
-						                                <thead>
+						                              <colgroup>
+				                                        <col style="width: 5%">
+				                                        <col style="width: 30%">
+				                                        <col style="width: 25%">
+				                                        <col style="width: 30%">
+				                                        <col style="width: 10%">
+				                                    </colgroup>
+										                <thead>
 						                                    <tr>
 						                                        <th scope="col">No</th>
 						                                        <th scope="col">Date</th>
 						                                        <th scope="col">Name</th>
 						                                        <th scope="col">Phone</th>
+						                                        <th scope="col">Pay</th>
 						                                    </tr>
 						                                </thead>
 						                                <tbody id="orderer_info_body">
-						                                 <c:forEach items="${purchaseList}" var="purchase"> <tr>
-						                                        <th scope="row">${purchase[0].pcNo}</th>
-						                                        <td>${purchase[0].pcInsertDate}</td>
-						                                        <td>${purchase[0].pName}</td>
-						                                        <td>${purchase[0].uPhone}</td>
-						                                        <td>${purchase[0].uaAddress}</td>
+						                                 		 <tr>
+						                                        <th scope="row">${purchase.pcNo}</th>
+						                                        <td>${purchase.pcInsertDate}</td>
+						                                        <td>${purchase.pName}</td>
+						                                        <td>${purchase.uPhone}</td>
+						                                        <td>결제방식</td>
 						                                    </tr>
-						                                    </c:forEach>
 						                                </tbody>
 						                            </table>
 						                        </div>
@@ -246,20 +239,17 @@
 						                                        <th scope="col">Item</th>
 						                                        <th scope="col">Quantity</th>
 						                                        <th scope="col">price</th>
+						                                        <th scope="col">total</th>
 						                                    </tr>
 						                                </thead>
 						                                <tbody id="item_info_body">
-						                                   <c:forEach items="${purchaseList}" var="purchase">
 						                                    <tr>
 						                                        <th scope="row">${purchase.pcNo}</th>
-						                                        <td>${purchase.pName}</td>
-						                                        <td>${PCQTY}</td>
-						                                        <td>${purchase.pPrice}</td>
+						                                          <td><img src="images/product/${purchase.pfRealName}" alt="Product"></td>
+						                                        <td>${purchase.pcQty}</td>
+						                                        <td><fmt:formatNumber value="${purchase.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
+						                                        <td><fmt:formatNumber value="${purchase.pcQty * purchase.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
 						                                    </tr>
-						                                    <tr>
-						                                        <th scope="row" colspan="4">total</th>
-						                                    </tr>
-						                                      </c:forEach>
 						                                </tbody>
 						                            </table>
 						                        </div>
@@ -269,8 +259,6 @@
 						        </div>
 						    </div>
 						<!-- order detail data -->
-
-						</p>
 	                    </div>
 	                    <div class="modal-footer">
 	                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -281,7 +269,6 @@
 	            </div>
 	        </div>
 	    </div>
-	  
 	<!-- 오더상세보기 모달 끝 -->        
     
     <!-- My Account Area -->
@@ -292,7 +279,7 @@
 
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp"/>
-	<script src="js/shop/order.js?after"></script>
+	<script src="js/shop/order.js"></script>
 	<script type = "text/javascript">
 	/********개별주문 삭제***********/
 	$('#order_delete_btn').on('click',function(e){
@@ -306,5 +293,4 @@
 	}); */
 	</script>
 </body>
-
 </html>

@@ -176,6 +176,7 @@
 								<div class="col-md-6 mb-3 search">
 									<button type="button"
 										class="btn btn-outline-primary mb-1 searchAddr">search</button>
+										  &nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-primary mb-1" onclick="modifyModalOpen('purchase')">Modify</button>
 								</div>
 								<div class="col-md-12">
 									<label for="order-notes">Message</label>
@@ -223,42 +224,9 @@
     
     <!-- *************************************************  -->
  
-    <div class="shortcodes_area section_padding_100">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="shortcodes_title mb-30">
-                        <h5 class="mb-3">My Account</h5>
-                    </div>
-                    <div class="shortcodes_content">
-                        <div class="table-responsive">
-                            <table class="table mb-0 table-bordered" style="vertical-align: middle; text-align: center;">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="board_title no-border">배송지</th>
-                                        <th scope="col" class="board_title no-border">주소</th>
-                                        <th scope="col" class="board_title no-border">전화 번호</th>
-                                        <th scope="col" class="board_title no-border"></th>
-                                    </tr>
-                                </thead>
-                                <tbody id="qna_list_tbody">
-                                	<!-- board start -->
-                                	<c:forEach var="address" items="${addressList}" varStatus="loop">
-									  <tr>
-									    <td>${SUNICKNAME}님의 배송지<br/><span style="color: gray;">${address.uaNo}</span></td>
-									    <td style="vertical-align: middle;">${address.uaAddress}&nbsp;${address.uaDetailAddress}</td>
-									    <td style="vertical-align: middle;">${address.uPhone}</td>
-									    <td style="vertical-align: middle;">
-									   		<c:if test="${address.uaNo == 1}">
-										      <button type="button" class="btn btn-primary btn-sm" onclick="modifyModalOpen()">Modify</button>
-									   		</c:if>
-									   		<c:if test="${address.uaNo > 1}">
-										    	<button type="button" class="btn btn-primary btn-sm" onclick="modifyModalOpen()">Modify</button>
-										    	<input type="hidden" id="d_uaNo" name="d_uaNo" value="${address.uaNo}">
-									      		<button type="button" class="btn btn-danger btn-sm delete-button" onclick="userDeleteAddress()">Delete</button>
-									   		</c:if>
-									    </td>
-									  </tr>
+ 
+                                
+                               
 									  <!-- 배송지 수정 모달 -->
 										<div class="modal" id="userModifyAddressModal" tabindex="-1" role="dialog">
 											<div class="modal-dialog" role="document">
@@ -288,22 +256,16 @@
 																	</div>
 											                	</div>
 											                </div>
-											                <div class="col-12">
-													            <div class="form-group">
-													                <label for="Address">Shipping address<span style="color: gray; font-size: 14px">&nbsp;Optional</span></label>
-													                <input type="text" class="form-control" id="m_uaContent" name="m_uaContent" value="${address.uaContent}" placeholder="Shipping address">
-													            </div>
-													        </div>
+							
 													        <div class="button-container">
-											            		<button type="button" class="btn btn-primary btn-sm" onclick="userModifyAddress()">Modify</button>&nbsp;&nbsp;&nbsp;&nbsp;
-																<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">Cancle</button>
+											            		<button type="button" class="btn btn-primary btn-sm" onclick="userModifyAddress()" >Modify</button>&nbsp;&nbsp;&nbsp;&nbsp;
+																<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">Cancel</button>
 															</div>
 													</div>
 												</div>
 											</div>
 										</div>
 										<!-- 배송지 수정 모달 -->
-									</c:forEach>
 									</div>
 
                                    <!-- board end -->

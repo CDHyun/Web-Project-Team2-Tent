@@ -13,8 +13,9 @@ public class PurchaseDeleteCommand implements TentCommand {
 		// TODO Auto-generated method stub
 		
 		String pcNoString = request.getParameter("pcNo");
-		int pcNo = Integer.parseInt(pcNoString);
 		
+		int pcNo = Integer.parseInt(pcNoString);
+		System.out.println(pcNo);
 		
 		
 		PurchaseDao dao  = new PurchaseDao();

@@ -1,6 +1,7 @@
 package com.javalec.tent.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -9,7 +10,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.javalec.tent.dto.AdminDto;
 import com.javalec.tent.dto.PurchaseDto;
+import com.javalec.tent.dto.UserDto;
 
 public class PurchaseDao {
 
@@ -64,7 +67,7 @@ public PurchaseDao() {
 	}
 }
 
-
+//주문자 정보 불러오기//
      public ArrayList<PurchaseDto> selectUser(String uid) {
  		ArrayList<PurchaseDto> beanList = new ArrayList<PurchaseDto>();
  		Connection connection = null;
@@ -109,6 +112,8 @@ public PurchaseDao() {
  		return beanList;
  	}
 
+     
+     //구매내역 마지막 페이지 데이터 불러오기//
      public ArrayList<PurchaseDto> purchaseList(String uid) {
  		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
  		System.out.println("DAO 호출");
@@ -118,9 +123,9 @@ public PurchaseDao() {
 
  		try {
  			connection = dataSource.getConnection();
- 			String query = "SELECT pc.pcNo, p.pCode, p.pName, p.pPrice, pc.pcQty, pc.pcStatus, pc.pcInsertDate, u.uPhone "
- 					+"FROM product p, user u, purchase pc "
- 					+"WHERE pc.pCode = p.pCode and u.uid = pc.uid and u.uid = ?";
+ 			String query = "SELECT pc.pcNo, p.pCode, p.pName, p.pPrice, pc.pcQty, pc.pcStatus, pc.pcInsertDate, u.uPhone, pf.pfRealName, pf.pfHoverRealName "
+ 					+"FROM product p, user u, purchase pc, productfile pf "
+ 					+"WHERE pc.pCode = p.pCode and pf.pCode = p.pCode and u.uid = pc.uid and pc.pcDeleted=0 and u.uid = ?";
  			
 
  			preparedStatement = connection.prepareStatement(query);
@@ -138,10 +143,16 @@ public PurchaseDao() {
  				String pcStatus = resultSet.getString(6);
 				String pcInsertDate = resultSet.getString(7);
 				String uPhone = resultSet.getString(8);
+				String pfRealName = resultSet.getString(9);
+				String pfHoverRealName = resultSet.getString(10);
  				
+				 
+//			    int cQty = getCQtyCart(uid, pCode); // 장바구니에서 cQty 가져오기
+//			    int realQty = (pcQty != cQty) ? Math.max(pcQty, cQty) : pcQty
 				
-				PurchaseDto purchaseDto = new PurchaseDto(uid, uPhone, pcNo, pPrice, pcQty, pName, pcInsertDate, pcStatus);
+				PurchaseDto purchaseDto = new PurchaseDto(uid, uPhone, pcNo, pPrice, pcQty, pName, pcInsertDate, pcStatus, pfRealName, pfHoverRealName);
 				dtos.add(purchaseDto);
+				System.out.println(dtos.get(0).getPcStatus());
  			}
 
  		} catch (Exception e) {
@@ -163,6 +174,8 @@ public PurchaseDao() {
 
  	}
 
+     
+     //purchase_check에서 order 누르면 db에 데이터 삽입하기//
  	public void purchaseinsert(String uid, int pCode, int pcQty, String pcDM, String pColor) { 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -191,7 +204,9 @@ public PurchaseDao() {
 			}
 		}
 	}
-	
+ 	
+ 	
+	//purchase_complete페이지에서 데이터 불러오기
  	public ArrayList<PurchaseDto> completeList(String uid) {
  		ArrayList<PurchaseDto> beanList = new ArrayList<PurchaseDto>();
  		Connection connection = null;
@@ -229,63 +244,9 @@ public PurchaseDao() {
  		}
  		return beanList;
  	}
-  
-// 	 public ArrayList<PurchaseDto> orderList(String uid) {
-//  		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
-//  		Connection connection = null;
-//  		PreparedStatement preparedStatement = null;
-//  		ResultSet resultSet = null;
-//
-//  		try {
-//  			connection = dataSource.getConnection();
-//  			String query = "SELECT u.uid, pc.pcNo, pc.pColor, p.pCode, p.pName, p.pPrice, pc.pcQty, pf.pfRealName, pf.pfHoverRealName, pc.pcInsertDate, u.uName, u.uPhone, ua.uaAddress, pc.pcStatus " 
-//  					+ "FROM purchase pc, product p, user u, productfile pf, productOption po, userAddress ua "
-//  					+ "WHERE pc.pCode = p.pCode and pf.pCode = p.pCode and po.pCode = p.pCode and u.uid = pc.uid and u.uid = ua.uid and u.uid = ?";
-//  			
-//  			preparedStatement = connection.prepareStatement(query);
-//  			preparedStatement.setString(1, uid);
-//  			resultSet = preparedStatement.executeQuery();
-//
-//  			while (resultSet.next()) {
-//  				String wkuid = resultSet.getString(1);
-//  				int pcNo = resultSet.getInt(2);
-//  				String pColor = resultSet.getString(3);
-//  				int pCode = resultSet.getInt(4);
-//  				String pName = resultSet.getString(5);
-//  				int pPrice = resultSet.getInt(6);
-//  				int pcQty = resultSet.getInt(7);
-//  				String pfRealName = resultSet.getString(8);
-// 				String pfHoverRealName = resultSet.getString(9);
-// 				String pcInsertDate = resultSet.getString(10);
-// 				String uName = resultSet.getString(11);
-// 				String uPhone = resultSet.getString(12);
-// 				String uaAddress = resultSet.getString(13);
-// 				String pcStatus = resultSet.getString(14);
-// 				
-//  				PurchaseDto purchaseDto = new PurchaseDto(wkuid, uName, uPhone, uaAddress, pcNo, pCode, pPrice, pcQty, pColor, pName, pcInsertDate, pfRealName, pfHoverRealName, pcStatus);
-//  				dtos.add(purchaseDto);
-//  			}
-//
-//  		} catch (Exception e) {
-//  			e.printStackTrace();
-//  		} finally {
-//  			try {
-//  				if (resultSet != null)
-//  					resultSet.close();
-//  				if (preparedStatement != null)
-//  					preparedStatement.close();
-//  				if (connection != null)
-//  					connection.close();
-//  			} catch (Exception e) {
-//  				e.printStackTrace();
-//  			}
-//  		}
-//
-//  		return dtos;
-//
-//  	}
-//
-// 	 
+ 
+ 	
+ 	//주문내역 확인하는 method//
  	  public ArrayList<PurchaseDto> purchaseCheckList(int ppcode) {  // 주문정보 보여주기 메서드 상품디테일에서 넘어오면 수행
  	 		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
  	 		System.out.println("DAO 1호출");
@@ -300,12 +261,9 @@ public PurchaseDao() {
  	 							+ "WHERE pf.pCode = p.pCode and p.pCode = ? ";
  	 			preparedStatement = connection.prepareStatement(query);
  	 			preparedStatement.setInt(1, ppcode);
- 	 			System.out.println("실행 바로 직전");
  	 			resultSet = preparedStatement.executeQuery();
- 	 			System.out.println("실행 바로 후");
 
  	 			if (resultSet.next()) {
- 	 				System.out.println("데이터 받기전");
  	 				String pName = resultSet.getString(1);
  	 				int pPrice = resultSet.getInt(2);
  	 				String pfRealName = resultSet.getString(3);
@@ -450,7 +408,7 @@ public PurchaseDao() {
  			
  			try {
  				connection = dataSource.getConnection();
- 				String query = "update purchase pc set pcDeleteDate=now() ,pcDeleted =1 where pc.pcNo =?";
+ 				String query = "update purchase pc set pcDeleteDate=now(), pcDeleted =1 where pc.pcNo =? ";
  				preparedStatement = connection.prepareStatement(query);
  				preparedStatement.setInt(1, pcNo);
  				
@@ -475,8 +433,137 @@ public PurchaseDao() {
  			}
  		}	
  			
- 	 
+ 		
+ 		public PurchaseDto purchaseDetailView(String uid, int ppcNo) {
+ 			PurchaseDto dto = null;
+ 			Connection connection = null;
+ 			PreparedStatement preparedStatement = null;
+ 			ResultSet resultSet = null;
+ 			
+ 			try {
+ 				connection = dataSource.getConnection();
+ 				String query = "select pc.pcNo, pc.pcinsertDate, p.pName ,u.uPhone, pf.pfRealName, pf.pfHoverRealName  "
+ 						+ "from product p, purchase pc, productfile pf, user u "
+ 						+ "where p.pCode = pc.pCode and p.pCode = pf.pCode and u.uid = ? and pcNo = ?";
+ 				preparedStatement = connection.prepareStatement(query);
+ 				preparedStatement.setString(1, uid);
+ 				preparedStatement.setInt(2, ppcNo);
+ 				resultSet = preparedStatement.executeQuery();
+ 				
+ 				if(resultSet.next()) {
+ 					
+ 					int pcNo = resultSet.getInt(1);
+ 					String pcinsertDate = resultSet.getString(2);
+ 					String pName = resultSet.getString(3);
+ 					String uPhone = resultSet.getString(4);
+ 					String pfRealName = resultSet.getString(5);
+ 					String pfHoverRealName = resultSet.getString(6);
+ 					
+ 					dto = new PurchaseDto(uPhone, pcNo, pName, pcinsertDate, pfRealName, pfHoverRealName);
+ 				}
+ 				
+ 			}catch(Exception e) {
+ 				e.printStackTrace();
+ 			}finally {
+ 				try {
+ 					if(resultSet != null){ // 무언가 들어가 있으면close
+ 						resultSet.close();
+ 					}
+ 					if(preparedStatement != null) {
+ 						preparedStatement.close();
+ 					}
+ 					if(connection != null) {
+ 						connection.close();
+ 					}
+ 				}catch (Exception e) {
+ 					e.printStackTrace();
+ 				}
+ 			}
+ 			
+ 			return dto;
+ 			
+ 		}
+ 		
+ 		public ArrayList<UserDto> userAddressInfo(String uid) {
+ 			ArrayList<UserDto> addressList = new ArrayList<UserDto>();
+ 			Connection con = null;
+ 			PreparedStatement ps = null;
+ 			ResultSet rs = null;
+ 			int result = 0;
+ 			try {
+ 				con = dataSource.getConnection();
+ 				
+ 				String query = "select u.uid, ua.uaNo, u.uPhone, ua.uaAddress, ua.uaDetailAddress, ua.uaZipcode, ua.uaContent "
+ 						+ "from user u, userAddress ua "
+ 						+ "where u.uid = ua.uid and u.uid = ?";
+ 				ps = con.prepareStatement(query);
+ 				ps.setString(1, uid);
+ 				rs = ps.executeQuery();
+ 				while(rs.next()) {
+ 					String wkuid = rs.getString(1);
+ 					int wkuaNo = rs.getInt(2);
+ 					String wkuPhone = rs.getString(3);
+ 					String wkuAddress = rs.getString(4);
+ 					String wkuDetailAddress = rs.getString(5);
+ 					String wkuZipcode = rs.getString(6);
+ 					String wkuContent = rs.getString(7);
+ 					UserDto userDto = new UserDto(wkuid, wkuPhone, wkuaNo, wkuZipcode, wkuAddress, wkuDetailAddress, wkuContent);
+ 					addressList.add(userDto);
+ 					
+ 				}
+ 				
+ 				
+ 			} catch (Exception e) {
+ 				e.printStackTrace();
+ 			} finally {
+ 				try {
+ 					if (con != null) con.close();
+ 					if (ps != null) ps.close();
+ 				} catch (Exception e) {
+ 					e.printStackTrace();
+ 				}
+ 			}
+ 			return addressList;
+ 		}
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		public int userModifyAddress(int uaNo, String uid, String uaAddress, String uaDetailAddress, String uaZipcode, String uaContent) {
+ 			Connection con = null;
+ 			PreparedStatement ps = null;
+ 			int result = 0;
+ 			try {
+ 				con = dataSource.getConnection();
+ 				
+ 				String query = "update userAddress set uaAddress = ?, uaDetailAddress = ?, uaZipcode = ?, uaContent = ? where uid = ? and uaNo = ?";
+ 				ps = con.prepareStatement(query);
+ 				ps.setString(1, uaAddress);
+ 				ps.setString(2, uaDetailAddress);
+ 				ps.setString(3, uaZipcode);
+ 				ps.setString(4, uaContent);
+ 				ps.setString(5, uid);
+ 				ps.setInt(6, uaNo);
+ 				result = ps.executeUpdate();
+ 			} catch (Exception e) {
+ 				e.printStackTrace();
+ 			} finally {
+ 				try {
+ 					if (con != null) con.close();
+ 					if (ps != null) ps.close();
+ 				} catch (Exception e) {
+ 					e.printStackTrace();
+ 				}
+ 			}
+ 			return result;
+ 		}
 
+ 		
 
 	
 }//END

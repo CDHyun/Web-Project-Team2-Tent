@@ -1,32 +1,25 @@
 package com.javalec.tent.command;
-
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.javalec.tent.dao.PurchaseDao;
-import com.javalec.tent.dto.PurchaseDto;
+import com.javalec.tent.command.TentCommand;
+import com.javalec.tent.dao.UserDao;
+import com.javalec.tent.dto.UserDto;
 
-public class PurchaseListCommand implements TentCommand {
+public class PurchaseInfoModifyCommand implements TentCommand {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-
 		HttpSession session = request.getSession();
 		String uid = (String)session.getAttribute("SUID");
-		
-	
-		PurchaseDao dao = new PurchaseDao();
-	
-		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
-		dtos = dao.purchaseList(uid);
-		request.setAttribute("purchaseList", dtos);
-		
-		
-		
+		UserDao userDao = new UserDao();
+		ArrayList<UserDto> addressList = new ArrayList<UserDto>();
+		addressList = userDao.userAddressInfo(uid);
+		request.setAttribute("addressList", addressList);
 	}
 
 }
