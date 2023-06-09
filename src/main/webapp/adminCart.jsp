@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 
 <head>
@@ -17,7 +18,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
     
-    
+    	
        	function selectAll(selectAll)  {
   			const checkboxes= document.querySelectorAll('input[type="checkbox"]');
   			checkboxes.forEach((checkbox) => {checkbox.checked = selectAll.checked })
@@ -41,7 +42,7 @@
  		}
 	
        	
-
+       	
 		function increaseQuantity(cmNo) {
 		    var quantityInput = document.getElementById("quantity_"+cmNo);
 		    var currentQuantity = parseInt(quantityInput.value);
@@ -56,6 +57,30 @@
 		    }
 		  }
 
+		  
+		  
+		  function cartUpdating(row) {
+		        var cNo = row.find('th').text();
+		        var cQty = {'#quantity_${dto.cNo}'}.val();
+		       
+		        
+		        
+		        // viewCount 증가를 서버에 요청
+		        $.ajax({
+		            url: "./AdminCartUpdateCommand", // 서버의 증가시키는 기능을 처리하는 URL
+		            method: "POST",
+		            data: { 
+		            	cNo: cNo,
+		            	cQty : cQty
+		            }, // 서버에 전달할 데이터 (여기서는 cNo를 전달)
+		            success: function(response) {
+		                console.log("View count increased successfully.");
+		            },
+		            error: function() {
+		                console.log("Error occurred while increasing view count.");
+		            }
+		        });
+		    }
        	
     </script>
         
@@ -108,8 +133,10 @@
                            
                             <table class="table table-bordered mb-30">
                                     <tr>
+                                        <th scope="col">No</th>
                                         <th scope="col">Image</th>
                                         <th scope="col">Product</th>
+                                        <th scope="col">Color</th>
                                         <th scope="col">Unit Price</th>
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Total</th>
@@ -123,22 +150,25 @@
                            				<form name="adminCartForm" action="adminCartDelete.do" method="post">
                                      
 										    <tr>
+										    	<th scope="row">${dto.cNo}</th>
 										      <td>
 										      <input type="hidden" name="cNo" id="cNo" value="${dto.cNo}">
 										      <input type="hidden" name="pCode" id="pCode" value="${dto.pCode}">
 										      <img alt="no" src="images/product/${dto.pfRealName }"> </td>
 										      <td>${dto.pName}</td>
-										      <td>${dto.pPrice}</td>
+										      <td>${dto.pColor}</td>
+										      <td>&#8361;&nbsp;<fmt:formatNumber value="${dto.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
 										      <td>
 										      <div class="input-form-group" style="display: flex; align-items: center;">
 	                            					<button type="button" id="plusQtyBtn_${dto.cNo}" class="btn btn-dark btn-sm" onclick="decreaseQuantity('${dto.cNo}')">-</button>&nbsp;&nbsp;
-	                            					<input type="text" id="quantity_${dto.cNo}" name="quantity" class="form-control" style="width: 45px" value="${dto.cQty}" min="1" max="10" readonly="readonly">&nbsp;&nbsp;
+	                            					<input type="text" id="quantity_${dto.cNo}" name="quantity_${dto.cNo}" class="form-control" style="width: 45px" value="${dto.cQty}" min="1" max="10" readonly="readonly">&nbsp;&nbsp;
 	                            					<button type="button" id="minusQtyBtn_${dto.cNo}" class="btn btn-dark btn-sm" onclick="increaseQuantity('${dto.cNo}')">+</button>
                             				</div>
-										      
-										      
 										      </td>
-										      <td>${dto.ctotal}</td>
+										      
+										       <td>&#8361;&nbsp;<fmt:formatNumber value="${dto.ctotal}" type="number" pattern="#,###"></fmt:formatNumber></td>
+										     
+										     
 										      <td>
 										      
                                            		  <input type="submit" value="x" class="fa fa-close" size="4"> 
@@ -167,19 +197,22 @@
                                 <tbody>
                                     <tr>
                                         <td>Sub Total</td>
-                                        <td>₩ ${cartTotal }</td>
+                                          <td>&#8361;&nbsp;<fmt:formatNumber value="${cartTotal }" type="number" pattern="#,###"></fmt:formatNumber></td>
                                     </tr>
                                     <tr>
-                                        <td>Shipping</td>
-                                        <td>₩ 3000</td>
+       									 <td>Shipping</td>
+       							 	 <c:set var="shipping" value="${cartTotal >= 500000 ? 0 : 3000}" />
+										<td>&#8361;&nbsp;<input type="text" value="${shipping}"></td>
+
+                                    <tr>
                                     </tr>
                                     <tr>
                                         <td>VAT (10%)</td>
-                                        <td>₩ ${cartTotal*0.1 }</td>
+                                        <td>&#8361;&nbsp;<fmt:formatNumber value="${cartTotal*0.1 }" type="number" pattern="#,###"></fmt:formatNumber></td>
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td>₩ ${(cartTotal*1.1)+3000 }</td>
+                                        <td>&#8361;&nbsp;<fmt:formatNumber value="${(cartTotal*1.1)+shipping }" type="number" pattern="#,###"></fmt:formatNumber></td>
                                     </tr>
                                 </tbody>
                             </table>
