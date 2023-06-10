@@ -65,7 +65,7 @@
 						<th style="background-color: #eeeeee; text-align: center;">작성일</th>
 					</tr>
 				</thead>
-					<c:forEach items="${list}" var="dto" varStatus="">
+					<c:forEach items="${list}" var="dto" varStatus="st">
     					<tr>
       						<td>${st.index+1}</td>
       						<!--<td>${dto.nNo}</td>-->
