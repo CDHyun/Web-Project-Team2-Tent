@@ -174,6 +174,7 @@
 
 <table border="" class="content">
   <tr>
+    <th>No</th>
     <th>주문일자</th>
     <th>브랜드명</th>
     <th>상품명</th>
@@ -182,8 +183,9 @@
   
  
   
-  <c:forEach items="${SALES}" var="dto">
+  <c:forEach items="${SALES}" var="dto" varStatus="st">
     <tr>
+      <td>${st.index+1}</td>
       <td>${dto.pcInsertdate}</td>
       <td>${dto.pBrandName}</td>
       <td>${dto.pName}</td>

@@ -994,5 +994,43 @@ public class AdminDao {
 			
 		}
 		
+//		//카트에서 받아온 배열을 purchase 테이블로 insert
+//		public String[] cartInsertAction() {
+//			
+//			Connection connection = null;
+//			PreparedStatement preparedStatement = null;
+//			//PreparedStatement preparedStatement1 = null;
+//			PreparedStatement preparedStatement2 = null;
+//			try {
+//		        connection = dataSource.getConnection();
+//		        String query = "INSERT INTO purchase (uid, pcQty, pColor, pCode,pcInsertDate)\r\n"
+//		        		+ "SELECT 'wook', c.cQty, c.cpColor, c.pCode,now()\r\n"
+//		        		+ "FROM cart c\r\n"
+//		        		+ "WHERE uid = ? and cNo=?";
+//		        preparedStatement = connection.prepareStatement(query);
+//		        preparedStatement.setString(1, pName);
+//		        preparedStatement.setString(2, pBrandName);
+//		        preparedStatement.setInt(3, Integer.parseInt(pPrice));
+//		        preparedStatement.setInt(4, Integer.parseInt(cgNo));
+//		        preparedStatement.executeUpdate();
+//
+//
+//			
+//			}catch(Exception e) {
+//				e.printStackTrace();
+//			}finally {
+//				try {
+//					
+//					if(preparedStatement != null) {
+//						preparedStatement.close();
+//					}
+//					if(connection != null) {
+//						connection.close();
+//					}
+//				}catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
 		
 }

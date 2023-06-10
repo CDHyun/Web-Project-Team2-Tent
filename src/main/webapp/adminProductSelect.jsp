@@ -58,6 +58,7 @@
 
 <table border="" class="content">
   <tr>
+    <th>No</th>
     <th>상품코드</th>
     <th>브랜드명</th>
     <th>상품명</th>
@@ -67,8 +68,9 @@
     <th>입고일자</th>
     <th></th>
   </tr>
-  <c:forEach items="${list}" var="dto">
+  <c:forEach items="${list}" var="dto" varStatus="st">
     <tr>
+      <td>${st.index+1}</td>
       <td>${dto.pCode}</td>
       <td>${dto.pBrandName}</td>
       <td>${dto.pName}</td>

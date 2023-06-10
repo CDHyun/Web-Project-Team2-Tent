@@ -1,3 +1,5 @@
+<%@page import="com.javalec.tent.dto.AdminDto"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
@@ -17,7 +19,15 @@
     <link rel="stylesheet" href="css/shop/cart.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-    
+  
+    var cNoArray = [
+        <c:forEach items="${cart}" var="dto" varStatus="st">
+            ${dto.cNo}${st.last ? '' : ','}
+        </c:forEach>
+    ];
+
+
+	    
     	
        	function selectAll(selectAll)  {
   			const checkboxes= document.querySelectorAll('input[type="checkbox"]');
@@ -144,13 +154,16 @@
                                     </tr>
                                 
                                 
+                                    <%
+                                    	ArrayList<String> cNoList = new ArrayList<String>();
+                                    	AdminDto dto = new AdminDto();
+                                    %>
                                     
-                                    
-                                     <c:forEach items="${cart}" var="dto">
-                           				<form name="adminCartForm" action="adminCartDelete.do" method="post">
+                                     <c:forEach items="${cart}" var="dto" varStatus="st">
+                           				<form name="adminCartForm" action="adminCartDelete.do" method="post">	
                                      
-										    <tr>
-										    	<th scope="row">${dto.cNo}</th>
+										    <tr>   
+										    	<th scope="row">${st.index+1}</th>   <!--${dto.cNo} 이값을 대신해서 index로 해줌  -->
 										      <td>
 										      <input type="hidden" name="cNo" id="cNo" value="${dto.cNo}">
 										      <input type="hidden" name="pCode" id="pCode" value="${dto.pCode}">
@@ -163,7 +176,7 @@
 	                            					<button type="button" id="plusQtyBtn_${dto.cNo}" class="btn btn-dark btn-sm" onclick="decreaseQuantity('${dto.cNo}')">-</button>&nbsp;&nbsp;
 	                            					<input type="text" id="quantity_${dto.cNo}" name="quantity_${dto.cNo}" class="form-control" style="width: 45px" value="${dto.cQty}" min="1" max="10" readonly="readonly">&nbsp;&nbsp;
 	                            					<button type="button" id="minusQtyBtn_${dto.cNo}" class="btn btn-dark btn-sm" onclick="increaseQuantity('${dto.cNo}')">+</button>
-                            				</div>
+                            					</div>
 										      </td>
 										      
 										       <td>&#8361;&nbsp;<fmt:formatNumber value="${dto.ctotal}" type="number" pattern="#,###"></fmt:formatNumber></td>
@@ -174,11 +187,12 @@
                                            		  <input type="submit" value="x" class="fa fa-close" size="4"> 
                                            		 <!--   <i class="fa fa-close" onclick="btnClick()"></i>-->
                                         	 </td>
-										     </tr> 
-										    
-                           </form>
+										    </tr> 
+										  
+                          			
+                          			
+                           				</form>
   									</c:forEach>
-                                    
                                     
                             </table>
                             

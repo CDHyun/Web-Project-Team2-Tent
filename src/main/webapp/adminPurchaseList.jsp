@@ -129,7 +129,8 @@
                                 <tbody>
                                     <tr>
                                         <td> Total</td>
-                                         <td>&#8361;<fmt:formatNumber value="${cartTotal*1.1+3000}" type="number" pattern="#,###"></fmt:formatNumber></td>
+                                        <c:set var="shipping" value="${cartTotal >= 500000 ? 0 : 3000}" />
+                                        <td>&#8361;&nbsp;<fmt:formatNumber value="${(cartTotal*1.1)+shipping }" type="number" pattern="#,###"></fmt:formatNumber></td>
                                     </tr>
                                 </tbody>
                             </table>

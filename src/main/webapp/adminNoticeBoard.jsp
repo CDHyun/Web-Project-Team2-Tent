@@ -58,15 +58,17 @@
 			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 				<thead>
 					<tr>
-						<th style="background-color: #eeeeee; text-align: center;">번호</th>
+						<th style="background-color: #eeeeee; text-align: center;">No</th>
+						<!--  <th style="background-color: #eeeeee; text-align: center;">번호</th>-->
 						<th style="background-color: #eeeeee; text-align: center;">제목</th>
 						<th style="background-color: #eeeeee; text-align: center;">작성자</th>
 						<th style="background-color: #eeeeee; text-align: center;">작성일</th>
 					</tr>
 				</thead>
-					<c:forEach items="${list}" var="dto">
+					<c:forEach items="${list}" var="dto" varStatus="">
     					<tr>
-      						<td>${dto.nNo}</td>
+      						<td>${st.index+1}</td>
+      						<!--<td>${dto.nNo}</td>-->
       						<td>${dto.nTitle}</td>
      						<td>${dto.aid}</td>
       						<td>${dto.nInsertdate}</td>
@@ -86,6 +88,7 @@
     <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
       <thead>
         <tr>
+          <th style="background-color: #eeeeee; text-align: left;">No</th>
           <th style="background-color: #eeeeee; text-align: left;">제목</th>
         </tr>
       </thead>
@@ -93,13 +96,14 @@
         <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom-style:solid;border-bottom-color:#E6E6E6;border-bottom-width:1;cursor:pointer;" onclick="view_content(this)">
           <tr height="27" onmouseover="this.style.background='#F7F7F7'" onmouseout="this.style.background=''">
             <td width="50" align="center" class="faq-question"></td>
-            <td><font color="#007FC8">${dto1.nTitle}</font></td>
+            <td ><font color="#007FC8">${loop.index+1}</font></td>
+            <td style="text-align: center;"><font color="#007FC8">${dto1.nTitle}</font></td>
           </tr>
         </table>
         <table cellpadding="0" cellspacing="0" border="0" style="display:none;">
           <tr valign="top">
             <th style="color:#0000bf;width:40; padding-top:1"></th>
-            <td>${dto1.nContent}</td>
+            <td style="text-align: center;">${dto1.nContent}</td>
           </tr>
         </table>
         <br/>
