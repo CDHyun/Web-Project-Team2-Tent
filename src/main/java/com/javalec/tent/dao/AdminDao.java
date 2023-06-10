@@ -994,6 +994,8 @@ public class AdminDao {
 			
 		}
 		
+		
+		
 //		//카트에서 받아온 배열을 purchase 테이블로 insert
 //		public String[] cartInsertAction() {
 //			
