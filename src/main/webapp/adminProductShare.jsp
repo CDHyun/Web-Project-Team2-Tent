@@ -65,10 +65,11 @@
 	
 	<table border="" class="content">
 		<tr>
-			<th>상품코드</th><th>브랜드명</th><th>상품명</th><th>색상</th><th>가격</th><th>재고</th><th>입고일자</th>
+			<th>No</th><th>상품코드</th><th>브랜드명</th><th>상품명</th><th>색상</th><th>가격</th><th>재고</th><th>입고일자</th>
 		</tr>
-		<c:forEach items="${list}" var="dto">
+		<c:forEach items="${list}" var="dto" varStatus="st">
 			<tr>
+				<td>${st.index+1}</td>
 				<td><a href="adminProductDetail.do?pCode=${dto.pCode}"> ${dto.pCode}</a></td>
 				<td>${dto.pBrandName}</td>
 				<td>${dto.pName}</td>
