@@ -256,22 +256,22 @@ public class CommentDao {
 	    return comment;
 	}
 	
-	public int getAnswerNumSum(int cmRef, int bNo) {
+	public int getAnswerCount(int bNo, int cmNo) {
 	    Connection con = null;
 	    PreparedStatement ps = null;
 	    ResultSet rs = null;
-	    int answerNumSum = 0;
+	    int answerCount = 0;
 
 	    try {
 	        con = dataSource.getConnection();
-	        String sql = "SELECT COUNT(*) FROM comment WHERE cmRef = ? and bNo = ?";
+	        String sql = "SELECT cmAnswerCount FROM comment WHERE bNo = ? and cmNo = ?";
 	        ps = con.prepareStatement(sql);
-	        ps.setInt(1, cmRef);
-	        ps.setInt(2, bNo);
+	        ps.setInt(1, bNo);
+	        ps.setInt(2, cmNo);
 	        rs = ps.executeQuery();
 
 	        if (rs.next()) {
-	            answerNumSum = rs.getInt(1);
+	        	answerCount = rs.getInt(1);
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -285,7 +285,7 @@ public class CommentDao {
 	        }
 	    }
 
-	    return answerNumSum;
+	    return answerCount;
 	}
 
 	public int getMaxStep(int cmRef, int bNo) {
@@ -299,6 +299,7 @@ public class CommentDao {
 	        String sql = "SELECT MAX(cmStep) FROM comment WHERE cmRef = ? and bNo = ?";
 	        ps = con.prepareStatement(sql);
 	        ps.setInt(1, cmRef);
+	        ps.setInt(2, bNo);
 	        rs = ps.executeQuery();
 
 	        if (rs.next()) {
@@ -325,7 +326,7 @@ public class CommentDao {
 
 	    try {
 	        con = dataSource.getConnection();
-	        String query = "UPDATE comment SET cmRefOrder = cmRefOrder + 1 WHERE cmRef = ? AND bNo = ? AND cmRefOrder > ?";
+	        String query = "UPDATE comment SET cmRefOrder = cmRefOrder + 1 WHERE cmRef = ? AND bNo = ? AND cmRefOrder >= ?";
 	        ps = con.prepareStatement(query);
 	        ps.setInt(1, cmRef);
 	        ps.setInt(2, bNo);
@@ -442,33 +443,40 @@ public class CommentDao {
 	          // 부모댓글의 step에 +1
 	          cmStep = parentComment.getCmStep() + 1;
 
-	          // 부모댓글의 그룹내 자식댓글 총 갯수 구하기
-	          int answerNumSum = getAnswerNumSum(cmRef, bNo);
+	          // 부모댓글의 자식 숫자 구하기
+	          int answerCount = getAnswerCount(bNo, cmParentNo);
 
 	          // 부모댓글의 그룹내 step 컬럼 최댓값 구하기
 	          int maxStep = getMaxStep(cmRef, bNo);
 
 	          // 대댓글의 step이 댓글의 그룹내에서 최대 step보다 작은 경우
+	          // 대댓글인 경우
 	          if (cmStep < maxStep) {
 	            // refOrder는 answerNumSum + 1
-	            long refOrder = answerNumSum + 1L;
+	            long cmRefOrder = answerCount + 1L;
 	            // 대댓글 저장
-	            saveComment(bNo, uid, uNickName, cmRef, cmStep, refOrder, cmParentNo, cmContent);
+	            saveComment(bNo, uid, uNickName, cmRef, cmStep, cmRefOrder, cmParentNo, cmContent);
 	            // 부모댓글의 그룹내 순서보다 큰 refOrder는 모두 +1 업데이트
-	            updateRefOrderGreaterThan(cmRef, refOrder, bNo);
+	            updateRefOrderGreaterThan(cmRef, cmRefOrder, bNo);
 	          }
+	          // 대대댓글이 존재하는 상태에서 대대댓글인 경우
 	          // 대댓글의 step이 댓글의 그룹내에서 최대 step과 같은 경우
 	          else if (cmStep == maxStep) {
+	        	answerCount = getAnswerCount(bNo, cmParentNo);
+	        	// cmRefOrder
+	            long cmRefOrder = getRefOrder(con, cmParentNo, bNo) + answerCount + 1L;
+	            System.out.println("cmRefOrder = " + cmRefOrder);
+	            System.out.println("answerCount = " + answerCount);
 	            // 부모댓글의 그룹내 순서와 자식댓글을 더한 값보다 큰 refOrder는 모두 +1 업데이트
-	            long refOrder = getRefOrder(con, cmRef, bNo) + answerNumSum + 1L;
-	            updateRefOrderGreaterThan(cmRef, refOrder, bNo);
+	            updateRefOrderGreaterThan(cmRef, cmRefOrder, bNo);
 	            // 대댓글 저장
-	            saveComment(bNo, uid, uNickName, cmRef, cmStep, refOrder, cmParentNo, cmContent);
+	            saveComment(bNo, uid, uNickName, cmRef, cmStep, cmRefOrder, cmParentNo, cmContent);
 	          }
+	          // 새로운 대대댓글인 경우
 	          // 대댓글의 step이 댓글의 그룹내에서 최대 step보다 큰 경우
 	          else {
 	            // refOrder는 refOrder + 1
-	            long refOrder = answerNumSum + 1L;
+	            long refOrder = getRefOrder(con, cmParentNo, bNo) + 1L;
 	            // 부모댓글의 그룹내 순서보다 큰 refOrder는 모두 +1 업데이트
 	            updateRefOrderGreaterThan(cmRef, refOrder, bNo);
 	            // 대댓글 저장

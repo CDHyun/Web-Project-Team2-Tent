@@ -21,6 +21,51 @@
 			});
 			return;
 		}
+		if ($("#luid").val() == "admin") {
+			Toast.fire({
+				icon : 'warning',
+				title : "ID, 비밀번호를 모두 입력해주세요",
+				target : '#toastContainer'
+				return;
+			});
+			
+			$.ajax({
+				type : 'POST',
+				url : './AdminLogin',
+				data : {
+					luid : luid,
+					luPassword : luPassword
+				},
+				success : function(result) {
+					console.log(result);
+					if (result === "0") {
+						Toast.fire({
+							icon : 'warning',
+							title : "ID 혹은 비밀번호를 확인해주세요."
+						});
+						return;
+					}
+					if (result === "1") {
+						Toast.fire({
+							icon : 'success',
+							title : "로그인 성공! \n 관리자님 오늘도 화이팅입니다."
+						});
+						setTimeout(function() {
+							$("#user_login_form").attr("action", "admin_login.do");
+							$("#user_login_form").submit();
+						}, 1500);
+					}
+				},
+				error : function() {
+					Toast.fire({
+						icon : 'warning',
+						title : "오류가 발생했습니다. 관리자에게 문의해주세요."
+					});
+				}
+			});
+			
+			
+		}
 		$.ajax({
 			type : 'POST',
 			url : './UserLogin',

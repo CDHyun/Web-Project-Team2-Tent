@@ -713,4 +713,42 @@ public class UserDao {
 		return result;
 	}
 	
+	public int adminLogin(String aid, String aPassword) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int accordCount = 0;
+		int result = 0;
+
+		try {
+			con = dataSource.getConnection();
+			String query3 = "select count(*) from user where uid = ? and uPassword = ?";
+			ps = con.prepareStatement(query3);
+			ps.setString(1, aid);
+			ps.setString(2, aPassword);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+			    accordCount = rs.getInt(1);
+			}
+			if(accordCount == 0) {
+				result = 0;	// 틀림
+			}
+			if(accordCount > 0) {
+				result = 1;	// 맞음
+			}
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (con != null) con.close();
+				if (ps != null) ps.close();
+				if (rs != null) rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 } // End Class
