@@ -23,23 +23,22 @@ public class AdminCartUserInfoCommand implements TentCommand {
 		  String cNoArrayString = Arrays.toString(cNoArray);
 
 		  session.setAttribute("cNoArrayString", cNoArrayString);
-		  System.out.println(Arrays.toString(cNoArray));
 		  System.out.println(cNoArrayString);
 	    
 
-	  
+		  PurchaseDao dao = new PurchaseDao();
+		  ArrayList<PurchaseDto> dtos =  dao.selectUser(uid);
+		  request.setAttribute("selectUser", dtos);
+		  
+		 
 		
-		PurchaseDao dao = new PurchaseDao();
-		ArrayList<PurchaseDto> dtos =  dao.selectUser(uid);
-		request.setAttribute("selectUser", dtos);
-		
+		String[] values = cNoArrayString.substring(3, cNoArrayString.length() - 3).split("\",\"");
 		AdminDao daos = new AdminDao();
 		
-		for(int i = 0;i <cNoArrayString.length();i++) {
-			
-			//daos.cartInsertAction(uid,i);
-		}
-		
+		 for (String value : values) {
+		      daos.cartInsertAction(uid, value);
+		  }
+	  
 	}
 
 }
