@@ -249,7 +249,7 @@
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp"/>
 	<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
-	<script src="js/shop/board.js" defer></script>
+	<script src="js/shop/board.js?after" defer></script>
 
 </body>
 

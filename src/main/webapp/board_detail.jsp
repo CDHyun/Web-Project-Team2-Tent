@@ -157,7 +157,12 @@
 	                  <div style="color: gray;">${cmt.cmInsertDate}</div>
 	                </div>
 	              </div>
-	              <div class="comment-content">${cmt.cmContent}</div>
+	              <c:if test="${cmt.cmDeleted == true}">
+		              <div class="comment-content"><span style="color: red;"> 삭제된 댓글입니다. </span></div>
+	              </c:if>
+	              <c:if test="${cmt.cmDeleted == false}">
+		              <div class="comment-content">${cmt.cmContent}</div>
+	              </c:if>
 	            </div>
 	            <div class="comment-actions" style="text-align: right;">
 	              <c:if test="${cmt.uid eq SUID}">
@@ -304,7 +309,7 @@
 	<jsp:include page="common/include_common_script.jsp"/>
 	<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 	<script src="js/shop/board.js"></script>
-	<script src="js/shop/comment.js?after"></script>
+	<script src="js/shop/comment.js"></script>
 	<script type="text/javascript">
 		
 	</script>

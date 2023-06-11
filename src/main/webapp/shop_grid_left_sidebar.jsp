@@ -403,31 +403,6 @@
         </div>
     </section>
     
-    <!-- 페이징 표시 -->
-    <div class="shop_pagination_area mt-30">
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination pagination-sm justify-content-center">
-                                <li class="page-item">
-                                    <a class="page-link" href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
-                                </li>
-								    <%-- 이전 페이지 링크 --%>
-								    <a href="?page=<%= previousPage %>">&laquo;</a>
-								
-								    <%-- 페이지 번호 표시 --%>
-								    <% for (int i = 1; i <= totalPages; i++) { %>
-								        <a href="?page=<%= i %>" <% if (i == currentPage) { %>class="active"<% } %>><%= i %></a>
-								    <% } %>
-								
-								    <%-- 다음 페이지 링크 --%>
-								    <a href="?page=<%= nextPage %>">&raquo;</a>
-                                <li class="page-item">
-                                    <a class="page-link" href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-    
-    
     
 	
 

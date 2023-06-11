@@ -67,10 +67,11 @@ public class ProductDao {
 		try {
 			con = dataSource.getConnection();
 			
-			String sql = "select p.pCode, p.cgNo, p.pName, p.pBrandName, p.pPrice, p.pDeleted, pf.pfRealName, pf.pfHoverRealName "
+			String sql = "select p.pCode, p.cgNo, p.pName, p.pBrandName, p.pPrice, p.pDeleted, pf.pfRealName, pf.pfHoverRealName, c.cgName "
 					+ "from product p "
 					+ "left join productFile pf ON p.pCode = pf.pCode "
-					+ "where p.pName like '%" + queryContent + "%' and p.pDeleted = 0 or p.pBrandName like '%" + queryContent + "%' and p.pDeleted = 0;";
+					+ "left join category c ON p.cgNo = c.cgNo "
+					+ "where p.pName like '%" + queryContent + "%' and p.pDeleted = 0 or p.pBrandName like '%" + queryContent + "%' or c.cgName like '%" + queryContent + "%' and p.pDeleted = 0;";
 			
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
