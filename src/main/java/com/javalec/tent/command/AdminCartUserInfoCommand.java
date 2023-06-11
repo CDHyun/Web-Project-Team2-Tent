@@ -20,9 +20,11 @@ public class AdminCartUserInfoCommand implements TentCommand {
 		String uid = (String)session.getAttribute("SUID");
 		
 		  String[] cNoArray = request.getParameterValues("cNoArrayInput");
+		  String cNoArrayString = Arrays.toString(cNoArray);
 
 		  
 		  System.out.println(Arrays.toString(cNoArray));
+		  System.out.println(cNoArrayString);
 	    
 
 	  
@@ -32,7 +34,11 @@ public class AdminCartUserInfoCommand implements TentCommand {
 		request.setAttribute("selectUser", dtos);
 		
 		AdminDao daos = new AdminDao();
-		//daos.cartInsertAction();
+		
+		for(int i = 0;i <cNoArrayString.length();i++) {
+			
+			//daos.cartInsertAction(uid,i);
+		}
 		
 	}
 
