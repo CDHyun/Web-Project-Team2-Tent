@@ -432,57 +432,57 @@ public PurchaseDao() {
  			}
  		}	
  			
-// 		
-// 		public PurchaseDto purchaseDetailView(String uid, int ppcNo) {
-// 			PurchaseDto dto = null;
-// 			Connection connection = null;
-// 			PreparedStatement preparedStatement = null;
-// 			ResultSet resultSet = null;
-// 			
-// 			try {
-// 				connection = dataSource.getConnection();
-// 				String query = "select pc.pcNo, pc.pcinsertDate, p.pName ,u.uPhone, pf.pfRealName, pf.pfHoverRealName  "
-// 						+ "from product p, purchase pc, productfile pf, user u "
-// 						+ "where p.pCode = pc.pCode and p.pCode = pf.pCode and u.uid = ? and pcNo = ?";
-// 				preparedStatement = connection.prepareStatement(query);
-// 				preparedStatement.setString(1, uid);
-// 				preparedStatement.setInt(2, ppcNo);
-// 				resultSet = preparedStatement.executeQuery();
-// 				
-// 				if(resultSet.next()) {
-// 					
-// 					int pcNo = resultSet.getInt(1);
-// 					String pcinsertDate = resultSet.getString(2);
-// 					String pName = resultSet.getString(3);
-// 					String uPhone = resultSet.getString(4);
-// 					String pfRealName = resultSet.getString(5);
-// 					String pfHoverRealName = resultSet.getString(6);
-// 					
-// 					dto = new PurchaseDto(uPhone, pcNo, pName, pcinsertDate, pfRealName, pfHoverRealName);
-// 				}
-// 				
-// 			}catch(Exception e) {
-// 				e.printStackTrace();
-// 			}finally {
-// 				try {
-// 					if(resultSet != null){ // 무언가 들어가 있으면close
-// 						resultSet.close();
-// 					}
-// 					if(preparedStatement != null) {
-// 						preparedStatement.close();
-// 					}
-// 					if(connection != null) {
-// 						connection.close();
-// 					}
-// 				}catch (Exception e) {
-// 					e.printStackTrace();
-// 				}
-// 			}
-// 			
-// 			return dto;
-// 			
-// 		}
-// 		
+ 		
+ 		public PurchaseDto purchaseDetailView(String uid, int ppcNo) {
+ 			PurchaseDto dto = null;
+ 			Connection connection = null;
+ 			PreparedStatement preparedStatement = null;
+ 			ResultSet resultSet = null;
+ 			
+ 			try {
+ 				connection = dataSource.getConnection();
+ 				String query = "select pc.pcNo, pc.pcinsertDate, p.pName ,u.uPhone, pf.pfRealName, pf.pfHoverRealName  "
+ 						+ "from product p, purchase pc, productfile pf, user u "
+ 						+ "where p.pCode = pc.pCode and p.pCode = pf.pCode and u.uid = ? and pcNo = ?";
+ 				preparedStatement = connection.prepareStatement(query);
+ 				preparedStatement.setString(1, uid);
+ 				preparedStatement.setInt(2, ppcNo);
+ 				resultSet = preparedStatement.executeQuery();
+ 				
+ 				if(resultSet.next()) {
+ 					
+ 					int pcNo = resultSet.getInt(1);
+ 					String pcinsertDate = resultSet.getString(2);
+ 					String pName = resultSet.getString(3);
+ 					String uPhone = resultSet.getString(4);
+ 					String pfRealName = resultSet.getString(5);
+ 					String pfHoverRealName = resultSet.getString(6);
+ 					
+ 					dto = new PurchaseDto(uPhone, pcNo, pName, pcinsertDate, pfRealName, pfHoverRealName);
+ 				}
+ 				
+ 			}catch(Exception e) {
+ 				e.printStackTrace();
+ 			}finally {
+ 				try {
+ 					if(resultSet != null){ // 무언가 들어가 있으면close
+ 						resultSet.close();
+ 					}
+ 					if(preparedStatement != null) {
+ 						preparedStatement.close();
+ 					}
+ 					if(connection != null) {
+ 						connection.close();
+ 					}
+ 				}catch (Exception e) {
+ 					e.printStackTrace();
+ 				}
+ 			}
+ 			
+ 			return dto;
+ 			
+ 		}
+ 		
  		public ArrayList<UserDto> userAddressInfo(String uid) {
  			ArrayList<UserDto> addressList = new ArrayList<UserDto>();
  			Connection con = null;

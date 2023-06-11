@@ -107,16 +107,19 @@ public class PurchaseDto {
 	}
 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public PurchaseDto(String uPhone, int pcNo, String pName, String pcInsertDate, String pfRealName,
+			String pfHoverRealName) {
+		super();
+		this.uPhone = uPhone;
+		this.pcNo = pcNo;
+		this.pName = pName;
+		this.pcInsertDate = pcInsertDate;
+		this.pfRealName = pfRealName;
+		this.pfHoverRealName = pfHoverRealName;
+	}
+
+
 
 
 
