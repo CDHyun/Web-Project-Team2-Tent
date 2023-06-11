@@ -19,16 +19,24 @@
     <link rel="stylesheet" href="css/shop/cart.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-  
-    var cNoArray = [
-        <c:forEach items="${cart}" var="dto" varStatus="st">
-            ${dto.cNo}${st.last ? '' : ','}
-        </c:forEach>
+    
+    // form을 서버로 제출하는 함수
+    function submitForm() {
+    // JSP 코드에서 생성된 값을 JavaScript 배열로 변환하여 변수에 할당
+    var cart = [
+      <c:forEach items="${cart}" var="dto" varStatus="st">
+        '${dto.cNo}'${st.last ? '' : ','}
+      </c:forEach>
     ];
 
+    // 변수의 값을 문자열로 변환하여 hidden input에 설정
+    document.getElementById('cNoArrayInput').value = JSON.stringify(cart);
 
-	    
-    	
+
+      document.getElementById('myForm').submit();
+    }
+    
+    
        	function selectAll(selectAll)  {
   			const checkboxes= document.querySelectorAll('input[type="checkbox"]');
   			checkboxes.forEach((checkbox) => {checkbox.checked = selectAll.checked })
@@ -174,7 +182,7 @@
 										      <td>
 										      <div class="input-form-group" style="display: flex; align-items: center;">
 	                            					<button type="button" id="plusQtyBtn_${dto.cNo}" class="btn btn-dark btn-sm" onclick="decreaseQuantity('${dto.cNo}')">-</button>&nbsp;&nbsp;
-	                            					<input type="text" id="quantity_${dto.cNo}" name="quantity_${dto.cNo}" class="form-control" style="width: 45px" value="${dto.cQty}" min="1" max="10" readonly="readonly">&nbsp;&nbsp;
+	                            					<input type="text" id="quantity_${dto.cNo}" name="quantity_${dto.cNo}" class="form-control" style="width: 45px" value="${dto.cQty}" min="1" max="10" >&nbsp;&nbsp;
 	                            					<button type="button" id="minusQtyBtn_${dto.cNo}" class="btn btn-dark btn-sm" onclick="increaseQuantity('${dto.cNo}')">+</button>
                             					</div>
 										      </td>
@@ -195,7 +203,6 @@
   									</c:forEach>
                                     
                             </table>
-                            
                             
                         </div>
                     </div>
@@ -231,7 +238,12 @@
                                 </tbody>
                             </table>
                         </div>
-                        <a href="cart_to_purchase.do" class="btn btn-primary d-block">Proceed To Checkout</a>
+                       
+                        <form id="myForm" action="cart_to_purchase.do" method="post">
+  						<input type="hidden" id="cNoArrayInput" name="cNoArrayInput" value="">
+						<input type="submit" class="btn btn-primary d-block" name="checkOut" id="checkOut" onclick="submitForm()" value="Proceed To Checkout">
+						</form>
+                   
                     </div>
                 </div>
             </div>
