@@ -86,7 +86,7 @@
                                     <!-- order item start -->
                                     <c:set var="tot_price" value="0" />
                                     <tbody>
-                                    <c:forEach var="purchaseCheck" items="${purchaseCheckList}">
+                                    <c:forEach var="purchaseCheck" items="${ITEM}">
                                     <c:set var="item_tot_price" value="${PCQTY * purchaseCheck.pPrice}" />
                                       <c:set var="tot_price" value="${tot_price + item_tot_price}" />
                                         <tr>
