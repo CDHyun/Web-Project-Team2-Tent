@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.javalec.tent.dao.PurchaseDao;
+import com.javalec.tent.dao.UserDao;
 import com.javalec.tent.dto.PurchaseDto;
+import com.javalec.tent.dto.UserDto;
 
 public class PurchaserInfoCommand implements TentCommand {
 
@@ -37,10 +39,14 @@ public class PurchaserInfoCommand implements TentCommand {
 //			String uid = "donghyun"; //****
 			PurchaseDao dao = new PurchaseDao();
 			ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
+			UserDao userDao = new UserDao();
+			ArrayList<UserDto> userInfo = new ArrayList<UserDto>();
+			userInfo = userDao.userAddressInfo(uid);
 			dtos = dao.selectUser(uid);
 		
 		
 			request.setAttribute("selectUser", dtos);
+			request.setAttribute("address", userInfo);
 
 		}
 

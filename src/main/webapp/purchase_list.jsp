@@ -29,8 +29,6 @@
   
 </style>
 
-
-
 </head>
 
 <body>
@@ -126,7 +124,7 @@
                         <span class="bigshop-label bigshop-label-success">배송완료</span>
                     </td>
                 </c:if>
-                <td><fmt:formatNumber value="${purchase.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
+                <td><fmt:formatNumber value="${purchase.pcQty * purchase.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
                 <td>
                    <button type="button" class="btn btn-secondary btn-sm view-order-btn" data-toggle="modal" data-target="#order_detail_modal" data-pcNo="${purchase.pcNo}">View</button>
 
@@ -194,7 +192,7 @@
 						                                        <td>${purchase.pcInsertDate}</td>
 						                                        <td>${purchase.pName}</td>
 						                                        <td>${purchase.uPhone}</td>
-						                                        <td>결제방식</td>
+						                                        <td>${purchase.pcPay}</td>
 						                                    </tr>
 						                                    </c:forEach>
 						                                </tbody>

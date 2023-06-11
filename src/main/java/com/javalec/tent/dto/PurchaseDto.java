@@ -33,6 +33,7 @@ public class PurchaseDto {
 	String pcDeleteDate;		        //상품 주문 취소 날짜
 	String pcStatus;                    //상품 주문 상태 
 	String pcDM;
+	String pcPay;
 	
 	
 	/* ProductFile */
@@ -65,7 +66,7 @@ public class PurchaseDto {
 
 
 	public PurchaseDto(String uid, String uPhone, int pcNo, int pPrice, int pcQty, String pName, String pcInsertDate,
-			String pcStatus, String pfRealName, String pfHoverRealName) {
+			String pcStatus, String pfRealName, String pfHoverRealName, String pcPay) {
 		super();
 		this.uid = uid;
 		this.uPhone = uPhone;
@@ -77,6 +78,8 @@ public class PurchaseDto {
 		this.pcStatus = pcStatus;
 		this.pfRealName = pfRealName;
 		this.pfHoverRealName = pfHoverRealName;
+		this.pcPay = pcPay;
+		
 	}
 
 	
@@ -98,9 +101,10 @@ public class PurchaseDto {
 
 	
 
-	public PurchaseDto(String uid, String uaZipcode, String uaAddress, String uaDetailAddress) {
+	public PurchaseDto(String uid, String uPhone, String uaZipcode, String uaAddress, String uaDetailAddress) {
 		super();
 		this.uid = uid;
+		this.uPhone = uPhone;
 		this.uaZipcode = uaZipcode;
 		this.uaAddress = uaAddress;
 		this.uaDetailAddress = uaDetailAddress;
@@ -491,6 +495,22 @@ public class PurchaseDto {
 
 
 
+	public String getPcPay() {
+		return pcPay;
+	}
+
+
+
+
+
+	public void setPcPay(String pcPay) {
+		this.pcPay = pcPay;
+	}
+
+
+
+
+
 	public String getPfName() {
 		return pfName;
 	}
@@ -551,6 +571,13 @@ public class PurchaseDto {
 		this.pfHoverRealName = pfHoverRealName;
 	}
 
+
+
+	
+	
+	
+	
+	
 
 
 	

@@ -123,7 +123,7 @@ public PurchaseDao() {
 
  		try {
  			connection = dataSource.getConnection();
- 			String query = "SELECT pc.pcNo, p.pCode, p.pName, p.pPrice, pc.pcQty, pc.pcStatus, pc.pcInsertDate, u.uPhone, pf.pfRealName, pf.pfHoverRealName "
+ 			String query = "SELECT pc.pcNo, p.pCode, p.pName, p.pPrice, pc.pcQty, pc.pcStatus, pc.pcInsertDate, u.uPhone, pf.pfRealName, pf.pfHoverRealName, pcPay "
  					+"FROM product p, user u, purchase pc, productfile pf "
  					+"WHERE pc.pCode = p.pCode and pf.pCode = p.pCode and u.uid = pc.uid and pc.pcDeleted=0 and u.uid = ?";
  			
@@ -145,12 +145,13 @@ public PurchaseDao() {
 				String uPhone = resultSet.getString(8);
 				String pfRealName = resultSet.getString(9);
 				String pfHoverRealName = resultSet.getString(10);
+				String pcPay = resultSet.getString(11);
  				
 				 
 //			    int cQty = getCQtyCart(uid, pCode); // 장바구니에서 cQty 가져오기
 //			    int realQty = (pcQty != cQty) ? Math.max(pcQty, cQty) : pcQty
 				
-				PurchaseDto purchaseDto = new PurchaseDto(uid, uPhone, pcNo, pPrice, pcQty, pName, pcInsertDate, pcStatus, pfRealName, pfHoverRealName);
+				PurchaseDto purchaseDto = new PurchaseDto(uid, uPhone, pcNo, pPrice, pcQty, pName, pcInsertDate, pcStatus, pfRealName, pfHoverRealName, pcPay);
 				dtos.add(purchaseDto);
 				
  			}
@@ -176,19 +177,20 @@ public PurchaseDao() {
 
      
      //purchase_check에서 order 누르면 db에 데이터 삽입하기//
- 	public void purchaseinsert(String uid, int pCode, int pcQty, String pcDM, String pColor) { 
+ 	public void purchaseinsert(String uid, int pCode, int pcQty, String pcDM, String pColor, String pcPay) { 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		try {
 			connection = dataSource.getConnection();
-			String query = "insert into purchase (uid, pCode, pcInsertDate, pcQty, pcDM, pColor) values(?, ?, now(), ?, ?, ?);";
+			String query = "insert into purchase (uid, pCode, pcInsertDate, pcQty, pcDM, pColor, pcPay) values(?, ?, now(), ?, ?, ?, ?);";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, uid);
 			preparedStatement.setInt(2, pCode);
 			preparedStatement.setInt(3, pcQty);
 			preparedStatement.setString(4, pcDM);
 			preparedStatement.setString(5, pColor);
+			preparedStatement.setString(6, pcPay);
 			preparedStatement.executeUpdate();
 
 		} catch (Exception e) {
@@ -483,8 +485,8 @@ public PurchaseDao() {
  			
  		}
  		
- 		public ArrayList<UserDto> userAddressInfo(String uid) {
- 			ArrayList<UserDto> addressList = new ArrayList<UserDto>();
+ 		public ArrayList<PurchaseDto> userAddressInfo(String uuid) {
+ 			ArrayList<PurchaseDto> addressList = new ArrayList<PurchaseDto>();
  			Connection con = null;
  			PreparedStatement ps = null;
  			ResultSet rs = null;
@@ -492,22 +494,20 @@ public PurchaseDao() {
  			try {
  				con = dataSource.getConnection();
  				
- 				String query = "select u.uid, ua.uaNo, u.uPhone, ua.uaAddress, ua.uaDetailAddress, ua.uaZipcode, ua.uaContent "
+ 				String query = "select u.uid, u.uPhone, ua.uaAddress, ua.uaDetailAddress, ua.uaZipcode "
  						+ "from user u, userAddress ua "
  						+ "where u.uid = ua.uid and u.uid = ?";
  				ps = con.prepareStatement(query);
- 				ps.setString(1, uid);
+ 				ps.setString(1, uuid);
  				rs = ps.executeQuery();
  				while(rs.next()) {
- 					String wkuid = rs.getString(1);
- 					int wkuaNo = rs.getInt(2);
- 					String wkuPhone = rs.getString(3);
- 					String wkuAddress = rs.getString(4);
- 					String wkuDetailAddress = rs.getString(5);
- 					String wkuZipcode = rs.getString(6);
- 					String wkuContent = rs.getString(7);
- 					UserDto userDto = new UserDto(wkuid, wkuPhone, wkuaNo, wkuZipcode, wkuAddress, wkuDetailAddress, wkuContent);
- 					addressList.add(userDto);
+ 					String uid = rs.getString(1);
+ 					String uPhone = rs.getString(2);
+ 					String uAddress = rs.getString(3);
+ 					String uDetailAddress = rs.getString(4);
+ 					String uZipcode = rs.getString(5);
+ 					PurchaseDto purchaseDto = new PurchaseDto(uid, uPhone, uZipcode, uAddress, uDetailAddress);
+ 					addressList.add(purchaseDto);
  					
  				}
  				
