@@ -70,35 +70,14 @@
 		  function decreaseQuantity(cmNo) {
 		    var quantityInput = document.getElementById("quantity_"+cmNo);
 		    var currentQuantity = parseInt(quantityInput.value);
-		    if (currentQuantity > 0) {
+		    if (currentQuantity > 1) {
 		      quantityInput.value = currentQuantity - 1;
 		    }
 		  }
 
 		  
 		  
-		  function cartUpdating(row) {
-		        var cNo = row.find('th').text();
-		        var cQty = {'#quantity_${dto.cNo}'}.val();
-		       
-		        
-		        
-		        // viewCount 증가를 서버에 요청
-		        $.ajax({
-		            url: "./AdminCartUpdateCommand", // 서버의 증가시키는 기능을 처리하는 URL
-		            method: "POST",
-		            data: { 
-		            	cNo: cNo,
-		            	cQty : cQty
-		            }, // 서버에 전달할 데이터 (여기서는 cNo를 전달)
-		            success: function(response) {
-		                console.log("View count increased successfully.");
-		            },
-		            error: function() {
-		                console.log("Error occurred while increasing view count.");
-		            }
-		        });
-		    }
+		
        	
     </script>
         
@@ -241,7 +220,7 @@
                        
                         <form id="myForm" action="cart_to_purchase.do" method="post">
   						<input type="hidden" id="cNoArrayInput" name="cNoArrayInput" value="">
-						<input type="submit" class="btn btn-primary d-block" name="checkOut" id="checkOut" onclick="submitForm()" value="Proceed To Checkout">
+						<input type="submit" class="btn btn-primary d-block" onclick="submitForm()" value="Proceed To Checkout">
 						</form>
                    
                     </div>
