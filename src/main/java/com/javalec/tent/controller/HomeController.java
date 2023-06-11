@@ -113,6 +113,10 @@ public class HomeController extends HttpServlet {
 			viewPage = "index.do";
 			break;
 		/* 로그아웃 후 메인 페이지로 이동 */
+		case "/admin_login.do":
+			viewPage = "adminfirst.do";
+			break;
+			/* 로그아웃 후 메인 페이지로 이동 */
 		case "/logout.do":
 			command = new UserLogoutCommand();
 			command.execute(request, response);
@@ -303,9 +307,6 @@ public class HomeController extends HttpServlet {
 			command = new PurchaseDeleteCommand();
 			command.execute(request, response);
 			viewPage = "purchase_list.do";
-			break;
-		case "/admin_login.do":
-			viewPage = "adminfirst.do";
 			break;
 		case "/adminCartDelete.do":
 			command = new AdminCartDeleteCommand();

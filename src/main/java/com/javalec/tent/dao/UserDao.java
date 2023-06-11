@@ -722,7 +722,7 @@ public class UserDao {
 
 		try {
 			con = dataSource.getConnection();
-			String query3 = "select count(*) from user where uid = ? and uPassword = ?";
+			String query3 = "select count(*) from admin where aid = ? and aPassword = ?";
 			ps = con.prepareStatement(query3);
 			ps.setString(1, aid);
 			ps.setString(2, aPassword);

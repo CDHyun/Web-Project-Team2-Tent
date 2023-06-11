@@ -12,7 +12,50 @@
 		var luid = $("#luid").val();
 		var luPassword = $("#luPassword").val();
 		var form = document.user_login_form;
-	
+		
+		if ($("#luid").val() == "admin") {
+			ToastConfirm.fire({ icon: 'warning', 
+				title: "관리자 로그인 접근 감지!.\n 관리자가 아닐 경우 법적 처벌을 받을 수 있습니다. \n 그래도 접근하시겠습니까?"}).then((result) => {
+				if(result.isConfirmed){
+					$.ajax({
+						type : 'POST',
+						url : './AdminLogin',
+						data : {
+							luid : luid,
+							luPassword : luPassword
+						},
+						success : function(result) {
+							console.log(result);
+							if (result === "0") {
+								Toast.fire({
+									icon : 'warning',
+									title : "ID 혹은 비밀번호를 확인해주세요."
+								});
+								return;
+							}
+							if (result === "1") {
+								Toast.fire({
+									icon : 'success',
+									title : "로그인 성공! \n 관리자님 오늘도 화이팅입니다."
+								});
+								setTimeout(function() {
+									$("#user_login_form").attr("action", "admin_login.do");
+									$("#user_login_form").submit();
+								}, 1500);
+							}
+						},
+						error : function() {
+							Toast.fire({
+								icon : 'warning',
+								title : "오류가 발생했습니다. 관리자에게 문의해주세요."
+							});
+						}
+					});
+				}
+			});
+			return;
+		}
+		
 		if ($("#luid").val() == "" || $("#luPassword").val() == "") {
 			Toast.fire({
 				icon : 'warning',
@@ -21,51 +64,7 @@
 			});
 			return;
 		}
-		if ($("#luid").val() == "admin") {
-			Toast.fire({
-				icon : 'warning',
-				title : "ID, 비밀번호를 모두 입력해주세요",
-				target : '#toastContainer'
-				return;
-			});
-			
-			$.ajax({
-				type : 'POST',
-				url : './AdminLogin',
-				data : {
-					luid : luid,
-					luPassword : luPassword
-				},
-				success : function(result) {
-					console.log(result);
-					if (result === "0") {
-						Toast.fire({
-							icon : 'warning',
-							title : "ID 혹은 비밀번호를 확인해주세요."
-						});
-						return;
-					}
-					if (result === "1") {
-						Toast.fire({
-							icon : 'success',
-							title : "로그인 성공! \n 관리자님 오늘도 화이팅입니다."
-						});
-						setTimeout(function() {
-							$("#user_login_form").attr("action", "admin_login.do");
-							$("#user_login_form").submit();
-						}, 1500);
-					}
-				},
-				error : function() {
-					Toast.fire({
-						icon : 'warning',
-						title : "오류가 발생했습니다. 관리자에게 문의해주세요."
-					});
-				}
-			});
-			
-			
-		}
+		
 		$.ajax({
 			type : 'POST',
 			url : './UserLogin',
@@ -113,7 +112,7 @@
 				});
 			}
 		});
-	}
+	} //
 
 	function emptySessionUser() {
 		ToastConfirm.fire({ icon: 'question', 
