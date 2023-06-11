@@ -98,15 +98,12 @@ public class PurchaseDto {
 
 	
 
-	public PurchaseDto(String uid, int uaNo, String uaZipcode, String uaAddress, String uaDetailAddress,
-			String uaContent) {
+	public PurchaseDto(String uid, String uaZipcode, String uaAddress, String uaDetailAddress) {
 		super();
 		this.uid = uid;
-		this.uaNo = uaNo;
 		this.uaZipcode = uaZipcode;
 		this.uaAddress = uaAddress;
 		this.uaDetailAddress = uaDetailAddress;
-		this.uaContent = uaContent;
 	}
 
 

@@ -18,86 +18,69 @@
     <link rel="stylesheet" href="css/shop/order.css">
     
     
-    	<script src="js/shop/user.js"></script>
-	<script type="text/javascript">
-	function addModalOpen() {
-		$('#userAddressAddModal').modal('show');
-		}
-	function modifyModalOpen() {
-		$('#userModifyAddressModal').modal('show');
-		}
-	function userModifyAddress() {
-		var uaNo = $('#m_uaNo').val();
-		var uaAddress = $('#m_uaAddress').val();
-		var uaDetailAddress = $('#m_uaDetailAddress').val();
-		var uaZipcode = $('#m_uaZipcode').val();
-		var uaContent = $('#m_uaContent').val();
-		var regExpuAddress = /^[가-힣|0-9|a-z|A-Z|-|\s]*$/;
-		
-		if (uaAddress.trim().length === 0) {
-			Toast.fire({icon : 'warning', title : "주소를 입력해주세요."});
-			return;
-		}
-		if (uaDetailAddress.trim().length === 0) {
-			Toast.fire({icon : 'warning', title : "상세 주소를 입력해주세요."});
-			return;
-		}
-		if (uaZipcode.length === 0) {
-			Toast.fire({icon : 'warning', title : "우편번호를 입력해주세요."});
-			return;
-		}
-		
-		if (!regExpuAddress.test(uaDetailAddress)) {
-			Toast.fire({icon : 'warning', title : "주소는 영문/한글/숫자/- 만 입력 가능합니다."});
-			ruAddress.select();
-			return
-		}
-		
-		$.ajax({
-			type : 'POST',
-			url : './UserModifyAddress',
-			data : {
-				uaNo : uaNo,
-				uaAddress : uaAddress,
-				uaDetailAddress : uaDetailAddress,
-				uaZipcode : uaZipcode,
-				uaContent : uaContent
-			},
-			success : function(result) {
-				console.log(result);
-				if (result === "0") {
-					Toast.fire({
-						icon : 'warning',
-						title : "배송지 정보 변경 중 문제가 발생했습니다."
-					});
-					return;
-				}
-				if (result === "1") {
-					Toast.fire({ icon: 'success', title: "배송지 정보가 변경 되었습니다." }).then(() => {
-						  $('#userModifyAddressModal').modal('hide');
-						  window.location.href = "user_address.do";
-						});
-				}
-			},
-			error : function() {
-				Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
-			}
-		});
-	}
-	</script>
-    
-    
+<!--     <script src="js/shop/user.js"></script> -->
+	<script type="text/javascript"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("sample6_extraAddress").value = extraAddr;
+                
+                } else {
+                    document.getElementById("sample6_extraAddress").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample6_postcode').value = data.zonecode;
+                document.getElementById("sample6_address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("sample6_detailAddress").focus();
+            }
+        }).open();
+    }
+</script>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
 
 </head>
 
 <body>
 
 
-		<%-- <% request.setCharacterEncoding("utf-8"); 
-		String pcDM = request.getParameter("pcDM"); 
-		session.setAttribute("SDM", "pcDM");
-		%> 
- --%>
+
 
     <!-- Preloader -->
     <div id="preloader">
@@ -163,20 +146,27 @@
                                     <input type="text" class="form-control o_check phone_number" name="puPhone" id="puPhone" min="0" value="${user.uPhone}" placeholder="- 제외 입력해주세요" readonly="readonly">
                                 </div>
                                 <div class="col-md-12 mb-3">
-									<label for="street_address">Address</label> <input type="text" class="form-control address o_check" id="puaAddress" name="puAddress" placeholder="Address" value="${user.uaAddress}">
+									<label for="street_address">Address</label> <input type="text" class="form-control address o_check" id="sample6_address" name="puAddress" placeholder="Address" value="${user.uaAddress}">
 								</div>
                                 <div class="col-md-12 mb-3">
-									<label for="street_address">Detail Address</label> <input type="text" class="form-control address o_check" name="puaDetailAddress" placeholder="Address" value="${user.uaDetailAddress}">
+									<label for="street_address">Detail Address</label> <input type="text" class="form-control address" id="sample6_detailAddress" name="puDetailAddress" placeholder="Detail Address" value="${user.uaDetailAddress}">
 								</div>
+                                <div class="col-md-12 mb-3">
+									<label for="street_address">Extra Address</label> <input type="text" class="form-control address " id="sample6_extraAddress" placeholder="Extra Address" value="">
+								</div>
+								
 								<div class="col-md-6 mb-3">
 									<label for="postcode">Postcode</label> <input type="text"
-										class="form-control postcode o_check" id="puZipcode" name="puZipcode"
+										class="form-control postcode o_check" id="sample6_postcode" name="puZipcode"
 										placeholder="Postcode" value="${user.uaZipcode}">
 								</div>
 								<div class="col-md-6 mb-3 search">
 									<button type="button"
-										class="btn btn-outline-primary mb-1 searchAddr">search</button>
-										  &nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-primary mb-1" onclick="modifyModalOpen('purchase')">Modify</button>
+										class="btn btn-outline-primary mb-1" onclick="sample6_execDaumPostcode()">search</button>
+										  &nbsp;&nbsp;&nbsp;&nbsp;
+									<form action="purchaseAddressModify.do" method="post">
+									<input type="submit" class="btn btn-primary mb-1" value="Modify"></form>	  
+										 
 								</div>
 								<div class="col-md-12">
 									<label for="order-notes">Message</label>
@@ -185,6 +175,7 @@
 										placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
 											</div>
 										</div>
+ 							&nbsp;&nbsp;<caption>*Press the modify button to modify it*</caption>
 									</form>
 								</div>
 							</div>
@@ -192,20 +183,7 @@
                         
                                
                                 
-                                
-                            
-<!-- 
-                <div class="col-12">
-
-           <!--      <div class="col-12">
-                    <div class="checkout_pagination d-flex justify-content-end mt-50">
-                        <a href="" id="orderer_next_btn" class="btn btn-primary mt-2 ml-2 order_next">Continue</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
+                              
 
 						<div class="col-12">
 							<div class="checkout_pagination mt-3 d-flex justify-content-end align-items-center clearfix">
@@ -226,46 +204,6 @@
  
  
                                 
-                               
-									  <!-- 배송지 수정 모달 -->
-										<div class="modal" id="userModifyAddressModal" tabindex="-1" role="dialog">
-											<div class="modal-dialog" role="document">
-												<div class="modal-content">
-													<div class="container">
-														<h5 class="mb-3" style="display: inline-block; text-align: center;">User Add Address</h5>
-														<span style="color: red">${l_msg}</span>
-												            <div class="col-12">
-													            <div class="form-group">
-													                <label for="Address">Address *</label>
-													                <input type="hidden" id="m_uaNo" name="m_uaNo" value="${address.uaNo}">
-													                <input type="text" class="form-control address m_u_check" id="m_uaAddress" name="m_uaAddress" value="${address.uaAddress}" placeholder="Address" readonly="readonly">
-													            </div>
-													        </div>
-													         <div class="col-12">
-													            <div class="form-group">
-													                <label for="Address">DetailAddress *</label>
-													                <input type="text" class="form-control" id="m_uaDetailAddress" name="m_uaDetailAddress" value="${address.uaDetailAddress}" placeholder="Detailed Address">
-													            </div>
-													        </div>
-													         <div class="col-12">
-													             <div class="form-group">
-														                <label for="Post">Post *</label><br>
-														             <div class="input-form-group" style="display: flex; align-items: center;">
-													                	<input type="text" class="form-control postcode m_u_check" id="m_uaZipcode" name="m_uaZipcode" value="${address.uaZipcode}" placeholder="Zipcode" readonly="readonly">
-																		<button type="button" class="btn btn-outline-primary btn-sm searchAddr" style="margin-left: 15px;">search</button>
-																	</div>
-											                	</div>
-											                </div>
-							
-													        <div class="button-container">
-											            		<button type="button" class="btn btn-primary btn-sm" onclick="userModifyAddress()" >Modify</button>&nbsp;&nbsp;&nbsp;&nbsp;
-																<button type="button" class="btn btn-secondary btn-sm" id="rcancelBtn" data-dismiss="modal">Cancel</button>
-															</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<!-- 배송지 수정 모달 -->
 									</div>
 
                                    <!-- board end -->
@@ -297,7 +235,7 @@
 
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp"/>
-	<script src="js/shop/order.js"></script>
+
 
 </body>
 
