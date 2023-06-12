@@ -20,8 +20,8 @@
 
 
 <script type="text/javascript">
-function wishlistDeleteAction() {
-	var wNo = $("#wNo").val();
+function wishlistDeleteAction(wwNo) {
+	var wNo = wwNo;
 	
    
 	var url = "wishlistDeletes.do?wNo=" + encodeURIComponent(wNo);
@@ -102,7 +102,7 @@ function wishlistDeleteAction() {
 	                                        <td><a href="#" class="btn btn-primary btn-sm wish_add_to_cart_btn" >Add</a></td>
 	                                        <th scope="row">
 	                                         <input type="hidden" id="wNo" name="wNo" value="${dto.wNo}">
-	                                            <a class="wish_item_del_btn" ><i class="icofont-close" onclick="wishlistDeleteAction()"></i></a>
+	                                            <a class="wish_item_del_btn" ><i class="icofont-close" onclick="wishlistDeleteAction(${dto.wNo})"></i></a>
 	                                        </th>
 	                                    </tr>
                                     </c:forEach>
