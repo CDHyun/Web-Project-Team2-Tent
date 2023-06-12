@@ -25,13 +25,6 @@
 	
 	var globalCmNo;
 	
-	$(() => {
-		if($("#child_content_modify_area").length != 0){
-			 CKEDITOR.replace('child_content_modify_area', {
-							height: 500                                                  
-	                 	});
-		}
-	});
 
 	function openParentModal() {
 		$('#parrentCommentWriteModal').modal('show');
@@ -58,7 +51,6 @@
 		console.log('bNo : ' + bNo);
 		console.log('cmNo : ' + cmNo)
 		console.log(cmContent);
-		
 		$.ajax({
 	        type: 'POST',
 	        url: './ChildCommentWrite',
@@ -109,37 +101,28 @@
 		  });
 	}
 	
-	function ModifyComment(cmNo) {
+	function ModifyComment() {
+		console.log(globalCmNo);
+		var cmNo = globalCmNo;
 		var bNo = $("#hidden_bNo").val();
 		var cmContent = CKEDITOR.instances.child_content_modify_area.getData();
-		var cmNo = cmNo;
+		/* var cmContent = $("#child_content_area").val(); */
+		console.log('bNo : ' + bNo);
+		console.log('cmNo : ' + cmNo)
+		console.log(cmContent);
 		$.ajax({
 	        type: 'POST',
-	        url: './ModifyComment',
+	        url: './ChildModifyComment',
 	        data: {
-	        	cmNo : cmNo,
-	        	bNo : bNo,
-	        	cmContent : cmContent
+	            cmNo : cmNo,
+	            bNo: bNo,
+	            cmContent: cmContent
 	        },
-	        success: function(result) {
-	          console.log(result);
-	          if (result === "0") {
-	            Toast.fire({
-	            icon: 'warning', title: "댓글 수정 중 문제가 발생했습니다." });
-	            return;
-	          }
-
-	          if (result === "1") {
-	        	 window.location.href = "board_detail.do?bNo=" + bNo;
-	          }
-	        },
-	        error: function() {
-	          Toast.fire({
-	            icon: 'warning',
-	            title: "오류가 발생했습니다. 관리자에게 문의해주세요."
-	          });
+	        success: function() {
+	            window.location.href = "board_detail.do?bNo=" + bNo;
 	        }
-	      });
+	    });
+		
 	}
 	
 	function deleteBoard() {
@@ -295,7 +278,7 @@
 		            <div class="comment-actions" style="text-align: right;">
 		              <c:if test="${cmt.uid eq SUID}">
 		                <input class="btn btn-danger btn-sm" type="button" value="삭제" onclick="deleteComment('${cmt.cmNo}')">
-		                <input class="btn btn-warning btn-sm" type="button" value="수정" onclick="openModifyModal()">
+		                <input class="btn btn-warning btn-sm" type="button" value="수정" onclick="openModifyModal('${cmt.cmNo}')">
 		              </c:if>
 		              <c:if test="${!cmt.uid eq SUID}">
 		                <input class="btn btn-secondary btn-sm" type="button" value="추천">
@@ -340,6 +323,7 @@
 		    <div class="modal-content">
 		      <div class="container">
 		        <h5 class="mb-3" style="display: inline-block; text-align: center;">Comment</h5>
+		        <form id="child_comment_form" action="child_comment_modify.do?bNo=${bNo}&cmNo=${cmt.cmNo}" method="post">
 		        <c:out value="${cmt.cmNo}"></c:out>
 		          <div class="form-group">
 		            <label for="uid">작성자 : ${SUNICKNAME}</label>
@@ -352,9 +336,10 @@
 		          </div>
 		          <div class="button-container">
 		            <input type="hidden" name="bNo" value="${bNo}">
-		            <button type="button" class="btn btn-primary btn-sm" onclick="ModifyComment('${cmt.cmNo}')">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		            <button type="button" class="btn btn-primary btn-sm" onclick="ModifyComment()">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		            <button type="button" class="btn btn-secondary btn-sm" id="cmCancelBtn" data-dismiss="modal">Cancel</button>
 		          </div>
+		        </form>
 		      </div>
 		    </div>
 		  </div>

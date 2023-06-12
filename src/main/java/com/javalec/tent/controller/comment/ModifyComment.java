@@ -12,7 +12,7 @@ import com.javalec.tent.dao.CommentDao;
 /**
  * Servlet implementation class DeleteComment
  */
-@WebServlet("/ModifyComment")
+@WebServlet("/ChildModifyComment")
 public class ModifyComment extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -36,10 +36,12 @@ public class ModifyComment extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		int cmNo = Integer.parseInt(request.getParameter("cmNo"));
 		int bNo = Integer.parseInt(request.getParameter("bNo"));
-		String cmContent = request.getParameter("m_cmContent");
+		String cmContent = request.getParameter("cmContent");
+		System.out.println("넘어온 cmNo : " + cmNo);
+		System.out.println("넘어온 bNo : " + bNo);
+		System.out.println("넘어온 수정 내용 : " + cmContent);
 		CommentDao commentDao = new CommentDao();
 		int result = commentDao.modifyComment(bNo, cmNo, cmContent);
 		response.getWriter().write(result + "");
