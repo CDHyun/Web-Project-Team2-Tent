@@ -16,7 +16,7 @@
 						<li><span>Email:</span> tent@example.com</li>
 						<li>
   						<span>Address:</span>
-  						<a href="#" onclick="showModal('Korea Building, 831-3 Yeoksam-dong, Gangnam-gu, Seoul, South Korea.')">
+  						<a href="#" onclick="showModals('Korea Building, 831-3 Yeoksam-dong, Gangnam-gu, Seoul, South Korea.')">
   							<span style="text-decoration: underline;  font-size: 70%; white-space: nowrap;"> Korea Building, 831-3 Yeoksam-dong,<br>
    							Gangnam-gu, Seoul, South Korea.</span>
 						</a>
@@ -162,8 +162,8 @@
 
 
 <!-- 모달을 위한 HTML 코드 -->
-<div id="myModal" class="modal">
-  <div class="modal-content">
+<div id="myModals" class="modals">
+  <div class="modal-contents">
     <span class="close" onclick="closeModal()">&times;</span>
     <div id="map" style="width: 100%; height: 350px;"></div><br/>
     <p>
@@ -177,7 +177,7 @@
 <script>
   var mapContainer = document.getElementById('map'); // 지도를 표시할 div
   var mapOption = {
-    center: new kakao.maps.LatLng(37.49584,127.028), // 지도의 중심좌표
+    center: new kakao.maps.LatLng(37.494613,127.030066), // 지도의 중심좌표
     level: 3 // 지도의 확대 레벨
   };
 
@@ -194,13 +194,13 @@
   // 마커가 지도 위에 표시되도록 설정합니다
   marker.setMap(map);
 
-  function showModal(address) {
-    var modal = document.getElementById("myModal");
+  function showModals(address) {
+    var modal = document.getElementById("myModals");
     modal.style.display = "block";
   }
 
   function closeModal() {
-    var modal = document.getElementById("myModal");
+    var modal = document.getElementById("myModals");
     modal.style.display = "none";
   }
  
@@ -216,7 +216,7 @@
 
 <!-- CSS 스타일링 -->
 <style>
-  .modal {
+  .modals {
     display: none;
     position: fixed;
     z-index: 1;
@@ -228,7 +228,7 @@
     background-color: rgba(0, 0, 0, 0.4);
   }
 
-  .modal-content {
+  .modal-contents {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
