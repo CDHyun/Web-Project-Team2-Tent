@@ -436,7 +436,6 @@ public PurchaseDao() {
  			
  		
  		public PurchaseDto purchaseDetailView(String uid, int ppcNo) {
- 			System.out.println("@@@1");
  			PurchaseDto dto = null;
  			Connection connection = null;
  			PreparedStatement preparedStatement = null;
@@ -451,7 +450,6 @@ public PurchaseDao() {
  				preparedStatement.setString(1, uid);
  				preparedStatement.setInt(2, ppcNo);
  				resultSet = preparedStatement.executeQuery();
- 				System.out.println("@@@2" + uid + "/" + ppcNo);
  				if(resultSet.next()) {
  					
  					int pcNo = resultSet.getInt(1);
@@ -463,21 +461,16 @@ public PurchaseDao() {
  					int pcQty = resultSet.getInt(7);
  					int pPrice = resultSet.getInt(8);
  					
- 					System.out.println("Result Get :" + pName);
- 					
- 					System.out.println("dddd");
  				
  					
  					dto = new PurchaseDto(pName, uPhone, pcNo, pcQty, pPrice, pcinsertDate, pfRealName, pcPay);
  				}
  				
  			}catch(Exception e) {
- 				System.out.println("err");
  				e.printStackTrace();
  			}finally {
  				try {
  					if(resultSet != null){ // 무언가 들어가 있으면close
- 						System.out.println("22222");
  						resultSet.close();
  					}
  					if(preparedStatement != null) {
@@ -491,7 +484,6 @@ public PurchaseDao() {
  				}
  			}
  			
- 			System.out.println("@@@3");
  			return dto;
  		}
  		

@@ -15,8 +15,6 @@ public class PurchaseDetailViewCommand implements TentCommand {
 		HttpSession session = request.getSession();
 		String uid = (String)session.getAttribute("SUID");
 		String pcNoString = request.getParameter("pcNo");
-		System.out.println("****************************");
-		System.out.println("******" + pcNoString);
         int pcNo = Integer.parseInt(pcNoString); ///
 //        try {
 //            pcNo = Integer.parseInt(pcNoString);
