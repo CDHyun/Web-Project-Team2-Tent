@@ -7,17 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.javalec.tent.dao.BoardDao;
+
 /**
  * Servlet implementation class DeleteBoardComment
  */
-@WebServlet("/DeleteBoardComment")
-public class DeleteBoardComment extends HttpServlet {
+@WebServlet("/DeleteBoardCommand")
+public class DeleteBoardCommand extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteBoardComment() {
+    public DeleteBoardCommand() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,7 +36,10 @@ public class DeleteBoardComment extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int bNo = Integer.parseInt("bNo");
+		int bNo = Integer.parseInt(request.getParameter("bNo"));
+		BoardDao boardDao = new BoardDao();
+		int result = boardDao.deleteBoard(bNo);
+		response.getWriter().write(result + "");
 	}
 
 }

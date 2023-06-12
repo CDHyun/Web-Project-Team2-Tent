@@ -282,6 +282,33 @@ public class BoardDao {
 		return boardDetail;
 	}
 	
+	public int deleteBoard(int bNo) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int result = 0;
+		
+		try {
+			con = dataSource.getConnection();
+			String sql = "update board set bDeleted = 1, bDeleteDate = now() where bNo = ?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, bNo);
+			result = ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(con != null) con.close();
+				if(ps != null) ps.close();
+				if(rs != null) rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 	
 	
 	

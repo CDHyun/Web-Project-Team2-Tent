@@ -131,7 +131,40 @@
 		    if (result.isConfirmed) {
 		      $.ajax({
 		        type: 'POST',
-		        url: './DeleteBoardComment',
+		        url: './DeleteBoardCommand',
+		        data: {
+		        	bNo : bNo
+		        },
+		        success: function(result) {
+		          console.log(result);
+		          if (result === "0") {
+		            Toast.fire({
+		            icon: 'warning', title: "게시글 삭제 중 문제가 발생했습니다." });
+		            return;
+		          }
+
+		          if (result === "1") {
+		        	 window.location.href = "board_list.do";
+		          }
+		        },
+		        error: function() {
+		          Toast.fire({
+		            icon: 'warning',
+		            title: "오류가 발생했습니다. 관리자에게 문의해주세요."
+		          });
+		        }
+		      });
+		    }
+		  });
+	}
+	
+	function modifyBoard() {
+		var bNo = $("#hidden_bNo").val();
+		ToastConfirm.fire({  icon: 'warning',  title: "게시글을 삭제하시겠습니까?"  }).then((result) => {
+		    if (result.isConfirmed) {
+		      $.ajax({
+		        type: 'POST',
+		        url: './DeleteBoardCommand',
 		        data: {
 		        	bNo : bNo
 		        },

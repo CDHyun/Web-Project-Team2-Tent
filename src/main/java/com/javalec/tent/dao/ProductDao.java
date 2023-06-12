@@ -294,10 +294,10 @@ public class ProductDao {
 		try {
 			con = dataSource.getConnection();
 			
-			String sql = "select p.pName, p.pfRealName, p.price from product p, productOption po, productFile pf where p.pCode = ? and p.pCode = po.pCode and p.pCode = pf.pCode";
+			String sql = "select p.pName, pf.pfRealName, p.pPrice from product p, productOption po, productFile pf where p.pCode = ? and p.pCode = po.pCode and p.pCode = pf.pCode";
 			
 			ps = con.prepareStatement(sql);
-//			ps.setInt(1, pCode);
+			ps.setInt(1, pCode);
 			rs = ps.executeQuery();
 			// pColor, pCode, pName, pfRealName, pPrice, pcQty
 			while(rs.next()) {
