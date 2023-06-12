@@ -27,6 +27,33 @@
         text-align: center;
     }
   
+   .pagination .page-link {
+        color: #007bff;
+        border: 1px solid #007bff;
+        background-color: #fff;
+        border-radius: 20px; /* 둥근 테두리 반지름 값 */
+        padding: 5px 10px; /* 숫자 간격과 여백을 조정할 수 있습니다. */
+    }
+
+    .pagination .page-link:hover,
+    .pagination .page-link:focus {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    
+  
+  
+  
+  
+  
+  
+  
 </style>
 
 </head>
@@ -140,18 +167,21 @@
 							</div>
 						</div>
 					</div>
-					<div class="content">
+					<div class="shop_pagination_area mt-30">
+			    <nav aria-label="Page navigation">
+			        <ul class="pagination pagination-sm justify-content-center">
   <%
     int lastpage = (int) request.getAttribute("d_count");
     int itemsPerPage = 7; // 페이지당 항목 개수
     int totalPages = (int) Math.ceil(lastpage / (double) itemsPerPage);
     
     for (int i = 1; i <= totalPages; i++) {
-      out.print("<a href='purchase_list.do?vpage=" + i + "'>" + i + "</a> ");
+    	 out.print("<a href='purchase_list.do?vpage=" + i + "' class='page-link'>" + i + "</a> ");
     }
   %>
-</div>
-					
+  </ul>
+			    </nav>
+			</div>			
 					
 <%-- <div style="width:600px; text-align:center; margin-top:10px;">
 <%
@@ -184,7 +214,7 @@ for(int i=1; i<=lastpage; i++ ){
 	<!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp" />
 	<script src="js/shop/order.js"></script>
-	<script type="text/javascript">\
+	<script type="text/javascript">
 	</script>
 </body>
 

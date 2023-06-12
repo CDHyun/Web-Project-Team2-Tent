@@ -108,9 +108,8 @@ public class PurchaseDao {
 	}
 
 	// 구매내역 마지막 페이지 데이터 불러오기//
-	public ArrayList<PurchaseDto> purchaseList(String uid) {
+	public ArrayList<PurchaseDto> purchaseList(String uid, int index_no) {
 		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
-		System.out.println("DAO 호출");
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -120,10 +119,11 @@ public class PurchaseDao {
 			String query = "SELECT pc.pcNo, p.pCode, p.pName, p.pPrice, pc.pcQty, pc.pcStatus, pc.pcInsertDate, u.uPhone, pf.pfRealName, pf.pfHoverRealName, pcPay " +
 		            "FROM product p, user u, purchase pc, productfile pf " +
 		            "WHERE pc.pCode = p.pCode AND pf.pCode = p.pCode AND u.uid = pc.uid AND pc.pcDeleted = 0 AND u.uid = ? " +
-		            "ORDER BY pc.pcInsertDate DESC"; 
-
+		            "ORDER BY pc.pcInsertDate DESC " +
+	                "LIMIT ?, 7 ";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, uid);
+			preparedStatement.setInt(2, index_no);
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {

@@ -37,7 +37,7 @@ public class PurchaseListCommand implements TentCommand {
 		int daocount = dao.pCount(uid);
 		request.setAttribute("d_count", daocount);
 		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
-		dtos = dao.purchaseList(uid);
+		dtos = dao.purchaseList(uid, index_no);
 		request.setAttribute("purchaseList", dtos);
 		
 		
