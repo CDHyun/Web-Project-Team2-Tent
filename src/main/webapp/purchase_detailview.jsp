@@ -19,7 +19,7 @@
     <title>purchase_detailview</title>
 </head>
 <body>
-    <c:set var="purchaseDetail" value="${purchaseDetailView}" />
+    <c:set var="purchaseDetail" value="${purchaseDetail}" />
     
     <!-- Preloader -->
     <div id="preloader">
@@ -68,27 +68,27 @@
                             <table class="table mb-0 table-bordered">
                                 <colgroup>
                                     <col style="width: 5%">
+                                    <col style="width: 20%">
                                     <col style="width: 30%">
-                                    <col style="width: 25%">
+                                    <col style="width: 15%">
                                     <col style="width: 30%">
-                                    <col style="width: 10%">
                                 </colgroup>
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
-                                        <th scope="col">Date</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Phone</th>
                                         <th scope="col">Pay</th>
+                                        <th scope="col">Date</th>
                                     </tr>
                                 </thead>
                                 <tbody id="orderer_info_body">
                                     <tr>
                                         <th scope="row">${purchaseDetail.pcNo}</th>
-                                        <td>${purchaseDetail.pcInsertDate}</td>
                                         <td>${purchaseDetail.pName}</td>
                                         <td>${purchaseDetail.uPhone}</td>
                                         <td>${purchaseDetail.pcPay}</td>
+                                        <td>${purchaseDetail.pcInsertDate}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -126,12 +126,12 @@
                             </table>
                         </div>
                     </div>
-                    
-                      <div class="text-right mt-4">
-                        <button type="button" class="btn btn-outline-primary mb-1">
-                            <a href="index.do">Check</a>
-                        </button>
-                    </div>
+                    <div class="text-right mt-4">
+    <button type="submit" class="btn btn-danger" id="order_delete_btn"><a href="purchaseDelete.do">Delete</a></button>
+    <button type="button" class="btn btn-outline-primary mb-1">
+        <a href="index.do">Check</a>
+    </button>
+</div>
                     
                     
                 </div>

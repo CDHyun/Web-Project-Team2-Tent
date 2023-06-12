@@ -126,9 +126,10 @@
                 </c:if>
                 <td><fmt:formatNumber value="${purchase.pcQty * purchase.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
                 <td>
-                	<form action="purchaseDetailView.do" method="post">
-					<input type="submit" name="view" class="btn btn-secondary btn-sm view-btn" value="view">
-                </form>
+                	   <form action="purchaseDetailView.do" method="post">
+        <input type="hidden" name="pcNo" value="${purchase.pcNo}">
+        <input type="submit" name="view" class="btn btn-secondary btn-sm view-btn" value="view">
+    </form>
                 
                   <%--  <button type="button" class="btn btn-secondary btn-sm view-btn" data-pcNo="${purchase.pcNo}" onclick="">View</button> --%>
 

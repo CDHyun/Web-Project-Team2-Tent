@@ -30,15 +30,15 @@ public class PurchaseInsertCommand implements TentCommand {
 	
 
 //				  세션에서 값 가져오기
-				 String cNoArrayString = (String) session.getAttribute("cNoArrayString");
-				String[] values = cNoArrayString.substring(3, cNoArrayString.length() - 3).split("\",\"");
-				int count = values.length;
-				AdminDao daos = new AdminDao();
-				
-				 for (String value : values) {
-				      daos.cartInsertAction(uid, value,pcDm,pcPay,count);
-				  }
-	
+//				 String cNoArrayString = (String) session.getAttribute("cNoArrayString");
+//				String[] values = cNoArrayString.substring(3, cNoArrayString.length() - 3).split("\",\"");
+//				int count = values.length;
+//				AdminDao daos = new AdminDao();
+//				
+//				 for (String value : values) {
+//				      daos.cartInsertAction(uid, value,pcDm,pcPay,count);
+//				  }
+//	
 		
 	}
 
