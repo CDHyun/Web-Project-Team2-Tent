@@ -126,7 +126,11 @@
                 </c:if>
                 <td><fmt:formatNumber value="${purchase.pcQty * purchase.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
                 <td>
-                   <button type="button" class="btn btn-secondary btn-sm view-order-btn" data-toggle="modal" data-target="#order_detail_modal" data-pcNo="${purchase.pcNo}">View</button>
+                	<form action="purchaseDetailView.do" method="post">
+					<input type="submit" name="view" class="btn btn-secondary btn-sm view-btn" value="view">
+                
+                
+                  <%--  <button type="button" class="btn btn-secondary btn-sm view-btn" data-pcNo="${purchase.pcNo}" onclick="">View</button> --%>
 
                 </td>
             </tr>
@@ -145,7 +149,7 @@
         </div>
    	</section>
    	
-	   	<!-- 오더상세보기 모달 시작 -->     
+	  <%--  	<!-- 오더상세보기 모달 시작 -->     
 	   	
 	    <div class="shortcodes_content mb-100">
 	        <div class="modal fade" id="order_detail_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -188,11 +192,13 @@
 						                                </thead>
 						                                <tbody id="orderer_info_body">
 						                                 <c:forEach items="${purchaseList}" var="purchase"> <tr>
+						                                  <c:if test="${purchase.pcNo eq selectedPcNo}">
 						                                        <th scope="row">${purchase.pcNo}</th>
 						                                        <td>${purchase.pcInsertDate}</td>
 						                                        <td>${purchase.pName}</td>
 						                                        <td>${purchase.uPhone}</td>
 						                                        <td>${purchase.pcPay}</td>
+						                                  </c:if>
 						                                    </tr>
 						                                    </c:forEach>
 						                                </tbody>
@@ -224,6 +230,7 @@
 						                                </thead>
 						                                <tbody id="item_info_body">
 						                                   <c:forEach items="${purchaseList}" var="purchase">
+						                                    <c:if test="${purchase.pcNo eq selectedPcNo}">
 						                                    <tr>
 						                                        <th scope="row">${purchase.pcNo}</th>
 						                                       <td><img src="images/product/${purchase.pfRealName}" alt="Product"></td>
@@ -231,6 +238,7 @@
 						                                        <td><fmt:formatNumber value="${purchase.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
 						                                        <td><fmt:formatNumber value="${purchase.pcQty * purchase.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
 						                                    </tr>
+						                                    </c:if>
 						                                      </c:forEach>
 						                                </tbody>
 						                            </table>
@@ -253,8 +261,7 @@
 	            </div>
 	        </div>
 	    </div>
-	  
-	<!-- 오더상세보기 모달 끝 -->        
+	<!-- 오더상세보기 모달 끝 -->         --%>
     
     <!-- My Account Area -->
 
@@ -264,7 +271,7 @@
 
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp"/>
-	<script src="js/shop/order.js?after"></script>
+	<script src="js/shop/order.js"></script>
 	<script type = "text/javascript">
 	/********개별주문 삭제***********/
 	$('#order_delete_btn').on('click',function(e){
@@ -276,6 +283,20 @@
 /* 	$('#order_all_delete_btn').on('click',function(e){
 		order_all_delete_action_rest();
 	}); */
+	
+	// View 버튼 클릭 시 선택된 purchase.pcNo 값을 selectedPcNo 변수에 설정하는 함수
+	function setSelectedPcNo(pcNo) {
+	  selectedPcNo = pcNo.toString();
+	  console.log('pcNo:'+pcNo);
+	  console.log('sNo:'+selectedPcNo);
+	  $('#order_detail_modal').modal('show');
+	}
+
+	// View 버튼 클릭 시 이벤트 처리
+	$('.view-btn').click(function() {
+	  var pcNo = $(this).data('pcno');
+	  setSelectedPcNo(pcNo);
+	});
 	</script>
 </body>
 

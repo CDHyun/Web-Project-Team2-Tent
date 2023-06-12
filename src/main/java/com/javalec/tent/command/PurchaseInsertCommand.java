@@ -15,8 +15,8 @@ public class PurchaseInsertCommand implements TentCommand {
 
 		HttpSession session = request.getSession();
 		String uid = (String)session.getAttribute("SUID");
-		String pcDm = (String)session.getAttribute("pcDM");
-		String pcPay = (String)session.getAttribute("o_pay_method");
+		String pcDm = (String)session.getAttribute("PCDM");
+		String pcPay = (String)session.getAttribute("PCPAY");
 		int pCode = (int)session.getAttribute("PCODE");
 		int pcQty = (int)session.getAttribute("PCQTY");
 		String pColor = (String)session.getAttribute("PCOLOR");

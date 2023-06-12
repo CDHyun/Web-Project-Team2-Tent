@@ -443,7 +443,7 @@ public PurchaseDao() {
  			
  			try {
  				connection = dataSource.getConnection();
- 				String query = "select pc.pcNo, pc.pcinsertDate, p.pName ,u.uPhone, pf.pfRealName, pf.pfHoverRealName  "
+ 				String query = "select pc.pcNo, pc.pcinsertDate, p.pName ,u.uPhone, pf.pfRealName, pc.pcPay, pc.pcQty, p.pPrice "
  						+ "from product p, purchase pc, productfile pf, user u "
  						+ "where p.pCode = pc.pCode and p.pCode = pf.pCode and u.uid = ? and pcNo = ?";
  				preparedStatement = connection.prepareStatement(query);
@@ -458,9 +458,12 @@ public PurchaseDao() {
  					String pName = resultSet.getString(3);
  					String uPhone = resultSet.getString(4);
  					String pfRealName = resultSet.getString(5);
- 					String pfHoverRealName = resultSet.getString(6);
+ 					String pcPay = resultSet.getString(6);
+ 					int pcQty = resultSet.getInt(7);
+ 					int pPrice = resultSet.getInt(8);
  					
- 					dto = new PurchaseDto(uPhone, pcNo, pName, pcinsertDate, pfRealName, pfHoverRealName);
+ 					
+ 					dto = new PurchaseDto(uPhone, pName, pcNo, pcQty, pPrice, pcinsertDate, pfRealName, pcPay);
  				}
  				
  			}catch(Exception e) {

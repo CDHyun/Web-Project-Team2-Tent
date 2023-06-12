@@ -42,6 +42,7 @@ import com.javalec.tent.command.ProductDetailCommand;
 import com.javalec.tent.command.PurchaseCheckInfoCommand;
 import com.javalec.tent.command.PurchaseCompleteCommand;
 import com.javalec.tent.command.PurchaseDeleteCommand;
+import com.javalec.tent.command.PurchaseDetailViewCommand;
 import com.javalec.tent.command.PurchaseInfoModifyCommand;
 import com.javalec.tent.command.PurchaseInsertCommand;
 import com.javalec.tent.command.PurchaseListCommand;
@@ -345,6 +346,12 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "purchase_info.jsp";
 			break;
+		case "/purchaseDetailView.do":
+			command = new PurchaseDetailViewCommand();
+			command.execute(request, response);
+			viewPage = "purchase_detailview.jsp";
+			break;
+			
 		
 		default:
 			break;

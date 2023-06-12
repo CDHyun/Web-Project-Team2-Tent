@@ -22,7 +22,8 @@ public class PurchaseCheckInfoCommand implements TentCommand {
 		int pCode = (int)session.getAttribute("PCODE");
 		int pcQty = (int)session.getAttribute("PCQTY");
 		String pColor = (String)session.getAttribute("PCOLOR");
-	
+		String pcPay = request.getParameter("o_pay_method");
+		session.setAttribute("PCPAY", pcPay);
 		
 		
 	

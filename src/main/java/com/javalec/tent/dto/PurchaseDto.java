@@ -124,6 +124,21 @@ public class PurchaseDto {
 	}
 
 
+	public PurchaseDto(String pName, String uPhone, int pcNo, int pPrice, int pcQty, String pcInsertDate,
+			String pfRealName, String pcPay) {
+		super();
+		this.pName = pName;
+		this.uPhone = uPhone;
+		this.pcNo = pcNo;
+		this.pPrice = pPrice;
+		this.pcQty = pcQty;
+		this.pcInsertDate = pcInsertDate;
+		this.pfRealName = pfRealName;
+		this.pcPay = pcPay;
+		
+	}
+	
+	
 
 
 

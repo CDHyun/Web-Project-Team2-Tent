@@ -146,7 +146,7 @@ pu<%@ page language="java" contentType="text/html; charset=UTF-8"
                         <h5 class="mb-4">Orderer Info</h5>
                         <%-- <c:set var="user" value="${selectUser}"/> --%>
                         <c:forEach items="${selectUser}" var="user">
-                        <form id="orderer_info_form" method="post">
+                        <form id="orderer_info_form" method="post" action="payment.do">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="first_name">ID</label>
@@ -180,26 +180,22 @@ pu<%@ page language="java" contentType="text/html; charset=UTF-8"
 								</div>
 								<div class="col-md-12">
 									<label for="order-notes">Message</label>
-									<textarea class="form-control" name="o_message"
+									<textarea class="form-control" name="pcDM"
 										id="order-notes" cols="30" rows="10"
 										placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
 											</div>
 										</div>
+										<div class="col-12">
+									<div class="checkout_pagination mt-3 d-flex justify-content-end align-items-center clearfix">
+										<a href="product_list.do"><input type="button" class="btn btn-primary ml-2" value="Go Back"></a>
+										<input type="submit" class="btn btn-primary ml-2" value="Continue">
+									</div>
+								</div>
 									</form>
 								</div>
 							</div>
                         </c:forEach>
                         
-						<div class="col-12">
-							<div class="checkout_pagination mt-3 d-flex justify-content-end align-items-center clearfix">
-								<form id="back_Receiver" action="product_detail.do" method="post" name="Go Back">
-									<input type="submit" class="btn btn-primary ml-2" value="Go Back">
-								</form>
-								<form id="Receiver_next_btn" action="payment.do" method="post" name="Continue">
-									<input type="submit" class="btn btn-primary ml-2" value="Continue">
-								</form>
-							</div>
-						</div>
 					</div>
 
 				</div>

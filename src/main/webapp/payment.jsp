@@ -67,7 +67,7 @@
                         <div class="payment_method">
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                 <!-- Single Payment Method -->
-                                <form id="payment_info_form" method="post">
+                                <form id="payment_info_form" method="post" action="purchase_check_info.do">
 	                                <div class="panel panel-default">
 	                                    <div class="panel-heading" role="tab" id="one">
 	                                        <h6 class="panel-title">
@@ -80,8 +80,8 @@
 	                                                    <div class="row">
 	                                                        <div class="col-12 mb-3">
 	                                                            <div class="custom-control custom-checkbox">
-	                                                                <input type="checkbox" name="o_pay_method" value="CARD" class="custom-control-input" id="customCheck1">
-	                                                                <label class="custom-control-label" for="customCheck1">Credit or Debit Card</label>
+	                                                                <input type="checkbox" name="o_pay_method" value="Credit Card" class="custom-control-input" id="customCheck1">
+	                                                                <label class="custom-control-label" for="customCheck1">Credit Card</label>
 	                                                            </div>
 	                                                        </div>
 	                                                    </div>
@@ -147,7 +147,7 @@
 	                                               <div class="row">
 	                                                   <div class="col-12 mb-3">
 	                                                       <div class="custom-control custom-checkbox">
-	                                                           <input type="checkbox" name="o_pay_method" value="CoD" class="custom-control-input" id="customCheck5">
+	                                                           <input type="checkbox" name="o_pay_method" value="Cash on Delivery" class="custom-control-input" id="customCheck5">
 	                                                           <label class="custom-control-label" for="customCheck5">Cash on Delivery</label>
 	                                                       </div>
 	                                                   </div>
@@ -155,21 +155,20 @@
 		                                        </div>
 		                                    </div>
 		                                </div>
-									</form>		
+									<div class="col-12">
+										<div
+											class="checkout_pagination d-flex justify-content-end mt-30">
+
+											<a href="payment.do"><button type="button" class="btn btn-primary mt-2 ml-2" id="payment_before_btn">Go Back</button></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<button type="submit" class="btn btn-primary mt-2 ml-2" id="payment_next_btn">Final Step</button>
+										</div>
+									</div>
+								</form>		
 		                         </div>
 		                     </div>
 		                 </div>
 		             </div>
-
-                <div class="col-12">
-                <div class="checkout_pagination d-flex justify-content-end mt-30">
-       
-							<a href="purchase_check_info.do"><button type="button" class="btn btn-primary mt-2 ml-2" id="payment_before_btn" >Go Back</button></a>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<a href="purchase_check_info.do"><button type="button" class="btn btn-primary mt-2 ml-2" id="payment_next_btn">Final Step</button></a>
-                    </div>
-            </div>
-        </div>
+			</div>
     </div>
     <!-- Checkout Area End -->
 
