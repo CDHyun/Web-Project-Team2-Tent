@@ -56,6 +56,30 @@
 				}
 			});
 		  }
+		function toWishlist() {
+			var pCode = $("#pCode").val();
+			var radios = document.getElementsByName('customRadio');
+		    var selectedValue = '';
+		    
+		    for (var i = 0; i < radios.length; i++) {
+		      if (radios[i].checked) {
+		        selectedValue = radios[i].value;
+		        break;
+		      }
+		    }
+		    // 선택된 값 확인
+		    console.log(selectedValue);
+		    var pColor = selectedValue;
+		    
+		    ToastConfirm.fire({ icon: 'question', title: "위시리스트에 담으시겠습니까?" }).then((result) => {
+				if(result.isConfirmed){
+					if(result.isConfirmed){
+						var url = "wishlists.do?pCode=" + encodeURIComponent(pCode)  + "&pColor=" + encodeURIComponent(pColor);
+						window.location.href = url;
+					}
+				}
+			});
+		  }
 		
 		function buy() {
 			var pCode = $("#pCode").val();
@@ -269,7 +293,7 @@
 
                         <!-- Others Info -->
                         <div class="others_info_area mb-3 d-flex flex-wrap">
-                            <a class="add_to_wishlist" href="wishlist.html"><i class="fa fa-heart" aria-hidden="true"></i> WISHLIST</a>
+                           <a class="add_to_wishlist"><i class="fa fa-heart" aria-hidden="true" onclick="toWishlist()"></i> WISHLIST</a> 
                             <a class="add_to_compare" href="compare.html"><i class="fa fa-th" aria-hidden="true"></i> COMPARE</a>
                             <a class="share_with_friend" href="#"><i class="fa fa-share" aria-hidden="true"></i> SHARE WITH FRIEND</a>
                         </div>

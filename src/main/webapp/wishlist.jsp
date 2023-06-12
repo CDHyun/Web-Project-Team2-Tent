@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="en">
 
@@ -58,6 +59,7 @@
                                     <tr>
                                     	<th scope="col"><input type="checkbox" id="check_all"></th>
                                         <th scope="col">Image</th>
+                                        <th scope="col">Brand</th>
                                         <th scope="col">Product</th>
                                         <th scope="col">Unit Price</th>
                                         <th scope="col">Add to Cart</th>
@@ -66,26 +68,29 @@
                                 </thead>
                                 <tbody>
                                 	<!-- wishlist item -->
-                                	<c:if test="${wishListList.size() == 0}">
+                                	<c:if test="${wishlist.size() == 0}">
                                 		<tr>
                                 			<td colspan="6">등록된 위시리스트가 없습니다. 위시리스트를 등록해주세요 🙂</td>
                                 		</tr>
                                 	</c:if>
-                                	<c:forEach var="wishList" items="${wishListList}">
-	                                    <tr id="wish_item_${wishList.w_no}">
+                                	<c:forEach var="dto" items="${wishlist}">
+	                                    <tr >
 	                                        <th scope="row">
-	                                            <input type="checkbox" id="wish_check_${wishList.w_no}" w_no="${wishList.w_no}" p_no="${wishList.product.p_no}">
+	                                            <input type="checkbox" id="wish_check_${dto.wNo}" >
 	                                        </th>
 	                                        <td>
-	                                            <img src="img/p_img/${wishList.product.imageList[0].im_name}" alt="Product">
+	                                            <img src="images/product/${dto.pfRealName }" alt="Product">
 	                                        </td>
 	                                        <td>
-	                                            <a href="product_detail?p_no=${wishList.product.p_no}">${wishList.product.p_name}</a>
+	                                          ${dto.pBrandName}
 	                                        </td>
-	                                        <td>&#8361;<s:eval expression="new java.text.DecimalFormat('#,###').format(wishList.product.p_price)"/></td>
-	                                        <td><a href="#" class="btn btn-primary btn-sm wish_add_to_cart_btn" p_no=${wishList.product.p_no}>Add</a></td>
+	                                        <td>
+	                                          ${dto.pName}
+	                                        </td>
+	                                       <td>&#8361;&nbsp;<fmt:formatNumber value="${dto.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
+	                                        <td><a href="#" class="btn btn-primary btn-sm wish_add_to_cart_btn" >Add</a></td>
 	                                        <th scope="row">
-	                                            <a href="" class="wish_item_del_btn" w_no="${wishList.w_no}"><i class="icofont-close"></i></a>
+	                                            <a href="" class="wish_item_del_btn" ><i class="icofont-close"></i></a>
 	                                        </th>
 	                                    </tr>
                                     </c:forEach>
@@ -97,9 +102,9 @@
 
                     <div class="cart-footer text-right">
                         <div class="back-to-shop">
-	                        <c:if test="${wishListList.size() != 0}">
-	                            <a href="#" class="btn btn-primary wish_item_sel_cart_btn">Add Items</a>
-	                            <a href="#" class="btn btn-primary wish_item_sel_del_btn" >Delete Items</a>
+	                        <c:if test="${wishlist.size() != 0}">
+	                           <!--  <a href="#" class="btn btn-primary wish_item_sel_cart_btn">Add Items</a>
+	                            <a href="#" class="btn btn-primary wish_item_sel_del_btn" >Delete Items</a> -->
 	                        </c:if>
                         </div>
                     </div>

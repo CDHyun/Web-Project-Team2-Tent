@@ -129,6 +129,12 @@
                            
                            
                             <table class="table table-bordered mb-30">
+                            <c:if test="${cart.size() == 0}">
+                                		<tr>
+                                			<td colspan="6">등록된 장바구니물품이 없습니다. 장바구니를 등록해주세요 🙂</td>
+                                		</tr>
+                                	</c:if>
+                            
                                     <tr>
                                         <th scope="col">No</th>
                                         <th scope="col">Image</th>
