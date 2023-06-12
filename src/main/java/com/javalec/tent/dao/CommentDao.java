@@ -488,6 +488,59 @@ public class CommentDao {
 	    }
 	}
 
+	
+	public int deleteComment(int bNo, int cmNo) {
+		Connection con = null;
+	    PreparedStatement ps = null;
+	    int result = 0;
+	    
+	    try {
+	    	con = dataSource.getConnection();
+	        String sql = "update comment set cmDeleted = 1, cmDeleteDate = now() where bNo = ? and cmNo = ?";
+	        
+	        ps = con.prepareStatement(sql);
+	        ps.setInt(1, bNo);
+	        ps.setInt(2, cmNo);
+	        result = ps.executeUpdate();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	        	if(con != null) con.close();
+				if(ps != null) ps.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+	    }
+		return result;
+	}
+	
+	public int modifyComment(int bNo, int cmNo, String cmContent) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		int result = 0;
+		
+		try {
+			con = dataSource.getConnection();
+			String sql = "update comment set cmContent = ? where bNo = ? and cmNo = ?";
+			
+			ps = con.prepareStatement(sql);
+			ps.setString(1, cmContent);
+			ps.setInt(2, bNo);
+			ps.setInt(3, cmNo);
+			result = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(con != null) con.close();
+				if(ps != null) ps.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+		return result;
+	}
 
 
 

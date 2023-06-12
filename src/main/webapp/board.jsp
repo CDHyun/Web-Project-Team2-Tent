@@ -191,7 +191,7 @@
          </div>
     </div>     
     
-    <!-- signUpModal Start -->
+    <!-- boardWriteModal Start -->
 	<div class="modal" id="boardWriteModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog modal-xl" role="document">
 			<div class="modal-content modal-xl">
@@ -240,7 +240,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- SignUpModal End -->
+	<!-- boardWriteModal End -->
             
     <!-- Footer Area -->
  	<jsp:include page="common/include_common_bottom.jsp"/>

@@ -24,7 +24,14 @@
 <script type="text/javascript">
 	
 	var globalCmNo;
-
+	
+	$(() => {
+		if($("#child_content_modify_area").length != 0){
+			 CKEDITOR.replace('child_content_modify_area', {
+							height: 500                                                  
+	                 	});
+		}
+	});
 
 	function openParentModal() {
 		$('#parrentCommentWriteModal').modal('show');
@@ -33,12 +40,21 @@
 		globalCmNo = cmNo;
 		$('#childCommentWriteModal').modal('show');
 	}
+	function openModifyModal(cmNo) {
+		globalCmNo = cmNo;
+		ToastConfirm.fire({  icon: 'warning',  title: "댓글을 수정하시겠습니까?"  }).then((result) => {
+		    if (result.isConfirmed) {
+			$('#childCommentModifyModal').modal('show');
+		    }
+		  });
+	}
 	
 	function childCommentWrite() {
 		console.log(globalCmNo);
 		var cmNo = globalCmNo;
 		var bNo = $("#hidden_bNo").val();
-		var cmContent = CKEDITOR.instances.child_content_area.getData();
+		/* var cmContent = CKEDITOR.instances.child_content_area.getData(); */
+		var cmContent = $("#child_content_modify_area").val();
 		console.log('bNo : ' + bNo);
 		console.log('cmNo : ' + cmNo)
 		console.log(cmContent);
@@ -47,7 +63,7 @@
 	        type: 'POST',
 	        url: './ChildCommentWrite',
 	        data: {
-	            cmNo: cmNo,
+	            cmNo : cmNo,
 	            bNo: bNo,
 	            cmContent: cmContent
 	        },
@@ -56,6 +72,74 @@
 	        }
 	    });
 		
+	}
+	
+	function deleteComment(cmNo) {
+		var bNo = $("#hidden_bNo").val();
+		var cmNo = cmNo;
+		ToastConfirm.fire({  icon: 'warning',  title: "댓글을 삭제하시겠습니까?"  }).then((result) => {
+		    if (result.isConfirmed) {
+		      $.ajax({
+		        type: 'POST',
+		        url: './DeleteComment',
+		        data: {
+		        	cmNo : cmNo,
+		        	bNo : bNo
+		        },
+		        success: function(result) {
+		          console.log(result);
+		          if (result === "0") {
+		            Toast.fire({
+		            icon: 'warning', title: "댓글 삭제 중 문제가 발생했습니다." });
+		            return;
+		          }
+
+		          if (result === "1") {
+		        	 window.location.href = "board_detail.do?bNo=" + bNo;
+		          }
+		        },
+		        error: function() {
+		          Toast.fire({
+		            icon: 'warning',
+		            title: "오류가 발생했습니다. 관리자에게 문의해주세요."
+		          });
+		        }
+		      });
+		    }
+		  });
+	}
+	
+	function ModifyComment(cmNo) {
+		var bNo = $("#hidden_bNo").val();
+		var cmContent = CKEDITOR.instances.child_content_modify_area.getData();
+		var cmNo = cmNo;
+		$.ajax({
+	        type: 'POST',
+	        url: './ModifyComment',
+	        data: {
+	        	cmNo : cmNo,
+	        	bNo : bNo,
+	        	cmContent : cmContent
+	        },
+	        success: function(result) {
+	          console.log(result);
+	          if (result === "0") {
+	            Toast.fire({
+	            icon: 'warning', title: "댓글 수정 중 문제가 발생했습니다." });
+	            return;
+	          }
+
+	          if (result === "1") {
+	        	 window.location.href = "board_detail.do?bNo=" + bNo;
+	          }
+	        },
+	        error: function() {
+	          Toast.fire({
+	            icon: 'warning',
+	            title: "오류가 발생했습니다. 관리자에게 문의해주세요."
+	          });
+	        }
+	      });
 	}
 	
 </script>
@@ -130,7 +214,7 @@
 						<div id="qna_btn_container">
 							<c:if test="${board.uid eq SUID}">
 								<input class="btn btn-primary btn-sm" type="button" value="수정" />&nbsp;&nbsp;
-							<input class="btn btn-primary btn-sm" type="button" value="삭제" />&nbsp;&nbsp;
+							<input class="btn btn-primary btn-sm" type="button" value="삭제" onclick="" />&nbsp;&nbsp;
                     	</c:if>
 							<input class="btn btn-primary btn-sm" type="button" value="댓글 달기"
 								onclick="openParentModal()" />&nbsp;&nbsp; <a
@@ -152,9 +236,18 @@
 	          <td>
 	            <div class="comment-wrapper" style="border: 1px solid black; padding: 10px; margin-left: ${cmt.cmStep * 30}px;">
 	              <div class="comment-header">
+	              
+	              
+	              
 	                <div class="comment-info">
+	                <c:if test="${cmt.cmDeleted == true}">
+	                <div>Unknown</div>
+	                  <div style="color: gray;">삭제 일자 : ${cmt.cmDeleteDate}</div>
+	                </c:if>
+	                <c:if test="${cmt.cmDeleted == false}">
 	                  <div>${cmt.uNickName}</div>
 	                  <div style="color: gray;">${cmt.cmInsertDate}</div>
+	                </c:if>
 	                </div>
 	              </div>
 	              <c:if test="${cmt.cmDeleted == true}">
@@ -164,17 +257,19 @@
 		              <div class="comment-content">${cmt.cmContent}</div>
 	              </c:if>
 	            </div>
-	            <div class="comment-actions" style="text-align: right;">
-	              <c:if test="${cmt.uid eq SUID}">
-	                <input class="btn btn-danger btn-sm" type="button" value="삭제">
-	                <input class="btn btn-warning btn-sm" type="button" value="수정">
-	              </c:if>
-	              <c:if test="${!cmt.uid eq SUID}">
-	                <input class="btn btn-secondary btn-sm" type="button" value="추천">
-	                <input class="btn btn-secondary btn-sm" type="button" value="비추천">
-	              </c:if>
-	              <input class="btn btn-secondary btn-sm" type="button" value="답글 달기" onclick="openChildModal('${cmt.cmNo}')">
-	            </div>
+				<c:if test="${cmt.cmDeleted == false}">
+		            <div class="comment-actions" style="text-align: right;">
+		              <c:if test="${cmt.uid eq SUID}">
+		                <input class="btn btn-danger btn-sm" type="button" value="삭제" onclick="deleteComment('${cmt.cmNo}')">
+		                <input class="btn btn-warning btn-sm" type="button" value="수정" onclick="openModifyModal()">
+		              </c:if>
+		              <c:if test="${!cmt.uid eq SUID}">
+		                <input class="btn btn-secondary btn-sm" type="button" value="추천">
+		                <input class="btn btn-secondary btn-sm" type="button" value="비추천">
+		              </c:if>
+		              <input class="btn btn-secondary btn-sm" type="button" value="답글 달기" onclick="openChildModal('${cmt.cmNo}')">
+		            </div>
+				</c:if>	            
 	          </td>
 	        </tr>
 	        <!-- childCommentWriteModal Start -->
@@ -204,6 +299,35 @@
 		    </div>
 		  </div>
 		</div>
+		<!--  -->
+	        <!-- childCommentModifyModal Start -->
+		<div class="modal" id="childCommentModifyModal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="container">
+		        <h5 class="mb-3" style="display: inline-block; text-align: center;">Comment</h5>
+		        <c:out value="${cmt.cmNo}"></c:out>
+		          <div class="form-group">
+		            <label for="uid">작성자 : ${SUNICKNAME}</label>
+		          </div>
+		          <div class="form-group">
+		            <label for="uid">작성일자 : <fmt:formatDate value='${toDay}' pattern='yyyy-MM-dd' /></label>
+		          </div>
+		          <div class="form-group">
+		            <textarea name="m_cmContent" id="child_content_modify_area" placeholder=" content"></textarea>
+		          </div>
+		          <div class="button-container">
+		            <input type="hidden" name="bNo" value="${bNo}">
+		            <button type="button" class="btn btn-primary btn-sm" onclick="ModifyComment('${cmt.cmNo}')">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		            <button type="button" class="btn btn-secondary btn-sm" id="cmCancelBtn" data-dismiss="modal">Cancel</button>
+		          </div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!--  -->
+		
+		
 	      </c:forEach>
 	    </tbody>
 	  </table>
@@ -308,8 +432,8 @@
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp"/>
 	<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
-	<script src="js/shop/board.js"></script>
-	<script src="js/shop/comment.js"></script>
+	<script src="js/shop/board.js?after"></script>
+	<script src="js/shop/comment.js?after"></script>
 	<script type="text/javascript">
 		
 	</script>

@@ -35,6 +35,8 @@ import com.javalec.tent.command.CartUpdateCommand;
 import com.javalec.tent.command.ChildCommentWriteCommand;
 import com.javalec.tent.command.CommentListCommand;
 import com.javalec.tent.command.IndexCommand;
+import com.javalec.tent.command.NoticeListCommand;
+import com.javalec.tent.command.NoticeWriteCommand;
 import com.javalec.tent.command.ParrentCommentWriteCommand;
 import com.javalec.tent.command.ProductDetailCommand;
 import com.javalec.tent.command.PurchaseCheckInfoCommand;
@@ -157,6 +159,11 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "board.jsp";
 			break;
+		case "/notice_list.do":
+			command = new NoticeListCommand();
+			command.execute(request, response);
+			viewPage = "notice.jsp";
+			break;
 		case "/board_write_form.do":
 			viewPage = "board_write_form.jsp";
 			break;
@@ -164,6 +171,11 @@ public class HomeController extends HttpServlet {
 			command = new BoardWriteCommand();
 			command.execute(request, response);
 			viewPage = "board_list.do";
+			break;
+		case "/notice_write.do":
+			command = new NoticeWriteCommand();
+			command.execute(request, response);
+			viewPage = "notice_list.do";
 			break;
 		case "/board_detail.do":
 			command = new BoardDetailCommand();

@@ -7,6 +7,9 @@
 	<script src="js/jquery.min.js"></script>
   	<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
   	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+  	
+  	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  
 <script type="text/javascript">
 	function loginCheck() {
 		var luid = $("#luid").val();
@@ -58,10 +61,6 @@
 			  return;
 			}
 
-		
-		
-		
-		
 		if ($("#luid").val() == "" || $("#luPassword").val() == "") {
 			Toast.fire({
 				icon : 'warning',
@@ -467,7 +466,44 @@
 		  }
 		});
 
-
+//f544dc7ed174c1cb80376d3cee1683f2
+//window.Kakao.init("f544dc7ed174c1cb80376d3cee1683f2");
+	Kakao.init('f544dc7ed174c1cb80376d3cee1683f2');
+	
+	//카카오로그인
+	function kakaoLogin() {
+	    Kakao.Auth.login({
+	      	success: function (resultobj) {
+		      	console.log(resultobj);
+		        Kakao.API.request({
+		          url: '/v2/user/me',
+		          success: function (res) {
+		        	  scope:'profile_nickname, account_email, gender';
+		        	  console.log(res)
+		        	  var kakaoid = response.id+"K";
+		        	  Kakao.Auth.setAccessToken(authObj.access_token); 
+		        	  openSignUpModal();
+		          },
+		          fail: function (error) {
+		            console.log(error)
+		          },
+		        })
+		      },
+	      fail: function (error) {
+	        console.log(error)
+	      },
+	    })
+	  }
+	
+    function kakaoLogout() {
+        if (!Kakao.Auth.getAccessToken()) {
+            alert('Not logged in.');
+            return;
+        }
+        Kakao.Auth.logout(function() {
+            alert('logout ok\naccess token -> ' + Kakao.Auth.getAccessToken());
+        });
+    }
 
 </script>
 
@@ -552,14 +588,14 @@
 								<li><a href="index.do">Home</a></li>
 								<c:if test="${empty SUID}">
 									<li><a href="product_list.do" id="shop_main_menu">Shop</a></li>
-									<li><a href="notice.do">Notice</a></li>
+									<li><a href="notice_list.do">Notice</a></li>
 									<li><a onclick="emptySessionUser()">Orders</a></li>
 									<li><a onclick="emptySessionUser()">QNA</a></li>
 									<li><a onclick="emptySessionUser()">Board</a></li>
 								</c:if>
 								<c:if test="${!empty SUID}">
 									<li><a href="product_list.do" id="shop_main_menu">Shop</a></li>
-									<li><a href="notice.do">Notice</a></li>
+									<li><a href="notice_list.do">Notice</a></li>
 									<li><a href="purchase_list.do">Orders</a></li>
 									<li><a href="question_list.do">QNA</a></li>
 									<li><a href="board_list.do">Board</a></li>
@@ -727,11 +763,13 @@
 						</div>
 					</div>
 					<div class="button-container">
-						<button type="button" class="btn btn-primary btn-sm"
-							onclick="loginCheck()">Login</button>
+						<button type="button" class="btn btn-primary btn-sm" onclick="loginCheck()">Login</button>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<button type="button" class="btn btn-secondary btn-sm" id="cancelBtn" data-dismiss="modal">취소</button>
+						<br/>
 					</div>
+						<a onclick="kakaoLogin()"><img alt=""src="images/user/kakao_login_medium_narrow.png" style=""></a>
+						<a onclick="kakaoLogout()">카카오 로그아웃</a>
 				</form>
 				<!-- Forget Password -->
 				<div class="forget_pass mt-15" style="text-align: center;"><a href="#">비밀번호를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;&nbsp;
