@@ -118,7 +118,7 @@ $(".board_btn.new_write").on("click", function(){
 게시글 수정 
 */ 
 $(".board_btn.update").on("click", function(){ 
-	if($("#b_title_txt").val() == "" || CKEDITOR.instances.b_content_area.getData() == ""){
+	if($("#b_title_modify_txt").val() == "" || CKEDITOR.instances.b_content_modify_area.getData() == ""){
 		Toast.fire({ icon: 'warning', title: "필수 입력값을 입력하지 않았습니다.\n 제목과 내용을 모두 입력해주세요" });
 		return;
 	}
@@ -126,7 +126,7 @@ $(".board_btn.update").on("click", function(){
 							title: "게시글을 수정하시겠습니까?"}).then((result) => {
 							if(result.isConfirmed){
 								let bNo = $(this).attr("bNo"); 
-								$("#board_update_form").attr("action", "board_update.do"); 
+								$("#board_update_form").attr("action", "board_modify.do"); 
 								$("#board_update_form").submit(); // bNo, bTitla, bContent 
 							}
 					});
@@ -167,6 +167,14 @@ ckeditor
 $(() => {
 	if($("#b_content_area").length != 0){
 		 CKEDITOR.replace('b_content_area', {
+						height: 500                                                  
+                 	});
+	}
+});
+
+$(() => {
+	if($("#b_content_modify_area").length != 0){
+		 CKEDITOR.replace('b_content_modify_area', {
 						height: 500                                                  
                  	});
 	}

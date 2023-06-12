@@ -191,6 +191,9 @@
 		  });
 	}
 	
+	function openModifyModal() {
+		$('#boardModifyModal').modal('show');
+	}
 	
 </script>
 	
@@ -263,7 +266,7 @@
 						</div>
 						<div id="qna_btn_container">
 							<c:if test="${board.uid eq SUID}">
-								<input class="btn btn-primary btn-sm" type="button" value="수정" />&nbsp;&nbsp;
+								<input class="btn btn-primary btn-sm" type="button" value="수정" onclick="openModifyModal()" />&nbsp;&nbsp;
 							<input class="btn btn-primary btn-sm" type="button" value="삭제" onclick="deleteBoard()" />&nbsp;&nbsp;
                     	</c:if>
 							<input class="btn btn-primary btn-sm" type="button" value="댓글 달기"
@@ -463,18 +466,56 @@
 			    </nav>
 			</div>
 			
-			<!-- Comment form
-						<div class="comment-container">
-				<form id="comment-form">
-					<div class="input-form-group" style="display: flex; align-items: center; text-align: center;">
-						<i class="fa fa-user-circle" style="vertical-align: middle;">&nbsp;${SUNICKNAME}</i>&nbsp;&nbsp;&nbsp;&nbsp;
-						<textarea id="cmContent" name="cmContent" rows="3" cols="85" placeholder="댓글을 입력하세요" style="width: 85%; height: 6.25em; resize: none;"></textarea>
-						<button class="btn btn-primary btn-xl" style="vertical-align: middle; margin-left: 15px;">등록</button>
-						<input type="hidden" id="uid" name="uid" value="${SUID}">
-					</div>
-				</form>
+    <!-- boardModifyModal Start -->
+	<div class="modal" id="boardModifyModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content modal-xl">
+				<div class="row">
+	                <div class="col-12">
+	                    <div class="shortcodes_title mb-30">
+	                        <h4>Board Modify</h4>
+	                    </div>
+	                    <div class="shortcodes_content">
+	                        <div class="table-responsive">
+	                        	<form action="board_modify.do" id="board_modify_form" name="board_modify_form" method="post">
+		                            <table class="table mb-0 table-bordered" style="width: 100%;">
+		                                <thead>
+		                                    <tr>
+		                                        <th scope="col" class="board_title">
+		                                        	<input type="text" name="bTitle" id="b_title_modify_txt" placeholder=" title" style="vertical-align: middle;"/>
+		                                        </th>
+		                                        <th scope="col" class="board_date" style="vertical-align: middle;"><fmt:formatDate value='${toDay}' pattern='yyyy-MM-dd' /></th>
+		                                        <th scope="col" class="board_writer" style="vertical-align: middle;">${SUNICKNAME}</th>
+		                                        <th scope=col class="board_writer" style="vertical-align: middle;">
+		                                        	<select name="bCgNo" style="vertical-align: middle;">
+		                                        		<option value="1">잡담</option>
+		                                        	</select>
+		                                        </th>
+		                                    </tr>
+		                                </thead>
+		                                <tbody>
+		                                    <tr>
+		                                        <td id="board_content_td" colspan="4">
+		                                        	<textarea name="bContent" id="b_content_modify_area" placeholder=" content">${board.tContent}</textarea>
+		                                        </td>
+		                                    </tr>
+		                                </tbody>
+		                            </table>
+	                			</form>
+	                      				<input type="hidden" name="pageno" value="${pageno}" />
+	                      				<input type="hidden" name="uid" value="${SUID}" />
+	                        </div>
+	                    </div>
+	                    	<div id="qna_btn_container">
+								<input class="btn btn-secondary btn-sm board_btn update" type="button" value="수정"/>&nbsp;&nbsp;&nbsp;
+								<input class="btn btn-secondary btn-sm board_btn list" type="button" pageno="${pageno}" value="목록" />
+	                    	</div>
+	                </div>
+	            </div>
 			</div>
-			-->
+		</div>
+	</div>
+	<!-- boardModifyModal End -->
     
     
     <!-- Footer Area -->

@@ -131,7 +131,7 @@
                         </div>
                     </div>
                     <div style="text-align: right;">
-						<input type="button" class="btn btn-secondary btn-sm" onclick="openWriteModal()" value="게시글작성"/>
+						<input type="button" class="btn btn-secondary btn-sm" onclick="openWriteModal()" value="게시글 작성"/>
                     </div>
                 </div>
             </div>
@@ -232,8 +232,8 @@
 	                        </div>
 	                    </div>
 	                    	<div id="qna_btn_container">
-								<input class="board_btn new_write" type="button" value="등록"/>
-								<input class="board_btn list" type="button" pageno="${pageno}" value="목록" />
+								<input class="btn btn-secondary btn-sm board_btn new_write" type="button" value="등록"/>&nbsp;&nbsp;&nbsp;
+								<input class="btn btn-secondary btn-sm board_btn list" type="button" pageno="${pageno}" value="목록" />
 	                    	</div>
 	                </div>
 	            </div>
@@ -241,7 +241,7 @@
 		</div>
 	</div>
 	<!-- boardWriteModal End -->
-            
+	
     <!-- Footer Area -->
  	<jsp:include page="common/include_common_bottom.jsp"/>
     <!-- Footer Area -->
@@ -249,7 +249,7 @@
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp"/>
 	<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
-	<script src="js/shop/board.js?after" defer></script>
+	<script src="js/shop/board.js" defer></script>
 
 </body>
 

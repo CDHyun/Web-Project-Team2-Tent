@@ -46,7 +46,10 @@
 		    // 선택된 값 확인
 		    console.log(selectedValue);
 		    var pColor = selectedValue;
-		    
+		    if(pColor == "") {
+		    	Toast.fire({ icon: 'warning', title: "색상을 선택해주세요." });
+		    	return;
+		    }
 		    ToastConfirm.fire({ icon: 'question', title: "장바구니에 담으시겠습니까?" }).then((result) => {
 				if(result.isConfirmed){
 					if(result.isConfirmed){

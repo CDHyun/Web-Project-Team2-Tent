@@ -141,7 +141,8 @@ public class BoardDao {
 	                + "WHERE bDeleted = 0 AND bTitle LIKE ? or bContent LIKE ?"
 	                + ") AS derivedTable"
 	                + ") AS finalResult "
-	                + "WHERE row_num >= ? AND row_num <= ?";
+	                + "WHERE row_num >= ? AND row_num <= ?"
+	                + " order by bNo desc";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, "%" + queryContent + "%");
 			ps.setString(2, "%" + queryContent + "%");
