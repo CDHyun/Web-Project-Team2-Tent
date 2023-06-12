@@ -1110,13 +1110,12 @@ public class AdminDao {
 						
 						while(resultSet.next()) {
 							String pColor = resultSet.getString(1);
-							int wNo = resultSet.getInt(2);
+							String wNo = resultSet.getString(2);
 							int pCode = resultSet.getInt(3);
 							String pfRealName = resultSet.getString(4);
 							String pName = resultSet.getString(5);
 							String pBrandName = resultSet.getString(6);
 							int pPrice = resultSet.getInt(7);
-							
 					
 							AdminDto dto = new AdminDto(pColor, wNo, pCode, pfRealName, pName, pBrandName, pPrice);
 							dtos.add(dto);
@@ -1143,6 +1142,40 @@ public class AdminDao {
 					return dtos;
 				
 				
+				}
+				
+				
+				
+				// 카트선택항목지우기
+				
+				public void deleteWishList(String wwNo) {
+					Connection connection = null;
+					PreparedStatement preparedStatement = null;
+					
+					try {
+						connection = dataSource.getConnection();
+						String query = "delete from wishlist where wNo =?";
+						preparedStatement = connection.prepareStatement(query);
+						preparedStatement.setString(1 ,wwNo );
+						
+						
+						preparedStatement.executeUpdate();
+					
+					}catch(Exception e) {
+						e.printStackTrace();
+					}finally {
+						try {
+							
+							if(preparedStatement != null) {
+								preparedStatement.close();
+							}
+							if(connection != null) {
+								connection.close();
+							}
+						}catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
 				}
 				
 				

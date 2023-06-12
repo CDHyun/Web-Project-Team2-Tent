@@ -26,7 +26,7 @@ public class AdminDto {
 	int pcStatus;
 	Date pcInsertdate;
 	
-	int wNo ;
+	String wNo ;
 	
 	//공지사항에 필요한 변수
 	String aid;
@@ -165,14 +165,14 @@ public class AdminDto {
 	}
 	
 	//wishlistselect
-	public AdminDto(String pColor,int cNo,int pCode, String pfRealName, String pName,String pBrandName, int pPrice) {
+	public AdminDto(String pColor,String wNo,int pCode, String pfRealName, String pName,String pBrandName, int pPrice) {
 		super();
 		this.pColor = pColor;
 		this.pName = pName;
 		this.pBrandName = pBrandName;
 		this.pPrice = pPrice;
 		this.pfRealName = pfRealName;
-		this.cNo = cNo;
+		this.wNo = wNo;
 		this.pCode = pCode;
 	}
 	
@@ -576,12 +576,12 @@ public class AdminDto {
 	}
 
 
-	public int getwNo() {
+	public String getwNo() {
 		return wNo;
 	}
 
 
-	public void setwNo(int wNo) {
+	public void setwNo(String wNo) {
 		this.wNo = wNo;
 	}
 
