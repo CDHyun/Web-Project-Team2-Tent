@@ -1212,4 +1212,66 @@ public class AdminDao {
 				
 				
 				
+				// 추천상품보여주기
+				public ArrayList<AdminDto> recommend() {
+					
+					
+					ArrayList<AdminDto> dtos = new ArrayList<AdminDto>();
+					Connection connection = null;
+					PreparedStatement preparedStatement = null;
+					ResultSet resultSet = null;
+					
+					try {
+						connection = dataSource.getConnection();
+						
+						String WhereDefault = "SELECT p.pCode, p.pName, p.pBrandName, p.pPrice, po.pColor, pf.pfRealName\r\n"
+								+ "FROM product p\r\n"
+								+ "JOIN productoption po ON p.pCode = po.pCode \r\n"
+								+ "join productfile pf on p.pCode = pf.pCode\r\n"
+								+ "ORDER BY po.pStock desc\r\n"
+								+ "LIMIT 3";
+								
+							
+						preparedStatement = connection.prepareStatement(WhereDefault);
+						resultSet = preparedStatement.executeQuery();
+						
+						while(resultSet.next()) {
+							int pCode = resultSet.getInt(1);
+							String pName = resultSet.getString(2);
+							String pBrandName = resultSet.getString(3);
+							int pPrice = resultSet.getInt(4);
+							String pColor = resultSet.getString(5);
+							String pfRealName = resultSet.getString(6);
+							
+					
+							AdminDto dto = new AdminDto(pCode, pName, pBrandName, pPrice, pColor, pfRealName);
+							dtos.add(dto);
+						}
+					}catch(Exception e) {
+						e.printStackTrace();
+					}finally {
+						try {
+							if(resultSet != null){ // 무언가 들어가 있으면close
+								resultSet.close();
+							}
+							if(preparedStatement != null) {
+								preparedStatement.close();
+							}
+							if(connection != null) {
+								connection.close();
+							}
+						}catch (Exception e) {
+							e.printStackTrace();
+						}
+						
+					}
+					
+					return dtos;
+				
+				
+				}
+				
+				
+				
+				
 }

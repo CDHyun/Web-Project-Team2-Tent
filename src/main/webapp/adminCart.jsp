@@ -74,17 +74,23 @@
 		      quantityInput.value = currentQuantity - 1;
 		    }
 		  }
-
 		  
-		  
+		  function buyProduct(ppCode) {
+				var pCode = ppCode;
+				
+			   
+				var url = "product_detail.do?pCode=" + encodeURIComponent(pCode);
+				window.location.href = url;
+			   
+			  
+			  }
 		
        	
     </script>
         
         
-
+  
 </head>
-
 <body>
 
 
@@ -195,7 +201,7 @@
 
                 
 
-                <div class="col-12 col-lg-5">
+                <div class="col-12 col-lg-5" style="margin-left: 60%;">
                     <div class="cart-total-area mb-30 ">
                         <h5 class="mb-3">Cart Totals</h5>
                         <div class="table-responsive">
@@ -221,57 +227,50 @@
     </div>
     <!-- Cart Area End -->
     <!-- Cart Area End -->
-	    <section class="you_may_cart_area section_padding_0_100 clearfix">
-	<div class="container">
-		<div class="row">
+	
+<div class="col-12 col-lg-5" style="margin-left: 50%;">
+	
+	<div class="row">
 			<div class="col-12">
 				<div class="section_heading new_arrivals">
-					<h5>Customer recommended</h5>
+					<h5>Today's Product!</h5>
 				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-12">
-				<div class="you_cart_slider owl-carousel">
-
-					<!-- Single Product -->
-					<c:forEach var="recommendedProduct" items="${RANDOM}">
-						<div class="single-product-area">
-							<div class="product_image">
-								<!-- Product Image -->
-								<img class="normal_img" src="images/product/${recommendedProduct.pfRealName}"
-									alt=""> <img class="hover_img"
-									src="images/product/${recommendedProduct.pfHoverRealName}" alt="">
-
-
-							<!-- Product Description -->
-							<div class="product_description">
-								<!-- Add to cart -->
-								<div class="product_add_to_cart">
-									<a href="" class="related_product_add_cart" p_no="${recommendedProduct.product.pCode}"><i class="icofont-shopping-cart"></i> Add to
-										Cart</a>
-								</div>
-
-								<!-- Quick View -->
-								<div class="product_quick_view">
-									<a href="#" data-toggle="modal" data-target="#quickview" p_no="${recommendedProduct.product.pCode}"><i
-										class="icofont-eye-alt"></i> Quick View</a>
-								</div>
-
-								<p class="brand_name">${recommendedProduct.product.pBrandName }</p>
-								<a href="product_detail?p_no=${recommendedProduct.product.pCode}" p_no="${recommendedProduct.product.pCode}">${recommendedProduct.product.pName}</a>
-								<h6 class="product-price">&#8361;<s:eval expression="new java.text.DecimalFormat('#,###').format(recommendedProduct.product_pPrice)"/></h6>
-								</div>
-							</div>
-						</div>
-					</c:forEach>
-					<!-- Single Product end -->
-
-				</div>
-			</div>
-		</div>
 	</div>
-</section>
+	 
+
+			<div id="carouselExampleInterval" class="carousel slide" data-ride="carousel" data-interval="5000">
+			  <div class="carousel-inner">
+			    <c:forEach items="${recommend}" var="dto" varStatus="st">
+			      <div class="carousel-item ${st.first ? 'active' : ''}">
+			        <div class="card" style="width: 18rem;">
+			          <img alt="no" src="images/product/${dto.pfRealName}" width="250" height="250">
+			          <div class="card-body">
+			            Brand: <h5 class="card-title">${dto.pBrandName}</h5>
+			            Product: <p class="card-text">${dto.pName}</p>
+			            Color: <p class="card-text">${dto.pColor}</p>
+			            <button type="button" class="btn btn-primary" onclick="buyProduct(${dto.pCode})">Buy Now</button>
+			          </div>
+			        </div>
+			      </div>
+			    </c:forEach>
+			  </div>
+			  <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
+			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			    <span class="sr-only">Previous</span>
+			  </a>
+			  <a class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next">
+			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			    <span class="sr-only">Next</span>
+			  </a>
+			</div>
+
+
+
+</div>	
+
+
+
 	
     <!-- Footer Area -->
  	<jsp:include page="common/include_common_bottom.jsp"/>

@@ -177,7 +177,16 @@ public class AdminDto {
 	}
 	
 	
-	
+	//추천
+	public AdminDto(int pCode, String pName, String pBrandName, int pPrice, String pColor, String pfRealName) {
+		super();
+		this.pName = pName;
+		this.pBrandName = pBrandName;
+		this.pPrice = pPrice;
+		this.pfRealName = pfRealName;
+		this.pColor = pColor;
+		this.pCode = pCode;
+	}
 	
 	
 	
@@ -208,6 +217,9 @@ public class AdminDto {
 	}
 
 	
+	
+
+
 	public int getColorSum() {
 		return colorSum;
 	}
