@@ -124,7 +124,7 @@
                                 <tbody>
                                     <tr>
                                         <td> Total</td>
-                                         <td>&#8361;<fmt:formatNumber value="${item_tot_price}" type="number" pattern="#,###"></fmt:formatNumber></td>
+                                         <td>&#8361;<fmt:formatNumber value="${tot_price}" type="number" pattern="#,###"></fmt:formatNumber></td>
                                        <%-- <td>&#8361;${tot_price}</td> --%>
                                     </tr>
                                 </tbody>
