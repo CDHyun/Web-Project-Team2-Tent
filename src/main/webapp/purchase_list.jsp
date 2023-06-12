@@ -128,7 +128,7 @@
                 <td>
                 	<form action="purchaseDetailView.do" method="post">
 					<input type="submit" name="view" class="btn btn-secondary btn-sm view-btn" value="view">
-                
+                </form>
                 
                   <%--  <button type="button" class="btn btn-secondary btn-sm view-btn" data-pcNo="${purchase.pcNo}" onclick="">View</button> --%>
 

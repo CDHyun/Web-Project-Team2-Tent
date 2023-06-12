@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.javalec.tent.command.TentCommand;
+import com.javalec.tent.dao.AdminDao;
 import com.javalec.tent.dao.PurchaseDao;
 
 public class PurchaseInsertCommand implements TentCommand {
@@ -26,7 +27,17 @@ public class PurchaseInsertCommand implements TentCommand {
 		dao.purchaseinsert(uid, pCode, pcQty, pcDm, pColor, pcPay);
 		
 		
-		
+	
+
+//				  세션에서 값 가져오기
+				 String cNoArrayString = (String) session.getAttribute("cNoArrayString");
+				String[] values = cNoArrayString.substring(3, cNoArrayString.length() - 3).split("\",\"");
+				int count = values.length;
+				AdminDao daos = new AdminDao();
+				
+				 for (String value : values) {
+				      daos.cartInsertAction(uid, value,pcDm,pcPay,count);
+				  }
 	
 		
 	}

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>	
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
@@ -13,16 +12,16 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- include_common_top -->
-	<jsp:include page="common/include_common_top.jsp"/>
+    <jsp:include page="common/include_common_top.jsp"/>
     <!-- include_common_top -->
     <link rel="stylesheet" href="css/shop/order.css">
     
- 
-<title>purchase_detailview</title>
+    <title>purchase_detailview</title>
 </head>
 <body>
-
-  <!-- Preloader -->
+    <c:set var="purchaseDetail" value="${purchaseDetailView}" />
+    
+    <!-- Preloader -->
     <div id="preloader">
         <div class="spinner-grow" role="status">
             <span class="sr-only">Loading...</span>
@@ -30,7 +29,7 @@
     </div>
 
     <!-- Header Area -->
-  	<jsp:include page="common/include_common_header.jsp"/>
+    <jsp:include page="common/include_common_header.jsp"/>
     <!-- Header Area End -->
     
     <!-- Breadcumb Area -->
@@ -53,98 +52,100 @@
     <section class="my-account-area section_padding_100_50">
         <div class="container">
             <div class="row">
-				<div class="col-12 col-lg-3">
-				    <div class="my-account-navigation mb-50">
-				        <ul>
-				            <li><a href="my_account.do">My Account</a></li>
-				            <li class="active"><a href="order_list">Orders</a></li>
-				            <li><a href="member_logout">Logout</a></li>
-				        </ul>  
-				    </div> 
-				</div>
-
-
-<div class="shortcodes_content">
-    <div class="table-responsive">
-        <table class="table mb-0 table-bordered">
-            <colgroup>
-                <col style="width: 5%">
-                <col style="width: 30%">
-                <col style="width: 25%">
-                <col style="width: 30%">
-                <col style="width: 10%">
-            </colgroup>
-            <thead>
-                <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Pay</th>
-                </tr>
-            </thead>
-            <tbody id="orderer_info_body">
-                <c:forEach items="${purchaseList}" var="purchase">
-                    <tr>
-                            <th scope="row">${purchase.pcNo}</th>
-                            <td>${purchase.pcInsertDate}</td>
-                            <td>${purchase.pName}</td>
-                            <td>${purchase.uPhone}</td>
-                            <td>${purchase.pcPay}</td>
-                       
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<br/>
-<br/>
-<br/>
-<br/>
-
-
-
-
-<div class="shortcodes_content">
-    <div class="table-responsive">
-        <table class="table mb-0 table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Item</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Total</th>
-                </tr>
-            </thead>
-            <tbody id="item_info_body">
-                <c:forEach items="${purchaseList}" var="purchase">
-                        <tr>
-                            <th scope="row">${purchase.pcNo}</th>
-                            <td><img src="images/product/${purchase.pfRealName}" alt="Product"></td>
-                            <td>${purchase.pcQty}</td>
-                            <td><fmt:formatNumber value="${purchase.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
-                            <td><fmt:formatNumber value="${purchase.pcQty * purchase.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
-                        </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-
+                <div class="col-12 col-lg-3 order-lg-first">
+                    <div class="my-account-navigation mb-50">
+                        <ul>
+                            <li><a href="my_account.do">My Account</a></li>
+                            <li class="active"><a href="order_list">Orders</a></li>
+                            <li><a href="member_logout">Logout</a></li>
+                        </ul>  
+                    </div> 
+                </div>
+                
+                <div class="col-12 col-lg-9">
+                    <div class="shortcodes_content">
+                        <div class="table-responsive">
+                            <table class="table mb-0 table-bordered">
+                                <colgroup>
+                                    <col style="width: 5%">
+                                    <col style="width: 30%">
+                                    <col style="width: 25%">
+                                    <col style="width: 30%">
+                                    <col style="width: 10%">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Phone</th>
+                                        <th scope="col">Pay</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="orderer_info_body">
+                                    <tr>
+                                        <th scope="row">${purchaseDetail.pcNo}</th>
+                                        <td>${purchaseDetail.pcInsertDate}</td>
+                                        <td>${purchaseDetail.pName}</td>
+                                        <td>${purchaseDetail.uPhone}</td>
+                                        <td>${purchaseDetail.pcPay}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+    
+                    <div class="shortcodes_content">
+                        <div class="table-responsive">
+                            <table class="table mb-0 table-bordered">
+                                <colgroup>
+                                    <col style="width: 5%">
+                                    <col style="width: 35%">
+                                    <col style="width: 15%">
+                                    <col style="width: 20%">
+                                    <col style="width: 25%">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">Item</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="item_info_body">
+                                    <tr>
+                                        <th scope="row">${purchaseDetail.pcNo}</th>
+                                        <td><img src="images/product/${purchaseDetail.pfRealName}" alt="Product"></td>
+                                        <td>${purchaseDetail.pcQty}</td>
+                                        <td><fmt:formatNumber value="${purchaseDetail.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
+                                        <td><fmt:formatNumber value="${purchaseDetail.pcQty * purchaseDetail.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                      <div class="text-right mt-4">
+                        <button type="button" class="btn btn-outline-primary mb-1">
+                            <a href="index.do">Check</a>
+                        </button>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer Area -->
- 	<jsp:include page="common/include_common_bottom.jsp"/>
+    <jsp:include page="common/include_common_bottom.jsp"/>
     <!-- Footer Area -->
 
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
-	<jsp:include page="common/include_common_script.jsp"/>
-	<script src="js/shop/order.js"></script>
-	<script type = "text/javascript"></script>
-
-
+    <jsp:include page="common/include_common_script.jsp"/>
+    <script src="js/shop/order.js"></script>
+    <script type="text/javascript"></script>
 </body>
 </html>

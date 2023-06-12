@@ -14,16 +14,19 @@ public class PurchaseDetailViewCommand implements TentCommand {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		String uid = (String)session.getAttribute("SUID");
-		
 		String pcNoString = request.getParameter("pcNo");
-		int pcNo = Integer.parseInt(pcNoString);
-		
-		
-		PurchaseDao dao = new PurchaseDao();
-		dao.purchaseDetailView(uid, pcNo);
+        int pcNo = 0;
+//        try {
+//            pcNo = Integer.parseInt(pcNoString);
+//        } catch (NumberFormatException e) {
+//            e.printStackTrace();
+//            return; 
+//        }
 
-		
-		
+        PurchaseDao dao = new PurchaseDao();
+        PurchaseDto dto = dao.purchaseDetailView(uid, pcNo);
+
+        request.setAttribute("purchaseDetail", dto);
 		
 		
 		
