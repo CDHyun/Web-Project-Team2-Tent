@@ -108,14 +108,20 @@
             <div class="row">
                 <!-- 카테고리 라디오 버튼 -->
       <div class="category-radio-buttons">
-          <input type="radio" name="category" id="notice" value="1" onclick="changeCategory('1');" checked>
+          <input type="button" name="category" id="notice" value="1" onclick="changeCategory('1');" checked>
           <label for="notice">Notice</label>
-          <input type="radio" name="category" id="faq" value="2" onclick="changeCategory('2');">
+          <input type="button" name="category" id="faq" value="2" onclick="changeCategory('2');">
           <label for="faq">FAQ</label>
       </div>
                 <div class="col-12">
                     <div class="shortcodes_title mb-30">
-                        <h4>Notice board</h4>
+                   <h4> 
+					  <c:choose>
+					      <c:when test="${nCgNo == 1}">Notice board</c:when>
+					      <c:when test="${nCgNo == 2}">FAQ board</c:when>
+					      <c:otherwise>Notice</c:otherwise>
+					  </c:choose>
+					</h4>
                     </div>
                     <div class="shortcodes_content">
                         <div class="table-responsive">
@@ -131,11 +137,20 @@
                                 </thead>
                                 <tbody id="qna_list_tbody">
                                 
+								    <c:set var="rowNumber" value="1" />
                                 	<!-- board start -->
 									<c:forEach var="notice" items="${noticeList}">
 									    <tr>
-									        <th scope="row">${notice.nNo}</th>
+									        <%-- <th scope="row">${notice.nNo}</th> --%>
+									         <th scope="row">${rowNumber}</th>
 									        <td>
+									        	<span>
+									        	<c:choose>
+											      <c:when test="${notice.nCgNo eq '1'}">[Notice]</c:when>
+											      <c:when test="${notice.nCgNo eq '2'}">[FAQ]</c:when>
+											      <c:otherwise>Notice</c:otherwise>
+											  </c:choose>
+									        	</span>
 									            <a href="#" onclick="toggleNoticeContent(this);">${notice.nTitle}</a>
 									            <div class="notice-content" style="display: none;">${notice.nContent}</div>
 									        </td>
@@ -146,6 +161,7 @@
 									        <td style="text-align: center;">${formattedDate}</td>
 									        <td style="text-align: center;">${notice.nViewCount}</td>
 									    </tr>
+									     <c:set var="rowNumber" value="${rowNumber + 1}" />
 									</c:forEach>
                                    <!-- board end -->
                                 </tbody>

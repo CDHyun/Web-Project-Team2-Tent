@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 import com.javalec.tent.dto.BoardDto;
 import com.javalec.tent.dto.CommentDto;
 import com.javalec.tent.util.BoardPageMaker;
+import com.javalec.tent.util.CommentPageMaker;
 
 public class CommentDao {
 
@@ -81,24 +82,35 @@ public class CommentDao {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		BoardPageMaker boardPageMaker = new BoardPageMaker();
+		CommentPageMaker commentPageMaker = new CommentPageMaker();
 		//1번 페이지 1~10
         //2번 페이지 11~20        
-        int startNum = (pageNo-1)*boardPageMaker.getDisplayRow()+1;
-        int endNum = pageNo*boardPageMaker.getDisplayRow();
+        int startNum = (pageNo-1)*commentPageMaker.getDisplayRow()+1;
+        int endNum = pageNo*commentPageMaker.getDisplayRow();
 		
 		
 		try {
 			con = dataSource.getConnection();
 			String sql = "SELECT * FROM ("
-	                + "SELECT derivedTable.*, ROW_NUMBER() OVER () AS row_num FROM ("
-	                + "SELECT cmNo, bNo, uid, uNickName, cmRef, cmStep, cmRefOrder, cmAnswerCount, cmParentNo, cmContent, cmInsertDate, cmUpdateDate, cmDeleteDate, cmRec, cmUnrec, cmDeleted "
-	                + "FROM comment "
-	                + "WHERE bNo = ? "
-	                + ") AS derivedTable"
-	                + ") AS finalResult "
-	                + "WHERE row_num >= ? AND row_num <= ? "
-	                + "order by cmRef asc, cmRefOrder asc";
+		            + "SELECT derivedTable.*, ROW_NUMBER() OVER () AS row_num FROM ("
+		            + "SELECT cmNo, bNo, uid, uNickName, cmRef, cmStep, cmRefOrder, cmAnswerCount, cmParentNo, cmContent, cmInsertDate, cmUpdateDate, cmDeleteDate, cmRec, cmUnrec, cmDeleted "
+		            + "FROM comment "
+		            + "WHERE bNo = ? "
+		            + "ORDER BY cmRef ASC, cmRefOrder ASC" // Include the ORDER BY clause here
+		            + ") AS derivedTable"
+		            + ") AS finalResult "
+		            + "WHERE row_num >= ? AND row_num <= ? "
+		            + "ORDER BY cmRef ASC, cmRefOrder ASC"; // Adjust the ORDER BY clause here if necessary
+
+//			String sql = "SELECT * FROM ("
+//					+ "SELECT derivedTable.*, ROW_NUMBER() OVER () AS row_num FROM ("
+//					+ "SELECT cmNo, bNo, uid, uNickName, cmRef, cmStep, cmRefOrder, cmAnswerCount, cmParentNo, cmContent, cmInsertDate, cmUpdateDate, cmDeleteDate, cmRec, cmUnrec, cmDeleted "
+//					+ "FROM comment "
+//					+ "WHERE bNo = ? "
+//					+ ") AS derivedTable"
+//					+ ") AS finalResult "
+//					+ "WHERE row_num >= ? AND row_num <= ? "
+//					+ "order by cmRef asc, cmRefOrder asc";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, bNo);
 			ps.setInt(2, startNum);
