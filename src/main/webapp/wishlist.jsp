@@ -17,7 +17,7 @@
     <!-- include_common_top -->
     <link rel="stylesheet" href="css/shop/wishlist.css">
 
-wishlistInsetTocart
+
 
 <script type="text/javascript">
 function wishlistDeleteAction(wwNo) {

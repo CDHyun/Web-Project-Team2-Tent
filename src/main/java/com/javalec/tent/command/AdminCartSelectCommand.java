@@ -38,6 +38,13 @@ public class AdminCartSelectCommand implements TentCommand {
 		request.setAttribute("cartTotal", dtoss);  // 가져온 총합계금액을 cartTotal에 넣기
 		session.setAttribute("ITEMTOTAL", dtoss);
 
+		
+		
+		
+		// 상품추천
+		ArrayList<AdminDto> dtosss = dao.recommend();
+		request.setAttribute("recommend", dtosss);
+		
 	}
 
 }
