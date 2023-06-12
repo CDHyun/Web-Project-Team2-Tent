@@ -836,11 +836,11 @@ public class AdminDao {
 					String pfRealName = resultSet.getString(4);
 					String pName = resultSet.getString(5);
 					int pPrice = resultSet.getInt(6);
-					int cQty = resultSet.getInt(7);
+					int pcQty = resultSet.getInt(7);
 					int ctotal = resultSet.getInt(8);
 					
 			
-					AdminDto dto = new AdminDto(pColor,cNo,pCode,pfRealName, pName, pPrice, cQty, ctotal);
+					AdminDto dto = new AdminDto(pColor,cNo,pCode,pfRealName, pName, pPrice, pcQty, ctotal);
 					dtos.add(dto);
 				}
 			}catch(Exception e) {

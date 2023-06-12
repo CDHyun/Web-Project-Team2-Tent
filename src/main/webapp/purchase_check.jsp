@@ -87,7 +87,7 @@
                                     <c:set var="tot_price" value="0" />
                                     <tbody>
                                     <c:forEach var="purchaseCheck" items="${ITEM}">
-                                    <c:set var="item_tot_price" value="${purchaseCheck.cQty * purchaseCheck.pPrice}" />
+                                    <c:set var="item_tot_price" value="${purchaseCheck.pcQty * purchaseCheck.pPrice}" />
                                       <c:set var="tot_price" value="${tot_price + item_tot_price}" />
                                         <tr>
                                             <td>
@@ -96,12 +96,12 @@
                                             <td>
                                                 <a href="#">${purchaseCheck.pName}</a>
                                             </td>
-                                            <c:set var="item_tot_price" value="${purchaseCheck.cQty * purchaseCheck.pPrice}"></c:set>
+                                            <c:set var="item_tot_price" value="${purchaseCheck.pcQty * purchaseCheck.pPrice}"></c:set>
                                             
                                              <td><fmt:formatNumber value="${purchaseCheck.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
                                          <%--    <td>${purchase.pPrice}</td> --%>
                                             <td>${purchaseCheck.pColor}</td>
-                                            <td>${purchaseCheck.cQty}</td>
+                                            <td>${purchaseCheck.pcQty}</td>
                                             <td><fmt:formatNumber value="${item_tot_price}" type="number" pattern="#,###"></fmt:formatNumber></td>
                                             <%-- <td>${item_tot_price}</td> --%>
                                         </tr>
@@ -137,7 +137,7 @@
           
                         </div>     
                         <form id="order_create_form" method="post">
-                        	<input type="hidden" name="total_price" value="${purchaseCheck.cQTY * purchaseCheck.pPrice}">
+                        	<input type="hidden" name="total_price" value="${purchaseCheck.pcQty * purchaseCheck.pPrice}">
                         </form> 
                     </div>
                 </div>

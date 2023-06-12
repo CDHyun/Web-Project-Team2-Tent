@@ -30,7 +30,7 @@ public class AdminCartSelectCommand implements TentCommand {
 		ArrayList<AdminDto> dtos = dao.cartSelect(uid);  // 가져온 데이터를 cart에 넣기
 		request.setAttribute("cart", dtos);
 		
-		
+		session.removeAttribute("ITEM");
 		session.setAttribute("ITEM", dtos);
 		
 		
