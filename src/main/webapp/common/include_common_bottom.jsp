@@ -11,10 +11,13 @@
 						<h6>Contact Us</h6>
 					</div>
 					<ul class="footer_content">
-						<li><span>Address:</span> Lords, London, UK - 1259</li>
-						<li><span>Phone:</span> 002 63695 24624</li>
+						<li><span>Phone:</span> 02-556-5611</li>
 						<li><span>FAX:</span> 002 78965 369552</li>
-						<li><span>Email:</span> support@example.com</li>
+						<li><span>Email:</span> tent@example.com</li>
+						<li>
+  						<span>Address:</span>
+  						<a href="#" onclick="showModal('Korea Building, 831-3 Yeoksam-dong, Gangnam-gu, Seoul, South Korea.')">Korea Building, 831-3 Yeoksam-dong, Gangnam-gu, Seoul, South Korea.</a>
+						</li>
 					</ul>
 					<div class="footer_social_area mt-15">
 						<a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
@@ -153,4 +156,111 @@
 		</div>
 	</div>
 </footer>
+
+
+<!-- 모달을 위한 HTML 코드 -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div id="map" style="width: 100%; height: 350px;"></div><br/>
+    <p>
+<button onclick="relayout()">SHOW MAP</button>
+</p>
+  </div>
+</div>
+
+<!-- JavaScript 코드 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6b5351400269a2ba0d44506cb8cfe156"></script>
+<script>
+  var mapContainer = document.getElementById('map'); // 지도를 표시할 div
+  var mapOption = {
+    center: new kakao.maps.LatLng(37.49584,127.028), // 지도의 중심좌표
+    level: 3 // 지도의 확대 레벨
+  };
+
+  var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+  // 마커가 표시될 위치입니다
+  var markerPosition = new kakao.maps.LatLng(37.494613,127.030066);
+
+  // 마커를 생성합니다
+  var marker = new kakao.maps.Marker({
+    position: markerPosition
+  });
+
+  // 마커가 지도 위에 표시되도록 설정합니다
+  marker.setMap(map);
+
+  function showModal(address) {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
+  }
+
+  function closeModal() {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";
+  }
+ 
+
+	function relayout() {    
+	    
+	    // 지도를 표시하는 div 크기를 변경한 이후 지도가 정상적으로 표출되지 않을 수도 있습니다
+	    // 크기를 변경한 이후에는 반드시  map.relayout 함수를 호출해야 합니다 
+	    // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
+	    map.relayout();
+	}
+</script>
+
+<!-- CSS 스타일링 -->
+<style>
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 100%; /* 수정된 부분 */
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* 수정된 부분 */
+  #map {
+    width: 100%;
+    height: 100%;
+  }
+ a {
+  text-decoration: underline;
+  font-size: 70%;
+}
+
+  
+</style>
+
 <!-- Footer Area -->
