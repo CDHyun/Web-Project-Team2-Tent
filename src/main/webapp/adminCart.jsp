@@ -161,7 +161,7 @@
 										      <td>
 										      <div class="input-form-group" style="display: flex; align-items: center;">
 	                            					<button type="button" id="plusQtyBtn_${dto.cNo}" class="btn btn-dark btn-sm" onclick="decreaseQuantity('${dto.cNo}')">-</button>&nbsp;&nbsp;
-	                            					<input type="text" id="quantity_${dto.cNo}" name="quantity_${dto.cNo}" class="form-control" style="width: 45px" value="${dto.cQty}" min="1" max="10" >&nbsp;&nbsp;
+	                            					<input type="text" id="quantity_${dto.cNo}" name="quantity_${dto.cNo}" class="form-control" style="width: 45px" value="${dto.pcQty}" min="1" max="10" >&nbsp;&nbsp;
 	                            					<button type="button" id="minusQtyBtn_${dto.cNo}" class="btn btn-dark btn-sm" onclick="increaseQuantity('${dto.cNo}')">+</button>
                             					</div>
 										      </td>
