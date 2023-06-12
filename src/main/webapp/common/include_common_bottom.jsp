@@ -16,7 +16,10 @@
 						<li><span>Email:</span> tent@example.com</li>
 						<li>
   						<span>Address:</span>
-  						<a href="#" onclick="showModal('Korea Building, 831-3 Yeoksam-dong, Gangnam-gu, Seoul, South Korea.')">Korea Building, 831-3 Yeoksam-dong, Gangnam-gu, Seoul, South Korea.</a>
+  						<a href="#" onclick="showModal('Korea Building, 831-3 Yeoksam-dong, Gangnam-gu, Seoul, South Korea.')">
+  							<span style="text-decoration: underline;  font-size: 70%; white-space: nowrap;"> Korea Building, 831-3 Yeoksam-dong,<br>
+   							Gangnam-gu, Seoul, South Korea.</span>
+						</a>
 						</li>
 					</ul>
 					<div class="footer_social_area mt-15">
@@ -255,10 +258,7 @@
     width: 100%;
     height: 100%;
   }
- a {
-  text-decoration: underline;
-  font-size: 70%;
-}
+ 
 
   
 </style>
