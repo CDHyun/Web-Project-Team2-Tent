@@ -23,23 +23,25 @@ public class PurchaseInsertCommand implements TentCommand {
 		String pColor = (String)session.getAttribute("PCOLOR");
 		
 		
-		PurchaseDao dao = new PurchaseDao();
-		dao.purchaseinsert(uid, pCode, pcQty, pcDm, pColor, pcPay);
-		
 		
 	
 
-//				  세션에서 값 가져오기
-//				 String cNoArrayString = (String) session.getAttribute("cNoArrayString");
-//				String[] values = cNoArrayString.substring(3, cNoArrayString.length() - 3).split("\",\"");
-//				int count = values.length;
-//				AdminDao daos = new AdminDao();
-//				
-//				 for (String value : values) {
-//				      daos.cartInsertAction(uid, value,pcDm,pcPay,count);
-//				  }
-//	
-		
+				  //세션에서 값 가져오기
+				 String cNoArrayString = (String) session.getAttribute("cNoArrayString");
+				String[] values = cNoArrayString.substring(3, cNoArrayString.length() - 3).split("\",\"");
+				int count = values.length;
+				AdminDao daos = new AdminDao();
+			
+				if( count >=2) {
+					
+				 for (String value : values) {
+				      daos.cartInsertAction(uid, value,pcDm,pcPay,count);
+				  }
+				}else {
+					
+				 PurchaseDao dao = new PurchaseDao();
+				 dao.purchaseinsert(uid, pCode, pcQty, pcDm, pColor, pcPay);
+				}
 	}
 
 }
