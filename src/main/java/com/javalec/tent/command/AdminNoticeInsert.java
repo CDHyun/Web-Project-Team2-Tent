@@ -12,10 +12,9 @@ public class AdminNoticeInsert implements TentCommand {
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		String aid = (String)session.getAttribute("aid");
+		String aid = (String)session.getAttribute("SUID");
 		String nTitle= request.getParameter("title");
 		String nContent = request.getParameter("content");
-		//String nCgNo = request.getParameter("CgNo");
 		
 		
 		

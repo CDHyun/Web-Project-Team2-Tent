@@ -31,8 +31,7 @@
 					</tr>
 					
 			</table>
-				
-			<a  href="adminNoticeEnd.do"><button type="button" class="btn btn-primary">작성완료</button></a>&nbsp;&nbsp;&nbsp;
+				<input type="submit" value="작성완료" class="btn btn-primary" >&nbsp;&nbsp;&nbsp;
 			<a  href="adminNotice.do"><button type="button" class="btn btn-danger">취소</button></a>
 		
 		</div>

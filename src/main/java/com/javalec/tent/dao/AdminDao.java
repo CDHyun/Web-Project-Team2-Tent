@@ -500,7 +500,7 @@ public class AdminDao {
 		
 		try {
 	        connection = dataSource.getConnection();
-	        String query = "INSERT INTO notice (aid, nTitle, nContent, nInsertDate) SELECT ?,  ?, ?, NOW() FROM admin a WHERE a.aid = ?";
+	        String query = "INSERT INTO notice (aid,nCgNo, nTitle, nContent, nInsertDate) SELECT ?, 1,  ?, ?, NOW() FROM admin a WHERE a.aid = ?";
 	        preparedStatement = connection.prepareStatement(query);
 	        preparedStatement.setString(1, aid);
 	        preparedStatement.setString(2, nTitle);
