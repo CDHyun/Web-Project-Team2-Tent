@@ -68,7 +68,7 @@
 				    <div class="my-account-navigation mb-50">
 				        <ul>
 				            <li><a href="my_account.do">My Account</a></li>
-				            <li class="active"><a href="order_list">Orders</a></li>
+				            <li class="active"><a href="purchase_list.do">Orders</a></li>
 				            <li><a href="member_logout">Logout</a></li>
 				        </ul>  
 				    </div> 
@@ -111,7 +111,7 @@
                 </c:if>
                 <c:if test="${purchase.pcStatus == -1}">
                     <td>
-                        <span class="bigshop-label bigshop-label-danger">취소됨</span>
+                        <span class="bigshop-label bigshop-label-danger">주문 취소</span>
                     </td>
                 </c:if>
                  <c:if test="${purchase.pcStatus == 1}">
@@ -121,7 +121,7 @@
                 </c:if>
                  <c:if test="${purchase.pcStatus == 2}">
                     <td>
-                        <span class="bigshop-label bigshop-label-success">배송완료</span>
+                        <span class="bigshop-label bigshop-label-success">배송 완료</span>
                     </td>
                 </c:if>
                 <td><fmt:formatNumber value="${purchase.pcQty * purchase.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>

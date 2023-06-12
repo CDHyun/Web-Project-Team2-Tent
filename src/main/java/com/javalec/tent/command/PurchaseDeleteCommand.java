@@ -18,7 +18,8 @@ public class PurchaseDeleteCommand implements TentCommand {
 		System.out.println(pcNo);
 		
 		PurchaseDao dao  = new PurchaseDao();
-		dao.purchaseDelete(pcNo);
+//		dao.purchaseDelete(pcNo);
+		dao.cancelPurchase(pcNo);
 
 
 	}
