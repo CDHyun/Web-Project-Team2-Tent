@@ -257,7 +257,7 @@
 	                            	<button type="button" id="minusQtyBtn" class="btn btn-dark btn-sm" onclick="increaseQuantity()">+</button>
                             	</div>
                             	<br/>
-                            	<button type="button" id="cartBtn" name="cartBtn" value="5" class="btn btn-primary btn-sm" onclick="addToCart()">Add to cart</button>&nbsp;&nbsp;&nbsp;
+                            	<button type="button" id="addToCart" name="cartBtn" value="5" class="btn btn-primary btn-sm" onclick="addToCart()">Add to cart</button>&nbsp;&nbsp;&nbsp;
                             	<button type="button" id="buyBtn" name="buyBtn" value="5" class="btn btn-primary btn-sm" onclick="buy()">Buy</button>
                             </div>
 
