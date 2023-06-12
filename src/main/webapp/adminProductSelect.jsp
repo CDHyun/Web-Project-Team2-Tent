@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,7 +80,7 @@
       <td>${dto.pBrandName}</td>
       <td>${dto.pName}</td>
       <td>${dto.pColor}</td>
-      <td>${dto.pPrice}</td>
+      <td>&#8361;&nbsp;<fmt:formatNumber value="${dto.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
       <td>${dto.pStock}</td>
       <td>${dto.pInsertdate}</td>
       <td><!-- Button trigger modal -->
