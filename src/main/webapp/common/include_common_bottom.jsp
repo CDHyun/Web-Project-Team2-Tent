@@ -167,8 +167,9 @@
     <span class="close" onclick="closeModal()">&times;</span>
     <div id="map" style="width: 100%; height: 350px;"></div><br/>
     <p>
-<button onclick="relayout()">SHOW MAP</button>
-</p>
+		<button onclick="relayout()">SHOW MAP</button>&nbsp;&nbsp;
+		<button onclick="returnMap()">RETURN</button>
+	</p>
   </div>
 </div>
 
@@ -212,6 +213,21 @@
 	    // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
 	    map.relayout();
 	}
+	
+	
+	 function returnMap() {
+		    var container = document.getElementById("map"); // 지도를 담을 컨테이너 가져오기
+		    var options = {
+		      center: new kakao.maps.LatLng(37.494649834619814, 127.03008817402738), // 이동할 좌표 설정
+		      level: 3 // 원하는 줌 레벨 설정
+		    };
+
+		    var map = new kakao.maps.Map(container, options); // 지도 생성 및 객체 리턴
+		    
+		    // 마커가 지도 위에 표시되도록 설정합니다
+		    marker.setMap(map);
+		  }
+	
 </script>
 
 <!-- CSS 스타일링 -->
