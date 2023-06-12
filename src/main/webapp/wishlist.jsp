@@ -17,6 +17,21 @@
     <!-- include_common_top -->
     <link rel="stylesheet" href="css/shop/wishlist.css">
 
+
+
+<script type="text/javascript">
+function wishlistDeleteAction() {
+	var wNo = $("#wNo").val();
+	
+   
+	var url = "wishlistDeletes.do?wNo=" + encodeURIComponent(wNo);
+	window.location.href = url;
+   
+  
+  }
+
+
+</script>
 </head>
 
 <body>
@@ -57,7 +72,6 @@
                             <table class="table table-bordered mb-30">
                                 <thead>
                                     <tr>
-                                    	<th scope="col"><input type="checkbox" id="check_all"></th>
                                         <th scope="col">Image</th>
                                         <th scope="col">Brand</th>
                                         <th scope="col">Product</th>
@@ -75,9 +89,6 @@
                                 	</c:if>
                                 	<c:forEach var="dto" items="${wishlist}">
 	                                    <tr >
-	                                        <th scope="row">
-	                                            <input type="checkbox" id="wish_check_${dto.wNo}" >
-	                                        </th>
 	                                        <td>
 	                                            <img src="images/product/${dto.pfRealName }" alt="Product">
 	                                        </td>
@@ -90,7 +101,8 @@
 	                                       <td>&#8361;&nbsp;<fmt:formatNumber value="${dto.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
 	                                        <td><a href="#" class="btn btn-primary btn-sm wish_add_to_cart_btn" >Add</a></td>
 	                                        <th scope="row">
-	                                            <a href="" class="wish_item_del_btn" ><i class="icofont-close"></i></a>
+	                                         <input type="hidden" id="wNo" name="wNo" value="${dto.wNo}">
+	                                            <a class="wish_item_del_btn" ><i class="icofont-close" onclick="wishlistDeleteAction()"></i></a>
 	                                        </th>
 	                                    </tr>
                                     </c:forEach>
