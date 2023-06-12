@@ -45,7 +45,7 @@ public class NoticeDao {
 		try {
 			con = dataSource.getConnection();
 			//nNo, aid, nCgNo, nTitle, nContent, nInsertDate, nUpdateDate, nDeleteDate, nDeleted
-			String query = "select nNo, aid, nCgNo, nTitle, nContent, nInsertDate, nViewCount, nDeleted from notice where nDeleted = 0";
+			String query = "select nNo, aid, nCgNo, nTitle, nContent, nInsertDate, nUpdateDate, nDeleteDate, nViewCount, nDeleted from notice where nDeleted = 0";
 			ps = con.prepareStatement(query);
 			rs = ps.executeQuery();
 			while(rs.next()) {
@@ -55,9 +55,11 @@ public class NoticeDao {
 				String nTitle = rs.getString(4);
 				String nContent = rs.getString(5);
 				String nInsertDate = rs.getString(6);
-				int nViewCount = rs.getInt(7);
-				boolean nDeleted = rs.getBoolean(8);
-				NoticeDto noticeDto = new NoticeDto(nNo, aid, nCgNo, nTitle, nContent, nInsertDate, nContent, nInsertDate, nDeleted);
+				String nUpdateDate = rs.getString(7);
+				String nDeleteDate = rs.getString(8);
+				int nViewCount = rs.getInt(9);
+				boolean nDeleted = rs.getBoolean(10);
+				NoticeDto noticeDto = new NoticeDto(nNo, aid, nCgNo, nTitle, nContent, nInsertDate, nUpdateDate, nDeleteDate, nDeleted, nViewCount);
 				noticeList.add(noticeDto);
 			}
 
@@ -72,7 +74,6 @@ public class NoticeDao {
 				e.printStackTrace();
 			}
 		}
-		
 		return noticeList;
 	}
 	

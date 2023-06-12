@@ -51,7 +51,7 @@ public class NoticeListCommand implements TentCommand {
         */
         ArrayList<NoticeDto> noticeList = new ArrayList<NoticeDto>();
         noticeList = noticeDao.noticeList();
-		request.setAttribute("boardList", noticeList);
+		request.setAttribute("noticeList", noticeList);
 		request.setAttribute("pageMaker", boardPageMaker);
 
 	}

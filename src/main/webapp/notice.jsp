@@ -22,7 +22,7 @@
 	
     var viewedQnas = []; // 조회한 Q&A 번호를 저장할 배열
     
-    function toggleQnaContent(element) {
+    function toggleNoticeContent(element) {
         var contentDiv = $(element).next('.notice-content');
         contentDiv.slideToggle(function() {
             if (contentDiv.is(':visible')) {
@@ -126,8 +126,8 @@
 									    <tr>
 									        <th scope="row">${notice.nNo}</th>
 									        <td>
-									            <a href="#" onclick="toggleQnaContent(this);">${notice.nTitle}</a>
-									            <div class="qna-content" style="display: none;">${notice.nContent}</div>
+									            <a href="#" onclick="toggleNoticeContent(this);">${notice.nTitle}</a>
+									            <div class="notice-content" style="display: none;">${notice.nContent}</div>
 									        </td>
 									        <td style="text-align: center;">관리자</td>
 									        <c:set var="dateString" value="${notice.nInsertDate}" />
@@ -214,7 +214,7 @@
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp"/>
 	<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
-	<script src="js/shop/notice.js" defer></script>
+	<script src="js/shop/notice.js?after" defer></script>
 
 </body>
 

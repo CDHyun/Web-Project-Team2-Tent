@@ -18,6 +18,7 @@ public class ProductDto {
 	String pDeleteDate;		// 상품 삭제 처리 날짜
 	boolean pDeleted;		// 상품 삭제 여부(Default 0 : false -> 삭제 되지 않음.)
 	int productCount;		//
+	int pcQty;
 	
 	/* ProductFile */
 	String pfName;			// 올린 상품 이미지 이름
@@ -61,6 +62,13 @@ public class ProductDto {
 		this.pColor = pColor;
 	}
 	
+	/* 구매 페이지 보내기 전에 데이터 조회 */
+	public ProductDto(String pName, int pPrice, String pfRealName) {
+		super();
+		this.pName = pName;
+		this.pPrice = pPrice;
+		this.pfRealName = pfRealName;
+	}
 
 	public ProductDto(String pColor) {
 		super();
@@ -71,6 +79,23 @@ public class ProductDto {
 		super();
 		this.productCount = productCount;
 	}
+	
+	/* item에 담아줄 데이터를 담을 생성자 */
+	public ProductDto(int pCode, String pName, int pPrice, int pcQty, String pfRealName, String pColor) {
+		super();
+		this.pCode = pCode;
+		this.pName = pName;
+		this.pPrice = pPrice;
+		this.pcQty = pcQty;
+		this.pfRealName = pfRealName;
+		this.pColor = pColor;
+	}
+	
+	
+	
+	
+	
+	
 
 	/* getter & setter */
 	public int getCgNo() {
@@ -208,6 +233,16 @@ public class ProductDto {
 	public void setProductCount(int productCount) {
 		this.productCount = productCount;
 	}
+
+	public int getPcQty() {
+		return pcQty;
+	}
+
+	public void setPcQty(int pcQty) {
+		this.pcQty = pcQty;
+	}
+	
+	
 	
 	
 	

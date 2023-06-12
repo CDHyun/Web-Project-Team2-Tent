@@ -105,7 +105,7 @@ $(".qna_btn.update_form").on("click", function(){
 */
 
 $(".notice_btn.new_write").on("click", function(){
-	if($("#n_title_txt").val() == "" || CKEDITOR.instances.q_content_area.getData() == ""){
+	if($("#n_title_txt").val() == "" || CKEDITOR.instances.n_content_area.getData() == ""){
 		Toast.fire({ icon: 'warning', title: "필수 입력값을 입력하지 않았습니다.\n 제목과 내용을 모두 입력해주세요" });
 		return;
 	}
@@ -116,7 +116,7 @@ $(".notice_btn.new_write").on("click", function(){
 게시글 수정 
 */ 
 $(".qna_btn.update").on("click", function(){ 
-	if($("#q_title_txt").val() == "" || CKEDITOR.instances.q_content_area.getData() == ""){
+	if($("#n_title_txt").val() == "" || CKEDITOR.instances.q_content_area.getData() == ""){
 		Toast.fire({ icon: 'warning', title: "필수 입력값을 입력하지 않았습니다.\n 제목과 내용을 모두 입력해주세요" });
 		return;
 	}

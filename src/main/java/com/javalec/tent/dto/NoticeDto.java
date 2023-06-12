@@ -12,6 +12,7 @@ public class NoticeDto {
 	String nInsertDate;
 	String nUpdateDate;
 	String nDeleteDate;
+	int nViewCount;
 	boolean nDeleted;
 	
 	public NoticeDto() {
@@ -19,7 +20,7 @@ public class NoticeDto {
 	}
 	
 	public NoticeDto(int nNo, String aid, int nCgNo, String nTitle, String nContent, String nInsertDate,
-			String nUpdateDate, String nDeleteDate, boolean nDeleted) {
+			String nUpdateDate, String nDeleteDate, boolean nDeleted, int nViewCount) {
 		super();
 		this.nNo = nNo;
 		this.aid = aid;
@@ -30,6 +31,7 @@ public class NoticeDto {
 		this.nUpdateDate = nUpdateDate;
 		this.nDeleteDate = nDeleteDate;
 		this.nDeleted = nDeleted;
+		this.nViewCount = nViewCount;
 	}
 
 	public int getnNo() {
@@ -102,6 +104,14 @@ public class NoticeDto {
 
 	public void setnDeleted(boolean nDeleted) {
 		this.nDeleted = nDeleted;
+	}
+
+	public int getnViewCount() {
+		return nViewCount;
+	}
+
+	public void setnViewCount(int nViewCount) {
+		this.nViewCount = nViewCount;
 	}
 	
 	

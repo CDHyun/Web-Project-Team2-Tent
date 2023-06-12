@@ -7,8 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.javalec.tent.dao.ProductDao;
 import com.javalec.tent.dao.PurchaseDao;
 import com.javalec.tent.dao.UserDao;
+import com.javalec.tent.dto.ProductDto;
 import com.javalec.tent.dto.PurchaseDto;
 import com.javalec.tent.dto.UserDto;
 
@@ -34,7 +36,18 @@ public class PurchaserInfoCommand implements TentCommand {
 			session.setAttribute("PCODE", pCode);
 			session.setAttribute("PCQTY", pcQty);
 			session.setAttribute("PCOLOR", pColor);
-					
+			
+			ProductDao productDao = new ProductDao();
+			ArrayList<ProductDto> productInfo = new ArrayList<ProductDto>();
+			productInfo = productDao.productInfo(pCode);
+			String pName = productInfo.get(0).getpName();
+			String pfRealName = productInfo.get(0).getPfRealName();
+			int pPrice = productInfo.get(0).getpPrice();
+			ArrayList<ProductDto> productInfo2 = new ArrayList<ProductDto>();
+			ProductDto productDto = new ProductDto(pCode, pName, pPrice, pcQty, pfRealName, pColor);
+			productInfo2.add(productDto);
+			session.removeAttribute("ITEM");
+			session.setAttribute("ITEM", productInfo2);
 			
 //			String uid = "donghyun"; //****
 			PurchaseDao dao = new PurchaseDao();

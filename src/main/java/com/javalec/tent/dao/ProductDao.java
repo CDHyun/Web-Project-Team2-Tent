@@ -9,6 +9,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.javalec.tent.dto.AdminDto;
 import com.javalec.tent.dto.ProductDto;
 
 public class ProductDao {
@@ -284,7 +285,43 @@ public class ProductDao {
 //	    return products;
 //	}
 
-	
+	/* 구매 페이지에 보내주기 전에 데이터 조회 */
+	public ArrayList<ProductDto> productInfo(int pCode) {
+		ArrayList<ProductDto> productInfo = new ArrayList<ProductDto>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = dataSource.getConnection();
+			
+			String sql = "select p.pName, p.pfRealName, p.price from product p, productOption po, productFile pf where p.pCode = ? and p.pCode = po.pCode and p.pCode = pf.pCode";
+			
+			ps = con.prepareStatement(sql);
+//			ps.setInt(1, pCode);
+			rs = ps.executeQuery();
+			// pColor, pCode, pName, pfRealName, pPrice, pcQty
+			while(rs.next()) {
+				String pName = rs.getString(1);
+				String pfRealName = rs.getString(2);
+				int pPrice = rs.getInt(3);
+				ProductDto productDto = new ProductDto(pName, pPrice, pfRealName);
+				productInfo.add(productDto);
+				
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(con != null) con.close();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return productInfo;
+	}
 	
 	
 
