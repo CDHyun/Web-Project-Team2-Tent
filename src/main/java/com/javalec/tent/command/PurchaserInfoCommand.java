@@ -53,7 +53,7 @@ public class PurchaserInfoCommand implements TentCommand {
 			
 			
 			
-			String cNoArrayString = "";
+			String cNoArrayString = "[[]]";
 			session.removeAttribute("cNoArrayString");
 			  session.setAttribute("cNoArrayString", cNoArrayString);
 			

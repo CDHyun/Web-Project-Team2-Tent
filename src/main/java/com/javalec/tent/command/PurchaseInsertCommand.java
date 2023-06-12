@@ -30,6 +30,10 @@ public class PurchaseInsertCommand implements TentCommand {
 		
 		
 		ArrayList<ProductDto> itemList = (ArrayList<ProductDto>)session.getAttribute("ITEM");
+		
+		if(itemList.size()==1) {
+			
+		
 		for(int i=0; i<itemList.size(); i++) {
 			int wkpCode = itemList.get(i).getpCode();
 			int wkpcQty = itemList.get(i).getPcQty();
@@ -37,24 +41,24 @@ public class PurchaseInsertCommand implements TentCommand {
 			dao.purchaseinsert(uid, wkpCode, wkpcQty, pcDm, wkpColor, pcPay);
 		}
 		
+		}else {
+			
+			
 		
 
-//		// 세션에서 값 가져오기
-//		String cNoArrayString = (String) session.getAttribute("cNoArrayString");
-//		String[] values = cNoArrayString.substring(3, cNoArrayString.length() - 3).split("\",\"");
-//		int count = values.length;
-//		AdminDao daos = new AdminDao();
-//
-//		if (count >= 2) {
-//
-//			for (String value : values) {
-//				daos.cartInsertAction(uid, value, pcDm, pcPay, count);
-//			}
-//		} else {
-//
-//			dao.purchaseinsert(uid, pCode, pcQty, pcDm, pColor, pcPay);
-//	
+		// 세션에서 값 가져오기
+		String cNoArrayString = (String) session.getAttribute("cNoArrayString");
+		String[] values = cNoArrayString.substring(3, cNoArrayString.length() - 3).split("\",\"");
+		int count = values.length;
+		AdminDao daos = new AdminDao();
 
+
+			for (String value : values) {
+				daos.cartInsertAction(uid, value, pcDm, pcPay, count);
+			}
+		
+
+		}
 	
 	
 	}
