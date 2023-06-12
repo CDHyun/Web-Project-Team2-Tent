@@ -53,8 +53,8 @@
 		console.log(globalCmNo);
 		var cmNo = globalCmNo;
 		var bNo = $("#hidden_bNo").val();
-		/* var cmContent = CKEDITOR.instances.child_content_area.getData(); */
-		var cmContent = $("#child_content_modify_area").val();
+		var cmContent = CKEDITOR.instances.child_content_area.getData();
+		/* var cmContent = $("#child_content_area").val(); */
 		console.log('bNo : ' + bNo);
 		console.log('cmNo : ' + cmNo)
 		console.log(cmContent);
@@ -142,6 +142,40 @@
 	      });
 	}
 	
+	function deleteBoard() {
+		var bNo = $("#hidden_bNo").val();
+		ToastConfirm.fire({  icon: 'warning',  title: "게시글을 삭제하시겠습니까?"  }).then((result) => {
+		    if (result.isConfirmed) {
+		      $.ajax({
+		        type: 'POST',
+		        url: './DeleteBoardComment',
+		        data: {
+		        	bNo : bNo
+		        },
+		        success: function(result) {
+		          console.log(result);
+		          if (result === "0") {
+		            Toast.fire({
+		            icon: 'warning', title: "게시글 삭제 중 문제가 발생했습니다." });
+		            return;
+		          }
+
+		          if (result === "1") {
+		        	 window.location.href = "board_list.do";
+		          }
+		        },
+		        error: function() {
+		          Toast.fire({
+		            icon: 'warning',
+		            title: "오류가 발생했습니다. 관리자에게 문의해주세요."
+		          });
+		        }
+		      });
+		    }
+		  });
+	}
+	
+	
 </script>
 	
 
@@ -214,7 +248,7 @@
 						<div id="qna_btn_container">
 							<c:if test="${board.uid eq SUID}">
 								<input class="btn btn-primary btn-sm" type="button" value="수정" />&nbsp;&nbsp;
-							<input class="btn btn-primary btn-sm" type="button" value="삭제" onclick="" />&nbsp;&nbsp;
+							<input class="btn btn-primary btn-sm" type="button" value="삭제" onclick="deleteBoard()" />&nbsp;&nbsp;
                     	</c:if>
 							<input class="btn btn-primary btn-sm" type="button" value="댓글 달기"
 								onclick="openParentModal()" />&nbsp;&nbsp; <a
@@ -433,7 +467,7 @@
 	<jsp:include page="common/include_common_script.jsp"/>
 	<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 	<script src="js/shop/board.js?after"></script>
-	<script src="js/shop/comment.js?after"></script>
+	<script src="js/shop/comment.js"></script>
 	<script type="text/javascript">
 		
 	</script>

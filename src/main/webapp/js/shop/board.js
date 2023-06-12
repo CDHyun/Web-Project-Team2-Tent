@@ -153,7 +153,7 @@ $(".board_btn.reply").on("click", function(){
 답글 등록
 */
 $(".board_btn.reply_write").on("click", function(){
-	if($("#q_title_txt").val() == "" || CKEDITOR.instances.q_content_area.getData() == ""){
+	if($("#q_title_txt").val() == "" || CKEDITOR.instances.b_content_area.getData() == ""){
 		Toast.fire({ icon: 'warning', title: "필수 입력값을 입력하지 않았습니다.\n 제목과 내용을 모두 입력해주세요" });
 		return;
 	}
@@ -171,4 +171,6 @@ $(() => {
                  	});
 	}
 });
+
+
 

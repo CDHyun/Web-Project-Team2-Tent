@@ -27,8 +27,8 @@
 	
 	function write() {
 		var form = document.board_write_form;
-		var qContent = form.bContent.value;
-		var qTitle = form.bTitle.value;
+		var bContent = form.bContent.value;
+		var bTitle = form.bTitle.value;
 		if(bContent == "" || bTitle == ""){
 			Toast.fire({ icon: 'warning', title: "필수 입력값을 입력하지 않았습니다.\n 제목과 내용을 모두 입력해주세요" });
 			return;
