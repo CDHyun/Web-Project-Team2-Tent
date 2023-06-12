@@ -117,9 +117,10 @@ public class PurchaseDao {
 
 		try {
 			connection = dataSource.getConnection();
-			String query = "SELECT pc.pcNo, p.pCode, p.pName, p.pPrice, pc.pcQty, pc.pcStatus, pc.pcInsertDate, u.uPhone, pf.pfRealName, pf.pfHoverRealName, pcPay "
-					+ "FROM product p, user u, purchase pc, productfile pf "
-					+ "WHERE pc.pCode = p.pCode and pf.pCode = p.pCode and u.uid = pc.uid and pc.pcDeleted=0 and u.uid = ?";
+			String query = "SELECT pc.pcNo, p.pCode, p.pName, p.pPrice, pc.pcQty, pc.pcStatus, pc.pcInsertDate, u.uPhone, pf.pfRealName, pf.pfHoverRealName, pcPay " +
+		            "FROM product p, user u, purchase pc, productfile pf " +
+		            "WHERE pc.pCode = p.pCode AND pf.pCode = p.pCode AND u.uid = pc.uid AND pc.pcDeleted = 0 AND u.uid = ? " +
+		            "ORDER BY pc.pcInsertDate DESC";
 
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, uid);
