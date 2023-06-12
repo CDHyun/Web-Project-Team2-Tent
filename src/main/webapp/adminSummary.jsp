@@ -3,6 +3,7 @@
     pageEncoding="UTF-8"%>
     <%@ page import="java.util.ArrayList" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 
 <head>
@@ -168,7 +169,7 @@
 
  
  
-<p class="content2">총 매출액 : <input type="text" name="sumAll" id="sumAll" readonly="readonly" size="15" value="${TOTAL }">원</p>
+<p class="content2">총 매출액 : <input type="text" name="sumAll" id="sumAll" readonly="readonly" size="15" value="&#8361;&nbsp;<fmt:formatNumber value="${TOTAL }" type="number" pattern="#,###"></fmt:formatNumber>"></p>
 
 
 
@@ -189,7 +190,7 @@
       <td>${dto.pcInsertdate}</td>
       <td>${dto.pBrandName}</td>
       <td>${dto.pName}</td>
-      <td>${dto.sum}</td>
+      <td>&#8361;&nbsp;<fmt:formatNumber value="${dto.sum}" type="number" pattern="#,###"></fmt:formatNumber></td>
     </tr>
   </c:forEach>
 </table>
