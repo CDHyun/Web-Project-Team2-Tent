@@ -640,7 +640,7 @@
 									<a onclick="emptySessionUser()"><i class="icofont-cart"></i></a>
 								</c:if>
 								<c:if test="${!empty SUID}">
-									<a href="cart.do"><i class="icofont-cart"></i><span
+									<a href="cart_list.do"><i class="icofont-cart"></i><span
 										class="cart_quantity">${cartList.size()}</span></a>
 								</c:if>
 							</div>

@@ -31,6 +31,7 @@ import com.javalec.tent.command.QuestionListCommand;
 import com.javalec.tent.command.QuestionWriteCommand;
 import com.javalec.tent.command.CartCommand;
 import com.javalec.tent.command.CartDeleteCommand;
+import com.javalec.tent.command.CartListCommand;
 import com.javalec.tent.command.CartUpdateCommand;
 import com.javalec.tent.command.ChildCommentWriteCommand;
 import com.javalec.tent.command.CommentListCommand;
@@ -190,6 +191,11 @@ public class HomeController extends HttpServlet {
 			command2 = new CommentListCommand();
 			command2.execute(request, response);
 			viewPage = "board_detail.jsp";
+			break;
+		case "/cart_list.do":
+			command = new CartListCommand();
+			command.execute(request, response);
+			viewPage = "cart_list.jsp";
 			break;
 		case "/parent_comment_write.do":
 			command = new ParrentCommentWriteCommand();

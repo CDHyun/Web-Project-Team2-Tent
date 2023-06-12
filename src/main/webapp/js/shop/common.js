@@ -23,36 +23,6 @@ function formatDate(date) {
 */
 
 /*
-로그인체크  
-$(".login_check").on("click", function(e){
-	ToastConfirm.fire({ icon: 'question', 
-			title: "로그인이 필요한 페이지입니다.\n 로그인 하시겠습니까?"}).then((result) => {
-			if(result.isConfirmed){
-				openLoginModal();
-			}
-		});
-	e.preventDefault();
-});
-*/
-
-/*
-function check_session(){
-	let result = false;
-	$.ajax({
-		url: "./UserSessionCheck",
-		method: "post",
-		async: false,
-		success:function(resultData){ 
-			console.log(resultData);
-			if(resultData == "Y"){
-				result = true;
-			}
-		}
-	});
-	return result;
-}
-*/
-/*
 파라미터값 얻기
 */
 function getParameterByName(name) {
@@ -62,37 +32,6 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-/*
-상품 장바구니 추가
-function addToCart(params){
-	if(!check_session()){
-		ToastConfirm.fire({ icon: 'question', 
-				title: "로그인이 필요한 페이지입니다.\n 로그인 하시겠습니까?"}).then((result) => {
-				if(result.isConfirmed){
-					openLoginModal();	
-				}
-			});
-		return;
-	}
-	$.ajax({
-		url: "add_cart_rest",
-		method: "post",
-		traditional: true,
-		data: params, 
-		dataType: "json",
-		success:function(resultObj){
-			console.log(resultObj);
-			if(resultObj.errorCode > 0){
-				Toast.fire({ icon: 'success', title: resultObj.errorMsg });
-				// 공통헤더 정보 변경 
-				update_common_header_cart_info(resultObj.data);
-			}else{
-				Toast.fire({ icon: 'error', title: resultObj.errorMsg });
-			}
-		}
-	});
-}
-*/
 
 /*
 상품 위시리스트 추가  

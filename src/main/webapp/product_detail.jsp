@@ -257,8 +257,14 @@
 	                            	<button type="button" id="minusQtyBtn" class="btn btn-dark btn-sm" onclick="increaseQuantity()">+</button>
                             	</div>
                             	<br/>
-                            	<button type="button" id="addToCart" name="cartBtn" value="5" class="btn btn-primary btn-sm" onclick="addToCart()">Add to cart</button>&nbsp;&nbsp;&nbsp;
-                            	<button type="button" id="buyBtn" name="buyBtn" value="5" class="btn btn-primary btn-sm" onclick="buy()">Buy</button>
+                            	<c:if test="${empty SUID}">
+	                            	<button type="button" id="addToCart" name="cartBtn" value="5" class="btn btn-primary btn-sm" onclick="emptySessionUser()">Add to cart</button>&nbsp;&nbsp;&nbsp;
+	                            	<button type="button" id="buyBtn" name="buyBtn" value="5" class="btn btn-primary btn-sm" onclick="emptySessionUser()">Buy</button>
+                            	</c:if>
+                            	<c:if test="${!empty SUID}">
+	                            	<button type="button" id="addToCart" name="cartBtn" value="5" class="btn btn-primary btn-sm" onclick="addToCart()">Add to cart</button>&nbsp;&nbsp;&nbsp;
+	                            	<button type="button" id="buyBtn" name="buyBtn" value="5" class="btn btn-primary btn-sm" onclick="buy()">Buy</button>
+                            	</c:if>
                             </div>
 
                         <!-- Others Info -->
@@ -473,8 +479,8 @@
 
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
 	<jsp:include page="common/include_common_script.jsp"/>
-	<script src="js/shop/product.js"></script>
-	<script src="js/shop/review.js"></script>
+	<script src="js/shop/product.js?after"></script>
+	<script src="js/shop/review.js?after"></script>
 
 </body>
 
