@@ -17,7 +17,7 @@
     <!-- include_common_top -->
     <link rel="stylesheet" href="css/shop/wishlist.css">
 
-
+wishlistInsetTocart
 
 <script type="text/javascript">
 function wishlistDeleteAction(wwNo) {
@@ -30,6 +30,15 @@ function wishlistDeleteAction(wwNo) {
   
   }
 
+function wishlistInsetTocart(wwNo) {
+	var wNo = wwNo;
+	
+   
+	var url = "wishlistInsertToCart.do?wNo=" + encodeURIComponent(wNo);
+	window.location.href = url;
+   
+  
+  }
 
 </script>
 </head>
@@ -99,7 +108,7 @@ function wishlistDeleteAction(wwNo) {
 	                                          ${dto.pName}
 	                                        </td>
 	                                       <td>&#8361;&nbsp;<fmt:formatNumber value="${dto.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
-	                                        <td><a href="#" class="btn btn-primary btn-sm wish_add_to_cart_btn" >Add</a></td>
+	                                        <td><a class="btn btn-primary btn-sm wish_add_to_cart_btn" onclick="wishlistInsetTocart(${dto.wNo})" style="color: white;" >Add</a></td>
 	                                        <th scope="row">
 	                                         <input type="hidden" id="wNo" name="wNo" value="${dto.wNo}">
 	                                            <a class="wish_item_del_btn" ><i class="icofont-close" onclick="wishlistDeleteAction(${dto.wNo})"></i></a>

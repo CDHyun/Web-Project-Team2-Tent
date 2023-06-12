@@ -1146,7 +1146,7 @@ public class AdminDao {
 				
 				
 				
-				// 카트선택항목지우기
+				// 위시리스트선택항목지우기
 				
 				public void deleteWishList(String wwNo) {
 					Connection connection = null;
@@ -1177,6 +1177,39 @@ public class AdminDao {
 						}
 					}
 				}
+				
+				//카트에서 받아온 배열을 purchase 테이블로 insert
+				public void wishlistToCart(String wwNo) {
+			
+					Connection connection = null;
+					PreparedStatement preparedStatement = null;
+					
+					
+					try {
+				        connection = dataSource.getConnection();
+				        String query = "insert into cart (uid, cpColor, pCode) select w.uid,  w.pColor,w.pCode from wishlist w where wNo = ?";
+				        preparedStatement = connection.prepareStatement(query);
+				        preparedStatement.setString(1, wwNo);
+				        preparedStatement.executeUpdate();
+
+				        
+					}catch(Exception e) {
+						e.printStackTrace();
+					}finally {
+						try {
+							
+							if(preparedStatement != null) {
+								preparedStatement.close();
+							}
+							if(connection != null) {
+								connection.close();
+							}
+						}catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				
 				
 				
 }
