@@ -21,7 +21,9 @@ public class AdminCartUserInfoCommand implements TentCommand {
 		
 		  String[] cNoArray = request.getParameterValues("cNoArrayInput");
 		  String cNoArrayString = Arrays.toString(cNoArray);
-
+		  
+		  
+		  session.removeAttribute("cNoArrayString");
 		  session.setAttribute("cNoArrayString", cNoArrayString);
 		  System.out.println(cNoArrayString);
 	    

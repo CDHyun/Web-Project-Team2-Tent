@@ -35,6 +35,10 @@
   th {
     background-color: #f2f2f2;
   }
+   .content tr.stock-low {
+    background-color: lightcoral;
+      font-weight: bold;
+  }
 </style>
 </head>
 
@@ -69,7 +73,7 @@
     <th></th>
   </tr>
   <c:forEach items="${list}" var="dto" varStatus="st">
-    <tr>
+  <tr <c:if test="${dto.pStock <= 5}">class="stock-low"</c:if>>
       <td>${st.index+1}</td>
       <td>${dto.pCode}</td>
       <td>${dto.pBrandName}</td>
