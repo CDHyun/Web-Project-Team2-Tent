@@ -27,6 +27,7 @@ import com.javalec.tent.command.AdminUpdateCommand;
 import com.javalec.tent.command.AdminWishListCommand;
 import com.javalec.tent.command.AdminWishListDeleteCommand;
 import com.javalec.tent.command.AdminWishListSelectCommand;
+import com.javalec.tent.command.AdminWishListToCartCommand;
 import com.javalec.tent.command.BoardDetailCommand;
 import com.javalec.tent.command.BoardListCommand;
 import com.javalec.tent.command.BoardWriteCommand;
@@ -383,6 +384,11 @@ public class HomeController extends HttpServlet {
 			break;	
 		case "/wishlistDeletes.do":
 			command = new AdminWishListDeleteCommand();
+			command.execute(request, response);
+			viewPage = "wishlistselect.do";
+			break;	
+		case "/wishlistInsertToCart.do":
+			command = new AdminWishListToCartCommand();
 			command.execute(request, response);
 			viewPage = "wishlistselect.do";
 			break;	
