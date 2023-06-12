@@ -32,12 +32,6 @@ public class AdminCartUserInfoCommand implements TentCommand {
 		  
 		 
 		
-		String[] values = cNoArrayString.substring(3, cNoArrayString.length() - 3).split("\",\"");
-		AdminDao daos = new AdminDao();
-		
-		 for (String value : values) {
-		      daos.cartInsertAction(uid, value);
-		  }
 	  
 	}
 

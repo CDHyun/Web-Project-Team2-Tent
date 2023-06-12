@@ -997,10 +997,11 @@ public class AdminDao {
 		
 		
 		//카트에서 받아온 배열을 purchase 테이블로 insert
-		public void cartInsertAction(String uuid, String ccNo) {
+		public void cartInsertAction(String uuid, String ccNo, String ppcDm, String ppcPay, int cCount) {
 	
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
+			PreparedStatement preparedStatement1 = null;
 			PreparedStatement preparedStatement2 = null;
 			
 			
@@ -1016,6 +1017,13 @@ public class AdminDao {
 		        preparedStatement.setString(3, ccNo);
 		        preparedStatement.executeUpdate();
 
+		        
+		        String query1 = "update purchase set pcDM=?, pcPay=? ORDER BY pcNo DESC LIMIT ?";
+		        preparedStatement1 = connection.prepareStatement(query1);
+		        preparedStatement1.setString(1, ppcDm);
+		        preparedStatement1.setString(2, ppcPay);
+		        preparedStatement1.setInt(3, cCount);
+		        preparedStatement1.executeUpdate();
 
 		        String query2 = "delete from cart where cNo = ?";
 		        preparedStatement2 = connection.prepareStatement(query2);
