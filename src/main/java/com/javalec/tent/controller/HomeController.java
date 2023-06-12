@@ -35,6 +35,7 @@ import com.javalec.tent.command.CartUpdateCommand;
 import com.javalec.tent.command.ChildCommentWriteCommand;
 import com.javalec.tent.command.CommentListCommand;
 import com.javalec.tent.command.IndexCommand;
+import com.javalec.tent.command.NoticeCgNoListCommand;
 import com.javalec.tent.command.NoticeListCommand;
 import com.javalec.tent.command.NoticeWriteCommand;
 import com.javalec.tent.command.ParrentCommentWriteCommand;
@@ -162,6 +163,11 @@ public class HomeController extends HttpServlet {
 			break;
 		case "/notice_list.do":
 			command = new NoticeListCommand();
+			command.execute(request, response);
+			viewPage = "notice.jsp";
+			break;
+		case "/notice_cg_list.do":
+			command = new NoticeCgNoListCommand();
 			command.execute(request, response);
 			viewPage = "notice.jsp";
 			break;

@@ -77,6 +77,48 @@ public class NoticeDao {
 		return noticeList;
 	}
 	
+	public ArrayList<NoticeDto> noticeCgNoList(int nCgNo){
+		ArrayList<NoticeDto> noticeList = new ArrayList<NoticeDto>();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			con = dataSource.getConnection();
+			//nNo, aid, nCgNo, nTitle, nContent, nInsertDate, nUpdateDate, nDeleteDate, nDeleted
+			String query = "select nNo, aid, nCgNo, nTitle, nContent, nInsertDate, nUpdateDate, nDeleteDate, nViewCount, nDeleted from notice where nDeleted = 0 and nCgNo = ?";
+			ps = con.prepareStatement(query);
+			ps.setInt(1, nCgNo);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				int nNo = rs.getInt(1);
+				String aid = rs.getString(2);
+				int wknCgNo = rs.getInt(3);
+				String nTitle = rs.getString(4);
+				String nContent = rs.getString(5);
+				String nInsertDate = rs.getString(6);
+				String nUpdateDate = rs.getString(7);
+				String nDeleteDate = rs.getString(8);
+				int nViewCount = rs.getInt(9);
+				boolean nDeleted = rs.getBoolean(10);
+				NoticeDto noticeDto = new NoticeDto(nNo, aid, wknCgNo, nTitle, nContent, nInsertDate, nUpdateDate, nDeleteDate, nDeleted, nViewCount);
+				noticeList.add(noticeDto);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(con != null) con.close();
+				if(ps != null) ps.close();
+				if(rs != null) rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return noticeList;
+	}
+	
 	public int writeNotice(String aid, int nCgNo, String nTitle, String nContent) {
 		Connection con = null;
 		PreparedStatement ps = null;

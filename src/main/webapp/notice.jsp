@@ -68,7 +68,11 @@
     function openNoticeWriteModal() {
     	$('#noticeWriteModal').modal('show');
 	}
-	
+    
+    function changeCategory(nCgNo) {
+    	  window.location.href = "notice_cg_list.do?nCgNo=" + nCgNo;
+    	}
+    
 	</script>
 </head>
 
@@ -99,10 +103,16 @@
         </div>
     </div>
     <!-- Breadcumb Area -->
-
     <div class="shortcodes_area section_padding_100">
         <div class="container">
             <div class="row">
+                <!-- 카테고리 라디오 버튼 -->
+      <div class="category-radio-buttons">
+          <input type="radio" name="category" id="notice" value="1" onclick="changeCategory('1');" checked>
+          <label for="notice">Notice</label>
+          <input type="radio" name="category" id="faq" value="2" onclick="changeCategory('2');">
+          <label for="faq">FAQ</label>
+      </div>
                 <div class="col-12">
                     <div class="shortcodes_title mb-30">
                         <h4>Notice board</h4>
