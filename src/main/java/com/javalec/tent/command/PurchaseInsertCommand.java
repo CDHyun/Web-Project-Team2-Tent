@@ -22,6 +22,7 @@ public class PurchaseInsertCommand implements TentCommand {
 		int pcQty = (int)session.getAttribute("PCQTY");
 		String pColor = (String)session.getAttribute("PCOLOR");
 		
+		PurchaseDao dao = new PurchaseDao();
 		
 		
 	
@@ -39,7 +40,6 @@ public class PurchaseInsertCommand implements TentCommand {
 				  }
 				}else {
 					
-				 PurchaseDao dao = new PurchaseDao();
 				 dao.purchaseinsert(uid, pCode, pcQty, pcDm, pColor, pcPay);
 				}
 	}

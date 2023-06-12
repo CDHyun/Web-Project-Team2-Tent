@@ -1,6 +1,7 @@
 package com.javalec.tent.command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +49,14 @@ public class PurchaserInfoCommand implements TentCommand {
 			productInfo2.add(productDto);
 			session.removeAttribute("ITEM");
 			session.setAttribute("ITEM", productInfo2);
+			
+			
+			
+			
+			String cNoArrayString = "";
+			session.removeAttribute("cNoArrayString");
+			  session.setAttribute("cNoArrayString", cNoArrayString);
+			
 			
 //			String uid = "donghyun"; //****
 			PurchaseDao dao = new PurchaseDao();
