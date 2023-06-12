@@ -196,23 +196,8 @@
                             <table class="table mb-3">
                                 <tbody>
                                     <tr>
-                                        <td>Sub Total</td>
-                                          <td>&#8361;&nbsp;<fmt:formatNumber value="${cartTotal }" type="number" pattern="#,###"></fmt:formatNumber></td>
-                                    </tr>
-                                    <tr>
-       									 <td>Shipping</td>
-       							 	 <c:set var="shipping" value="${cartTotal >= 500000 ? 0 : 3000}" />
-										<td>&#8361;&nbsp;<input type="text" value="${shipping}"></td>
-
-                                    <tr>
-                                    </tr>
-                                    <tr>
-                                        <td>VAT (10%)</td>
-                                        <td>&#8361;&nbsp;<fmt:formatNumber value="${cartTotal*0.1 }" type="number" pattern="#,###"></fmt:formatNumber></td>
-                                    </tr>
-                                    <tr>
                                         <td>Total</td>
-                                        <td>&#8361;&nbsp;<fmt:formatNumber value="${(cartTotal*1.1)+shipping }" type="number" pattern="#,###"></fmt:formatNumber></td>
+                                        <td>&#8361;&nbsp;<fmt:formatNumber value="${cartTotal }" type="number" pattern="#,###"></fmt:formatNumber></td>
                                     </tr>
                                 </tbody>
                             </table>
