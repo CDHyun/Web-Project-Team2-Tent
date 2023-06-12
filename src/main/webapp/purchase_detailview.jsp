@@ -61,8 +61,8 @@
                                 <colgroup>
                                     <col style="width: 5%">
                                     <col style="width: 20%">
-                                    <col style="width: 30%">
-                                    <col style="width: 15%">
+                                    <col style="width: 25%">
+                                    <col style="width: 20%">
                                     <col style="width: 30%">
                                 </colgroup>
                                 <thead>
@@ -92,8 +92,8 @@
                                 <colgroup>
                                     <col style="width: 5%">
                                     <col style="width: 40%">
-                                    <col style="width: 10%">
                                     <col style="width: 20%">
+                                    <col style="width: 10%">
                                     <col style="width: 25%">
                                 </colgroup>
                                 <thead>
@@ -109,8 +109,8 @@
                                     <tr>
                                         <th scope="row">${purchaseDetail.pcNo}</th>
                                         <td><img src="images/product/${purchaseDetail.pfRealName}" alt="Product"></td>
-                                        <td><fmt:formatNumber value="${purchaseDetail.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
                                         <td>${purchaseDetail.pcQty}</td>
+                                        <td><fmt:formatNumber value="${purchaseDetail.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
                                         <td><fmt:formatNumber value="${purchaseDetail.pcQty * purchaseDetail.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
                                     </tr>
                                 </tbody>

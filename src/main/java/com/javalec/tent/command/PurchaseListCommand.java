@@ -20,9 +20,22 @@ public class PurchaseListCommand implements TentCommand {
 //		int pcNo = Integer.parseInt(request.getParameter("PCNO"));
 //		session.setAttribute("PCNO", pcNo);
 		
+		//페이징 처리
+		 String vpage = request.getParameter("vpage");
+		    if(vpage==null){
+		    	vpage = "1";
+		    }
+		int v_page = Integer.parseInt(vpage);
+		int index_no = (v_page-1)*7;
+		
+		
+		
 	
 		PurchaseDao dao = new PurchaseDao();
 	
+		// count select 
+		int daocount = dao.pCount(uid);
+		request.setAttribute("d_count", daocount);
 		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
 		dtos = dao.purchaseList(uid);
 		request.setAttribute("purchaseList", dtos);

@@ -120,7 +120,7 @@ public class PurchaseDao {
 			String query = "SELECT pc.pcNo, p.pCode, p.pName, p.pPrice, pc.pcQty, pc.pcStatus, pc.pcInsertDate, u.uPhone, pf.pfRealName, pf.pfHoverRealName, pcPay " +
 		            "FROM product p, user u, purchase pc, productfile pf " +
 		            "WHERE pc.pCode = p.pCode AND pf.pCode = p.pCode AND u.uid = pc.uid AND pc.pcDeleted = 0 AND u.uid = ? " +
-		            "ORDER BY pc.pcInsertDate DESC";
+		            "ORDER BY pc.pcInsertDate DESC"; 
 
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, uid);
@@ -140,8 +140,7 @@ public class PurchaseDao {
 				String pfHoverRealName = resultSet.getString(10);
 				String pcPay = resultSet.getString(11);
 
-//			    int cQty = getCQtyCart(uid, pCode); // 장바구니에서 cQty 가져오기
-//			    int realQty = (pcQty != cQty) ? Math.max(pcQty, cQty) : pcQty
+
 
 				PurchaseDto purchaseDto = new PurchaseDto(uid, uPhone, pcNo, pPrice, pcQty, pName, pcInsertDate,
 						pcStatus, pfRealName, pfHoverRealName, pcPay);
@@ -558,4 +557,54 @@ public class PurchaseDao {
 		return result;
 	}
 
+	public int pCount(String uid) {
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+	    int p_count = 0; // p_count 변수를 try 블록 외부에서 선언하여 나중에 접근할 수 있도록 합니다.
+	    
+	    try {
+	        connection = dataSource.getConnection();
+	        String query =  
+                    " SELECT count(*) "
+	                + "FROM product p, user u, purchase pc, productfile pf "
+	                + "WHERE pc.pCode = p.pCode AND pf.pCode = p.pCode AND u.uid = pc.uid AND pc.pcDeleted = 0 AND u.uid = ? ";
+	 
+	        preparedStatement = connection.prepareStatement(query);
+	        preparedStatement.setString(1, uid);
+	        resultSet = preparedStatement.executeQuery();
+	        
+	        if (resultSet.next()) {
+	            p_count = resultSet.getInt(1);
+	            System.out.println(p_count);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (resultSet != null) {
+	                resultSet.close();
+	            }
+	            if (preparedStatement != null) {
+	                preparedStatement.close();
+	            }
+	            if (connection != null) {
+	                connection.close();
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    
+	    return p_count; // p_count의 값을 메서드의 끝에서 반환합니다.
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
 }// END
