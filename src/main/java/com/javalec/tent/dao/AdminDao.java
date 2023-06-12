@@ -764,7 +764,7 @@ public class AdminDao {
 	}
 	
 	
-	//데이터 입력메서드
+	//카트데이터 입력메서드
 		public void cartInsert(String uuid, int ppCode, int ppcQty, String ppColor) {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
@@ -1051,4 +1051,99 @@ public class AdminDao {
 			}
 		}
 		
+		
+		//위시리스트데이터 입력메서드
+				public void wishlistInsert(String uuid, int ppCode, String ppColor) {
+					Connection connection = null;
+					PreparedStatement preparedStatement = null;
+					try {
+				        connection = dataSource.getConnection();
+				        String query = "INSERT INTO wishlist (uid, pColor, pCode) VALUES (?, ?,?)";
+				        preparedStatement = connection.prepareStatement(query);
+				        preparedStatement.setString(1, uuid);
+				        preparedStatement.setString(2, ppColor);
+				        preparedStatement.setInt(3,ppCode );
+				        preparedStatement.executeUpdate();
+
+				    
+
+
+					
+					}catch(Exception e) {
+						e.printStackTrace();
+					}finally {
+						try {
+							
+							if(preparedStatement != null) {
+								preparedStatement.close();
+							}
+							if(connection != null) {
+								connection.close();
+							}
+						}catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+					
+				}
+		
+				
+				
+				public ArrayList<AdminDto> wishlistSelect(String uuid) {
+					
+					
+					ArrayList<AdminDto> dtos = new ArrayList<AdminDto>();
+					Connection connection = null;
+					PreparedStatement preparedStatement = null;
+					ResultSet resultSet = null;
+					
+					try {
+						connection = dataSource.getConnection();
+						
+						String WhereDefault = "select w.pColor,w.wNo,w.pCode,pf.pfRealName, p.pName,p.pBrandName, p.pPrice";
+						String WhereDefault2 = " from product p, wishlist w, productfile pf, user u, productoption po";
+						String WhereDefault3 = " where pf.pCode = p.pCode and p.pCode = w.pCode and u.uid = w.uid and w.pColor = po.pColor and pf.pCode = w.pCode and po.pCode = p.pCode and u.uid =?";
+							
+						preparedStatement = connection.prepareStatement(WhereDefault+WhereDefault2+WhereDefault3);
+						preparedStatement.setString(1, uuid);
+						resultSet = preparedStatement.executeQuery();
+						
+						while(resultSet.next()) {
+							String pColor = resultSet.getString(1);
+							int wNo = resultSet.getInt(2);
+							int pCode = resultSet.getInt(3);
+							String pfRealName = resultSet.getString(4);
+							String pName = resultSet.getString(5);
+							String pBrandName = resultSet.getString(6);
+							int pPrice = resultSet.getInt(7);
+							
+					
+							AdminDto dto = new AdminDto(pColor, wNo, pCode, pfRealName, pName, pBrandName, pPrice);
+							dtos.add(dto);
+						}
+					}catch(Exception e) {
+						e.printStackTrace();
+					}finally {
+						try {
+							if(resultSet != null){ // 무언가 들어가 있으면close
+								resultSet.close();
+							}
+							if(preparedStatement != null) {
+								preparedStatement.close();
+							}
+							if(connection != null) {
+								connection.close();
+							}
+						}catch (Exception e) {
+							e.printStackTrace();
+						}
+						
+					}
+					
+					return dtos;
+				
+				
+				}
+				
+				
 }

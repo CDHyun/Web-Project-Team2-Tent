@@ -24,6 +24,8 @@ import com.javalec.tent.command.AdminPurchaseStatusCommand;
 import com.javalec.tent.command.AdminStatusChangeCommand;
 import com.javalec.tent.command.AdminSummaryCommand;
 import com.javalec.tent.command.AdminUpdateCommand;
+import com.javalec.tent.command.AdminWishListCommand;
+import com.javalec.tent.command.AdminWishListSelectCommand;
 import com.javalec.tent.command.BoardDetailCommand;
 import com.javalec.tent.command.BoardListCommand;
 import com.javalec.tent.command.BoardWriteCommand;
@@ -363,7 +365,21 @@ public class HomeController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "purchase_detailview.jsp";
 			break;
-			
+		case "/wishlists.do":
+			command = new AdminWishListCommand();
+			command.execute(request, response);
+			viewPage = "wishlistselect.do";
+			break;
+		case "/wishlistselect.do":
+			command = new AdminWishListSelectCommand();
+			command.execute(request, response);
+			viewPage = "wishlist.jsp";
+			break;
+		case "/wishlistinput.do":
+			command = new AdminWishListCommand();
+			command.execute(request, response);
+			viewPage = "product_list.do";
+			break;	
 		
 		default:
 			break;

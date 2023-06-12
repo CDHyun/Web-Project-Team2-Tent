@@ -627,7 +627,7 @@
 									class="icofont-heart"></i></a>
 							</c:if>
 							<c:if test="${!empty SUID}">
-								<a href="wishlist_view" class="wishlist-btn"><i
+								<a href="wishlistselect.do" class="wishlist-btn"><i
 									class="icofont-heart"></i></a>
 							</c:if>
 						</div>
