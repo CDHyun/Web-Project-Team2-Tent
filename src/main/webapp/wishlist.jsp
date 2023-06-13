@@ -23,9 +23,20 @@
 function wishlistDeleteAction(wwNo) {
 	var wNo = wwNo;
 	
+	Swal.fire({
+	    text: "상품을 위시리스트에서 삭제하시겠습니까?",
+	    icon: "question",
+	    showCancelButton: true,
+	    confirmButtonText: "확인",
+	    cancelButtonText: "취소",
+	  }).then((result) => {
+	    if (result.isConfirmed) {
+	    	var url = "wishlistDeletes.do?wNo=" + encodeURIComponent(wNo);
+	    	window.location.href = url;
+	    }
+	  });
    
-	var url = "wishlistDeletes.do?wNo=" + encodeURIComponent(wNo);
-	window.location.href = url;
+
    
   
   }
@@ -33,9 +44,23 @@ function wishlistDeleteAction(wwNo) {
 function wishlistInsetTocart(wwNo) {
 	var wNo = wwNo;
 	
+	
+	Swal.fire({
+	    text: "상품을 장바구니에 추가하시겠습니까?",
+	    icon: "question",
+	    showCancelButton: true,
+	    confirmButtonText: "확인",
+	    cancelButtonText: "취소",
+	  }).then((result) => {
+	    if (result.isConfirmed) {
+	    	var url = "wishlistInsertToCart.do?wNo=" + encodeURIComponent(wNo);
+	    	window.location.href = url;
+	       
+	    }
+	  });
    
-	var url = "wishlistInsertToCart.do?wNo=" + encodeURIComponent(wNo);
-	window.location.href = url;
+   
+	
    
   
   }
