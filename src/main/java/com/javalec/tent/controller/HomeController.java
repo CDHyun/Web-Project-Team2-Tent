@@ -291,6 +291,7 @@ public class HomeController extends HttpServlet {
 			break;
 			/* 결제수단 페이지로 이동 */
 		case("/payment.do"):
+			session.setAttribute("PCDM", request.getParameter("pcDM"));
 			viewPage = "payment.jsp";
 			break;
 		/* 주문확인, 총구매액 페이지로 이동 */

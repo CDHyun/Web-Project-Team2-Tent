@@ -60,10 +60,10 @@
                             <table class="table mb-0 table-bordered text-center">
                                 <colgroup>
                                     <col style="width: 5%">
-                                    <col style="width: 20%">
+                                    <col style="width: 15%">
                                     <col style="width: 25%">
                                     <col style="width: 20%">
-                                    <col style="width: 30%">
+                                    <col style="width: 35%">
                                 </colgroup>
                                 <thead>
                                     <tr>
@@ -71,16 +71,16 @@
                                         <th scope="col">Name</th>
                                         <th scope="col">Phone</th>
                                         <th scope="col">Pay</th>
-                                        <th scope="col">Date</th>
+                                        <th scope="col">Message</th>
                                     </tr>
                                 </thead>
                                 <tbody id="orderer_info_body">
                                     <tr>
                                         <th scope="row">${purchaseDetail.pcNo}</th>
-                                        <td>${purchaseDetail.pName}</td>
+                                        <td>${purchaseDetail.uName}</td>
                                         <td>${purchaseDetail.uPhone}</td>
                                         <td>${purchaseDetail.pcPay}</td>
-                                        <td>${purchaseDetail.pcInsertDate}</td>
+                                        <td>${purchaseDetail.pcDM}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -91,15 +91,17 @@
                             <table class="table mb-0 table-bordered text-center">
                                 <colgroup>
                                     <col style="width: 5%">
-                                    <col style="width: 40%">
-                                    <col style="width: 20%">
-                                    <col style="width: 10%">
-                                    <col style="width: 25%">
+                                    <col style="width: 30%">
+                                    <col style="width: 30%">
+                                    <col style="width: 15%">
+                                    <col style="width: 5%">
+                                    <col style="width: 15%">
                                 </colgroup>
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
                                         <th scope="col">Item</th>
+                                        <th scope="col">Item Name</th>
                                         <th scope="col">Price</th>
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Total</th>
@@ -109,6 +111,7 @@
                                     <tr>
                                         <th scope="row">${purchaseDetail.pcNo}</th>
                                         <td><img src="images/product/${purchaseDetail.pfRealName}" alt="Product"></td>
+                                        <td>${purchaseDetail.pName}</td>
                                         <td>${purchaseDetail.pcQty}</td>
                                         <td><fmt:formatNumber value="${purchaseDetail.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>
                                         <td><fmt:formatNumber value="${purchaseDetail.pcQty * purchaseDetail.pPrice}" type="number" pattern="#,###"></fmt:formatNumber></td>

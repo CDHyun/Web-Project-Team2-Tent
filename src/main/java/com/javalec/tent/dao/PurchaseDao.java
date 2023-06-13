@@ -169,6 +169,7 @@ public class PurchaseDao {
 
 	// purchase_check에서 order 누르면 db에 데이터 삽입하기//
 	public int purchaseinsert(String uid, int pCode, int pcQty, String pcDM, String pColor, String pcPay) {
+		System.out.println("제발");
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		PreparedStatement selectPs = null;
@@ -446,7 +447,7 @@ public class PurchaseDao {
 
 		try {
 			connection = dataSource.getConnection();
-			String query = "select pc.pcNo, pc.pcinsertDate, p.pName ,u.uPhone, pf.pfRealName, pc.pcPay, pc.pcQty, p.pPrice "
+			String query = "select pc.pcNo, pc.pcinsertDate, p.pName ,u.uPhone, pf.pfRealName, pc.pcPay, pc.pcQty, p.pPrice, pc.pcDM, uName "
 					+ "from product p, purchase pc, productfile pf, user u "
 					+ "where p.pCode = pc.pCode and p.pCode = pf.pCode and u.uid = ? and pcNo = ?";
 			preparedStatement = connection.prepareStatement(query);
@@ -463,8 +464,10 @@ public class PurchaseDao {
 				String pcPay = resultSet.getString(6);
 				int pcQty = resultSet.getInt(7);
 				int pPrice = resultSet.getInt(8);
+				String pcDM = resultSet.getString(9);
+				String uName = resultSet.getString(10);
 
-				dto = new PurchaseDto(pName, uPhone, pcNo, pcQty, pPrice, pcinsertDate, pfRealName, pcPay);
+				dto = new PurchaseDto(pName, uPhone, pcNo, pcQty, pPrice, pcinsertDate, pfRealName, pcPay, pcDM, uName);
 			}
 
 		} catch (Exception e) {
