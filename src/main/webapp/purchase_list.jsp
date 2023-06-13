@@ -26,7 +26,7 @@
             text-align: center;
         }
 
-        .pagination .page-link {
+       /*  .pagination .page-link {
             color: #007bff;
             border: 1px solid #007bff;
             background-color: #fff;
@@ -44,7 +44,7 @@
         .pagination .page-item.active .page-link {
             background-color: #007bff;
             border-color: #007bff;
-        }
+        } */
     </style>
 
 </head>
@@ -177,20 +177,10 @@
                                 }
                             }
                             %>
-                        </ul>
+                       </ul>
                     </nav>
                 </div>
-                <%-- <div style="width:600px; text-align:center; margin-top:10px;">
-                <%
-                for(int i=1; i<=lastpage; i++ ){
-                    if (i == currentPage) {
-                        out.print("<a href='purchase_list.do?'vpage=" +i+"' class='active'>" + i + "</a> ");
-                    } else {
-                        out.print("<a href='purchase_list.do?'vpage=" +i+"'>" + i + "</a> ");
-                    }
-                }
-                %>
-                </div> --%>
+    
                 <c:if test="${purchaseList.size() != 0}">
                     <button type="button" class="btn btn-outline-primary mb-1" id="order_all_delete_btn">
                         <a href="index.do">Check</a>

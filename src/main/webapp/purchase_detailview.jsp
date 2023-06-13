@@ -68,7 +68,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">No</th>
-                                        <th scope="col">Name</th>
+                                        <th scope="col">Orderer</th>
                                         <th scope="col">Phone</th>
                                         <th scope="col">Pay</th>
                                         <th scope="col">Message</th>
@@ -123,7 +123,7 @@
                     <div class="text-right mt-4">
                         <form action="purchaseDelete.do" method="post" style="display: inline;">
                             <input type="hidden" name="pcNo" id="pcNo" value="${purchaseDetail.pcNo}">
-                            <input type="submit" value="Delete" class="btn btn-danger">
+                            <input type="submit" value="Cancel" class="btn btn-danger">
                         </form>
                         <button type="button" class="btn btn-outline-primary mb-1">
                             <a href="index.do">Check</a>
