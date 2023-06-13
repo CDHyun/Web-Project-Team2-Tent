@@ -14,13 +14,19 @@
     
     <script type="text/javascript">
     
-    function swal(){
-    	Swal.fire({
-    		icon : 'success',
-    		title : '스윗 알러트 테스트'
-    	})
-    	
-    }
+    function changeStatus() {
+  	  Swal.fire({
+  	    text: "주문상태를 변경하시겠습니까?",
+  	    icon: "question",
+  	    showCancelButton: true,
+  	    confirmButtonText: "확인",
+  	    cancelButtonText: "취소",
+  	  }).then((result) => {
+  	    if (result.isConfirmed) {
+  	      document.getElementById("adminstatusform").submit();
+  	    }
+  	  });
+  	}
     
     </script>
     <style>
@@ -94,8 +100,7 @@
            		      <option value="2" ${dto.pcStatus == 2 ? 'selected' : ''}>배송완료</option>
             		</select>
         		</td>
-        		<td><input type="submit" value="확인" class="btn btn-info" size="5" onclick=""></td>
-        		<td><input type="button" value="테스트" class="btn btn-info" size="5" onclick="swal()"></td>
+        		<td><input type="button" value="확인" class="btn btn-info" size="5" onclick="changeStatus()"></td>
     		</tr>
     </form>
 		</c:forEach>
