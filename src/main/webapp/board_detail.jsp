@@ -329,13 +329,13 @@
 						</div>
 						<div id="qna_btn_container">
 							<c:if test="${board.uid eq SUID}">
-								<input class="btn btn-primary btn-sm" type="button" value="수정" onclick="openModifyModal()" />&nbsp;&nbsp;
-							<input class="btn btn-primary btn-sm" type="button" value="삭제" onclick="deleteBoard()" />&nbsp;&nbsp;
+								<input class="btn btn-warning btn-sm" type="button" value="수정" onclick="openModifyModal()" />&nbsp;&nbsp;
+							<input class="btn btn-danger btn-sm" type="button" value="삭제" onclick="deleteBoard()" />&nbsp;&nbsp;
                     	</c:if>
 							<input class="btn btn-primary btn-sm" type="button" value="댓글 달기"
 								onclick="openParentModal()" />&nbsp;&nbsp; <a
 								href="board_list.do?pageNo=1"><input
-								class="btn btn-primary btn-sm" type="button" value="목록" /></a>&nbsp;&nbsp;
+								class="btn btn-secondary btn-sm" type="button" value="목록" /></a>&nbsp;&nbsp;
 						</div>
 						    <!-- boardModifyModal Start -->
 	<div class="modal" id="boardModifyModal" tabindex="-1" role="dialog">

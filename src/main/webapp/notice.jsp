@@ -108,10 +108,8 @@
             <div class="row">
                 <!-- 카테고리 라디오 버튼 -->
       <div class="category-radio-buttons">
-          <input type="button" name="category" id="notice" value="1" onclick="changeCategory('1');" checked>
-          <label for="notice">Notice</label>
-          <input type="button" name="category" id="faq" value="2" onclick="changeCategory('2');">
-          <label for="faq">FAQ</label>
+          <input type="button" class="btn btn-secondary btn-sm" name="category" id="notice" value="Notice" onclick="changeCategory('1');" checked>
+          <input type="button" class="btn btn-secondary btn-sm" name="category" id="faq" value="FAQ" onclick="changeCategory('2');">
       </div>
                 <div class="col-12">
                     <div class="shortcodes_title mb-30">

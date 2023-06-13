@@ -450,97 +450,140 @@
 	*/
 	
 	function openUserRenameModal() {
-		$('#userRenameModal').modal('show');
-	}
+		  Swal.fire({
+		    icon: 'question',
+		    title: "이름을 변경하시겠습니까?",
+		    showCancelButton: true,
+		    confirmButtonText: "확인"
+		  }).then((result) => {
+		    if (result.isConfirmed) {
+		      $('#userRenameModal').modal('show');
+		    }
+		  });
+		}
+
 	
 	function userRename() {
-		var uReName = $("#uReName").val();
-		const regExpName = /^[a-z|A-Z|가-힣]*$/;
-		if ($("#uReName").val() == "") {
-			Toast.fire({ icon : 'warning', title : "변경하실 이름을 입력해주세요", target : '#toastContainer' });
-			return;
+		  var uReName = $("#uReName").val();
+		  const regExpName = /^[a-z|A-Z|가-힣]*$/;
+		  if ($("#uReName").val() == "") {
+		    Swal.fire({ icon: 'warning', title: "변경하실 이름을 입력해주세요" });
+		    return;
+		  }
+		  if (!regExpName.test(uReName)) {
+		    Swal.fire({ icon: 'warning', title: "이름은 한글과 영문만 입력 가능합니다." });
+		    $("#uReName").select();
+		    return;
+		  }
+		  $.ajax({
+		    type: 'POST',
+		    url: './UserRename',
+		    data: {
+		      uReName: uReName
+		    },
+		    success: function(result) {
+		      console.log(result);
+		      if (result === "0") {
+		        Swal.fire({ icon: 'warning', title: "변경 중 문제가 발생했습니다." });
+		        return;
+		      }
+		      if (result === "1") {
+		        Swal.fire({ icon: 'success', title: "이름이 변경 되었습니다." }).then(() => {
+		          $('#userRenameModal').modal('hide');
+		          window.location.href = "user_my_account.do";
+		        });
+		      }
+		    },
+		    error: function() {
+		      Swal.fire({ icon: 'warning', title: "오류가 발생했습니다. 관리자에게 문의해주세요." });
+		    }
+		  });
 		}
-		if (!regExpName.test(uReName)) {
-			Toast.fire({ icon : 'warning', title : "이름은 한글과 영문만 입력 가능합니다." });
-			$("#uReName").select();
-			return
-		}
-		$.ajax({
-			type : 'POST',
-			url : './UserRename',
-			data : {
-				uReName : uReName
-			},
-			success : function(result) {
-				console.log(result);
-				if (result === "0") {
-					Toast.fire({
-						icon : 'warning',
-						title : "변경 중 문제가 발생했습니다."
-					});
-					return;
-				}
-				if (result === "1") {
-					Toast.fire({ icon: 'success', title: "이름이 변경 되었습니다." }).then(() => {
-						  $('#userRenameModal').modal('hide');
-						  window.location.href = "user_my_account.do";
-						});
-				}
-			},
-			error : function() {
-				Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
-			}
-		});
-	}
+
 	/* Email*/
 	function openUserReEmailModal() {
-		$('#userReEmailModal').modal('show');
+	  Swal.fire({
+	    icon: 'question',
+	    title: "이메일을 변경하시겠습니까?",
+	    showCancelButton: true,
+	    confirmButtonText: "확인",
+	    cancelButtonText: "취소",
+	  }).then((result) => {
+	    if (result.isConfirmed) {
+	      $('#userReEmailModal').modal('show');
+	    }
+	  });
 	}
 	
 	function userReEmail() {
-		var uReEmail = $("#uReEmail").val();
-		const regExpEmail = /^\w+@[a-zA-Z_]+?\.(com|co\.kr|net)$/;
-		if ($("#uReEmail").val() == "") {
-			Toast.fire({ icon : 'warning', title : "변경하실 이메일을 입력해주세요", target : '#toastContainer' });
-			return;
+		  var uReEmail = $("#uReEmail").val();
+		  const regExpEmail = /^\w+@[a-zA-Z_]+?\.(com|co\.kr|net)$/;
+		  if ($("#uReEmail").val() == "") {
+		    Swal.fire({
+		      icon: 'warning',
+		      title: "변경하실 이메일을 입력해주세요",
+		      target: '#toastContainer'
+		    });
+		    return;
+		  }
+		  if (!regExpEmail.test(uReEmail)) {
+		    Swal.fire({
+		      icon: 'warning',
+		      title: "이메일 형식을 확인해주세요. \n ex) id@domain.com"
+		    });
+		    $("#uReEmail").select();
+		    return;
+		  }
+		  $.ajax({
+		    type: 'POST',
+		    url: './UserEmailModify',
+		    data: {
+		      uReEmail: uReEmail
+		    },
+		    success: function(result) {
+		      console.log(result);
+		      if (result === "0") {
+		        Swal.fire({
+		          icon: 'warning',
+		          title: "변경 중 문제가 발생했습니다."
+		        });
+		        return;
+		      }
+		      if (result === "1") {
+		        Swal.fire({
+		          icon: 'success',
+		          title: "이메일이 변경 되었습니다."
+		        }).then(() => {
+		          $('#userReEmailModal').modal('hide');
+		          window.location.href = "user_my_account.do";
+		        });
+		      }
+		    },
+		    error: function() {
+		      Swal.fire({
+		        icon: 'warning',
+		        title: "오류가 발생했습니다. 관리자에게 문의해주세요."
+		      });
+		    }
+		  });
 		}
-		if (!regExpEmail.test(uReEmail)) {
-			Toast.fire({icon : 'warning', title : "이메일 형식을 확인해주세요. \n ex) id@domain.com"});
-			$("#uReEmail").select();
-			return
-		}
-		$.ajax({
-			type : 'POST',
-			url : './UserEmailModify',
-			data : {
-				uReEmail : uReEmail
-			},
-			success : function(result) {
-				console.log(result);
-				if (result === "0") {
-					Toast.fire({
-						icon : 'warning',
-						title : "변경 중 문제가 발생했습니다."
-					});
-					return;
-				}
-				if (result === "1") {
-					Toast.fire({ icon: 'success', title: "이메일이 변경 되었습니다." }).then(() => {
-						  $('#userReEmailModal').modal('hide');
-						  window.location.href = "user_my_account.do";
-						});
-				}
-			},
-			error : function() {
-				Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
-			}
-		});
-	}
+
 	
 	/* Phone*/
 	function openUserRePhoneModal() {
-		$('#userRePhoneModal').modal('show');
+	  Swal.fire({
+	    icon: 'question',
+	    title: "전화번호를 변경하시겠습니까?",
+	    showCancelButton: true,
+	    confirmButtonText: "확인",
+	    cancelButtonText: "취소",
+	  }).then((result) => {
+	    if (result.isConfirmed) {
+	      $('#userRePhoneModal').modal('show');
+	    }
+	  });
 	}
+
 	
 	function userRePhone() {
 		const uPhone1 = $('#uPhone1').val();
@@ -600,15 +643,20 @@
 			}
 		});
 	}
-	
-	/* Password */
 	function openUserChangePasswordModal() {
-		ToastConfirm.fire({ icon: 'question', title: "비밀번호를 변경하시겠습니까?" }).then((result) => {
-			if(result.isConfirmed){
-				$('#userChangePasswordModal').modal('show');
-			}
-			});
-	}
+		  Swal.fire({
+		    icon: 'question',
+		    title: "비밀번호를 변경하시겠습니까?",
+		    showCancelButton: true,
+		    confirmButtonText: "확인",
+		    cancelButtonText: "취소",
+		  }).then((result) => {
+		    if (result.isConfirmed) {
+		      $('#userChangePasswordModal').modal('show');
+		    }
+		  });
+		}
+
 	
 	
 	var passwordInput = $("#c_uChangePass");
@@ -713,87 +761,96 @@
 	    }
 	  });
 	}
-
 	
 	function userChangeNickName() {
-		var uNickName = $("#c_uNickName").val();
-		const regExpuNickName = /^[a-z|A-Z|가-힣]*$/;
-		if (!regExpuNickName.test(uNickName)) {
-			Toast.fire({
-				icon : 'warning',
-				title : "닉네임은 영문/숫자/한글만 가능합니다."
-			});
-			return
+		  var uNickName = $("#c_uNickName").val();
+		  const regExpuNickName = /^[a-z|A-Z|가-힣]*$/;
+		  if (!regExpuNickName.test(uNickName)) {
+		    Swal.fire({
+		      icon: 'warning',
+		      title: "닉네임은 영문/숫자/한글만 가능합니다."
+		    });
+		    return;
+		  }
+		  
+		  $.ajax({
+		    type: 'POST',
+		    url: './UserChangeNickName',
+		    data: {
+		      uNickName: uNickName
+		    },
+		    success: function(result) {
+		      console.log(result);
+		      if (result === "0") {
+		        Swal.fire({ icon: 'warning', title: "변경 중 문제가 발생했습니다." });
+		        return;
+		      }
+		      if (result === "1") {
+		        Swal.fire({ icon: 'success', title: "닉네임이 변경 되었습니다." }).then(() => {
+		          $('#userChangeNickNameModal').modal('hide');
+		          window.location.href = "user_my_account.do";
+		        });
+		      }
+		    },
+		    error: function() {
+		      Swal.fire({ icon: 'warning', title: "오류가 발생했습니다. 관리자에게 문의해주세요." });
+		    }
+		  });
 		}
-		
-		$.ajax({
-			type : 'POST',
-			url : './UserChangeNickName',
-			data : {
-				uNickName : uNickName
-			},
-			success : function(result) {
-				console.log(result);
-				if (result === "0") {
-					Toast.fire({ icon : 'warning', title : "변경 중 문제가 발생했습니다." });
-					return;
-				}
-				if (result === "1") {
-					Toast.fire({ icon: 'success', title: "닉네임이 변경 되었습니다." }).then(() => {
-						  $('#userChangeNickNameModal').modal('hide');
-						  window.location.href = "user_my_account.do";
-						});
-				}
-			},
-			error : function() {
-				Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
-			}
-		});
-	}
-		
+
 	function deleteAccountQuestion() {
-		ToastConfirm.fire({ icon: 'warning', title: "정말로 탈퇴하시겠습니까?" }).then((result) => {
-			if(result.isConfirmed){
-				$('#deletePasswordCheckModal').modal('show');
-			}
-		});
-	}
-	
-	function deleteAcount() {
-		var password = $("#dPassword").val();
-		if($("#dPassword").length === 0){
-			Toast.fire({ icon : 'warning', title : "비밀번호를 입력해주세요." });
-			return;
+		  Swal.fire({
+		    icon: 'warning',
+		    title: "정말로 탈퇴하시겠습니까?",
+		    showCancelButton: true,
+		    confirmButtonText: "확인",
+		    cancelButtonText: "취소",
+		    confirmButtonColor: "#ff0000" // 빨간색
+		  }).then((result) => {
+		    if (result.isConfirmed) {
+		      $('#deletePasswordCheckModal').modal('show');
+		    }
+		  });
 		}
-		$.ajax({
-			type : 'POST',
-			url : './UserDeleteAccount',
-			data : {
-				password : password
-			},
-			success : function(result) {
-				console.log(result);
-				if (result === "-1") {
-					Toast.fire({ icon : 'warning', title : "비밀번호가 일치하지 않습니다." });
-					return;
-				}
-				if (result === "0") {
-					Toast.fire({ icon : 'warning', title : "탈퇴 중 문제가 발생했습니다." });
-					return;
-				}
-				if (result === "1") {
-					Toast.fire({ icon: 'success', title: "탈퇴가 완료 되었습니다. 이용해주셔서 감사합니다." }).then(() => {
-						  $('#deletePasswordCheckModal').modal('hide');
-						  window.location.href = "logout.do";
-						});
-				}
-			},
-			error : function() {
-				Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
-			}
-		});
-	}
-	
+
+
+
+
+		function deleteAcount() {
+		  var password = $("#dPassword").val();
+		  if ($("#dPassword").length === 0) {
+		    Swal.fire({ icon: 'warning', title: "비밀번호를 입력해주세요." });
+		    return;
+		  }
+		  $.ajax({
+		    type: 'POST',
+		    url: './UserDeleteAccount',
+		    data: {
+		      password: password
+		    },
+		    success: function(result) {
+		      console.log(result);
+		      if (result === "-1") {
+		        Swal.fire({ icon: 'warning', title: "비밀번호가 일치하지 않습니다." });
+		        return;
+		      }
+		      if (result === "0") {
+		        Swal.fire({ icon: 'warning', title: "탈퇴 중 문제가 발생했습니다." });
+		        return;
+		      }
+		      if (result === "1") {
+		        Swal.fire({ icon: 'success', title: "탈퇴가 완료 되었습니다. 이용해주셔서 감사합니다." }).then(() => {
+		          $('#deletePasswordCheckModal').modal('hide');
+		          window.location.href = "logout.do";
+		        });
+		      }
+		    },
+		    error: function() {
+		      Swal.fire({ icon: 'warning', title: "오류가 발생했습니다. 관리자에게 문의해주세요." });
+		    }
+		  });
+		}
+
 </script>
 	
 </body>
