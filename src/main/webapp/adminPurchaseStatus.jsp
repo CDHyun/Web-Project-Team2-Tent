@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,23 +13,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>주문처리</title>
     
-    <script type="text/javascript">
-    
-    function changeStatus() {
-  	  Swal.fire({
-  	    text: "주문상태를 변경하시겠습니까?",
-  	    icon: "question",
-  	    showCancelButton: true,
-  	    confirmButtonText: "확인",
-  	    cancelButtonText: "취소",
-  	  }).then((result) => {
-  	    if (result.isConfirmed) {
-  	      document.getElementById("adminstatusform").submit();
-  	    }
-  	  });
-  	}
-    
-    </script>
+   
     <style>
         .header {
             display: flex;
@@ -59,10 +44,26 @@
             background-color: #f2f2f2;
         }
     </style>
+
 </head>
   
 
 <body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+<script>
+function changeStatus() {
+	  Swal.fire({
+	    title: "주문 상태 변경",
+	    text: "주문 상태가 변경되었습니다.",
+	    icon: "success",
+	    showConfirmButton: false,
+	    timer: 2000
+	  });
+	}
+</script>
+
+
+
     <!-- Header Start -->
     <div class="header">
         <jsp:include page="/adminSidebar.jsp" />
@@ -81,7 +82,7 @@
             <th></th>
         </tr>
         <c:forEach items="${check}" var="dto">
-    <form action="adminStatusChange.do" method="post"  class="content">
+    <form id="adminstatusform" name="adminstatusform" action="adminStatusChange.do" method="post"  class="content">
    			 <tr>
        			 <td>
     				<input type="hidden" name="pcNo" value="${dto.pcNo}">
@@ -100,7 +101,7 @@
            		      <option value="2" ${dto.pcStatus == 2 ? 'selected' : ''}>배송완료</option>
             		</select>
         		</td>
-        		<td><input type="button" value="확인" class="btn btn-info" size="5" onclick="changeStatus()"></td>
+        		<td><input type="submit" value="확인" class="btn btn-info" size="5" onclick="changeStatus()"></td>
     		</tr>
     </form>
 		</c:forEach>
@@ -108,7 +109,6 @@
     </table>
         <br /><br />
     
-  
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
