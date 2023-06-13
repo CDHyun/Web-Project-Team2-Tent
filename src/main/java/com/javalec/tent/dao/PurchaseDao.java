@@ -169,7 +169,6 @@ public class PurchaseDao {
 
 	// purchase_check에서 order 누르면 db에 데이터 삽입하기//
 	public int purchaseinsert(String uid, int pCode, int pcQty, String pcDM, String pColor, String pcPay) {
-		System.out.println("제발");
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		PreparedStatement selectPs = null;
@@ -257,7 +256,6 @@ public class PurchaseDao {
 	// 주문내역 확인하는 method//
 	public ArrayList<PurchaseDto> purchaseCheckList(int ppcode) { // 주문정보 보여주기 메서드 상품디테일에서 넘어오면 수행
 		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
-		System.out.println("DAO 1호출");
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -579,7 +577,6 @@ public class PurchaseDao {
 	        
 	        if (resultSet.next()) {
 	            p_count = resultSet.getInt(1);
-	            System.out.println(p_count);
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
