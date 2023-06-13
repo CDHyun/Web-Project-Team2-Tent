@@ -27,6 +27,9 @@ public class PurchaseListCommand implements TentCommand {
 		    }
 		int v_page = Integer.parseInt(vpage);
 		int index_no = (v_page-1)*7;
+		// Your Java code for getting the current page number dynamically
+		int currentPage = Integer.parseInt(request.getParameter("vpage"));
+
 		
 		
 		
