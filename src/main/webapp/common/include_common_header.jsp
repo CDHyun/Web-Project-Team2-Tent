@@ -785,8 +785,10 @@ function emptySessionUser() {
 						<button type="button" class="btn btn-secondary btn-sm" id="cancelBtn" data-dismiss="modal">취소</button>
 						<br/>
 					</div>
+					<!-- 
 						<a onclick="kakaoLogin()"><img alt=""src="images/user/kakao_login_medium_narrow.png" style=""></a>
 						<a onclick="kakaoLogout()">카카오 로그아웃</a>
+					 -->
 				</form>
 				<!-- Forget Password -->
 				<div class="forget_pass mt-15" style="text-align: center;"><a href="#">비밀번호를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;&nbsp;
