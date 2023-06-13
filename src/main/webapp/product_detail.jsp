@@ -31,86 +31,113 @@
 		    radioButtons[i].addEventListener('click', getSelectedValue);
 		}
 		
-		function addToCart() {
-			var pCode = $("#pCode").val();
-			var pcQty = $("#quantity").val();
-			var radios = document.getElementsByName('customRadio');
-		    var selectedValue = '';
-		    
-		    for (var i = 0; i < radios.length; i++) {
-		      if (radios[i].checked) {
-		        selectedValue = radios[i].value;
-		        break;
-		      }
-		    }
-		    // 선택된 값 확인
-		    console.log(selectedValue);
-		    var pColor = selectedValue;
-		    if(pColor == "") {
-		    	Toast.fire({ icon: 'warning', title: "색상을 선택해주세요." });
-		    	return;
-		    }
-		    ToastConfirm.fire({ icon: 'question', title: "장바구니에 담으시겠습니까?" }).then((result) => {
-				if(result.isConfirmed){
-					if(result.isConfirmed){
-						var url = "cart.do?pCode=" + encodeURIComponent(pCode) + "&pcQty=" + encodeURIComponent(pcQty) + "&pColor=" + encodeURIComponent(pColor);
-						window.location.href = url;
-					}
-				}
-			});
-		  }
-		function toWishlist() {
-			var pCode = $("#pCode").val();
-			var radios = document.getElementsByName('customRadio');
-		    var selectedValue = '';
-		    
-		    for (var i = 0; i < radios.length; i++) {
-		      if (radios[i].checked) {
-		        selectedValue = radios[i].value;
-		        break;
-		      }
-		    }
-		    // 선택된 값 확인
-		    console.log(selectedValue);
-		    var pColor = selectedValue;
-		    
-		    ToastConfirm.fire({ icon: 'question', title: "위시리스트에 담으시겠습니까?" }).then((result) => {
-				if(result.isConfirmed){
-					if(result.isConfirmed){
-						var url = "wishlists.do?pCode=" + encodeURIComponent(pCode)  + "&pColor=" + encodeURIComponent(pColor);
-						window.location.href = url;
-					}
-				}
-			});
-		  }
-		
-		function buy() {
-			var pCode = $("#pCode").val();
-			var pcQty = $("#quantity").val();
-			var radios = document.getElementsByName('customRadio');
-		    var selectedValue = '';
-		    
-		    for (var i = 0; i < radios.length; i++) {
-		      if (radios[i].checked) {
-		        selectedValue = radios[i].value;
-		        break;
-		      }
-		    }
-		    // 선택된 값 확인
-		    console.log(selectedValue);
-		    console.log(pcQty);
-		    var pColor = selectedValue;
-		    if(pColor == "") {
-		    	Toast.fire({ icon: 'warning', title: "색상을 선택해주세요." });
-		    	return;
-		    }
-		    ToastConfirm.fire({ icon: 'question', title: "바로 구매하시겠습니까?" }).then((result) => {
-				if(result.isConfirmed){
-					var url = "purchase_info.do?pCode=" + encodeURIComponent(pCode) + "&pcQty=" + encodeURIComponent(pcQty) + "&pColor=" + encodeURIComponent(pColor);
-					window.location.href = url;
-				}
-			});
-		  }
+		  function addToCart() {
+			  var pCode = $("#pCode").val();
+			  var pcQty = $("#quantity").val();
+			  var radios = document.getElementsByName('customRadio');
+			  var selectedValue = '';
+
+			  for (var i = 0; i < radios.length; i++) {
+			    if (radios[i].checked) {
+			      selectedValue = radios[i].value;
+			      break;
+			    }
+			  }
+			  // 선택된 값 확인
+			  console.log(selectedValue);
+			  var pColor = selectedValue;
+			  if (pColor == "") {
+			    Swal.fire({ icon: 'warning', title: "색상을 선택해주세요." });
+			    return;
+			  }
+			  
+			  Swal.fire({
+				  icon: 'question',
+				  title: "장바구니에 담으시겠습니까?",
+				  showCancelButton: true,
+				  showConfirmButton: true,
+				  confirmButtonText: "OK",
+				  cancelButtonText: "Cancel"
+				  }).then((result) => {
+			    if (result.isConfirmed) {
+			      if (result.isConfirmed) {
+			        var url = "cart.do?pCode=" + encodeURIComponent(pCode) + "&pcQty=" + encodeURIComponent(pcQty) + "&pColor=" + encodeURIComponent(pColor);
+			        window.location.href = url;
+			      }
+			    }
+			  });
+			}
+
+			function toWishlist() {
+			  var pCode = $("#pCode").val();
+			  var radios = document.getElementsByName('customRadio');
+			  var selectedValue = '';
+
+			  for (var i = 0; i < radios.length; i++) {
+			    if (radios[i].checked) {
+			      selectedValue = radios[i].value;
+			      break;
+			    }
+			  }
+			  // 선택된 값 확인
+			  console.log(selectedValue);
+			  var pColor = selectedValue;
+
+			  Swal.fire({
+				  icon: 'question',
+				  title: "위시리스트에 담으시겠습니까?",
+				  showCancelButton: true,
+				  showConfirmButton: true,
+				  confirmButtonText: "OK",
+				  cancelButtonText: "Cancel"
+					  }).then((result) => {
+			    if (result.isConfirmed) {
+			      if (result.isConfirmed) {
+			        var url = "wishlists.do?pCode=" + encodeURIComponent(pCode) + "&pColor=" + encodeURIComponent(pColor);
+			        window.location.href = url;
+			      }
+			    }
+			  });
+			}
+
+			function buy() {
+			  var pCode = $("#pCode").val();
+			  var pcQty = $("#quantity").val();
+			  var radios = document.getElementsByName('customRadio');
+			  var selectedValue = '';
+
+			  for (var i = 0; i < radios.length; i++) {
+			    if (radios[i].checked) {
+			      selectedValue = radios[i].value;
+			      break;
+			    }
+			  }
+			  // 선택된 값 확인
+			  console.log(selectedValue);
+			  console.log(pcQty);
+			  var pColor = selectedValue;
+			  if (pColor == "") {
+			    Swal.fire({ icon: 'warning', title: "색상을 선택해주세요." });
+			    return;
+			  }
+			  Swal.fire({
+				  icon: 'question',
+				  title: "바로 구매하시겠습니까?",
+				  showCancelButton: true,
+				  showConfirmButton: true,
+				  confirmButtonText: "OK",
+				  cancelButtonText: "Cancel"
+				}).then((result) => {
+				  if (result.isConfirmed) {
+				    var url = "purchase_info.do?pCode=" + encodeURIComponent(pCode) + "&pcQty=" + encodeURIComponent(pcQty) + "&pColor=" + encodeURIComponent(pColor);
+				    window.location.href = url;
+				  } else if (result.dismiss === Swal.DismissReason.cancel) {
+				    // Handle cancel button action here
+				  }
+				});
+
+			}
+
 		
 		function increaseQuantity() {
 		    var quantityInput = document.getElementById("quantity");

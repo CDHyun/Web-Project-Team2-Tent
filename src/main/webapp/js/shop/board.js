@@ -116,7 +116,6 @@ $(".board_btn.new_write").on("click", function(){
 
 /* 
 게시글 수정 
-*/ 
 $(".board_btn.update").on("click", function(){ 
 	if($("#b_title_modify_txt").val() == "" || CKEDITOR.instances.b_content_modify_area.getData() == ""){
 		Toast.fire({ icon: 'warning', title: "필수 입력값을 입력하지 않았습니다.\n 제목과 내용을 모두 입력해주세요" });
@@ -131,6 +130,7 @@ $(".board_btn.update").on("click", function(){
 							}
 					});
 });
+*/ 
 
 /*
 새글 등록 폼 

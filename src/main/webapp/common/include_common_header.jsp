@@ -11,122 +11,131 @@
   	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
   
 <script type="text/javascript">
-	function loginCheck() {
-		var luid = $("#luid").val();
-		var luPassword = $("#luPassword").val();
-		var form = document.user_login_form;
-		
-		if ($("#luid").val() == "admin") {
-			  ToastConfirm.fire({
-			    icon: 'warning',
-			    title: "관리자 로그인 접근 감지! \n 관리자가 아닐 경우 법적 처벌을 받을 수 있습니다. \n 그래도 접근하시겠습니까?"
-			  }).then((result) => {
-			    if (result.isConfirmed) {
-			      $.ajax({
-			        type: 'POST',
-			        url: './AdminLogin',
-			        data: {
-			          luid: luid,
-			          luPassword: luPassword
-			        },
-			        success: function(result) {
-			          console.log(result);
-			          if (result === "0") {
-			            Toast.fire({
-			              icon: 'warning',
-			              title: "ID 혹은 비밀번호를 확인해주세요."
-			            });
-			            return;
-			          }
+function loginCheck() {
+    var luid = $("#luid").val();
+    var luPassword = $("#luPassword").val();
+    var form = document.user_login_form;
 
-			          if (result === "1") {
-			            Toast.fire({
-			              icon: 'success',
-			              title: "로그인 성공! \n 관리자님 오늘도 화이팅입니다."
-			            }).then(() => {
-			              $("#user_login_form").attr("action", "admin_login.do");
-			              $("#user_login_form").submit();
-			            });
-			          }
-			        },
-			        error: function() {
-			          Toast.fire({
-			            icon: 'warning',
-			            title: "오류가 발생했습니다. 관리자에게 문의해주세요."
-			          });
-			        }
-			      });
-			    }
-			  });
-			  return;
-			}
+    if ($("#luid").val() == "admin") {
+        Swal.fire({
+            icon: 'warning',
+            title: "관리자 로그인 접근 감지! \n 관리자가 아닐 경우 법적 처벌을 받을 수 있습니다. \n 그래도 접근하시겠습니까?",
+            showCancelButton: true,
+            confirmButtonText: "접근",
+            cancelButtonText: "취소"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: './AdminLogin',
+                    data: {
+                        luid: luid,
+                        luPassword: luPassword
+                    },
+                    success: function(result) {
+                        console.log(result);
+                        if (result === "0") {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: "ID 혹은 비밀번호를 확인해주세요."
+                            });
+                            return;
+                        }
 
-		if ($("#luid").val() == "" || $("#luPassword").val() == "") {
-			Toast.fire({
-				icon : 'warning',
-				title : "ID, 비밀번호를 모두 입력해주세요",
-				target : '#toastContainer'
-			});
-			return;
-		}
-		
-		$.ajax({
-			type : 'POST',
-			url : './UserLogin',
-			data : {
-				luid : luid,
-				luPassword : luPassword
-			},
-			success : function(result) {
-				console.log(result);
-				if (result === "0") {
-					Toast.fire({
-						icon : 'warning',
-						title : "ID 혹은 비밀번호를 확인해주세요."
-					});
-					return;
-				}
-				if (result === "-1") {
-					Toast.fire({
-						icon : 'warning',
-						title : "탈퇴한 회원입니다."
-					});
-					return;
-				}
-				if (result === "-2") {
-					Toast.fire({
-						icon : 'warning',
-						title : "존재하지 않는 회원입니다."
-					});
-					return;
-				}
-				if (result === "1") {
-					Toast.fire({
-						icon : 'success',
-						title : "로그인 성공! \n 환영합니다."
-					});
-					setTimeout(function() {
-						$("#user_login_form").submit();
-					}, 1500);
-				}
-			},
-			error : function() {
-				Toast.fire({
-					icon : 'warning',
-					title : "오류가 발생했습니다. 관리자에게 문의해주세요."
-				});
-			}
-		});
-	} //
+                        if (result === "1") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: "로그인 성공! \n 관리자님 오늘도 화이팅입니다."
+                            }).then(() => {
+                                $("#user_login_form").attr("action", "admin_login.do");
+                                $("#user_login_form").submit();
+                            });
+                        }
+                    },
+                    error: function() {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: "오류가 발생했습니다. 관리자에게 문의해주세요."
+                        });
+                    }
+                });
+            }
+        });
+        return;
+    }
 
-	function emptySessionUser() {
-		ToastConfirm.fire({ icon: 'question', 
-				title: "로그인이 필요한 페이지입니다.\n 로그인 하시겠습니까?"}).then((result) => {
-				if(result.isConfirmed){
-					openLoginModal();
-				}
-			});
-	}
+    if ($("#luid").val() == "" || $("#luPassword").val() == "") {
+        Swal.fire({
+            icon: 'warning',
+            title: "ID, 비밀번호를 모두 입력해주세요"
+        });
+        return;
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: './UserLogin',
+        data: {
+            luid: luid,
+            luPassword: luPassword
+        },
+        success: function(result) {
+            console.log(result);
+            if (result === "0") {
+                Swal.fire({
+                    icon: 'warning',
+                    title: "ID 혹은 비밀번호를 확인해주세요."
+                });
+                return;
+            }
+            if (result === "-1") {
+                Swal.fire({
+                    icon: 'warning',
+                    title: "탈퇴한 회원입니다."
+                });
+                return;
+            }
+            if (result === "-2") {
+                Swal.fire({
+                    icon: 'warning',
+                    title: "존재하지 않는 회원입니다."
+                });
+                return;
+            }
+            if (result === "1") {
+                Swal.fire({
+                    icon: 'success',
+                    title: "로그인 성공! \n 환영합니다."
+                }).then(() => {
+                    setTimeout(function() {
+                        $("#user_login_form").submit();
+                    }, 1500);
+                });
+            }
+        },
+        error: function() {
+            Swal.fire({
+                icon: 'warning',
+                title: "오류가 발생했습니다. 관리자에게 문의해주세요."
+            });
+        }
+    });
+}
+
+
+function emptySessionUser() {
+    Swal.fire({
+        icon: 'question',
+        title: "로그인이 필요한 페이지입니다.\n 로그인 하시겠습니까?",
+        showCancelButton: true,
+        confirmButtonText: "로그인",
+        cancelButtonText: "취소"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            openLoginModal();
+        }
+    });
+}
 	
 	
 	// 회원가입 모달 열기
@@ -166,305 +175,313 @@
 		}
 	};
 	
-	/* ID 중복 확인 */
 	function checkDuplicateId() {
-		const ruid = $('#ruid').val();
-		const regExpAdmin = /^(?!.*(?:admin|root|insert|update|delete|select)).*$/
-		if (!regExpAdmin.test(ruid.toLowerCase())) {
-			Toast.fire({
-				icon : 'warning',
-				title : "해당 아이디는 사용 불가능합니다."
-			});
-			form.ruid.select();
-			return;
-		}
-		if (ruid.trim().length === 0) {
-			Toast.fire({
-				icon : 'warning',
-				title : "아이디를 입력해주세요."
-			});
-			return;
-		}
-		console.log(ruid);
-		$.ajax({
-			type : 'POST',
-			url : './UserCheckDuplicateCommand',
-			data : {
-				ruid : ruid
-			},
-			success : function(result) {
-				console.log(result);
-				if (result === "0") {
-					Toast.fire({
-						icon : 'warning',
-						title : "사용 가능한 아이디입니다."
-					});
-					
-				} else {
-					Toast.fire({
-						icon : 'warning',
-						title : "중복되는 아이디입니다."
-					});
-				}
-			},
-			error : function() {
-				Toast.fire({
-					icon : 'warning',
-					title : "오류가 발생했습니다. 다시 시도해주세요."
-				});
-			}
-		});
+	    const ruid = $('#ruid').val();
+	    var regExpuid = /^[a-z|A-Z|0-9]*$/;
+	    const regExpAdmin = /^(?!.*(?:admin|root|insert|update|delete|select)).*$/
+	    if (!regExpAdmin.test(ruid.toLowerCase())) {
+	        Swal.fire({
+	            icon: 'warning',
+	            title: "해당 아이디는 사용 불가능합니다."
+	        });
+	        form.ruid.select();
+	        return;
+	    }
+	    if (ruid.trim().length === 0) {
+	        Swal.fire({
+	            icon: 'warning',
+	            title: "아이디를 입력해주세요."
+	        });
+	        return;
+	    }
+	    if (!regExpuid.test(ruid)) {
+	        Swal.fire({
+	            icon: 'warning',
+	            title: "아이디는 영문&숫자만 사용 가능합니다."
+	        });
+	        form.ruid.select();
+	        return;
+	    }
+	    console.log(ruid);
+	    $.ajax({
+	        type: 'POST',
+	        url: './UserCheckDuplicateCommand',
+	        data: {
+	            ruid: ruid
+	        },
+	        success: function(result) {
+	            console.log(result);
+	            if (result === "0") {
+	                Swal.fire({
+	                    icon: 'warning',
+	                    title: "사용 가능한 아이디입니다."
+	                });
+	            } else {
+	                Swal.fire({
+	                    icon: 'warning',
+	                    title: "중복되는 아이디입니다."
+	                });
+	            }
+	        },
+	        error: function() {
+	            Swal.fire({
+	                icon: 'warning',
+	                title: "오류가 발생했습니다. 다시 시도해주세요."
+	            });
+	        }
+	    });
 	}
+
+	
+	
 	/* 회원가입 체크 */
 	function registerCheck() {
-		const form = document.user_register_form;
-		/*  var uid = $('#uid').val(); */
-		const ruid = $('#ruid').val();
-		const ruPassword = $('#ruPassword').val();
-		const ruRePass = $('#ruRePass').val();
-		const ruName = $('#ruName').val();
-		const ruNickName = $('#ruNickName').val();
-		const ruPhone1 = $('#ruPhone1').val();
-		const ruPhone2 = $('#ruPhone2').val();
-		const ruPhone3 = $('#ruPhone3').val();
-		const ruPhone = ruPhone1 + '-' + ruPhone2 + '-' + ruPhone3;
-		
-		const ruEmail = $('#ruEmail').val();
-		const ruAddress = $('#ruAddress').val();
-		const ruDetailAddress = $('#ruDetailAddress').val();
-		const ruGender = $('input[name="gender"]:checked').val();
-		const ruBirthday = $('#ruBirthday').val();
-		const ruZipcode = $('#ruZipcode').val();
-		const regExpAdmin = /^(?!.*(?:admin|root|insert|update|delete|select)).*$/
-		const regExpuid = /^[a-z|A-Z|0-9]*$/;
-		const regExpuPass = /^[a-z|A-Z|0-9]*$/;
-		const regExpuName = /^[a-z|A-Z|가-힣]*$/;
-		const regExpuNickName = /^[a-z|A-Z|가-힣]*$/;
-		const regExpuPhone = /^\d{3}-\d{3,4}-\d{4}$/;
-		const regExpuPhone2 = /^[0-9]*$/;
-		const regExpuEmail = /^\w+@[a-zA-Z_]+?\.(com|co\.kr|net)$/;
-		const regExpuAddress = /^[가-힣|0-9|a-z|A-Z|-|\s]*$/;
-	
-		/* Admin등 아이디 유효성 검사*/
-		if (!regExpAdmin.test(ruid.toLowerCase())) {
-			Toast.fire({
-				icon : 'warning',
-				title : "해당 아이디는 사용 불가능합니다."
-			});
-			form.ruid.select();
-			return;
-		}
-	
-		/* ID 입력 확인 */
-		if (ruid.trim().length === 0) {
-			Toast.fire({
-				icon : 'warning',
-				title : "아이디를 입력해주세요."
-			});
-			return;
-		}
-		if (!regExpuid.test(ruid)) {
-			Toast.fire({
-				icon : 'warning',
-				title : "아이디는 영문&숫자만 사용 가능합니다."
-			});
-			form.ruid.select();
-			return
-	
-		}
-	
-		/* 비밀번호 입력 확인 */
-		if (ruPassword.trim().length === 0) {
-			Toast.fire({
-				icon : 'warning',
-				title : "비밀번호를 입력해주세요."
-			});
-			return;
-		}
-		if (!regExpuPass.test(ruPassword)) {
-			Toast.fire({
-				icon : 'warning',
-				title : "비밀번호는 영문&숫자만 사용 가능합니다."
-			});
-			form.ruPassword.select();
-			return
-		}
-		if (ruRePass.trim().length === 0) {
-			Toast.fire({
-				icon : 'warning',
-				title : "비밀번호 확인을 입력해주세요."
-			});
-			return;
-		}
-		if (!regExpuPass.test(ruRePass)) {
-			Toast.fire({
-				icon : 'warning',
-				title : "비밀번호는 영문&숫자만 사용 가능합니다."
-			});
-			form.ruRePass.select();
-			return
-	
-		}
-		if (ruPassword.trim() !== ruRePass.trim()) {
-			Toast.fire({
-				icon : 'warning',
-				title : "비밀번호가 일치하지 않습니다."
-			});
-			form.ruRePass.select();
-			return
-	
-		}
-	
-		/* 이름, 닉네임 입력 확인 */
-		if (ruName.trim().length === 0) {
-			Toast.fire({icon : 'warning',title : "이름을 입력해주세요."});
-			form.ruName.focus();
-			return;
-		}
-		if (ruNickName.trim().length === 0) {
-			Toast.fire({icon : 'warning',title : "닉네임을 입력해주세요."});
-			form.ruNickName.focus();
-			return;
-		}
-		if (!regExpuName.test(ruName)) {
-			Toast.fire({
-				icon : 'warning',
-				title : "이름은 한글과 영문만 입력 할 수 있습니다."
-			});
-			form.ruName.select();
-			return
-		}
-		if (!regExpuNickName.test(ruNickName)) {
-			Toast.fire({
-				icon : 'warning',
-				title : "닉네임은 한글과 영문만 입력 할 수 있습니다."
-			});
-			form.ruNickName.select();
-			return
-		}
-	
-		/* 생일 입력 확인 */
-		if (ruBirthday.length === 0) {
-			Toast.fire({icon : 'warning', title : "생일을 선택해주세요."});
-			return;
-		}
-		/* 전화번호 입력 확인 */
-		if (ruPhone2.trim().length === 0) {
-			Toast.fire({
-				icon : 'warning',
-				title : "전화번호를 입력해주세요."
-			});
-			return;
-		}
-		if (ruPhone3.trim().length === 0) {
-			Toast.fire({
-				icon : 'warning',
-				title : "전화번호를 입력해주세요."
-			});
-			return;
-		}
-		if (!regExpuPhone2.test(ruPhone2)) {
-			Toast.fire({icon : 'warning', title : "전화번호는 숫자만 가능합니다."});
-			form.ruPhone2.select();
-			return
-		}
-		if (!regExpuPhone2.test(ruPhone3)) {
-			Toast.fire({icon : 'warning', title : "전화번호는 숫자만 가능합니다."});
-			form.ruPhone3.select();
-			return
-		}
-		if (!regExpuPhone.test(ruPhone)) {
-			Toast.fire({icon : 'warning', title : "전화번호를 확인해주세요."});
-			form.ruPhone.select();
-			return
-		}
-		
-		if (ruEmail.trim().length === 0) {
-			Toast.fire({icon : 'warning', title : "이메일을 입력해주세요."});
-			return;
-		}
-		if (!regExpuEmail.test(ruEmail)) {
-			Toast.fire({icon : 'warning', title : "이메일 형식을 확인해주세요. \n ex) id@domain.com"});
-			ruEmail.select();
-			return
-		}
-		
-		if (ruAddress.trim().length === 0) {
-			Toast.fire({icon : 'warning', title : "주소를 입력해주세요."});
-			return;
-		}
-		if (ruDetailAddress.trim().length === 0) {
-			Toast.fire({icon : 'warning', title : "상세 주소를 입력해주세요."});
-			return;
-		}
-		if (ruZipcode.length === 0) {
-			Toast.fire({icon : 'warning', title : "우편번호를 입력해주세요."});
-			return;
-		}
-		if (!regExpuAddress.test(ruDetailAddress)) {
-			Toast.fire({icon : 'warning', title : "주소는 영문/한글/숫자/- 만 입력 가능합니다."});
-			ruAddress.select();
-			return
-		}
-		console.log(ruid);
-		$.ajax({
-			type : 'POST',
-			url : './UserSignUpCommand',
-			data : {
-				ruid : ruid,
-				ruPassword : ruPassword,
-				ruName : ruName,
-				ruNickName : ruNickName,
-				ruGender : ruGender,
-				ruBirthday : ruBirthday,
-				ruPhone : ruPhone,
-				ruEmail : ruEmail,
-				ruAddress : ruAddress,
-				ruDetailAddress : ruDetailAddress,
-				ruZipcode : ruZipcode
-			},
-			success : function(result) {
-				console.log(result);
-				if (result === "1") {
-					ToastConfirm.fire({ icon: 'question', 
-						title: "회원가입을 축하합니다! \n바로 로그인 하시겠습니까?"}).then((result) => {
-						if(result.isConfirmed){
-							$('#signUpModal').modal('hide');
-							openLoginModal();
-						}
-					});
-				} else {
-					Toast.fire({icon : 'warning', title : "회원 가입에 실패했습니다. 중복을 확인해주세요."});
-					return;
-				}
-			},
-			error : function() {
-					Toast.fire({icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요."});
-			}
-		});
+	    const form = document.user_register_form;
+	    const ruid = $('#ruid').val();
+	    const ruPassword = $('#ruPassword').val();
+	    const ruRePass = $('#ruRePass').val();
+	    const ruName = $('#ruName').val();
+	    const ruNickName = $('#ruNickName').val();
+	    const ruPhone1 = $('#ruPhone1').val();
+	    const ruPhone2 = $('#ruPhone2').val();
+	    const ruPhone3 = $('#ruPhone3').val();
+	    const ruPhone = ruPhone1 + '-' + ruPhone2 + '-' + ruPhone3;
+	    const ruEmail = $('#ruEmail').val();
+	    const ruAddress = $('#ruAddress').val();
+	    const ruDetailAddress = $('#ruDetailAddress').val();
+	    const ruGender = $('input[name="gender"]:checked').val();
+	    const ruBirthday = $('#ruBirthday').val();
+	    const ruZipcode = $('#ruZipcode').val();
+	    const regExpAdmin = /^(?!.*(?:admin|root|insert|update|delete|select)).*$/;
+	    const regExpuid = /^[a-z|A-Z|0-9]*$/;
+	    const regExpuPass = /^[a-z|A-Z|0-9]*$/;
+	    const regExpuName = /^[a-z|A-Z|가-힣]*$/;
+	    const regExpuNickName = /^[a-z|A-Z|가-힣]*$/;
+	    const regExpuPhone = /^\d{3}-\d{3,4}-\d{4}$/;
+	    const regExpuPhone2 = /^[0-9]*$/;
+	    const regExpuEmail = /^\w+@[a-zA-Z_]+?\.(com|co\.kr|net)$/;
+	    const regExpuAddress = /^[가-힣|0-9|a-z|A-Z|-|\s]*$/;
+
+	    /* Admin등 아이디 유효성 검사*/
+	    if (!regExpAdmin.test(ruid.toLowerCase())) {
+	        Swal.fire({
+	            icon: 'warning',
+	            title: "해당 아이디는 사용 불가능합니다."
+	        });
+	        form.ruid.select();
+	        return;
+	    }
+
+	    /* ID 입력 확인 */
+	    if (ruid.trim().length === 0) {
+	        Swal.fire({
+	            icon: 'warning',
+	            title: "아이디를 입력해주세요."
+	        });
+	        return;
+	    }
+	    if (!regExpuid.test(ruid)) {
+	        Swal.fire({
+	            icon: 'warning',
+	            title: "아이디는 영문&숫자만 사용 가능합니다."
+	        });
+	        form.ruid.select();
+	        return;
+	    }
+
+	    /* 비밀번호 입력 확인 */
+	    if (ruPassword.trim().length === 0) {
+	        Swal.fire({
+	            icon: 'warning',
+	            title: "비밀번호를 입력해주세요."
+	        });
+	        return;
+	    }
+	    if (!regExpuPass.test(ruPassword)) {
+	        Swal.fire({
+	            icon: 'warning',
+	            title: "비밀번호는 영문&숫자만 사용 가능합니다."
+	        });
+	        form.ruPassword.select();
+	        return;
+	    }
+	    if (ruRePass.trim().length === 0) {
+	        Swal.fire({
+	            icon: 'warning',
+	            title: "비밀번호 확인을 입력해주세요."
+	        });
+	        return;
+	    }
+	    if (!regExpuPass.test(ruRePass)) {
+	        Swal.fire({
+	            icon: 'warning',
+	            title: "비밀번호는 영문&숫자만 사용 가능합니다."
+	        });
+	        form.ruRePass.select();
+	        return;
+	    }
+	    if (ruPassword.trim() !== ruRePass.trim()) {
+	        Swal.fire({
+	            icon: 'warning',
+	            title: "비밀번호가 일치하지 않습니다."
+	        });
+	        form.ruRePass.select();
+	        return;
+	    }
+
+	    /* 이름, 닉네임 입력 확인 */
+	    if (ruName.trim().length === 0) {
+	        Swal.fire({ icon: 'warning', title: "이름을 입력해주세요."});
+	        form.ruName.focus();
+	        return;
+	    }
+	    if (ruNickName.trim().length === 0) {
+	        Swal.fire({ icon: 'warning', title: "닉네임을 입력해주세요."});
+	        form.ruNickName.focus();
+	        return;
+	    }
+	    if (!regExpuName.test(ruName)) {
+	        Swal.fire({
+	            icon: 'warning',
+	            title: "이름은 한글과 영문만 입력 할 수 있습니다."
+	        });
+	        form.ruName.select();
+	        return;
+	    }
+	    if (!regExpuNickName.test(ruNickName)) {
+	        Swal.fire({
+	            icon: 'warning',
+	            title: "닉네임은 한글과 영문만 입력 할 수 있습니다."
+	        });
+	        form.ruNickName.select();
+	        return;
+	    }
+
+	    /* 생일 입력 확인 */
+	    if (ruBirthday.length === 0) {
+	        Swal.fire({ icon: 'warning', title: "생일을 선택해주세요."});
+	        return;
+	    }
+
+	    /* 전화번호 입력 확인 */
+	    if (ruPhone2.trim().length === 0) {
+	        Swal.fire({
+	            icon: 'warning',
+	            title: "전화번호를 입력해주세요."
+	        });
+	        return;
+	    }
+	    if (ruPhone3.trim().length === 0) {
+	        Swal.fire({
+	            icon: 'warning',
+	            title: "전화번호를 입력해주세요."
+	        });
+	        return;
+	    }
+	    if (!regExpuPhone2.test(ruPhone2)) {
+	        Swal.fire({ icon: 'warning', title: "전화번호는 숫자만 가능합니다."});
+	        form.ruPhone2.select();
+	        return;
+	    }
+	    if (!regExpuPhone2.test(ruPhone3)) {
+	        Swal.fire({ icon: 'warning', title: "전화번호는 숫자만 가능합니다."});
+	        form.ruPhone3.select();
+	        return;
+	    }
+	    if (!regExpuPhone.test(ruPhone)) {
+	        Swal.fire({ icon: 'warning', title: "전화번호를 확인해주세요."});
+	        form.ruPhone.select();
+	        return;
+	    }
+
+	    if (ruEmail.trim().length === 0) {
+	        Swal.fire({ icon: 'warning', title: "이메일을 입력해주세요."});
+	        return;
+	    }
+	    if (!regExpuEmail.test(ruEmail)) {
+	        Swal.fire({ icon: 'warning', title: "이메일 형식을 확인해주세요. \n ex) id@domain.com"});
+	        ruEmail.select();
+	        return;
+	    }
+
+	    if (ruAddress.trim().length === 0) {
+	        Swal.fire({ icon: 'warning', title: "주소를 입력해주세요."});
+	        return;
+	    }
+	    if (ruDetailAddress.trim().length === 0) {
+	        Swal.fire({ icon: 'warning', title: "상세 주소를 입력해주세요."});
+	        return;
+	    }
+	    if (ruZipcode.length === 0) {
+	        Swal.fire({ icon: 'warning', title: "우편번호를 입력해주세요."});
+	        return;
+	    }
+	    if (!regExpuAddress.test(ruDetailAddress)) {
+	        Swal.fire({ icon: 'warning', title: "주소는 영문/한글/숫자/- 만 입력 가능합니다."});
+	        ruAddress.select();
+	        return;
+	    }
+	    console.log(ruid);
+	    $.ajax({
+	        type: 'POST',
+	        url: './UserSignUpCommand',
+	        data: {
+	            ruid: ruid,
+	            ruPassword: ruPassword,
+	            ruName: ruName,
+	            ruNickName: ruNickName,
+	            ruGender: ruGender,
+	            ruBirthday: ruBirthday,
+	            ruPhone: ruPhone,
+	            ruEmail: ruEmail,
+	            ruAddress: ruAddress,
+	            ruDetailAddress: ruDetailAddress,
+	            ruZipcode: ruZipcode
+	        },
+	        success: function(result) {
+	            console.log(result);
+	            if (result === "1") {
+	                Swal.fire({
+	                    icon: 'question',
+	                    title: "회원가입을 축하합니다! \n바로 로그인 하시겠습니까?"
+	                }).then((result) => {
+	                    if (result.isConfirmed) {
+	                        $('#signUpModal').modal('hide');
+	                        openLoginModal();
+	                    }
+	                });
+	            } else {
+	                Swal.fire({ icon: 'warning', title: "회원 가입에 실패했습니다. 중복을 확인해주세요."});
+	                return;
+	            }
+	        },
+	        error: function() {
+	            Swal.fire({ icon: 'warning', title: "오류가 발생했습니다. 관리자에게 문의해주세요."});
+	        }
+	    });
 	}
-	
 
 	document.addEventListener("DOMContentLoaded", function() {
-		  var passwordInput = document.getElementById("ruPassword");
-		  var confirmPasswordInput = document.getElementById("ruRePass");
+	    var passwordInput = document.getElementById("ruPassword");
+	    var confirmPasswordInput = document.getElementById("ruRePass");
 
-		  confirmPasswordInput.addEventListener("input", confirmPasswordMatch);
+	    confirmPasswordInput.addEventListener("input", confirmPasswordMatch);
 
-		  function confirmPasswordMatch() {
-		    var password = document.getElementById("ruPassword").value;
-		    var confirmPassword = document.getElementById("ruRePass").value;
-		    var passwordMatchEl = document.getElementById("passwordConfirm");
+	    function confirmPasswordMatch() {
+	        var password = document.getElementById("ruPassword").value;
+	        var confirmPassword = document.getElementById("ruRePass").value;
+	        var passwordMatchEl = document.getElementById("passwordConfirm");
 
-		    if (password === confirmPassword) {
-		      passwordMatchEl.textContent = "Password Match";
-		      passwordMatchEl.style.color = "green";
-		    } else {
-		      passwordMatchEl.textContent = "Password Mismatch";
-		      passwordMatchEl.style.color = "red";
-		    }
-		  }
-		});
+	        if (password === confirmPassword) {
+	            passwordMatchEl.textContent = "Password Match";
+	            passwordMatchEl.style.color = "green";
+	        } else {
+	            passwordMatchEl.textContent = "Password Mismatch";
+	            passwordMatchEl.style.color = "red";
+	        }
+	    }
+	});
+
 
 //f544dc7ed174c1cb80376d3cee1683f2
 //window.Kakao.init("f544dc7ed174c1cb80376d3cee1683f2");

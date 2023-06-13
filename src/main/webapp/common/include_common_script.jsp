@@ -19,3 +19,4 @@
 <script src="js/wow.min.js"></script>
 <script src="js/default/active.js"></script>
 <script src="js/shop/common.js?after"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
