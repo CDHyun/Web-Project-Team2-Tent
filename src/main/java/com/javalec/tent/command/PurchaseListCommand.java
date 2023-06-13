@@ -13,38 +13,25 @@ public class PurchaseListCommand implements TentCommand {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-
 		HttpSession session = request.getSession();
-		String uid = (String)session.getAttribute("SUID");
-//		int pcNo = Integer.parseInt(request.getParameter("PCNO"));
-//		session.setAttribute("PCNO", pcNo);
-		
-		//페이징 처리
-		 String vpage = request.getParameter("vpage");
-		    if(vpage==null){
-		    	vpage = "1";
-		    }
-		int v_page = Integer.parseInt(vpage);
-		int index_no = (v_page-1)*7;
-		// Your Java code for getting the current page number dynamically
-		int currentPage = Integer.parseInt(request.getParameter("vpage"));
+		String uid = (String) session.getAttribute("SUID");
 
-		
-		
-		
-	
+		String vpage = request.getParameter("vpage");
+		int v_page;
+		try {
+			v_page = Integer.parseInt(vpage);
+		} catch (NumberFormatException e) {
+			v_page = 1; // 기본 페이지 번호 설정
+		}
+
+		int index_no = (v_page - 1) * 7;
+
 		PurchaseDao dao = new PurchaseDao();
-	
-		// count select 
+
 		int daocount = dao.pCount(uid);
 		request.setAttribute("d_count", daocount);
-		ArrayList<PurchaseDto> dtos = new ArrayList<PurchaseDto>();
-		dtos = dao.purchaseList(uid, index_no);
-		request.setAttribute("purchaseList", dtos);
-		
-		
-		
-	}
 
+		ArrayList<PurchaseDto> dtos = dao.purchaseList(uid, index_no);
+		request.setAttribute("purchaseList", dtos);
+	}
 }
