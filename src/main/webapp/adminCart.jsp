@@ -239,7 +239,7 @@
 	</div>
 	 
 
-			<div id="carouselExampleInterval" class="carousel slide" data-ride="carousel" data-interval="5000">
+			<div id="carouselExampleInterval" class="carousel slide" data-ride="carousel" data-interval="3000">
 			  <div class="carousel-inner">
 			    <c:forEach items="${recommend}" var="dto" varStatus="st">
 			      <div class="carousel-item ${st.first ? 'active' : ''}">

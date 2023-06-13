@@ -632,95 +632,88 @@
 	  }
 	}
 
-	
 	function userChangePassword() {
-		var password = $("#c_uPassword").val();
-		var changePassword = $("#c_uChangePass").val();
-		var confirmPassword = $("#c_uConfrimChangePass").val();
-		var regExpuPass = /^[a-z|A-Z|0-9]*$/;
-		if($("#c_uPassword").length === 0){
-			Toast.fire({ icon : 'warning', title : "비밀번호를 입력해주세요." });
-			return;
+		  var password = $("#c_uPassword").val();
+		  var changePassword = $("#c_uChangePass").val();
+		  var confirmPassword = $("#c_uConfrimChangePass").val();
+		  var regExpuPass = /^[a-z|A-Z|0-9]*$/;
+
+		  if ($("#c_uPassword").length === 0) {
+		    Swal.fire({ icon: 'warning', title: "비밀번호를 입력해주세요." });
+		    return;
+		  }
+		  if ($("#c_uChangePass").length === 0) {
+		    Swal.fire({ icon: 'warning', title: "새 비밀번호를 입력해주세요." });
+		    return;
+		  }
+		  if ($("#c_uConfrimChangePass").length === 0) {
+		    Swal.fire({ icon: 'warning', title: "새 비밀번호 확인을 입력해주세요." });
+		    return;
+		  }
+		  if (!regExpuPass.test(password)) {
+		    Swal.fire({ icon: 'warning', title: "비밀번호는 영문&숫자만 사용 가능합니다." });
+		    return;
+		  }
+		  if (!regExpuPass.test(changePassword)) {
+		    Swal.fire({ icon: 'warning', title: "비밀번호는 영문&숫자만 사용 가능합니다." });
+		    return;
+		  }
+		  if (!regExpuPass.test(confirmPassword)) {
+		    Swal.fire({ icon: 'warning', title: "비밀번호는 영문&숫자만 사용 가능합니다." });
+		    return;
+		  }
+
+		  if (changePassword !== confirmPassword) {
+		    Swal.fire({ icon: 'warning', title: "입력하신 비밀번호와 비밀번호 확인이 일치하지 않습니다." });
+		    return;
+		  }
+
+		  $.ajax({
+		    type: 'POST',
+		    url: './UserChangePassword',
+		    data: {
+		      password: password,
+		      changePassword: changePassword
+		    },
+		    success: function(result) {
+		      console.log(result);
+		      if (result === "-1") {
+		        Swal.fire({ icon: 'warning', title: "비밀번호가 일치하지 않습니다." });
+		        return;
+		      }
+		      if (result === "0") {
+		        Swal.fire({ icon: 'warning', title: "변경 중 문제가 발생했습니다." });
+		        return;
+		      }
+		      if (result === "1") {
+		        Swal.fire({ icon: 'success', title: "비밀번호가 변경 되었습니다." }).then(() => {
+		          $('#userChangePasswordModal').modal('hide');
+		          window.location.href = "user_my_account.do";
+		        });
+		      }
+		    },
+		    error: function() {
+		      Swal.fire({ icon: 'warning', title: "오류가 발생했습니다. 관리자에게 문의해주세요." });
+		    }
+		  });
+
 		}
-		if($("#c_uChangePass").length === 0){
-			Toast.fire({ icon : 'warning', title : "새 비밀번호를 입력해주세요." });
-			return;
-		}
-		if($("#c_uConfrimChangePass").length === 0){
-			Toast.fire({ icon : 'warning', title : "새 비밀번호 확인을 입력해주세요." });
-			return;
-		}
-		if (!regExpuPass.test(password)) {
-			Toast.fire({
-				icon : 'warning',
-				title : "비밀번호는 영문&숫자만 사용 가능합니다."
-			});
-			return
-		}
-		if (!regExpuPass.test(changePassword)) {
-			Toast.fire({
-				icon : 'warning',
-				title : "비밀번호는 영문&숫자만 사용 가능합니다."
-			});
-			return
-		}
-		if (!regExpuPass.test(confirmPassword)) {
-			Toast.fire({
-				icon : 'warning',
-				title : "비밀번호는 영문&숫자만 사용 가능합니다."
-			});
-			return
-		}
-		
-		if (!changePassword === confirmPassword) {
-			Toast.fire({
-				icon : 'warning',
-				title : "입력하신 비밀번호와 비밀번호 확인이 일치하지 않습니다."
-			});
-			return
-		}
-		
-		
-		$.ajax({
-			type : 'POST',
-			url : './UserChangePassword',
-			data : {
-				password : password,
-				changePassword : changePassword
-			},
-			success : function(result) {
-				console.log(result);
-				if (result === "-1") {
-					Toast.fire({ icon : 'warning', title : "비밀번호가 일치하지 않습니다." });
-					return;
-				}
-				if (result === "0") {
-					Toast.fire({ icon : 'warning', title : "변경 중 문제가 발생했습니다." });
-					return;
-				}
-				if (result === "1") {
-					Toast.fire({ icon: 'success', title: "비밀번호가 변경 되었습니다." }).then(() => {
-						  $('#userChangePasswordModal').modal('hide');
-						  window.location.href = "user_my_account.do";
-						});
-				}
-			},
-			error : function() {
-				Toast.fire({ icon : 'warning', title : "오류가 발생했습니다. 관리자에게 문의해주세요." });
-			}
-		});
-		
-	}
-	
+
 	
 	/* NickName */
 	function openUserChangeNickNameModal() {
-		ToastConfirm.fire({ icon: 'question', title: "닉네임을 변경하시겠습니까?" }).then((result) => {
-			if(result.isConfirmed){
-				$('#userChangeNickNameModal').modal('show');
-			}
-		});
+	  Swal.fire({ 
+	    icon: 'question', 
+	    title: "닉네임을 변경하시겠습니까?", 
+	    showCancelButton: true, 
+	    confirmButtonText: "확인" 
+	  }).then((result) => {
+	    if (result.isConfirmed) {
+	      $('#userChangeNickNameModal').modal('show');
+	    }
+	  });
 	}
+
 	
 	function userChangeNickName() {
 		var uNickName = $("#c_uNickName").val();

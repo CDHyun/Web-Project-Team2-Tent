@@ -135,14 +135,14 @@ public class BoardDao {
 		try {
 			con = dataSource.getConnection();
 			String sql = "SELECT * FROM ("
-	                + "SELECT derivedTable.*, ROW_NUMBER() OVER () AS row_num FROM ("
-	                + "SELECT bNo, uid, uNickName, bCgNo, bTitle, bContent, bInsertDate, bViewCount "
-	                + "FROM board "
-	                + "WHERE bDeleted = 0 AND bTitle LIKE ? or bContent LIKE ?"
-	                + ") AS derivedTable"
-	                + ") AS finalResult "
-	                + "WHERE row_num >= ? AND row_num <= ?"
-	                + " order by bNo desc";
+			        + "SELECT derivedTable.*, ROW_NUMBER() OVER () AS row_num FROM ("
+			        + "SELECT bNo, uid, uNickName, bCgNo, bTitle, bContent, bInsertDate, bViewCount "
+			        + "FROM board "
+			        + "WHERE bDeleted = 0 AND (bTitle LIKE ? or bContent LIKE ?)"
+			        + ") AS derivedTable"
+			        + ") AS finalResult "
+			        + "WHERE row_num >= ? AND row_num <= ?"
+			        + " order by bNo desc";
 			ps = con.prepareStatement(sql);
 			ps.setString(1, "%" + queryContent + "%");
 			ps.setString(2, "%" + queryContent + "%");
@@ -294,6 +294,35 @@ public class BoardDao {
 			String sql = "update board set bDeleted = 1, bDeleteDate = now() where bNo = ?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, bNo);
+			result = ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(con != null) con.close();
+				if(ps != null) ps.close();
+				if(rs != null) rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public int modifyBoard(int bNo, String bTitle, String bContent) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int result = 0;
+		
+		try {
+			con = dataSource.getConnection();
+			String sql = "update board set bTitle = ?, bContent = ?, bUpdateDate = now() where bNo = ?";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, bTitle);
+			ps.setString(2, bContent);
+			ps.setInt(3, bNo);
 			result = ps.executeUpdate();
 			
 		} catch (Exception e) {

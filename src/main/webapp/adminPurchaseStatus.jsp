@@ -11,6 +11,18 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>주문처리</title>
+    
+    <script type="text/javascript">
+    
+    function swal(){
+    	Swal.fire({
+    		icon : 'success',
+    		title : '스윗 알러트 테스트'
+    	})
+    	
+    }
+    
+    </script>
     <style>
         .header {
             display: flex;
@@ -82,7 +94,8 @@
            		      <option value="2" ${dto.pcStatus == 2 ? 'selected' : ''}>배송완료</option>
             		</select>
         		</td>
-        		<td><input type="submit" value="확인" class="btn btn-info" size="5"></td>
+        		<td><input type="submit" value="확인" class="btn btn-info" size="5" onclick=""></td>
+        		<td><input type="button" value="테스트" class="btn btn-info" size="5" onclick="swal()"></td>
     		</tr>
     </form>
 		</c:forEach>

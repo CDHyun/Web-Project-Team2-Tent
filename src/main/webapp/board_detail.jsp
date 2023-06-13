@@ -67,39 +67,50 @@
 	}
 	
 	function deleteComment(cmNo) {
-		var bNo = $("#hidden_bNo").val();
-		var cmNo = cmNo;
-		ToastConfirm.fire({  icon: 'warning',  title: "댓글을 삭제하시겠습니까?"  }).then((result) => {
+		  var bNo = $("#hidden_bNo").val();
+		  var cmNo = cmNo;
+		  Swal.fire({
+		    icon: 'warning',
+		    title: '댓글을 삭제하시겠습니까?',
+		    showCancelButton: true,
+		    confirmButtonColor: '#ff0000', // Red color
+		    cancelButtonColor: '#6c757d', // Default color
+		    confirmButtonText: '삭제',
+		    cancelButtonText: '취소',
+		  }).then((result) => {
 		    if (result.isConfirmed) {
 		      $.ajax({
 		        type: 'POST',
 		        url: './DeleteComment',
 		        data: {
-		        	cmNo : cmNo,
-		        	bNo : bNo
+		          cmNo: cmNo,
+		          bNo: bNo
 		        },
 		        success: function(result) {
 		          console.log(result);
 		          if (result === "0") {
-		            Toast.fire({
-		            icon: 'warning', title: "댓글 삭제 중 문제가 발생했습니다." });
+		            Swal.fire({
+		              icon: 'warning',
+		              title: '댓글 삭제 중 문제가 발생했습니다.'
+		            });
 		            return;
 		          }
 
 		          if (result === "1") {
-		        	 window.location.href = "board_detail.do?bNo=" + bNo;
+		            window.location.href = "board_detail.do?bNo=" + bNo;
 		          }
 		        },
 		        error: function() {
-		          Toast.fire({
+		          Swal.fire({
 		            icon: 'warning',
-		            title: "오류가 발생했습니다. 관리자에게 문의해주세요."
+		            title: '오류가 발생했습니다. 관리자에게 문의해주세요.'
 		          });
 		        }
 		      });
 		    }
 		  });
-	}
+		}
+
 	
 	function ModifyComment() {
 		console.log(globalCmNo);
@@ -126,62 +137,105 @@
 	}
 	
 	function deleteBoard() {
-		var bNo = $("#hidden_bNo").val();
-		ToastConfirm.fire({  icon: 'warning',  title: "게시글을 삭제하시겠습니까?"  }).then((result) => {
+		  var bNo = $("#hidden_bNo").val();
+		  console.log("삭제 요청 번호 :" + bNo)
+		  Swal.fire({
+		    icon: 'warning',
+		    title: '게시글을 삭제하시겠습니까?',
+		    showCancelButton: true,
+		    confirmButtonColor: '#ff0000', // Red color
+		    cancelButtonColor: '#6c757d', // Default color
+		    confirmButtonText: '삭제',
+		    cancelButtonText: '취소',
+		  }).then((result) => {
 		    if (result.isConfirmed) {
 		      $.ajax({
 		        type: 'POST',
 		        url: './DeleteBoardCommand',
 		        data: {
-		        	bNo : bNo
+		          bNo: bNo
 		        },
 		        success: function(result) {
 		          console.log(result);
 		          if (result === "0") {
-		            Toast.fire({
-		            icon: 'warning', title: "게시글 삭제 중 문제가 발생했습니다." });
+		            Swal.fire({
+		              icon: 'warning',
+		              title: '게시글 삭제 중 문제가 발생했습니다.'
+		            });
 		            return;
 		          }
-
 		          if (result === "1") {
-		        	 window.location.href = "board_list.do";
+		        	  Swal.fire({
+		        		  icon: 'success',
+		        		  title: "게시글이 삭제되었습니다!",
+		        		  showCancelButton: false,
+		        		  showConfirmButton: true,
+		        		  confirmButtonText: "OK"
+		        		}).then((result) => {
+		        		  if (result.isConfirmed) {
+		        		    window.location.href = 'board_list.do';
+		        		  }
+		        		});
 		          }
 		        },
 		        error: function() {
-		          Toast.fire({
+		          Swal.fire({
 		            icon: 'warning',
-		            title: "오류가 발생했습니다. 관리자에게 문의해주세요."
+		            title: '오류가 발생했습니다. 관리자에게 문의해주세요.'
 		          });
 		        }
 		      });
 		    }
 		  });
-	}
+		}
+
 	
 	function modifyBoard() {
-		var bNo = $("#hidden_bNo").val();
-		ToastConfirm.fire({  icon: 'warning',  title: "게시글을 삭제하시겠습니까?"  }).then((result) => {
+		  var bNo = $("#hidden_bNo").val();
+		  var bTitle = $("#b_title_modify_txt").val();
+		  var bContent = CKEDITOR.instances.b_content_modify_area.getData();
+		  Swal.fire({
+		    icon: 'warning',
+		    title: "수정 내용을 저장하시겠습니까?",
+		    showCancelButton: true,
+		    confirmButtonText: "저장",
+		    cancelButtonText: "취소"
+		  }).then((result) => {
 		    if (result.isConfirmed) {
 		      $.ajax({
 		        type: 'POST',
-		        url: './DeleteBoardCommand',
+		        url: './ModifyBoardCommand',
 		        data: {
-		        	bNo : bNo
+		          bNo: bNo,
+		          bTitle : bTitle,
+		          bContent : bContent
 		        },
-		        success: function(result) {
+		        success: function (result) {
 		          console.log(result);
 		          if (result === "0") {
-		            Toast.fire({
-		            icon: 'warning', title: "게시글 삭제 중 문제가 발생했습니다." });
+		            Swal.fire({
+		              icon: 'warning',
+		              title: "게시글 수정 중 문제가 발생했습니다."
+		            });
 		            return;
 		          }
 
 		          if (result === "1") {
-		        	 window.location.href = "board_list.do";
+		        	  Swal.fire({
+		        		  icon: 'success',
+		        		  title: "게시글이 수정되었습니다.",
+		        		  showCancelButton: false,
+		        		  showConfirmButton: true,
+		        		  confirmButtonText: "OK"
+		        		}).then((result) => {
+		        		  if (result.isConfirmed) {
+		        		    window.location.href = "board_detail.do?bNo=" + bNo;
+		        		  }
+		        		});
 		          }
 		        },
-		        error: function() {
-		          Toast.fire({
+		        error: function () {
+		          Swal.fire({
 		            icon: 'warning',
 		            title: "오류가 발생했습니다. 관리자에게 문의해주세요."
 		          });
@@ -189,12 +243,21 @@
 		      });
 		    }
 		  });
-	}
-	
+		}
+
 	function openModifyModal() {
-		$('#boardModifyModal').modal('show');
-	}
-	
+		  Swal.fire({
+		    icon: 'question',
+		    title: "수정하시겠습니까?",
+		    showCancelButton: true,
+		    confirmButtonText: "수정",
+		    cancelButtonText: "취소"
+		  }).then((result) => {
+		    if (result.isConfirmed) {
+		      $('#boardModifyModal').modal('show');
+		    }
+		  });
+		}
 </script>
 	
 
@@ -274,6 +337,57 @@
 								href="board_list.do?pageNo=1"><input
 								class="btn btn-primary btn-sm" type="button" value="목록" /></a>&nbsp;&nbsp;
 						</div>
+						    <!-- boardModifyModal Start -->
+	<div class="modal" id="boardModifyModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content modal-xl">
+				<div class="row">
+	                <div class="col-12">
+	                    <div class="shortcodes_title mb-30">
+	                        <h4>Board Modify</h4>
+	                    </div>
+	                    <div class="shortcodes_content">
+	                        <div class="table-responsive">
+	                        	<form action="board_modify.do" id="board_modify_form" name="board_modify_form" method="post">
+		                            <table class="table mb-0 table-bordered" style="width: 100%;">
+		                                <thead>
+		                                    <tr>
+		                                        <th scope="col" class="board_title">
+		                                        	<input type="text" name="bTitle" id="b_title_modify_txt" placeholder=" title" value="${board.bTitle}" style="vertical-align: middle;"/>
+		                                        </th>
+		                                        <th scope="col" class="board_date" style="vertical-align: middle;"><fmt:formatDate value='${toDay}' pattern='yyyy-MM-dd' /></th>
+		                                        <th scope="col" class="board_writer" style="vertical-align: middle;">${SUNICKNAME}</th>
+		                                        <th scope=col class="board_writer" style="vertical-align: middle;">
+		                                        	<select name="bCgNo" style="vertical-align: middle;">
+		                                        		<option value="1">잡담</option>
+		                                        	</select>
+		                                        </th>
+		                                    </tr>
+		                                </thead>
+		                                <tbody>
+		                                    <tr>
+		                                        <td id="board_content_td" colspan="4">
+		                                        	<textarea name="bContent" id="b_content_modify_area" placeholder=" content">${board.bContent}</textarea>
+		                                        </td>
+		                                    </tr>
+		                                </tbody>
+		                            </table>
+	                			</form>
+	                      				<input type="hidden" name="pageno" value="${pageno}" />
+	                      				<input type="hidden" name="uid" value="${SUID}" />
+	                        </div>
+	                    </div>
+	                    	<div id="qna_btn_container">
+								<input class="btn btn-secondary btn-sm board_btn" type="button" value="수정" onclick="modifyBoard()"/>&nbsp;&nbsp;&nbsp;
+								<input class="btn btn-secondary btn-sm board_btn list" type="button" pageno="${pageno}" value="목록" />
+	                    	</div>
+	                </div>
+	            </div>
+			</div>
+		</div>
+	</div>
+	<!-- boardModifyModal End -->
+						
 					</c:forEach>
 				</div>
 			</div>
@@ -466,58 +580,6 @@
 			    </nav>
 			</div>
 			
-    <!-- boardModifyModal Start -->
-	<div class="modal" id="boardModifyModal" tabindex="-1" role="dialog">
-		<div class="modal-dialog modal-xl" role="document">
-			<div class="modal-content modal-xl">
-				<div class="row">
-	                <div class="col-12">
-	                    <div class="shortcodes_title mb-30">
-	                        <h4>Board Modify</h4>
-	                    </div>
-	                    <div class="shortcodes_content">
-	                        <div class="table-responsive">
-	                        	<form action="board_modify.do" id="board_modify_form" name="board_modify_form" method="post">
-		                            <table class="table mb-0 table-bordered" style="width: 100%;">
-		                                <thead>
-		                                    <tr>
-		                                        <th scope="col" class="board_title">
-		                                        	<input type="text" name="bTitle" id="b_title_modify_txt" placeholder=" title" style="vertical-align: middle;"/>
-		                                        </th>
-		                                        <th scope="col" class="board_date" style="vertical-align: middle;"><fmt:formatDate value='${toDay}' pattern='yyyy-MM-dd' /></th>
-		                                        <th scope="col" class="board_writer" style="vertical-align: middle;">${SUNICKNAME}</th>
-		                                        <th scope=col class="board_writer" style="vertical-align: middle;">
-		                                        	<select name="bCgNo" style="vertical-align: middle;">
-		                                        		<option value="1">잡담</option>
-		                                        	</select>
-		                                        </th>
-		                                    </tr>
-		                                </thead>
-		                                <tbody>
-		                                    <tr>
-		                                        <td id="board_content_td" colspan="4">
-		                                        	<textarea name="bContent" id="b_content_modify_area" placeholder=" content">${board.tContent}</textarea>
-		                                        </td>
-		                                    </tr>
-		                                </tbody>
-		                            </table>
-	                			</form>
-	                      				<input type="hidden" name="pageno" value="${pageno}" />
-	                      				<input type="hidden" name="uid" value="${SUID}" />
-	                        </div>
-	                    </div>
-	                    	<div id="qna_btn_container">
-								<input class="btn btn-secondary btn-sm board_btn update" type="button" value="수정"/>&nbsp;&nbsp;&nbsp;
-								<input class="btn btn-secondary btn-sm board_btn list" type="button" pageno="${pageno}" value="목록" />
-	                    	</div>
-	                </div>
-	            </div>
-			</div>
-		</div>
-	</div>
-	<!-- boardModifyModal End -->
-    
-    
     <!-- Footer Area -->
  	<jsp:include page="common/include_common_bottom.jsp"/>
     <!-- Footer Area -->
