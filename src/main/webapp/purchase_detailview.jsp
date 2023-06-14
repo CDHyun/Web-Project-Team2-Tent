@@ -126,7 +126,7 @@
                             <input type="submit" value="Cancel" class="btn btn-danger">
                         </form>
                         <button type="button" class="btn btn-outline-primary mb-1">
-                            <a href="index.do">Check</a>
+                            <a href="purchase_list.do">Check</a>
                         </button>
                     </div>
                 </div>

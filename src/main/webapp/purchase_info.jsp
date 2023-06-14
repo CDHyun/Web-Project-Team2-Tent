@@ -179,10 +179,12 @@
 									<button type="button" class="btn btn-outline-primary mb-1" onclick="modifyModalOpen()">Modify</button>
 								</div>
 								<div class="col-md-12">
-									<label for="order-notes">Message</label>
+								<label for="order-notes">Message</label>
+                                <textarea class="form-control" name="pcDM" id="order-notes" cols="30" rows="10" placeholder="Notes about your order, e.g. special notes for delivery.">부재시 문앞에 놔주세요</textarea>
+									<!-- <label for="order-notes">Message</label>
 									<textarea class="form-control" name="pcDM"
 										id="order-notes" cols="30" rows="10"
-										placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+										placeholder="Notes about your order, e.g. special notes for delivery."></textarea> -->
 											</div>
 										</div>
 										<div class="col-12">
