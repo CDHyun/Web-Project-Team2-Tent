@@ -693,7 +693,7 @@ function emptySessionUser() {
 									<div class="cart-pricing my-4">
 										<ul>
 											<li><span>Sub Total:</span> <%-- <span>&#8361;<s:eval expression="new java.text.DecimalFormat('#,##0').format(tot_price)"/></span> --%>
-												<span id="header_cart_sub_tot">&#8361;${tot_price}</span></li>
+												<span id="header_cart_sub_tot">&#8361;${ITEMTOTAL}</span></li>
 											<li><span>Shipping:</span> <span
 												id="header_cart_shipping"> <c:if
 														test="${tot_price < 50000 && tot_price > 0}">
