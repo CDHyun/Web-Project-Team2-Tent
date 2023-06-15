@@ -16,7 +16,7 @@ public class AdminPurchaseCommand implements TentCommand {
 		
 		AdminDao dao = new AdminDao();
 		
-		dao.cartTopurchase();
+		//dao.cartTopurchase();
 		
 		
 

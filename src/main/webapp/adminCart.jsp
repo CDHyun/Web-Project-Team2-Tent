@@ -76,17 +76,19 @@
 			  var cQty = currentQuantity;
 			  
 			  $.ajax({
-		            url: "./AdminUpdateCartAction", // 카트수량 증가시키는 기능을 처리하는 URL
-		            method: "POST",
-		            data: { cNo: cNo,
-		            		cQty : cQty		}, // 서버에 전달할 데이터 (여기서는 cNo를 전달)
-		            success: function(response) {
-		                console.log("View count increased successfully.");
-		            },
-		            error: function() {
-		                console.log("Error occurred while increasing view count.");
-		            }
-		        });
+			        url: "./AdminUpdateCartAction",
+			        method: "POST",
+			        data: {
+			            cNo: cNo,
+			            cQty: cQty
+			        },
+			        success: function(response) {
+			            console.log("Quantity updated successfully.");
+			        },
+			        error: function() {
+			            console.log("Error occurred while updating quantity.");
+			        }
+			    });
 			  
 			  
 		
