@@ -15,12 +15,20 @@ public class CartListCommand implements TentCommand {
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String uid = (String)session.getAttribute("SUID");
-		AdminDao adminDao = new AdminDao();
-		ArrayList<AdminDto> cart = new ArrayList<AdminDto>();
-		cart = adminDao.cartSelect(uid);
 		
-		request.setAttribute("cart", cart);
 		
+		AdminDao dao = new AdminDao();
+		
+		
+		ArrayList<AdminDto> dtos = dao.cartSelect(uid);  // 가져온 데이터를 cart에 넣기
+		request.setAttribute("cart", dtos);
+		
+		
+		int dtoss =  dao.cCountSum(uid);
+		request.setAttribute("cartTotal", dtoss);  // 가져온 총합계금액을 cartTotal에 넣기
+		
+		session.removeAttribute("ITEMTOTAL");
+		session.setAttribute("ITEMTOTAL", dtoss);
 	}
 
 }

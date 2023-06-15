@@ -1178,7 +1178,7 @@ public class AdminDao {
 					}
 				}
 				
-				//카트에서 받아온 배열을 purchase 테이블로 insert
+				//위시리스트에서 카트로 insert 
 				public void wishlistToCart(String wwNo) {
 			
 					Connection connection = null;
@@ -1187,7 +1187,7 @@ public class AdminDao {
 					
 					try {
 				        connection = dataSource.getConnection();
-				        String query = "insert into cart (uid, cpColor, pCode) select w.uid,  w.pColor,w.pCode from wishlist w where wNo = ?";
+				        String query = "insert into cart (uid, cpColor, pCode) select w.uid, w.pColor,w.pCode from wishlist w where wNo = ?";
 				        preparedStatement = connection.prepareStatement(query);
 				        preparedStatement.setString(1, wwNo);
 				        preparedStatement.executeUpdate();
