@@ -43,28 +43,22 @@
 		}
         
        
-       	function deletecartcontent() {
-			var cNo = $("#cNo").val();
-			var pCode = $("#pCode").val();
-		    
-		   
-		   
-			var url = "adminCartDelete.do?cNo=" + encodeURIComponent(cNo) + "&pCode=" + encodeURIComponent(pCode);
-			window.location.href = url;
-			
-		  }
-		
-       	function btnClick() {
-			var form = document.adminCartForm;
-			form.submit();
- 		}
-	
+       	
        	
        	
 		function increaseQuantity(cmNo) {
 		    var quantityInput = document.getElementById("quantity_"+cmNo);
 		    var currentQuantity = parseInt(quantityInput.value);
-		    quantityInput.value = currentQuantity + 1;
+		    if (currentQuantity < 10) {
+		        quantityInput.value = currentQuantity + 1;
+		        updateQuantityInDatabase(cmNo, currentQuantity + 1); // AJAX 요청으로 데이터베이스 값 업데이트
+		      } else{
+		    	  Swal.fire({
+		    		    text: "구매가능한 최대수량은 10개입니다.",
+		    		    icon: "error",
+		    		    showCancelButton: false,
+		    		  })
+		      }
 		  }
 
 		  function decreaseQuantity(cmNo) {
@@ -72,8 +66,33 @@
 		    var currentQuantity = parseInt(quantityInput.value);
 		    if (currentQuantity > 1) {
 		      quantityInput.value = currentQuantity - 1;
+		      updateQuantityInDatabase(cmNo, currentQuantity - 1); // AJAX 요청으로 데이터베이스 값 업데이트
 		    }
 		  }
+		  
+		  function updateQuantityInDatabase(cmNo, currentQuantity) {
+			    
+			  var cNo = cmNo;
+			  var cQty = currentQuantity;
+			  
+			  $.ajax({
+		            url: "./AdminUpdateCartAction", // 카트수량 증가시키는 기능을 처리하는 URL
+		            method: "POST",
+		            data: { cNo: cNo,
+		            		cQty : cQty		}, // 서버에 전달할 데이터 (여기서는 cNo를 전달)
+		            success: function(response) {
+		                console.log("View count increased successfully.");
+		            },
+		            error: function() {
+		                console.log("Error occurred while increasing view count.");
+		            }
+		        });
+			  
+			  
+		
+			}
+		  
+		  
 		  
 		  function buyProduct(ppCode) {
 				var pCode = ppCode;
