@@ -36,6 +36,8 @@ public class AdminCartSelectCommand implements TentCommand {
 		
 		int dtoss =  dao.cCountSum(uid);
 		request.setAttribute("cartTotal", dtoss);  // 가져온 총합계금액을 cartTotal에 넣기
+		
+		session.removeAttribute("ITEMTOTAL");
 		session.setAttribute("ITEMTOTAL", dtoss);
 
 		

@@ -145,7 +145,7 @@
                                     	AdminDto dto = new AdminDto();
                                     %>
                                     
-                                     <c:forEach items="${ITEM}" var="dto" varStatus="st">
+                                     <c:forEach items="${cart}" var="dto" varStatus="st">
                            				<form name="adminCartForm" action="adminCartDelete.do" method="post">	
                                      
 										    <tr>   
