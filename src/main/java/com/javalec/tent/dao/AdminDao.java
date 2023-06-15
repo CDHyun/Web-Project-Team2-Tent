@@ -990,9 +990,7 @@ public class AdminDao {
 			
 		}
 		
-		public void cartTopurchase() {
-			
-		}
+		
 		
 		
 		
@@ -1272,6 +1270,37 @@ public class AdminDao {
 				}
 				
 				
-				
+				//카트수량수정메서드
+				public void updateQuantity(String ccNo, String ccQty) {
+					Connection connection = null;
+					PreparedStatement preparedStatement = null;
+					try {
+						connection = dataSource.getConnection();
+						String query = "update cart set cQty = ? where cNo = ?";
+						preparedStatement = connection.prepareStatement(query);
+						preparedStatement.setString(1, ccQty);
+						preparedStatement.setString(2, ccNo);
+						
+						
+						
+						preparedStatement.executeUpdate();
+					
+					}catch(Exception e) {
+						e.printStackTrace();
+					}finally {
+						try {
+							
+							if(preparedStatement != null) {
+								preparedStatement.close();
+							}
+							if(connection != null) {
+								connection.close();
+							}
+						}catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+					
+				}
 				
 }
