@@ -228,6 +228,7 @@ public class HomeController extends HttpServlet {
 			break;
 		case("/purchase_info.do"):
 			command = new PurchaserInfoCommand();
+		session.setAttribute("ITEMTOTAL", Integer.parseInt(request.getParameter("pPrice"))*Integer.parseInt(request.getParameter("pcQty")));
 			command.execute(request, response);
 			viewPage = "purchase_info.jsp";
 			break;
