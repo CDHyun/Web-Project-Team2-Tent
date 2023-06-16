@@ -50,7 +50,9 @@ public class PurchaserInfoCommand implements TentCommand {
 			session.removeAttribute("ITEM");
 			session.setAttribute("ITEM", productInfo2);
 			
-			
+			session.removeAttribute("ITEMTOTAL");
+			session.setAttribute("ITEMTOTAL", productDto.getpPrice()*productDto.getPcQty());
+			System.out.println("현재 세션 값 = " +session.getAttribute("ITEMTOTAL"));
 			
 			
 			String cNoArrayString = "[[]]";

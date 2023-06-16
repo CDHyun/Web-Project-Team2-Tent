@@ -121,12 +121,24 @@
                         <h5 class="mb-3">Cart Totals</h5>
                         <div class="table-responsive">
                             <table class="table mb-0">
-                                <tbody>
-                                    <tr>
-                                        <td> Total</td>
-                                         <td>&#8361;<fmt:formatNumber value="${tot_price}" type="number" pattern="#,###"></fmt:formatNumber></td>
-                                       <%-- <td>&#8361;${tot_price}</td> --%>
+                                 <tbody>
+                                <tr>
+                                        <td>Sub Total</td>
+                                        <td>&#8361;&nbsp;<fmt:formatNumber value="${ITEMTOTAL }" type="number" pattern="#,###"></fmt:formatNumber></td>
                                     </tr>
+                                    <tr>
+                                        <td><c:set var="shipping" value="${ITEMTOTAL >= 500000 ? 0 : 3000}" />Shipping</td>
+									   <td>&#8361;&nbsp;<fmt:formatNumber value="${shipping}" type="number"></fmt:formatNumber></td>
+                                    </tr>
+                                    <tr>
+                                        <td>VAT (10%)</td>
+                                        <td>&#8361;&nbsp;<fmt:formatNumber value="${ITEMTOTAL*0.1 }" type="number" pattern="#,###"></fmt:formatNumber></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total</td>
+                                         <td>&#8361;&nbsp;<fmt:formatNumber value="${ITEMTOTAL*1.1 +shipping}" type="number" pattern="#,###"></fmt:formatNumber></td>
+                                    </tr>
+                                   
                                 </tbody>
                             </table>
                         </div>

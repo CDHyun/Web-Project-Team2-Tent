@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.javalec.tent.dao.AdminDao;
 import com.javalec.tent.dao.PurchaseDao;
 import com.javalec.tent.dto.PurchaseDto;
 
@@ -33,8 +34,12 @@ public class PurchaseCheckInfoCommand implements TentCommand {
 		dtos = dao.purchaseCheckList(pCode);
 		request.setAttribute("purchaseCheckList", dtos);
 		
+	
+			
+		}
 		
 		
-	}
+		
+	
 
 }
