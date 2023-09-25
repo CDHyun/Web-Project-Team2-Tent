@@ -440,7 +440,7 @@ public class CommentDao {
 	    try {
 	        con = dataSource.getConnection();
 	        CommentDto parentComment = getCommentByCmNo(con, cmParentNo);
-	     // 대댓글 저장 로직 구현
+	        // 대댓글 저장 로직 구현
 	        int cmStep = 0; // 댓글은 step 0
 
 	        // ref의 최댓값 찾아서 ref에 +1 저장

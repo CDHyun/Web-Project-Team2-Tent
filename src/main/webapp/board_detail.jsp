@@ -33,7 +33,7 @@
 		globalCmNo = cmNo;
 		$('#childCommentWriteModal').modal('show');
 	}
-	function openModifyModal(cmNo) {
+	function openModifyCommentModal(cmNo) {
 		globalCmNo = cmNo;
 		ToastConfirm.fire({  icon: 'warning',  title: "댓글을 수정하시겠습니까?"  }).then((result) => {
 		    if (result.isConfirmed) {
@@ -112,7 +112,7 @@
 		}
 
 	
-	function ModifyComment() {
+	function modifyComment() {
 		console.log(globalCmNo);
 		var cmNo = globalCmNo;
 		var bNo = $("#hidden_bNo").val();
@@ -338,61 +338,61 @@
 								class="btn btn-secondary btn-sm" type="button" value="목록" /></a>&nbsp;&nbsp;
 						</div>
 						    <!-- boardModifyModal Start -->
-	<div class="modal" id="boardModifyModal" tabindex="-1" role="dialog">
-		<div class="modal-dialog modal-xl" role="document">
-			<div class="modal-content modal-xl">
-				<div class="row">
-	                <div class="col-12">
-	                    <div class="shortcodes_title mb-30">
-	                        <h4>Board Modify</h4>
-	                    </div>
-	                    <div class="shortcodes_content">
-	                        <div class="table-responsive">
-	                        	<form action="board_modify.do" id="board_modify_form" name="board_modify_form" method="post">
-		                            <table class="table mb-0 table-bordered" style="width: 100%;">
-		                                <thead>
-		                                    <tr>
-		                                        <th scope="col" class="board_title">
-		                                        	<input type="text" name="bTitle" id="b_title_modify_txt" placeholder=" title" value="${board.bTitle}" style="vertical-align: middle;"/>
-		                                        </th>
-		                                        <th scope="col" class="board_date" style="vertical-align: middle;"><fmt:formatDate value='${toDay}' pattern='yyyy-MM-dd' /></th>
-		                                        <th scope="col" class="board_writer" style="vertical-align: middle;">${SUNICKNAME}</th>
-		                                        <th scope=col class="board_writer" style="vertical-align: middle;">
-		                                        	<select name="bCgNo" style="vertical-align: middle;">
-		                                        		<option value="1">잡담</option>
-		                                        	</select>
-		                                        </th>
-		                                    </tr>
-		                                </thead>
-		                                <tbody>
-		                                    <tr>
-		                                        <td id="board_content_td" colspan="4">
-		                                        	<textarea name="bContent" id="b_content_modify_area" placeholder=" content">${board.bContent}</textarea>
-		                                        </td>
-		                                    </tr>
-		                                </tbody>
-		                            </table>
-	                			</form>
-	                      				<input type="hidden" name="pageno" value="${pageno}" />
-	                      				<input type="hidden" name="uid" value="${SUID}" />
-	                        </div>
-	                    </div>
-	                    	<div id="qna_btn_container">
-								<input class="btn btn-secondary btn-sm board_btn" type="button" value="수정" onclick="modifyBoard()"/>&nbsp;&nbsp;&nbsp;
-								<input class="btn btn-secondary btn-sm board_btn list" type="button" pageno="${pageno}" value="목록" />
-	                    	</div>
-	                </div>
-	            </div>
-			</div>
-		</div>
-	</div>
-	<!-- boardModifyModal End -->
+							<div class="modal" id="boardModifyModal" tabindex="-1" role="dialog">
+								<div class="modal-dialog modal-xl" role="document">
+									<div class="modal-content modal-xl">
+										<div class="row">
+							                <div class="col-12">
+							                    <div class="shortcodes_title mb-30">
+							                        <h4>Board Modify</h4>
+							                    </div>
+							                    <div class="shortcodes_content">
+							                        <div class="table-responsive">
+							                        	<form action="board_modify.do" id="board_modify_form" name="board_modify_form" method="post">
+								                            <table class="table mb-0 table-bordered" style="width: 100%;">
+								                                <thead>
+								                                    <tr>
+								                                        <th scope="col" class="board_title">
+								                                        	<input type="text" name="bTitle" id="b_title_modify_txt" placeholder=" title" value="${board.bTitle}" style="vertical-align: middle;"/>
+								                                        </th>
+								                                        <th scope="col" class="board_date" style="vertical-align: middle;"><fmt:formatDate value='${toDay}' pattern='yyyy-MM-dd' /></th>
+								                                        <th scope="col" class="board_writer" style="vertical-align: middle;">${SUNICKNAME}</th>
+								                                        <th scope=col class="board_writer" style="vertical-align: middle;">
+								                                        	<select name="bCgNo" style="vertical-align: middle;">
+								                                        		<option value="1">잡담</option>
+								                                        	</select>
+								                                        </th>
+								                                    </tr>
+								                                </thead>
+								                                <tbody>
+								                                    <tr>
+								                                        <td id="board_content_td" colspan="4">
+								                                        	<textarea name="bContent" id="b_content_modify_area" placeholder=" content">${board.bContent}</textarea>
+								                                        </td>
+								                                    </tr>
+								                                </tbody>
+								                            </table>
+							                			</form>
+							                      				<input type="hidden" name="pageno" value="${pageno}" />
+							                      				<input type="hidden" name="uid" value="${SUID}" />
+							                        </div>
+							                    </div>
+							                    	<div id="qna_btn_container">
+														<input class="btn btn-secondary btn-sm board_btn" type="button" value="수정" onclick="modifyBoard()"/>&nbsp;&nbsp;&nbsp;
+														<input class="btn btn-secondary btn-sm board_btn list" type="button" pageno="${pageno}" value="목록" />
+							                    	</div>
+							                </div>
+							            </div>
+									</div>
+								</div>
+							</div>
+							<!-- boardModifyModal End -->
 						
 					</c:forEach>
 				</div>
 			</div>
 			<br/><br/>
-			<!-- Comment List -->
+	<!-- Comment List -->
 	<div class="comment-list-container">
 	  <c:set var="cmtCount" value="${commentCount}"></c:set>
 	  <h6><i class="fa fa-commenting-o"></i>댓글 : <span style="color: orange;"><c:out value="(${cmtCount})" /></span> </h6>
@@ -428,7 +428,7 @@
 		            <div class="comment-actions" style="text-align: right;">
 		              <c:if test="${cmt.uid eq SUID}">
 		                <input class="btn btn-danger btn-sm" type="button" value="삭제" onclick="deleteComment('${cmt.cmNo}')">
-		                <input class="btn btn-warning btn-sm" type="button" value="수정" onclick="openModifyModal('${cmt.cmNo}')">
+		                <input class="btn btn-warning btn-sm" type="button" value="수정" onclick="openModifyCommentModal('${cmt.cmNo}')">
 		              </c:if>
 		              <c:if test="${!cmt.uid eq SUID}">
 		                <input class="btn btn-secondary btn-sm" type="button" value="추천">
@@ -486,7 +486,7 @@
 		          </div>
 		          <div class="button-container">
 		            <input type="hidden" name="bNo" value="${bNo}">
-		            <button type="button" class="btn btn-primary btn-sm" onclick="ModifyComment()">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		            <button type="button" class="btn btn-primary btn-sm" onclick="modifyComment()">Confirm</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		            <button type="button" class="btn btn-secondary btn-sm" id="cmCancelBtn" data-dismiss="modal">Cancel</button>
 		          </div>
 		        </form>

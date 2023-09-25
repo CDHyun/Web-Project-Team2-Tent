@@ -12,16 +12,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- 
+    	06/15 : 배송지 추가 오류 수정
+     -->
     <!-- include_common_top -->
 	<jsp:include page="common/include_common_top.jsp"/>
     <link rel="stylesheet" href="css/shop/user.css">
 
 	<script src="js/shop/user.js"></script>
 	<script type="text/javascript">
+	var globalUaNo;
 	function addModalOpen() {
 		$('#userAddressAddModal').modal('show');
 		}
-	function modifyModalOpen() {
+	function modifyModalOpen(uaNo) {
+		globalUaNo = uaNo;
 		$('#userModifyAddressModal').modal('show');
 		}
 	  
@@ -85,7 +90,8 @@
 	}
 	
 	function userModifyAddress() {
-		var uaNo = $('#m_uaNo').val();
+		/* var uaNo = $('#m_uaNo').val(); */
+		var uaNo = globalUaNo;
 		var uaAddress = $('#m_uaAddress').val();
 		var uaDetailAddress = $('#m_uaDetailAddress').val();
 		var uaZipcode = $('#m_uaZipcode').val();
@@ -144,8 +150,9 @@
 	}
 	
 	
-	function userDeleteAddress() {
-		var uaNo = $('#d_uaNo').val();
+	function userDeleteAddress(uaNo) {
+		/* var uaNo = $('#d_uaNo').val(); */
+		var uaNo = globalUaNo;
 		ToastConfirm.fire({ icon: 'question', title: "배송지를 삭제 하시겠습니까?" }).then((result) => {
 			if(result.isConfirmed){
 				$.ajax({
@@ -174,6 +181,7 @@
 		});
 	}
 	  
+	
 	</script>
 
 </head>
@@ -233,12 +241,12 @@
 									    <td style="vertical-align: middle;">${address.uPhone}</td>
 									    <td style="vertical-align: middle;">
 									   		<c:if test="${address.uaNo == 1}">
-										      <button type="button" class="btn btn-primary btn-sm" onclick="modifyModalOpen()">Modify</button>
+										      <button type="button" class="btn btn-primary btn-sm" onclick="modifyModalOpen('${address.uaNo}')">Modify</button>
 									   		</c:if>
 									   		<c:if test="${address.uaNo > 1}">
-										    	<button type="button" class="btn btn-primary btn-sm" onclick="modifyModalOpen()">Modify</button>
+										    	<button type="button" class="btn btn-primary btn-sm" onclick="modifyModalOpen('${address.uaNo}')">Modify</button>
 										    	<input type="hidden" id="d_uaNo" name="d_uaNo" value="${address.uaNo}">
-									      		<button type="button" class="btn btn-danger btn-sm delete-button" onclick="userDeleteAddress()">Delete</button>
+									      		<button type="button" class="btn btn-danger btn-sm delete-button" onclick="userDeleteAddress('${address.uaNo}')">Delete</button>
 									   		</c:if>
 									    </td>
 									  </tr>
@@ -296,6 +304,7 @@
                         </div>
                     </div>
                     <br/>
+                    <!-- 배송지 추가 버튼 -->
 					<button type="button" class="btn btn-primary btn-sm" onclick="addModalOpen()">배송지 추가</button>
 					<a href="user_my_account.do"><button type="button" class="btn btn-secondary btn-sm" onclick="">뒤로 가기</button></a>
                 </div>
